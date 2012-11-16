@@ -11,9 +11,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    geom/chessgen.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    geom/chessgen.h
 
 FORMS    += mainwindow.ui
 
