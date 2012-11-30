@@ -10,22 +10,40 @@
 #include <iostream>
 #include <vector>
 
+#include "geom/chessgen.h"
+
 using namespace cv;
 using namespace std;
+using namespace fr;
 
 int main(int, char**)
 {
-    VideoCapture cap(0); // open the default camera
+    VideoCapture cap(1); // open the default camera
     if(!cap.isOpened())  // check if we succeeded
         return -1;
 
-    cap.set(CV_CAP_PROP_FRAME_WIDTH,640);
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT,480);
+    cap.set(CV_CAP_PROP_FRAME_WIDTH,800);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT,600);
     Mat edges;
-    Size size(7,7);
-    //Size size(9,17);
+    Size size(9,17);
+
+    int counter = 10;
+
     vector<Point2f> corners;
     bool found;
+
+    vector<Point3f> chess = fr::ChessGen::getBoard(size,1,true);
+   /* for(unsigned int i=0;i<chess.size();i++){
+        cout << chess[i].x << "," << chess[i].y << endl;
+    }*/
+
+    vector<vector<Point3f> > objectPoints;
+    vector<vector<Point2f> > imagePoints;
+
+    Mat camera = Mat::eye(3,3,CV_64F);
+    Mat distortion = Mat::zeros(8, 1, CV_64F);
+    vector<Mat > rvecs;
+    vector<Mat > tvecs;
 
     namedWindow("edges",1);
     for(;;)
@@ -33,22 +51,32 @@ int main(int, char**)
         Mat frame;
         cap >> frame; // get a new frame from camera
         cvtColor(frame, edges, CV_BGR2GRAY);
-        found = findChessboardCorners(edges,size,corners);
-        /*
+
         found = findCirclesGrid(edges,size,corners
                                 ,CALIB_CB_ASYMMETRIC_GRID
                                 );//*/
         if(found) frame.convertTo(edges,-1,0.2);
-        //else displayOverlay("edges","no chessboard found",0);
+
         drawChessboardCorners(edges,size,corners,found);
-        //GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5);
-        //Canny(edges, edges, 0, 60, 3);
+
         imshow("edges", edges);
-        if(found){if(waitKey(30) >= 0) break;}
-        else{if(waitKey(300) >= 0) break;}
+        if(found){
+            if(waitKey(200)>=0){
+            //waitKey(300);
+                objectPoints.push_back(chess);
+                imagePoints.push_back(corners);
+                if(--counter<= 0)
+                    break;
+            }
+        }
+        else waitKey(30);
     }
+
+    calibrateCamera(objectPoints,imagePoints,Size(800,600),camera,distortion,rvecs,tvecs,0);
+
     if(found) imwrite("/home/ryan/chessboard.png",edges);
 
-    // the camera will be deinitialized automatically in VideoCapture destructor
+    cout << camera << endl;
+
     return 0;
 }
