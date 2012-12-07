@@ -18,14 +18,14 @@ using namespace fr;
 
 int main(int, char**)
 {
-    VideoCapture cap(0); // open the default camera
+    VideoCapture cap(1); // open the default camera
     if(!cap.isOpened())  // check if we succeeded
         return -1;
 
     cap.set(CV_CAP_PROP_FRAME_WIDTH,640);
     cap.set(CV_CAP_PROP_FRAME_HEIGHT,480);
     Mat edges;
-    Size size(7,7);
+    Size size(12,9);
 
     int counter = 10;
 
@@ -64,7 +64,7 @@ int main(int, char**)
         drawChessboardCorners(edges,size,corners,found);
 
         imshow("edges", edges);
-        if(found){
+        /*if(found){
             //if(waitKey(200)>=0){
             waitKey(300);
                 objectPoints.push_back(chess);
@@ -73,15 +73,16 @@ int main(int, char**)
                     break;
             //}
         }
-        else waitKey(30);
+        else waitKey(30);*/
+        if(waitKey(30)>1) break;
     }
 
-    double rpe = calibrateCamera(objectPoints,imagePoints,Size(800,600),camera,distortion,rvecs,tvecs,CV_CALIB_FIX_ASPECT_RATIO);
+    //double rpe = calibrateCamera(objectPoints,imagePoints,Size(800,600),camera,distortion,rvecs,tvecs,CV_CALIB_FIX_ASPECT_RATIO);
 
     if(found) imwrite("/home/ryan/chessboard.png",edges);
 
-    cout << camera << endl;
-    cout << rpe << endl;
+    //cout << camera << endl;
+    //cout << rpe << endl;
 
     return 0;
 }
