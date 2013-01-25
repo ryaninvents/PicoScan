@@ -34,6 +34,12 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="margin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="ModelViewWidget" name="widget" native="true">
       <property name="cursor">
@@ -41,6 +47,10 @@
       </property>
       <property name="mouseTracking">
        <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:rgb(36, 76, 120);
+color:white;</string>
       </property>
      </widget>
     </item>
@@ -114,7 +124,12 @@
    <addaction name="separator"/>
    <addaction name="actionFull_screen"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="styleSheet">
+    <string notr="true">background-color:rgb(36, 76, 120);
+color:white;</string>
+   </property>
+  </widget>
   <action name="actionCalibrate">
    <property name="enabled">
     <bool>false</bool>
@@ -414,9 +429,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSelect_cameras</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showCameraSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAbout()</slot>
   <slot>setFullScreen(bool)</slot>
+  <slot>showCameraSettings()</slot>
  </slots>
 </ui>

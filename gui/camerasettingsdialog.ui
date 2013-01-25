@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>CameraSettingsDialog</class>
  <widget class="QDialog" name="CameraSettingsDialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,11 +14,17 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Camera settings</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../icons.qrc">
     <normaloff>:/oxygen/gui/icons/oxygen/camera-web.png</normaloff>:/oxygen/gui/icons/oxygen/camera-web.png</iconset>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <property name="spacing">
@@ -158,7 +167,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="capMethod">
        <item>
         <property name="text">
          <string>OpenCV</string>
@@ -174,7 +183,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="device">
        <property name="prefix">
         <string>Device </string>
        </property>
@@ -191,7 +200,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="resolution">
        <property name="text">
         <string>1024 x 768</string>
        </property>
@@ -205,7 +214,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox">
+      <widget class="QDoubleSpinBox" name="cellSize">
        <property name="suffix">
         <string> µm</string>
        </property>
@@ -228,7 +237,7 @@
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="calibrationDetails">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -238,7 +247,7 @@
       </widget>
      </item>
      <item row="6" column="1">
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="icon">
        <property name="text">
         <string/>
        </property>
@@ -275,7 +284,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QWidget" name="widget" native="true">
+      <widget class="QWidget" name="preview" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
          <horstretch>0</horstretch>
@@ -303,7 +312,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="closeButton">
          <property name="text">
           <string>Close</string>
          </property>
@@ -318,5 +327,22 @@
  <resources>
   <include location="../icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>closeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>839</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

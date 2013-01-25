@@ -26,3 +26,8 @@ void MainWindow::setFullScreen(bool fs)
         showNormal();
     }
 }
+
+void MainWindow::showCameraSettings()
+{
+    camSettings.show();
+}

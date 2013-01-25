@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "gui/aboutdialog.h"
+#include "gui/camerasettingsdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,10 +21,12 @@ public:
 public slots:
     void showAbout();
     void setFullScreen(bool fs);
+    void showCameraSettings();
     
 private:
     Ui::MainWindow *ui;
     AboutDialog about;
+    CameraSettingsDialog camSettings;
 };
 
 #endif // MAINWINDOW_H
