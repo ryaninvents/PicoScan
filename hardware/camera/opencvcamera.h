@@ -23,6 +23,26 @@ public:
       Determine whether the camera is available to take frames.
       */
     bool isOpen(){return cap.isOpened();}
+
+
+
+    /** Set the capture resolution of this device. */
+    void setResolution(int u,int v);
+
+    /** Set the capture resolution of this device. */
+    void setResolution(cv::Size s){setResolution(s.width,s.height);}
+
+    /** Returns the horizontal resolution of this camera. */
+    int getResolutionU();
+
+    /** Returns the vertical resolution of this camera. */
+    int getResolutionV();
+
+    /** Returns the resolution of this camera.    */
+    cv::Size getResolution(){Camera::setResolution(getResolutionU(),
+                                                   getResolutionV());
+                            return Camera::getResolution();}
+
 private:
     cv::VideoCapture cap;
 };

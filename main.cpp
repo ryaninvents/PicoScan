@@ -11,26 +11,74 @@
 #include <vector>
 
 #include "geom/chessgen.h"
+#include "hardware/camera/camera.h"
+#include "hardware/camera/opencvcamera.h"
+#include "hardware/standards/calibrationstandard.h"
+#include "hardware/standards/chessboardstandard.h"
 
-#define NUM_IMAGES 12
-
-using namespace cv;
-using namespace std;
-using namespace fr;
-
-int main(int, char**)
+int main(int argc, char** argv)
 {
-    VideoCapture cap0(0);
-    VideoCapture cap1(1);
-    if(!cap1.isOpened() || !cap0.isOpened())
+/*
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.showMaximized();
+
+    return a.exec();
+*/
+    // desired number of images; eventually an argument?
+    unsigned int n = 12;
+
+    // the two cameras we'll be using
+    Camera *cam1;
+    Camera *cam2;
+
+    // our calibration standard
+    CalibrationStandard *standard =
+            new ChessboardStandard(cv::Size(9,12),
+                                   25.4);
+
+    // keep track of how many images remain
+    unsigned int counter = n;
+
+    // list of snapshots
+    std::vector<cv::Mat> images1;
+    std::vector<cv::Mat> images2;
+
+    // snapshot holders
+    cv::Mat snap1, snap2;
+
+    // initialize the cameras however you like
+    // they will probably be arguments in the future
+    cam1 = new OpenCVCamera(0);
+    cam2 = new OpenCVCamera(1);
+
+    // if we're having trouble, abort abort abort
+    if(!cam1->isOpen() || !cam2->isOpen())
         return -1;
 
-    unsigned int i;
+    cam1->setResolution(800,600);
+    cam2->setResolution(800,600);
 
-    cap1.set(CV_CAP_PROP_FRAME_WIDTH,640);
-    cap1.set(CV_CAP_PROP_FRAME_HEIGHT,480);
-    cap0.set(CV_CAP_PROP_FRAME_WIDTH,640);
-    cap0.set(CV_CAP_PROP_FRAME_HEIGHT,480);
+    cv::namedWindow("Camera 1",1);
+    cv::namedWindow("Camera 2",1);
+
+    for(;;){
+        snap1 = cam1->getFrame();
+        snap2 = cam2->getFrame();
+
+        cv::imshow("Camera 1",snap1);
+        cv::imshow("Camera 2",snap2);
+
+        if(cv::waitKey(2)>1) break;
+
+    }
+
+    return 0;
+
+    /*
+
+
+    unsigned int i;
     Mat edges1, edges0;
     Size size(4,11);
 
@@ -40,17 +88,14 @@ int main(int, char**)
     bool found1,found0;
 
     vector<Point3f> chess = fr::ChessGen::getBoard(size,10.16,true);
-   /* for(unsigned int i=0;i<chess.size();i++){
-        cout << chess[i].x << "," << chess[i].y << endl;
-    }*/
 
     vector<vector<Point3f> > objectPoints;
     vector<vector<Point2f> > imagePoints1,imagePoints0;
 
-    Mat camera0 = Mat::eye(3,3,CV_64F);
-    Mat distortion0 = Mat::zeros(8, 1, CV_64F);
-    Mat camera1 = Mat::eye(3,3,CV_64F);
-    Mat distortion1 = Mat::zeros(8, 1, CV_64F);
+    Mat camera0mat = Mat::eye(3,3,CV_64F);
+    Mat distortion0mat = Mat::zeros(8, 1, CV_64F);
+    Mat camera1mat = Mat::eye(3,3,CV_64F);
+    Mat distortion1mat = Mat::zeros(8, 1, CV_64F);
     vector<Mat > rvecs0, rvecs1;
     vector<Mat > tvecs0, tvecs1;
 
@@ -80,13 +125,13 @@ int main(int, char**)
 
         if(waitKey(200)>=0){
             //found = findChessboardCorners(edges,size,corners);
-            //*
+            //
             found0 = findCirclesGrid(edges0,size,corners0
                                     ,CALIB_CB_ASYMMETRIC_GRID
-                                    );//*/
+                                    );//
             found1 = findCirclesGrid(edges1,size,corners1
                                     ,CALIB_CB_ASYMMETRIC_GRID
-                                    );//*/
+                                    );//
             if(found0&&found1){
                 objectPoints.push_back(chess);
                 imagePoints0.push_back(corners0);
@@ -101,22 +146,22 @@ int main(int, char**)
 
     double rpe0 = calibrateCamera(objectPoints,imagePoints0,
                                  Size(edges0.size[0],edges0.size[1]),
-                                 camera0,distortion0,rvecs0,tvecs0,
+                                 camera0mat,distortion0mat,rvecs0,tvecs0,
                                  CV_CALIB_FIX_ASPECT_RATIO|
                                  CV_CALIB_FIX_PRINCIPAL_POINT);
     double rpe1 = calibrateCamera(objectPoints,imagePoints1,
                                  Size(edges1.size[0],edges1.size[1]),
-                                 camera1,distortion1,rvecs1,tvecs1,
+                                 camera1mat,distortion1mat,rvecs1,tvecs1,
                                  CV_CALIB_FIX_ASPECT_RATIO|
                                  CV_CALIB_FIX_PRINCIPAL_POINT);
 
     cout << " ==== Camera 0 ====\n";
-    cout << camera0 << endl;
-    cout << distortion0 << endl;
+    cout << camera0mat << endl;
+    cout << distortion0mat << endl;
 
     cout << " ==== Camera 1 ====\n";
-    cout << camera1 << endl;
-    cout << distortion1 << endl;
+    cout << camera1mat << endl;
+    cout << distortion1mat << endl;
 
     vector<Point3f> cornersReal;
     vector<Point2f> cornersImage;
@@ -135,13 +180,13 @@ int main(int, char**)
 
     solvePnP(cornersReal,
              cornersImage,
-             camera1,
-             distortion1,
+             camera1mat,
+             distortion1mat,
              relativeRot,
              relativeTrans);
 
     cout << " ==== Relative positions of cameras: ==== \n"
          << relativeTrans << "\n" << relativeRot << "\n";
 
-    return 0;
+    return 0;*/
 }

@@ -1,24 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>707</width>
+    <height>455</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QWidget" name="widget" native="true"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>707</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionExit"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionExport_to_STL"/>
+   </widget>
+   <widget class="QMenu" name="menuHardware">
+    <property name="title">
+     <string>Hardware</string>
+    </property>
+    <addaction name="actionSelect_cameras"/>
+    <addaction name="actionSelect_standard"/>
+    <addaction name="actionProjector_settings"/>
+    <addaction name="actionCalibrate"/>
+    <addaction name="actionSetup_wizard"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuHardware"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionCalibrate"/>
+   <addaction name="actionTake_snapshot"/>
+   <addaction name="actionSelect_standard"/>
+   <addaction name="actionSelect_cameras"/>
+   <addaction name="actionProjector_settings"/>
+   <addaction name="actionSetup_wizard"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoom_out"/>
+   <addaction name="actionZoom_best"/>
+   <addaction name="actionZoom_in"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionCalibrate">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/measure.png</normaloff>:/oxygen/icons/oxygen/measure.png</iconset>
+   </property>
+   <property name="text">
+    <string>Calibrate</string>
+   </property>
+   <property name="toolTip">
+    <string>Calibrate the setup</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSelect_cameras">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/camera-web.png</normaloff>:/oxygen/icons/oxygen/camera-web.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select cameras</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionTake_snapshot">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/media-record.png</normaloff>:/oxygen/icons/oxygen/media-record.png</iconset>
+   </property>
+   <property name="text">
+    <string>Take snapshot</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/document-new.png</normaloff>:/oxygen/icons/oxygen/document-new.png</iconset>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSelect_standard">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/games-config-board.png</normaloff>:/oxygen/icons/oxygen/games-config-board.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select standard</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/system-shutdown.png</normaloff>:/oxygen/icons/oxygen/system-shutdown.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/media-playback-stop.png</normaloff>:/oxygen/icons/oxygen/media-playback-stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionProjector_settings">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/video-projector.png</normaloff>:/oxygen/icons/oxygen/video-projector.png</iconset>
+   </property>
+   <property name="text">
+    <string>Projector settings</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/help-about.png</normaloff>:/oxygen/icons/oxygen/help-about.png</iconset>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSetup_wizard">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/tools-wizard.png</normaloff>:/oxygen/icons/oxygen/tools-wizard.png</iconset>
+   </property>
+   <property name="text">
+    <string>Setup wizard</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionZoom_in">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/zoom-in.png</normaloff>:/oxygen/icons/oxygen/zoom-in.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom in</string>
+   </property>
+  </action>
+  <action name="actionZoom_out">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/zoom-out.png</normaloff>:/oxygen/icons/oxygen/zoom-out.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom out</string>
+   </property>
+  </action>
+  <action name="actionZoom_best">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/zoom-next.png</normaloff>:/oxygen/icons/oxygen/zoom-next.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom best</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to fit the scene</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/document-open.png</normaloff>:/oxygen/icons/oxygen/document-open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionExport_to_STL">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/document-export.png</normaloff>:/oxygen/icons/oxygen/document-export.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export to STL</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
- <resources/>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="gui/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
