@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
-    <normaloff>:/oxygen/gui/icons/oxygen/scanner.png</normaloff>:/oxygen/gui/icons/oxygen/scanner.png</iconset>
+    <normaloff>:/oxygen/gui/icons/oxygen/scanner-big.png</normaloff>:/oxygen/gui/icons/oxygen/scanner-big.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">

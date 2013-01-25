@@ -73,5 +73,6 @@
         <file>gui/icons/oxygen/zoom-out.png</file>
         <file>gui/icons/oxygen/zoom-previous.png</file>
         <file>gui/icons/oxygen/zoom-select.png</file>
+        <file>gui/icons/oxygen/scanner-big.png</file>
     </qresource>
 </RCC>
