@@ -11,12 +11,16 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Scan Studio</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/oxygen/gui/icons/oxygen/scanner.png</normaloff>:/oxygen/gui/icons/oxygen/scanner.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QWidget" name="widget" native="true"/>
+     <widget class="ModelViewWidget" name="widget" native="true"/>
     </item>
    </layout>
   </widget>
@@ -34,19 +38,20 @@
      <string>File</string>
     </property>
     <addaction name="actionNew"/>
-    <addaction name="actionExit"/>
     <addaction name="actionOpen"/>
     <addaction name="actionExport_to_STL"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHardware">
     <property name="title">
      <string>Hardware</string>
     </property>
-    <addaction name="actionSelect_cameras"/>
     <addaction name="actionSelect_standard"/>
+    <addaction name="actionSetup_wizard"/>
+    <addaction name="actionSelect_cameras"/>
     <addaction name="actionProjector_settings"/>
     <addaction name="actionCalibrate"/>
-    <addaction name="actionSetup_wizard"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -54,7 +59,16 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionZoom_best"/>
+    <addaction name="separator"/>
+    <addaction name="actionFull_screen"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuView"/>
    <addaction name="menuHardware"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -65,19 +79,24 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionCalibrate"/>
-   <addaction name="actionTake_snapshot"/>
    <addaction name="actionSelect_standard"/>
+   <addaction name="actionSetup_wizard"/>
    <addaction name="actionSelect_cameras"/>
    <addaction name="actionProjector_settings"/>
-   <addaction name="actionSetup_wizard"/>
+   <addaction name="actionCalibrate"/>
+   <addaction name="actionTake_snapshot"/>
    <addaction name="separator"/>
    <addaction name="actionZoom_out"/>
    <addaction name="actionZoom_best"/>
    <addaction name="actionZoom_in"/>
+   <addaction name="separator"/>
+   <addaction name="actionFull_screen"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionCalibrate">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="icons.qrc">
      <normaloff>:/oxygen/gui/icons/oxygen/measure.png</normaloff>:/oxygen/gui/icons/oxygen/measure.png</iconset>
@@ -87,6 +106,9 @@
    </property>
    <property name="toolTip">
     <string>Calibrate the setup</string>
+   </property>
+   <property name="statusTip">
+    <string>Calibrate the cameras and the projector</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -98,19 +120,28 @@
      <normaloff>:/oxygen/gui/icons/oxygen/camera-web.png</normaloff>:/oxygen/gui/icons/oxygen/camera-web.png</iconset>
    </property>
    <property name="text">
-    <string>Select cameras</string>
+    <string>Camera settings</string>
+   </property>
+   <property name="statusTip">
+    <string>Choose the cameras to scan with and set them up</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
    </property>
   </action>
   <action name="actionTake_snapshot">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="icons.qrc">
      <normaloff>:/oxygen/gui/icons/oxygen/media-record.png</normaloff>:/oxygen/gui/icons/oxygen/media-record.png</iconset>
    </property>
    <property name="text">
     <string>Take snapshot</string>
+   </property>
+   <property name="statusTip">
+    <string>Take a 3D frame</string>
    </property>
   </action>
   <action name="actionNew">
@@ -133,6 +164,9 @@
    <property name="text">
     <string>Select standard</string>
    </property>
+   <property name="statusTip">
+    <string>Set up the calibration standard</string>
+   </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
    </property>
@@ -144,6 +178,9 @@
    </property>
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="statusTip">
+    <string>Quit Scan Studio</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -159,12 +196,18 @@
    </property>
   </action>
   <action name="actionProjector_settings">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="icons.qrc">
      <normaloff>:/oxygen/gui/icons/oxygen/video-projector.png</normaloff>:/oxygen/gui/icons/oxygen/video-projector.png</iconset>
    </property>
    <property name="text">
     <string>Projector settings</string>
+   </property>
+   <property name="statusTip">
+    <string>Set up the projector</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -178,6 +221,9 @@
    <property name="text">
     <string>About</string>
    </property>
+   <property name="statusTip">
+    <string>About ScanStudio</string>
+   </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
    </property>
@@ -189,6 +235,9 @@
    </property>
    <property name="text">
     <string>Setup wizard</string>
+   </property>
+   <property name="statusTip">
+    <string>Figure out how best to arrange your hardware</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -202,6 +251,9 @@
    <property name="text">
     <string>Zoom in</string>
    </property>
+   <property name="statusTip">
+    <string>Zoom in</string>
+   </property>
   </action>
   <action name="actionZoom_out">
    <property name="icon">
@@ -211,6 +263,9 @@
    <property name="text">
     <string>Zoom out</string>
    </property>
+   <property name="statusTip">
+    <string>Zoom out</string>
+   </property>
   </action>
   <action name="actionZoom_best">
    <property name="icon">
@@ -218,10 +273,16 @@
      <normaloff>:/oxygen/gui/icons/oxygen/zoom-next.png</normaloff>:/oxygen/gui/icons/oxygen/zoom-next.png</iconset>
    </property>
    <property name="text">
-    <string>Zoom best</string>
+    <string>Zoom to fit</string>
    </property>
    <property name="toolTip">
     <string>Zoom to fit the scene</string>
+   </property>
+   <property name="statusTip">
+    <string>Fit the scene in the window</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionOpen">
@@ -244,14 +305,96 @@
    <property name="text">
     <string>Export to STL</string>
    </property>
+   <property name="statusTip">
+    <string>Export the mesh to an STL file</string>
+   </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
    </property>
   </action>
+  <action name="actionFull_screen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/view-fullscreen.png</normaloff>:/oxygen/gui/icons/oxygen/view-fullscreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Full screen</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle full screen</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ModelViewWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/modelviewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showAbout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFull_screen</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setFullScreen(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>showAbout()</slot>
+  <slot>setFullScreen(bool)</slot>
+ </slots>
 </ui>
