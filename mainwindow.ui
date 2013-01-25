@@ -79,8 +79,8 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionCalibrate">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/measure.png</normaloff>:/oxygen/icons/oxygen/measure.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/measure.png</normaloff>:/oxygen/gui/icons/oxygen/measure.png</iconset>
    </property>
    <property name="text">
     <string>Calibrate</string>
@@ -94,8 +94,8 @@
   </action>
   <action name="actionSelect_cameras">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/camera-web.png</normaloff>:/oxygen/icons/oxygen/camera-web.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/camera-web.png</normaloff>:/oxygen/gui/icons/oxygen/camera-web.png</iconset>
    </property>
    <property name="text">
     <string>Select cameras</string>
@@ -106,8 +106,8 @@
   </action>
   <action name="actionTake_snapshot">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/media-record.png</normaloff>:/oxygen/icons/oxygen/media-record.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/media-record.png</normaloff>:/oxygen/gui/icons/oxygen/media-record.png</iconset>
    </property>
    <property name="text">
     <string>Take snapshot</string>
@@ -115,8 +115,8 @@
   </action>
   <action name="actionNew">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/document-new.png</normaloff>:/oxygen/icons/oxygen/document-new.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/document-new.png</normaloff>:/oxygen/gui/icons/oxygen/document-new.png</iconset>
    </property>
    <property name="text">
     <string>New</string>
@@ -127,8 +127,8 @@
   </action>
   <action name="actionSelect_standard">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/games-config-board.png</normaloff>:/oxygen/icons/oxygen/games-config-board.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/games-config-board.png</normaloff>:/oxygen/gui/icons/oxygen/games-config-board.png</iconset>
    </property>
    <property name="text">
     <string>Select standard</string>
@@ -139,8 +139,8 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/system-shutdown.png</normaloff>:/oxygen/icons/oxygen/system-shutdown.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/system-shutdown.png</normaloff>:/oxygen/gui/icons/oxygen/system-shutdown.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -151,8 +151,8 @@
   </action>
   <action name="actionStop">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/media-playback-stop.png</normaloff>:/oxygen/icons/oxygen/media-playback-stop.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/media-playback-stop.png</normaloff>:/oxygen/gui/icons/oxygen/media-playback-stop.png</iconset>
    </property>
    <property name="text">
     <string>Stop</string>
@@ -160,8 +160,8 @@
   </action>
   <action name="actionProjector_settings">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/video-projector.png</normaloff>:/oxygen/icons/oxygen/video-projector.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/video-projector.png</normaloff>:/oxygen/gui/icons/oxygen/video-projector.png</iconset>
    </property>
    <property name="text">
     <string>Projector settings</string>
@@ -172,8 +172,8 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/help-about.png</normaloff>:/oxygen/icons/oxygen/help-about.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/help-about.png</normaloff>:/oxygen/gui/icons/oxygen/help-about.png</iconset>
    </property>
    <property name="text">
     <string>About</string>
@@ -184,8 +184,8 @@
   </action>
   <action name="actionSetup_wizard">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/tools-wizard.png</normaloff>:/oxygen/icons/oxygen/tools-wizard.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/tools-wizard.png</normaloff>:/oxygen/gui/icons/oxygen/tools-wizard.png</iconset>
    </property>
    <property name="text">
     <string>Setup wizard</string>
@@ -196,8 +196,8 @@
   </action>
   <action name="actionZoom_in">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/zoom-in.png</normaloff>:/oxygen/icons/oxygen/zoom-in.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/zoom-in.png</normaloff>:/oxygen/gui/icons/oxygen/zoom-in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom in</string>
@@ -205,8 +205,8 @@
   </action>
   <action name="actionZoom_out">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/zoom-out.png</normaloff>:/oxygen/icons/oxygen/zoom-out.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/zoom-out.png</normaloff>:/oxygen/gui/icons/oxygen/zoom-out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom out</string>
@@ -214,8 +214,8 @@
   </action>
   <action name="actionZoom_best">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/zoom-next.png</normaloff>:/oxygen/icons/oxygen/zoom-next.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/zoom-next.png</normaloff>:/oxygen/gui/icons/oxygen/zoom-next.png</iconset>
    </property>
    <property name="text">
     <string>Zoom best</string>
@@ -226,8 +226,8 @@
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/document-open.png</normaloff>:/oxygen/icons/oxygen/document-open.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/document-open.png</normaloff>:/oxygen/gui/icons/oxygen/document-open.png</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -238,8 +238,8 @@
   </action>
   <action name="actionExport_to_STL">
    <property name="icon">
-    <iconset resource="gui/icons.qrc">
-     <normaloff>:/oxygen/icons/oxygen/document-export.png</normaloff>:/oxygen/icons/oxygen/document-export.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/document-export.png</normaloff>:/oxygen/gui/icons/oxygen/document-export.png</iconset>
    </property>
    <property name="text">
     <string>Export to STL</string>
@@ -251,7 +251,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="gui/icons.qrc"/>
+  <include location="icons.qrc"/>
  </resources>
  <connections/>
 </ui>
