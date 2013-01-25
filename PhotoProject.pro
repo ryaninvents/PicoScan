@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     hardware/standards/calibrationstandard.cpp \
     hardware/standards/chessboardstandard.cpp \
     gui/modelviewwidget.cpp \
-    gui/aboutdialog.cpp
+    gui/aboutdialog.cpp \
+    gui/camerasettingsdialog.cpp
 
 HEADERS  += mainwindow.h \
     geom/chessgen.h \
@@ -29,10 +30,12 @@ HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
     hardware/standards/chessboardstandard.h \
     gui/modelviewwidget.h \
-    gui/aboutdialog.h
+    gui/aboutdialog.h \
+    gui/camerasettingsdialog.h
 
 FORMS    += mainwindow.ui \
-    gui/aboutdialog.ui
+    gui/aboutdialog.ui \
+    gui/camerasettingsdialog.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`
