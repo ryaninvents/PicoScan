@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     gui/camerasettingsdialog.cpp \
     geom/sheet.cpp \
     hardware/projector/projectionscreen.cpp \
-    hardware/projector/projectionpattern.cpp
+    hardware/projector/projectionpattern.cpp \
+    gui/imageview.cpp
 
 HEADERS  += mainwindow.h \
     geom/chessgen.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     gui/camerasettingsdialog.h \
     geom/sheet.h \
     hardware/projector/projectionscreen.h \
-    hardware/projector/projectionpattern.h
+    hardware/projector/projectionpattern.h \
+    gui/imageview.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

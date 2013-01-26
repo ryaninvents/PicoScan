@@ -78,10 +78,10 @@ int main(int argc, char** argv)
 {
 //*
     QApplication a(argc, argv);
-    //MainWindow w;
-    ProjectionScreen w;
+    MainWindow w;
+    //ProjectionScreen w;
     w.showMaximized();
-    w.projectOnDisplay(0);
+    //w.projectOnDisplay(0);
     return a.exec();
 //*/
     // desired number of images; eventually an argument?
