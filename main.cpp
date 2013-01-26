@@ -22,7 +22,25 @@
 Scan Studio allows users to quickly and easily scan 3D objects into the
 industry-standard STL format.
 
-\tableofcontents
+\section Attribution
+
+\subsection Oxygen icon set
+
+<a href="http://www.oxygen-icons.org/">Oxygen</a> icon set used under the
+terms of the <a href="http://creativecommons.org/licenses/by-sa/3.0/">
+CC BY-SA 3.0</a> license.
+
+\subsection Qt
+
+<a href="http://qt-project.org/">Qt</a> application framework used under the
+terms of the <a href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html">
+GNU Lesser General Public License</a>.
+
+\subsection OpenCV
+
+<a href="http://opencv.org/">OpenCV</a> computer vision library used under the
+terms of the <a href="http://opensource.org/licenses/BSD-2-Clause">BSD 2-Clause
+License</a>.
 
 \section License
 
