@@ -2,6 +2,7 @@
 #define CAMERASETTINGSDIALOG_H
 
 #include <QDialog>
+#include "../hardware/camera/camera.h"
 
 namespace Ui {
 class CameraSettingsDialog;
@@ -17,6 +18,7 @@ public:
     
 private:
     Ui::CameraSettingsDialog *ui;
+    Camera *camera;
 };
 
 #endif // CAMERASETTINGSDIALOG_H
