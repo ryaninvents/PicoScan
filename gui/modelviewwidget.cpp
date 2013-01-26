@@ -8,7 +8,7 @@ ModelViewWidget::ModelViewWidget(QWidget *parent) :
 }
 
 void ModelViewWidget::initializeGL() {
-    QColor bgBlue(36, 76, 120);
+    QColor bgBlue(14,41,71);
     qglClearColor(bgBlue);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
