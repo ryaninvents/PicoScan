@@ -16,7 +16,11 @@
 #include "hardware/standards/calibrationstandard.h"
 #include "hardware/standards/chessboardstandard.h"
 #include "hardware/projector/projectionscreen.h"
-
+/**
+  \mainpage
+  Scan Studio allows users to quickly and easily scan 3D objects into the
+  industry-standard STL format.
+  */
 int main(int argc, char** argv)
 {
 //*
