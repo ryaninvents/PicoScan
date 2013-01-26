@@ -15,14 +15,16 @@
 #include "hardware/camera/opencvcamera.h"
 #include "hardware/standards/calibrationstandard.h"
 #include "hardware/standards/chessboardstandard.h"
+#include "hardware/projector/projectionscreen.h"
 
 int main(int argc, char** argv)
 {
 //*
     QApplication a(argc, argv);
-    MainWindow w;
+    //MainWindow w;
+    ProjectionScreen w;
     w.showMaximized();
-
+    w.projectOnDisplay(0);
     return a.exec();
 //*/
     // desired number of images; eventually an argument?

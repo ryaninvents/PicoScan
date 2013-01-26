@@ -13,6 +13,8 @@
         <file>icons/oxygen/computer.png</file>
         <file>icons/oxygen/computer-laptop.png</file>
         <file>icons/oxygen/document-export.png</file>
+        <file>icons/oxygen/document-new.png</file>
+        <file>icons/oxygen/document-open.png</file>
         <file>icons/oxygen/document-properties.png</file>
         <file>icons/oxygen/document-save.png</file>
         <file>icons/oxygen/document-save-all.png</file>
@@ -22,13 +24,21 @@
         <file>icons/oxygen/draw-arrow-forward.png</file>
         <file>icons/oxygen/draw-arrow-up.png</file>
         <file>icons/oxygen/edit-clear-locationbar-rtl.png</file>
+        <file>icons/oxygen/edit-copy.png</file>
+        <file>icons/oxygen/edit-delete.png</file>
         <file>icons/oxygen/edit-redo.png</file>
         <file>icons/oxygen/fill-color.png</file>
         <file>icons/oxygen/fork.png</file>
         <file>icons/oxygen/games-config-board.png</file>
         <file>icons/oxygen/games-solve.png</file>
+        <file>icons/oxygen/go-top.png</file>
+        <file>icons/oxygen/go-up.png</file>
         <file>icons/oxygen/help-about.png</file>
+        <file>icons/oxygen/help-contextual.png</file>
+        <file>icons/oxygen/help-hint.png</file>
         <file>icons/oxygen/kig.png</file>
+        <file>icons/oxygen/list-add.png</file>
+        <file>icons/oxygen/list-remove.png</file>
         <file>icons/oxygen/measure.png</file>
         <file>icons/oxygen/media-eject.png</file>
         <file>icons/oxygen/media-playback-pause.png</file>
@@ -45,8 +55,10 @@
         <file>icons/oxygen/preferences-system.png</file>
         <file>icons/oxygen/printer.png</file>
         <file>icons/oxygen/printer-laser.png</file>
+        <file>icons/oxygen/process-stop.png</file>
         <file>icons/oxygen/roll.png</file>
         <file>icons/oxygen/scanner.png</file>
+        <file>icons/oxygen/scanner-big.png</file>
         <file>icons/oxygen/shapes.png</file>
         <file>icons/oxygen/system-shutdown.png</file>
         <file>icons/oxygen/task-accepted.png</file>
@@ -62,6 +74,7 @@
         <file>icons/oxygen/view-fullscreen.png</file>
         <file>icons/oxygen/view-restore.png</file>
         <file>icons/oxygen/view-statistics.png</file>
+        <file>icons/oxygen/window-close.png</file>
         <file>icons/oxygen/zoom-1-to-2.png</file>
         <file>icons/oxygen/zoom-2-to-1.png</file>
         <file>icons/oxygen/zoom-draw.png</file>
@@ -71,7 +84,5 @@
         <file>icons/oxygen/zoom-out.png</file>
         <file>icons/oxygen/zoom-previous.png</file>
         <file>icons/oxygen/zoom-select.png</file>
-        <file>icons/oxygen/document-new.png</file>
-        <file>icons/oxygen/document-open.png</file>
     </qresource>
 </RCC>
