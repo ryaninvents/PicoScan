@@ -23,7 +23,7 @@ public:
       Change the camera attached to the widget.
       \param cam The camera to stream to the widget.
       */
-    void setCamera(Camera *cam){camera = cam;}
+    void setCamera(Camera *cam){camera = cam;noCamera = false;}
 
     /**
       Set the frame-taking interval of the widget, in milliseconds.
@@ -49,6 +49,7 @@ private:
     QTimer *timer;
     Camera *camera;
     bool running;
+    bool noCamera;
     unsigned int interval;
     
 };

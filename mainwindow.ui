@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="gui/icons.qrc">
-    <normaloff>:/oxygen/icons/oxygen/scanner-big.png</normaloff>:/oxygen/icons/oxygen/scanner-big.png</iconset>
+    <normaloff>:/oxygen/icons/oxygen/camera-web.png</normaloff>:/oxygen/icons/oxygen/camera-web.png</iconset>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>

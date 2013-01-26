@@ -5,11 +5,12 @@ CameraStreamWidget::CameraStreamWidget(QWidget *parent) :
     running(false),
     interval(30)
 {
+    noCamera = true;
 }
 
 void CameraStreamWidget::startCameraStream()
 {
-    if(running) return;
+    if(noCamera || running) return;
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(updateImage()));
     timer->start(interval);
@@ -33,6 +34,7 @@ void CameraStreamWidget::toggleCameraStream(bool b)
 
 void CameraStreamWidget::updateImage()
 {
+    if(noCamera) return;
     cv::Mat3b image;
     image = camera->getFrame();
     displayImage(image,true);

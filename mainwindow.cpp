@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    manager = new ScanManager;
+    //camSettings.setScanManager(manager);
 }
 
 MainWindow::~MainWindow()
@@ -30,4 +32,9 @@ void MainWindow::setFullScreen(bool fs)
 void MainWindow::showCameraSettings()
 {
     camSettings.show();
+}
+
+void MainWindow::showCalStdSettings()
+{
+    stdSettings.show();
 }

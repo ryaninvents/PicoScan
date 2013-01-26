@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-TARGET = PhotoProject
+TARGET = ScanStudio
 TEMPLATE = app
 
 
@@ -25,7 +25,9 @@ SOURCES += main.cpp\
     hardware/projector/projectionscreen.cpp \
     hardware/projector/projectionpattern.cpp \
     gui/imageviewwidget.cpp \
-    gui/camerastreamwidget.cpp
+    gui/camerastreamwidget.cpp \
+    gui/calibrationstandarddialog.cpp \
+    hardware/scanmanager.cpp
 
 HEADERS  += mainwindow.h \
     geom/chessgen.h \
@@ -41,11 +43,14 @@ HEADERS  += mainwindow.h \
     hardware/projector/projectionscreen.h \
     hardware/projector/projectionpattern.h \
     gui/imageviewwidget.h \
-    gui/camerastreamwidget.h
+    gui/camerastreamwidget.h \
+    gui/calibrationstandarddialog.h \
+    hardware/scanmanager.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
-    gui/camerasettingsdialog.ui
+    gui/camerasettingsdialog.ui \
+    gui/calibrationstandarddialog.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`

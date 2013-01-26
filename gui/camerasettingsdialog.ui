@@ -332,6 +332,7 @@
    <container>1</container>
    <slots>
     <slot>toggleCameraStream(bool)</slot>
+    <slot>stopCameraStream()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -371,5 +372,74 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>closeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>preview</receiver>
+   <slot>stopCameraStream()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>833</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>752</x>
+     <y>150</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addCamera</sender>
+   <signal>clicked()</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>addCamera()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>309</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeCamera</sender>
+   <signal>clicked()</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>deleteCamera()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>309</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listWidget</sender>
+   <signal>currentRowChanged(int)</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>selectedCameraChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>134</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>selectedCameraChanged(int)</slot>
+  <slot>deleteCamera()</slot>
+  <slot>addCamera()</slot>
+ </slots>
 </ui>
