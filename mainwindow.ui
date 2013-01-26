@@ -43,7 +43,7 @@
     <item>
      <widget class="ModelViewWidget" name="widget" native="true">
       <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
+       <cursorShape>OpenHandCursor</cursorShape>
       </property>
       <property name="mouseTracking">
        <bool>false</bool>
@@ -69,9 +69,8 @@ color:white;</string>
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew"/>
-    <addaction name="actionOpen"/>
     <addaction name="actionExport_to_STL"/>
+    <addaction name="actionExport_to_OBJ"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -337,7 +336,7 @@ color:white;</string>
   <action name="actionExport_to_STL">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/oxygen/gui/icons/oxygen/document-export.png</normaloff>:/oxygen/gui/icons/oxygen/document-export.png</iconset>
+     <normaloff>:/oxygen/gui/icons/oxygen/kig.png</normaloff>:/oxygen/gui/icons/oxygen/kig.png</iconset>
    </property>
    <property name="text">
     <string>Export to STL</string>
@@ -365,6 +364,18 @@ color:white;</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionExport_to_OBJ">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/oxygen/gui/icons/oxygen/shapes.png</normaloff>:/oxygen/gui/icons/oxygen/shapes.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export to OBJ</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
  </widget>

@@ -12,13 +12,28 @@ public:
     void initializeGL();
     void paintGL();
     void resizeGL(int width, int height);
+
+
+    /*
+      \todo mousePressEvent
+      \todo mouseMoveEvent
+      \todo mouseReleaseEvent
+      */
+
+    void mousePressEvent(QMouseEvent * ev);
+    void mouseMoveEvent(QMouseEvent * ev);
+    void mouseReleaseEvent(QMouseEvent *);
 signals:
 
 public slots:
 
 private:
     // model rotation in 3D space
-    double xRot, yRot, zRot;
+    GLdouble xRot, yRot, zoom;
+    GLdouble xPlus, yPlus;
+
+    // mouse press position
+    int mX, mY;
 
 };
 

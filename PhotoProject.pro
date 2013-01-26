@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     hardware/standards/chessboardstandard.cpp \
     gui/modelviewwidget.cpp \
     gui/aboutdialog.cpp \
-    gui/camerasettingsdialog.cpp
+    gui/camerasettingsdialog.cpp \
+    geom/sheet.cpp
 
 HEADERS  += mainwindow.h \
     geom/chessgen.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     hardware/standards/chessboardstandard.h \
     gui/modelviewwidget.h \
     gui/aboutdialog.h \
-    gui/camerasettingsdialog.h
+    gui/camerasettingsdialog.h \
+    geom/sheet.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
