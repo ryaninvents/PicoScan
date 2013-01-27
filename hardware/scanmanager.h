@@ -26,6 +26,8 @@ public:
     /** Refresh the list of cameras. */
     unsigned int refreshCameras();
 
+    unsigned int releaseAll();
+
 private:
     std::vector<Camera *> cameras;
 };

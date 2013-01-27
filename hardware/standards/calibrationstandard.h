@@ -38,6 +38,19 @@ public:
                    std::vector<cv::Mat> rvecs,
                    std::vector<cv::Mat> tvecs,
                    double *rpe);
+
+protected:
+    /** Utility function for quickly generating a grid.
+      \param size The dimensions of the grid, in (cols, rows).
+      \param scaleX Horizontal grid spacing.
+      \param scaleY Vertical grid spacing.
+      \param offset Set this to create staggered rows, or to zero for a uniform
+                        grid.
+    */
+    static std::vector<cv::Point3f> getGridPoints(cv::Size size,
+                                                  double scaleX,
+                                                  double scaleY,
+                                                  double offset);
 };
 
 #endif // CALIBRATIONSTANDARD_H

@@ -81,3 +81,25 @@ bool CalibrationStandard::calibrate(Camera *camera,
 
     return true;
 }
+
+std::vector<cv::Point3f> CalibrationStandard::getGridPoints(
+        cv::Size size,
+        double scaleX,
+        double scaleY,
+        double offset)
+{
+    int x,y;
+    double _x, _y;
+    static std::vector<cv::Point3f> pts;
+    for(x=0;x<size.height;x++){
+        for(y=0;y<size.width;y++){
+            _x = x;
+            _y = y;
+            if(x%2 == 1) _y += offset;
+            _x *= scaleX;
+            _y *= scaleY;
+            pts.push_back(cv::Point3d(_y,_x,0));
+        }
+    }
+    return pts;
+}
