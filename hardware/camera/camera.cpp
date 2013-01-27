@@ -2,4 +2,5 @@
 
 Camera::Camera()
 {
+    setName("Camera");
 }

@@ -4,18 +4,17 @@
 #include "camera/camera.h"
 #include <vector>
 
+/**
+  A class to wrangle the cameras and projector.
+
+  In the interest of simplicity, ScanManager automatically finds all cameras
+  on the system.
+  */
 class ScanManager
 {
 public:
     ScanManager();
-    /**
-      Add a specific camera to the manager.
-      */
-    void addCamera(Camera * cam);
-    /**
-      Remove a camera from the manager.
-      */
-    void removeCamera(unsigned int i);
+
     /**
       Get a camera from the manager.
       */
@@ -24,8 +23,8 @@ public:
     /** Count the number of cameras this manager is responsible for. */
     unsigned int numCameras();
 
-    /** Have the system determine which camera to add to the manager. */
-    bool addCamera();
+    /** Refresh the list of cameras. */
+    unsigned int refreshCameras();
 
 private:
     std::vector<Camera *> cameras;

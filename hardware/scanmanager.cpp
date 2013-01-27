@@ -2,19 +2,10 @@
 
 #include "camera/opencvcamera.h"
 
+#define MAX_CAMERAS 3
+
 ScanManager::ScanManager()
 {
-}
-
-void ScanManager::addCamera(Camera *cam)
-{
-    cameras.push_back(cam);
-}
-
-void ScanManager::removeCamera(unsigned int i)
-{
-    if(i>=numCameras()) return;
-    cameras.erase(cameras.begin()+i);
 }
 
 Camera *ScanManager::getCamera(unsigned int i)
@@ -28,9 +19,27 @@ unsigned int ScanManager::numCameras()
     return cameras.size();
 }
 
-bool ScanManager::addCamera()
+unsigned int ScanManager::refreshCameras()
 {
-    Camera *cam = new OpenCVCamera(numCameras());
-    cam->setName("Camera");
-    addCamera(cam);
+    unsigned int i;
+    Camera *cam;
+    for(i=0;i<MAX_CAMERAS;i++){
+        cam = new OpenCVCamera(i);
+        if(cam->isOpen()){
+            cameras.push_back(cam);
+        }else{
+            return i;
+        }
+    }
+    return MAX_CAMERAS;
+}
+
+unsigned int ScanManager::releaseAll()
+{
+    uint i;
+    Camera *cam;
+    for(i=0;i<numCameras();i++){
+        cam = cameras.at(i);
+        cam->release();
+    }
 }

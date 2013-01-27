@@ -23,23 +23,15 @@ void CameraSettingsDialog::selectedCameraChanged(int i)
     loadCameraDetails();
 }
 
-void CameraSettingsDialog::deleteCamera()
+void CameraSettingsDialog::reloadCameras()
 {
-    manager->removeCamera(idx);
-    ui->listWidget->removeItemWidget(
-                ui->listWidget->item(idx));
-    if(manager->numCameras()==0) enableControls(false);
+    manager->refreshCameras();
+    updateCameraList();
+
+    ui->listWidget->setCurrentRow(0);
 }
 
-void CameraSettingsDialog::addCamera()
-{
-    if(manager->addCamera()){
-        enableControls(true);
-        ui->listWidget->addItem(
-                    manager->getCamera(manager->numCameras()-1)->getName());
-        selectedCameraChanged(manager->numCameras()-1);
-    }
-}
+
 
 void CameraSettingsDialog::enableControls(bool b)
 {
@@ -57,4 +49,14 @@ void CameraSettingsDialog::loadCameraDetails()
 {
     ui->camName->setText(camera->getName());
     ui->preview->setCamera(camera);
+}
+
+void CameraSettingsDialog::updateCameraList()
+{
+    unsigned int i;
+    ui->listWidget->clear();
+    for(i=0;i<manager->numCameras();i++){
+        ui->listWidget->addItem(
+            manager->getCamera(i)->getName());
+    }
 }

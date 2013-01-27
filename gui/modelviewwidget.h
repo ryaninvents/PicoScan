@@ -23,9 +23,13 @@ public:
     void mousePressEvent(QMouseEvent * ev);
     void mouseMoveEvent(QMouseEvent * ev);
     void mouseReleaseEvent(QMouseEvent *);
+    void wheelEvent(QWheelEvent * ev);
 signals:
 
 public slots:
+    void zoomIn();
+    void zoomOut();
+    void zoomFit();
 
 private:
     // model rotation in 3D space
@@ -34,6 +38,8 @@ private:
 
     // mouse press position
     int mX, mY;
+
+    void drawFloor();
 
 };
 

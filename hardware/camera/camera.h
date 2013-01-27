@@ -21,8 +21,11 @@ public:
     /** Notify the camera that we will be
         expecting an image in the near future.*/
     void notify(){ waiting = true; }
-    /** Is the camera available to take frames? */
+    /// Is the camera available to take frames?
     virtual bool isOpen() = 0;
+
+    /// Release any resources this camera is using.
+    virtual void release() = 0;
 private:
     /** Whether or not we are waiting for the
         camera to take a snapshot (since it

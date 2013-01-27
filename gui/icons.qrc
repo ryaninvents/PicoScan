@@ -84,5 +84,6 @@
         <file>icons/oxygen/zoom-out.png</file>
         <file>icons/oxygen/zoom-previous.png</file>
         <file>icons/oxygen/zoom-select.png</file>
+        <file>icons/oxygen/view-refresh.png</file>
     </qresource>
 </RCC>

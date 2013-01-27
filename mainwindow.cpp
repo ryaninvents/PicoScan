@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     manager = new ScanManager;
-    //camSettings.setScanManager(manager);
+    camSettings.setScanManager(manager);
 }
 
 MainWindow::~MainWindow()

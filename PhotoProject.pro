@@ -141,7 +141,8 @@ OTHER_FILES += \
     gui/icons/oxygen/arrow-left.png \
     gui/icons/oxygen/arrow-down-double.png \
     gui/icons/oxygen/arrow-down.png \
-    gui/icons/oxygen/applications-graphics.png
+    gui/icons/oxygen/applications-graphics.png \
+    gui/icons/oxygen/view-refresh.png
 
 RESOURCES += \
     gui/icons.qrc

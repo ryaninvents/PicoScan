@@ -61,7 +61,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="addCamera">
+        <widget class="QPushButton" name="refreshCameras">
          <property name="minimumSize">
           <size>
            <width>16</width>
@@ -69,74 +69,17 @@
           </size>
          </property>
          <property name="text">
-          <string/>
+          <string>Reload camera list</string>
          </property>
          <property name="icon">
           <iconset resource="icons.qrc">
-           <normaloff>:/oxygen/icons/oxygen/list-add.png</normaloff>:/oxygen/icons/oxygen/list-add.png</iconset>
+           <normaloff>:/oxygen/icons/oxygen/view-refresh.png</normaloff>:/oxygen/icons/oxygen/view-refresh.png</iconset>
          </property>
          <property name="iconSize">
           <size>
            <width>16</width>
            <height>16</height>
           </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="removeCamera">
-         <property name="minimumSize">
-          <size>
-           <width>16</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="icons.qrc">
-           <normaloff>:/oxygen/icons/oxygen/list-remove.png</normaloff>:/oxygen/icons/oxygen/list-remove.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="loadSetup">
-         <property name="minimumSize">
-          <size>
-           <width>16</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="icons.qrc">
-           <normaloff>:/oxygen/icons/oxygen/document-open.png</normaloff>:/oxygen/icons/oxygen/document-open.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="saveSetup">
-         <property name="minimumSize">
-          <size>
-           <width>16</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="icons.qrc">
-           <normaloff>:/oxygen/icons/oxygen/document-save-all.png</normaloff>:/oxygen/icons/oxygen/document-save-all.png</iconset>
          </property>
         </widget>
        </item>
@@ -333,6 +276,7 @@
    <slots>
     <slot>toggleCameraStream(bool)</slot>
     <slot>stopCameraStream()</slot>
+    <slot>closeCameraStream()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -376,7 +320,7 @@
    <sender>closeButton</sender>
    <signal>clicked()</signal>
    <receiver>preview</receiver>
-   <slot>stopCameraStream()</slot>
+   <slot>closeCameraStream()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>833</x>
@@ -389,29 +333,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>addCamera</sender>
+   <sender>refreshCameras</sender>
    <signal>clicked()</signal>
    <receiver>CameraSettingsDialog</receiver>
-   <slot>addCamera()</slot>
+   <slot>reloadCameras()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>39</x>
-     <y>309</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>459</x>
-     <y>165</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>removeCamera</sender>
-   <signal>clicked()</signal>
-   <receiver>CameraSettingsDialog</receiver>
-   <slot>deleteCamera()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>103</x>
      <y>309</y>
     </hint>
     <hint type="destinationlabel">
@@ -439,7 +367,6 @@
  </connections>
  <slots>
   <slot>selectedCameraChanged(int)</slot>
-  <slot>deleteCamera()</slot>
-  <slot>addCamera()</slot>
+  <slot>reloadCameras()</slot>
  </slots>
 </ui>

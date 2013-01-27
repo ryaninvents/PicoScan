@@ -44,6 +44,8 @@ public slots:
     void toggleCameraStream(bool b);
     /** Update the widget with a single image. */
     void updateImage();
+    /** Close the camera stream so you can destroy the widget. */
+    void closeCameraStream();
 
 private:
     QTimer *timer;

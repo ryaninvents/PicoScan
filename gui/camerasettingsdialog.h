@@ -26,8 +26,7 @@ public:
 
 public slots:
     void selectedCameraChanged(int i);
-    void deleteCamera();
-    void addCamera();
+    void reloadCameras();
     
 private:
     Ui::CameraSettingsDialog *ui;
@@ -42,6 +41,7 @@ private:
     void enableControls(bool b);
 
     void loadCameraDetails();
+    void updateCameraList();
 };
 
 #endif // CAMERASETTINGSDIALOG_H

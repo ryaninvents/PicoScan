@@ -32,3 +32,8 @@ int OpenCVCamera::getResolutionV()
 {
     return cap.get(CV_CAP_PROP_FRAME_HEIGHT);
 }
+
+int OpenCVCamera::release()
+{
+    cap.release();
+}

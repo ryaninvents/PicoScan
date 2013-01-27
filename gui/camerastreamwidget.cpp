@@ -19,6 +19,7 @@ void CameraStreamWidget::startCameraStream()
 
 void CameraStreamWidget::stopCameraStream()
 {
+    if(!running || noCamera) return;
     timer->stop();
     running = false;
 }
@@ -38,4 +39,9 @@ void CameraStreamWidget::updateImage()
     cv::Mat3b image;
     image = camera->getFrame();
     displayImage(image,true);
+}
+
+void CameraStreamWidget::closeCameraStream()
+{
+    stopCameraStream();
 }
