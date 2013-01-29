@@ -92,71 +92,38 @@
      <property name="fieldGrowthPolicy">
       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
      </property>
-     <item row="0" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Name:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="1" column="1">
       <widget class="QLineEdit" name="camName"/>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Method:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="capMethod">
-       <item>
-        <property name="text">
-         <string>OpenCV</string>
-        </property>
-       </item>
-      </widget>
-     </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Device:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QSpinBox" name="device">
-       <property name="prefix">
-        <string>Device </string>
-       </property>
-       <property name="maximum">
-        <number>2</number>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Resolution:</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="QPushButton" name="resolution">
        <property name="text">
         <string>1024 x 768</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Cell size:</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="1">
       <widget class="QDoubleSpinBox" name="cellSize">
        <property name="suffix">
         <string> µm</string>
@@ -172,14 +139,14 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="label_7">
        <property name="text">
         <string>Details:</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="4" column="1">
       <widget class="QPushButton" name="calibrationDetails">
        <property name="enabled">
         <bool>false</bool>
@@ -189,34 +156,23 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
-      <widget class="QPushButton" name="icon">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="icons.qrc">
-         <normaloff>:/oxygen/icons/oxygen/camera-web.png</normaloff>:/oxygen/icons/oxygen/camera-web.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Icon:</string>
-       </property>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="cams">
+       <item>
+        <property name="text">
+         <string>Cam1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Cam2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Cam3</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
@@ -364,9 +320,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>camName</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>renameCamera(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>471</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>selectedCameraChanged(int)</slot>
   <slot>reloadCameras()</slot>
+  <slot>renameCamera(QString)</slot>
  </slots>
 </ui>

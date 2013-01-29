@@ -6,13 +6,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    manager = new ScanManager;
-    camSettings.setScanManager(manager);
+    hardware = new HardwareManager;
+    camSettings.setHardwareManager(hardware);
+    screen = new ProjectionScreen;
+
+    connect(&stdSettings,SIGNAL(accept()),this,SLOT(adjustCalStd()));
+
 }
 
 MainWindow::~MainWindow()
 {
+    delete screen;
     delete ui;
+    QCoreApplication::exit(0);
+
 }
 
 void MainWindow::showAbout()
@@ -32,9 +39,40 @@ void MainWindow::setFullScreen(bool fs)
 void MainWindow::showCameraSettings()
 {
     camSettings.show();
+    enableCalibrate();
 }
 
 void MainWindow::showCalStdSettings()
 {
     stdSettings.show();
+}
+
+void MainWindow::showProjectionScreen()
+{
+    screen->show();
+    screen->projectOnDisplay(1);
+}
+
+void MainWindow::showCalibrationDialog()
+{
+}
+
+void MainWindow::quitProgram()
+{
+    QCoreApplication::exit(0);
+}
+
+void MainWindow::adjustCalStd()
+{
+    enableCalibrate();
+}
+
+void MainWindow::closeEvent(QCloseEvent *)
+{
+    quitProgram();
+}
+
+void MainWindow::enableCalibrate()
+{
+    ui->actionCalibrate->setEnabled(true);
 }

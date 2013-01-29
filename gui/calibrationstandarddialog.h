@@ -14,6 +14,9 @@ class CalibrationStandardDialog : public QDialog
 public:
     explicit CalibrationStandardDialog(QWidget *parent = 0);
     ~CalibrationStandardDialog();
+
+signals:
+    void accept();
     
 private:
     Ui::CalibrationStandardDialog *ui;

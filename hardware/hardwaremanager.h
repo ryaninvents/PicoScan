@@ -1,5 +1,5 @@
-#ifndef SCANMANAGER_H
-#define SCANMANAGER_H
+#ifndef HARDWAREMANAGER_H
+#define HARDWAREMANAGER_H
 
 #include "camera/camera.h"
 #include <vector>
@@ -10,10 +10,10 @@
   In the interest of simplicity, ScanManager automatically finds all cameras
   on the system.
   */
-class ScanManager
+class HardwareManager
 {
 public:
-    ScanManager();
+    HardwareManager();
 
     /**
       Get a camera from the manager.

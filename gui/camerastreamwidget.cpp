@@ -3,7 +3,7 @@
 CameraStreamWidget::CameraStreamWidget(QWidget *parent) :
     ImageViewWidget(parent),
     running(false),
-    interval(30)
+    interval(100)
 {
     noCamera = true;
 }

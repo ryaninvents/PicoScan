@@ -7,7 +7,9 @@
 #include "gui/camerasettingsdialog.h"
 #include "gui/calibrationstandarddialog.h"
 
+#include "hardware/hardwaremanager.h"
 #include "hardware/scanmanager.h"
+#include "hardware/projector/projectionscreen.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,13 +28,23 @@ public slots:
     void setFullScreen(bool fs);
     void showCameraSettings();
     void showCalStdSettings();
+    void showProjectionScreen();
+    void showCalibrationDialog();
+    void quitProgram();
+    void adjustCalStd();
+
+protected:
+    void closeEvent(QCloseEvent *);
     
 private:
     Ui::MainWindow *ui;
     AboutDialog about;
     CameraSettingsDialog camSettings;
     CalibrationStandardDialog stdSettings;
-    ScanManager *manager;
+    HardwareManager *hardware;
+    ProjectionScreen *screen;
+
+    void enableCalibrate();
 };
 
 #endif // MAINWINDOW_H

@@ -10,7 +10,6 @@
 #include <iostream>
 #include <vector>
 
-#include "geom/chessgen.h"
 #include "hardware/camera/camera.h"
 #include "hardware/camera/opencvcamera.h"
 #include "hardware/standards/calibrationstandard.h"
@@ -83,7 +82,7 @@ int main(int argc, char** argv)
     w.showMaximized();
     //w.projectOnDisplay(0);
     return a.exec();
-//*/
+/*
     // desired number of images; eventually an argument?
     unsigned int n = 12;
 

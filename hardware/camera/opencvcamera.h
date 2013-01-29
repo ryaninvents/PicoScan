@@ -22,9 +22,9 @@ public:
     /**
       Determine whether the camera is available to take frames.
       */
-    bool isOpen(){return cap.isOpened();}
+    bool isOpen(){return cap->isOpened();}
 
-
+    void release();
 
     /** Set the capture resolution of this device. */
     void setResolution(int u,int v);
@@ -44,7 +44,7 @@ public:
                             return Camera::getResolution();}
 
 private:
-    cv::VideoCapture cap;
+    cv::VideoCapture *cap;
 };
 
 #endif // OPENCVCAMERA_H

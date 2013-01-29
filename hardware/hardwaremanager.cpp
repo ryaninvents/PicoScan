@@ -1,25 +1,25 @@
-#include "scanmanager.h"
+#include "hardwaremanager.h"
 
 #include "camera/opencvcamera.h"
 
 #define MAX_CAMERAS 3
 
-ScanManager::ScanManager()
+HardwareManager::HardwareManager()
 {
 }
 
-Camera *ScanManager::getCamera(unsigned int i)
+Camera *HardwareManager::getCamera(unsigned int i)
 {
     if(i>=numCameras()) return 0;
     return cameras.at(i);
 }
 
-unsigned int ScanManager::numCameras()
+unsigned int HardwareManager::numCameras()
 {
     return cameras.size();
 }
 
-unsigned int ScanManager::refreshCameras()
+unsigned int HardwareManager::refreshCameras()
 {
     unsigned int i;
     Camera *cam;
@@ -37,7 +37,7 @@ unsigned int ScanManager::refreshCameras()
     return MAX_CAMERAS;
 }
 
-void ScanManager::releaseAll()
+void HardwareManager::releaseAll()
 {
     uint i;
     Camera *cam;

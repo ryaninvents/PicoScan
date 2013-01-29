@@ -1,16 +1,16 @@
 #include "opencvcamera.h"
 
-OpenCVCamera::OpenCVCamera(int idx):
-    cap(idx)
+OpenCVCamera::OpenCVCamera(int idx)
 {
-    setResolution(cap.get(CV_CAP_PROP_FRAME_WIDTH),
-                  cap.get(CV_CAP_PROP_FRAME_HEIGHT));
+    cap = new cv::VideoCapture(idx);
+    setResolution(cap->get(CV_CAP_PROP_FRAME_WIDTH),
+                  cap->get(CV_CAP_PROP_FRAME_HEIGHT));
 }
 
 cv::Mat OpenCVCamera::getFrame()
 {
     cv::Mat out;
-    cap >> out;
+    cap->read(out);
     return out;
 }
 
@@ -18,22 +18,24 @@ cv::Mat OpenCVCamera::getFrame()
 
 void OpenCVCamera::setResolution(int u, int v)
 {
-    cap.set(CV_CAP_PROP_FRAME_WIDTH,u);
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT,v);
+    cap->set(CV_CAP_PROP_FRAME_WIDTH,u);
+    cap->set(CV_CAP_PROP_FRAME_HEIGHT,v);
     Camera::setResolution(u,v);
 }
 
 int OpenCVCamera::getResolutionU()
 {
-    return cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    return cap->get(CV_CAP_PROP_FRAME_WIDTH);
 }
 
 int OpenCVCamera::getResolutionV()
 {
-    return cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    return cap->get(CV_CAP_PROP_FRAME_HEIGHT);
 }
 
-int OpenCVCamera::release()
+void OpenCVCamera::release()
 {
-    cap.release();
+    cap->release();
+    delete cap;
+    cap = 0;
 }

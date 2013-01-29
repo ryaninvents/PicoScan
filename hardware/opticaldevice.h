@@ -2,6 +2,7 @@
 #define OPTICALDEVICE_H
 
 #include <opencv2/core/core.hpp>
+#include <QString>
 
 
 /**
@@ -36,7 +37,7 @@ public:
     void setIntrinsics(cv::Mat m);
 
     /** Set this device's name. */
-    void setName(char *n);
+    void setName(QString n);
 
     /** Update the orientation of this device. */
     void setOrientation(cv::Mat o);
@@ -59,7 +60,7 @@ public:
     cv::Mat getIntrinsics();
 
     /** Returns the name of this device. */
-    char *getName();
+    QString getName();
 
     /** Get the horizontal component of a vector with
         a unit forward component and passing through
@@ -104,7 +105,7 @@ public:
 
 private:
     cv::Mat distortion;
-    char *name;
+    QString name;
     cv::Mat orientation;
     cv::Mat intrinsicMatrix;
     cv::Vec3d position;

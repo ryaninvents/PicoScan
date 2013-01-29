@@ -11,6 +11,11 @@ CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
     enableControls(false);
 }
 
+Camera *CameraSettingsDialog::getCurrentCamera()
+{
+    return manager->getCamera(idx);
+}
+
 CameraSettingsDialog::~CameraSettingsDialog()
 {
     delete ui;
@@ -18,6 +23,7 @@ CameraSettingsDialog::~CameraSettingsDialog()
 
 void CameraSettingsDialog::selectedCameraChanged(int i)
 {
+    if(i<0) return;
     camera = manager->getCamera(i);
     idx = i;
     loadCameraDetails();
@@ -29,6 +35,14 @@ void CameraSettingsDialog::reloadCameras()
     updateCameraList();
 
     ui->listWidget->setCurrentRow(0);
+    selectedCameraChanged(0);
+    enableControls(true);
+}
+
+void CameraSettingsDialog::renameCamera(QString newName)
+{
+    getCurrentCamera()->setName(newName);
+    ui->listWidget->item(idx)->setText(newName);
 }
 
 
@@ -36,10 +50,7 @@ void CameraSettingsDialog::reloadCameras()
 void CameraSettingsDialog::enableControls(bool b)
 {
     ui->camName->setEnabled(b);
-    ui->device->setEnabled(b);
     ui->cellSize->setEnabled(b);
-    ui->icon->setEnabled(b);
-    ui->capMethod->setEnabled(b);
     ui->resolution->setEnabled(b);
     ui->liveFeed->setEnabled(b);
     if(!b) ui->liveFeed->setChecked(false);

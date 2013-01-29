@@ -16,7 +16,7 @@ void OpticalDevice::setIntrinsics(cv::Mat m)
     intrinsicMatrix = m;
 }
 
-void OpticalDevice::setName(char *n)
+void OpticalDevice::setName(QString n)
 {
     name = n;
 }
@@ -56,7 +56,7 @@ cv::Mat OpticalDevice::getIntrinsics()
     return intrinsicMatrix;
 }
 
-char *OpticalDevice::getName()
+QString OpticalDevice::getName()
 {
     return name;
 }

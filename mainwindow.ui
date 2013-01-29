@@ -129,17 +129,6 @@ color:white;</string>
 color:white;</string>
    </property>
   </widget>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <action name="actionCalibrate">
    <property name="enabled">
     <bool>false</bool>
@@ -428,7 +417,7 @@ color:white;</string>
    <sender>actionExit</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>close()</slot>
+   <slot>quitProgram()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -536,11 +525,29 @@ color:white;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionProjector_settings</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showProjectionScreen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAbout()</slot>
   <slot>setFullScreen(bool)</slot>
   <slot>showCameraSettings()</slot>
   <slot>showCalStdSettings()</slot>
+  <slot>showProjectionScreen()</slot>
+  <slot>quitProgram()</slot>
  </slots>
 </ui>

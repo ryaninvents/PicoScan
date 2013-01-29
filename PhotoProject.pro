@@ -26,7 +26,10 @@ SOURCES += main.cpp\
     gui/imageviewwidget.cpp \
     gui/camerastreamwidget.cpp \
     gui/calibrationstandarddialog.cpp \
-    hardware/scanmanager.cpp
+    hardware/scanmanager.cpp \
+    gui/calibrationdialog.cpp \
+    gui/calibrationinprogress.cpp \
+    hardware/hardwaremanager.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -43,12 +46,17 @@ HEADERS  += mainwindow.h \
     gui/imageviewwidget.h \
     gui/camerastreamwidget.h \
     gui/calibrationstandarddialog.h \
-    hardware/scanmanager.h
+    hardware/scanmanager.h \
+    gui/calibrationdialog.h \
+    gui/calibrationinprogress.h \
+    hardware/hardwaremanager.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
     gui/camerasettingsdialog.ui \
-    gui/calibrationstandarddialog.ui
+    gui/calibrationstandarddialog.ui \
+    gui/calibrationdialog.ui \
+    gui/calibrationinprogress.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`
@@ -140,7 +148,8 @@ OTHER_FILES += \
     gui/icons/oxygen/arrow-down-double.png \
     gui/icons/oxygen/arrow-down.png \
     gui/icons/oxygen/applications-graphics.png \
-    gui/icons/oxygen/view-refresh.png
+    gui/icons/oxygen/view-refresh.png \
+    gui/icons/oxygen/document-revert.png
 
 RESOURCES += \
     gui/icons.qrc
