@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>621</width>
-    <height>242</height>
+    <height>375</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,7 +74,24 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="takeSnap">
+       <property name="text">
+        <string>Take snapshot</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons.qrc">
+         <normaloff>:/oxygen/icons/oxygen/media-record.png</normaloff>:/oxygen/icons/oxygen/media-record.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="reset">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Reset</string>
        </property>
@@ -85,7 +102,13 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="cancel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Cancel</string>
        </property>
@@ -97,6 +120,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="calibrate">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Calibrate</string>
        </property>
@@ -116,10 +145,53 @@
    <extends>QWidget</extends>
    <header>gui/camerastreamwidget.h</header>
    <container>1</container>
+   <slots>
+    <slot>toggleCameraStream(bool)</slot>
+    <slot>stopCameraStream()</slot>
+    <slot>closeCameraStream()</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources>
   <include location="icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>CalibrationDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>469</x>
+     <y>357</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>takeSnap</sender>
+   <signal>clicked()</signal>
+   <receiver>CalibrationDialog</receiver>
+   <slot>takeSnap()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>274</x>
+     <y>357</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>takeSnap()</slot>
+  <slot>calibrate()</slot>
+  <slot>reset()</slot>
+ </slots>
 </ui>

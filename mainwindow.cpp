@@ -42,6 +42,7 @@ void MainWindow::setFullScreen(bool fs)
 void MainWindow::showCameraSettings()
 {
     camSettings.show();
+    camSettings.setScanManager(manager);
     enableCalibrate();
 }
 
@@ -69,6 +70,7 @@ void MainWindow::quitProgram()
 
 void MainWindow::adjustCalStd()
 {
+    manager->setStandard(stdSettings.getStandard());
     enableCalibrate();
 }
 

@@ -12,7 +12,7 @@ public:
     Calibrator(CalibrationInProgress *dialog,
                ScanManager *m);
     void clearFrames();
-    bool addImagePair(cv::Mat left, cv::Mat right);
+    int addImagePair(cv::Mat left, cv::Mat right);
 
     /** Run the calibration sequence, and find camera parameters. */
     bool runCalib();

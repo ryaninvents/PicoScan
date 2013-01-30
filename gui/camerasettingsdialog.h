@@ -23,6 +23,7 @@ public:
       Set the ScanManager that this dialog governs.
       */
     void setHardwareManager(HardwareManager *m){hardware = m;}
+    void setScanManager(ScanManager *m){manager = m;}
     Camera *getCurrentCamera();
     ~CameraSettingsDialog();
 

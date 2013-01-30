@@ -49,10 +49,12 @@ void CameraSettingsDialog::renameCamera(QString newName)
 
 void CameraSettingsDialog::setLeft()
 {
+    manager->setLeft(getCurrentCamera());
 }
 
 void CameraSettingsDialog::setRight()
 {
+    manager->setRight(getCurrentCamera());
 }
 
 

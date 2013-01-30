@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include "../hardware/scanmanager.h"
+#include "../geom/calibrator.h"
+#include "../gui/calibrationinprogress.h"
 
 namespace Ui {
 class CalibrationDialog;
@@ -19,10 +21,17 @@ public:
     ScanManager *getManager(){return manager;}
 
     ~CalibrationDialog();
+
+public slots:
+    void takeSnap();
+    void calibrate();
+    void reset();
     
 private:
     Ui::CalibrationDialog *ui;
     ScanManager *manager;
+    Calibrator *calibrator;
+    CalibrationInProgress *inProgress;
 };
 
 #endif // CALIBRATIONDIALOG_H

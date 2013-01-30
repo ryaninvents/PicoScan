@@ -17,13 +17,13 @@ public:
     explicit CalibrationStandardDialog(QWidget *parent = 0);
     ~CalibrationStandardDialog();
     void setManager(ScanManager *m){manager = m;}
+    CalibrationStandard *getStandard();
 
 signals:
     void accept();
     
 private:
     Ui::CalibrationStandardDialog *ui;
-    CalibrationStandard *getStandard();
     ScanManager *manager;
 };
 

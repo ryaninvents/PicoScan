@@ -27,5 +27,5 @@ CalibrationStandard *CalibrationStandardDialog::getStandard()
                                        ),
                                    ui->rowSpace->value());
     }
-    manager->setStandard(s);
+    return s;
 }

@@ -14,7 +14,7 @@ std::vector<cv::Point2d> ChessboardStandard::getImagePoints(
 {
     std::vector<cv::Point2d> corners;
     *success = cv::findChessboardCorners(image,
-                              cv::Size(image.size[0],image.size[1]),
+                              size,
                               corners);
     return corners;
 }
