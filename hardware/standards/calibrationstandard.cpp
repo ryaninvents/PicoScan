@@ -14,7 +14,7 @@ std::vector<std::vector<cv::Point3d> > CalibrationStandard::getObjectPoints(
     std::vector<cv::Point3d> pts = getObjectPoints();
 
     for(i=0;i<n;i++){
-        out.push_back(pts);
+        out.push_back(getObjectPoints());
     }
     return out;
 }

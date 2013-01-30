@@ -55,8 +55,16 @@ bool Calibrator::runCalib()
 
     unsigned int i;
 
+    std = manager->getStandard();
+
     left = manager->getLeft();
     right = manager->getRight();
+
+    leftMat = cv::Mat::eye(3,3,CV_64F);
+    rightMat = cv::Mat::eye(3,3,CV_64F);
+
+    leftDist = cv::Mat::zeros(8,1,CV_64F);
+    rightDist = cv::Mat::zeros(8,1,CV_64F);
 
     std::vector<std::vector<cv::Point3d> > objectPts;
     objectPts = std->getObjectPoints(imagePointsLeft.size());
@@ -80,12 +88,14 @@ bool Calibrator::runCalib()
                                    rightTrans,
                                    CV_CALIB_FIX_ASPECT_RATIO|
                                    CV_CALIB_FIX_PRINCIPAL_POINT);
-
+/*
     left->setIntrinsics(leftMat);
     left->setDistortion(leftDist);
 
     right->setIntrinsics(rightMat);
     right->setDistortion(rightDist);
+
+    /*
 
     for(i=0;i<imagePointsRight.size();i++){
         cornersReal.push_back(cv::Point3d(
@@ -117,7 +127,7 @@ bool Calibrator::runCalib()
                               relativeRot.at<double>(0),
                               relativeRot.at<double>(1),
                               relativeRot.at<double>(2)
-                              ));
+                              ));*/
 
     return true;
 }

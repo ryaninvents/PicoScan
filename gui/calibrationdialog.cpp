@@ -40,13 +40,18 @@ void CalibrationDialog::takeSnap()
     left = manager->getLeft()->getFrame();
     right = manager->getRight()->getFrame();
     n = calibrator->addImagePair(left,right);
-    ui->imageCount->setText(QString::number(n));
+    if(n>=0)
+        ui->imageCount->setText(QString::number(n));
 }
 
 void CalibrationDialog::calibrate()
 {
+    calibrator->runCalib();
+    close();
 }
 
 void CalibrationDialog::reset()
 {
+    calibrator->clearFrames();
+    ui->imageCount->setText(QString::number(0));
 }

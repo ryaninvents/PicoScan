@@ -188,6 +188,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>calibrate</sender>
+   <signal>clicked()</signal>
+   <receiver>CalibrationDialog</receiver>
+   <slot>calibrate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>566</x>
+     <y>357</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>reset</sender>
+   <signal>clicked()</signal>
+   <receiver>CalibrationDialog</receiver>
+   <slot>reset()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>382</x>
+     <y>357</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>takeSnap()</slot>

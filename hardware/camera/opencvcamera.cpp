@@ -3,8 +3,7 @@
 OpenCVCamera::OpenCVCamera(int idx)
 {
     cap = new cv::VideoCapture(idx);
-    setResolution(cap->get(CV_CAP_PROP_FRAME_WIDTH),
-                  cap->get(CV_CAP_PROP_FRAME_HEIGHT));
+    setResolution(800,600);
 }
 
 cv::Mat OpenCVCamera::getFrame()
@@ -20,6 +19,8 @@ void OpenCVCamera::setResolution(int u, int v)
 {
     cap->set(CV_CAP_PROP_FRAME_WIDTH,u);
     cap->set(CV_CAP_PROP_FRAME_HEIGHT,v);
+    u = cap->get(CV_CAP_PROP_FRAME_WIDTH);
+    v = cap->get(CV_CAP_PROP_FRAME_HEIGHT);
     Camera::setResolution(u,v);
 }
 
