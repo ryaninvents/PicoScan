@@ -8,22 +8,22 @@ ChessboardStandard::ChessboardStandard(cv::Size size, double scale):
 {
 }
 
-std::vector<cv::Point2d> ChessboardStandard::getImagePoints(
+std::vector<cv::Point2f> ChessboardStandard::getImagePoints(
         cv::Mat image,
         bool *success)
 {
-    std::vector<cv::Point2d> corners;
+    std::vector<cv::Point2f> corners;
     *success = cv::findChessboardCorners(image,
                               size,
                               corners);
     return corners;
 }
 
-std::vector<cv::Point3d> ChessboardStandard::getObjectPoints()
+std::vector<cv::Point3f> ChessboardStandard::getObjectPoints()
 {
     int x,y;
     double _x, _y;
-    std::vector<cv::Point3d> pts;
+    std::vector<cv::Point3f> pts;
 
     for(x=0;x<size.height;x++){
         for(y=0;y<size.width;y++){
@@ -31,7 +31,7 @@ std::vector<cv::Point3d> ChessboardStandard::getObjectPoints()
             _y = y;
             _x *= scale;
             _y *= scale;
-            pts.push_back(cv::Point3d(_y,_x,0));
+            pts.push_back(cv::Point3f(_y,_x,0));
         }
     }
     return pts;

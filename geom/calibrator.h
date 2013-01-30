@@ -18,8 +18,8 @@ public:
     bool runCalib();
 
 private:
-    std::vector<std::vector<cv::Point2d> > imagePointsLeft;
-    std::vector<std::vector<cv::Point2d> > imagePointsRight;
+    std::vector<std::vector<cv::Point2f> > imagePointsLeft;
+    std::vector<std::vector<cv::Point2f> > imagePointsRight;
     cv::Size leftSize, rightSize;
     CalibrationInProgress *progressDialog;
     ScanManager *manager;

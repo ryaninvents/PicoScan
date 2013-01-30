@@ -22,7 +22,7 @@ int Calibrator::addImagePair(cv::Mat left, cv::Mat right)
     CalibrationStandard *std = manager->getStandard();
 
     bool success;
-    std::vector<cv::Point2d> leftPts, rightPts;
+    std::vector<cv::Point2f> leftPts, rightPts;
 
     leftPts = std->getImagePoints(left,&success);
     if(!success) return -1;
@@ -51,6 +51,8 @@ bool Calibrator::runCalib()
     std::vector<cv::Point3d> cornersReal;
     std::vector<cv::Point2d> cornersImage;
 
+    std::vector<std::vector<cv::Point3f> > objectPts;
+
     cv::Mat relativeRot, relativeTrans;
 
     unsigned int i;
@@ -66,8 +68,11 @@ bool Calibrator::runCalib()
     leftDist = cv::Mat::zeros(8,1,CV_64F);
     rightDist = cv::Mat::zeros(8,1,CV_64F);
 
-    std::vector<std::vector<cv::Point3d> > objectPts;
     objectPts = std->getObjectPoints(imagePointsLeft.size());
+
+    printf("imagePointsLeft[%d]\nimagePointsLeft[0][%d]\n",imagePointsLeft.size(),imagePointsLeft.at(0).size());
+
+
 
     rpeLeft = cv::calibrateCamera(objectPts,
                                   imagePointsLeft,
@@ -79,6 +84,7 @@ bool Calibrator::runCalib()
                                   CV_CALIB_FIX_ASPECT_RATIO|
                                   CV_CALIB_FIX_PRINCIPAL_POINT);
 
+    /*
     rpeRight = cv::calibrateCamera(objectPts,
                                    imagePointsRight,
                                    rightSize,

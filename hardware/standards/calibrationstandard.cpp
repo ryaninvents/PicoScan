@@ -6,12 +6,12 @@ CalibrationStandard::CalibrationStandard()
 {
 }
 
-std::vector<std::vector<cv::Point3d> > CalibrationStandard::getObjectPoints(
+std::vector<std::vector<cv::Point3f> > CalibrationStandard::getObjectPoints(
         unsigned int n)
 {
-    std::vector<std::vector<cv::Point3d> > out;
+    std::vector<std::vector<cv::Point3f> > out;
     unsigned int i;
-    std::vector<cv::Point3d> pts = getObjectPoints();
+    std::vector<cv::Point3f> pts = getObjectPoints();
 
     for(i=0;i<n;i++){
         out.push_back(getObjectPoints());
@@ -19,12 +19,12 @@ std::vector<std::vector<cv::Point3d> > CalibrationStandard::getObjectPoints(
     return out;
 }
 
-std::vector<std::vector<cv::Point2d> > CalibrationStandard::getImagePoints(
+std::vector<std::vector<cv::Point2f> > CalibrationStandard::getImagePoints(
         std::vector<cv::Mat> images,
         bool *success)
 {
-    std::vector<std::vector<cv::Point2d> > out;
-    std::vector<cv::Point2d> tmp;
+    std::vector<std::vector<cv::Point2f> > out;
+    std::vector<cv::Point2f> tmp;
     unsigned int i;
     bool b;
 
@@ -49,8 +49,8 @@ bool CalibrationStandard::calibrate(Camera *camera,
                                     double *rpe)
 {
     bool *found = false;
-    std::vector<std::vector<cv::Point2d> > imagePoints;
-    std::vector<std::vector<cv::Point3d> > objectPoints;
+    std::vector<std::vector<cv::Point2f> > imagePoints;
+    std::vector<std::vector<cv::Point3f> > objectPoints;
     cv::Mat cameraMatrix;
     cv::Mat distortionCoeffs;
 
@@ -98,7 +98,7 @@ std::vector<cv::Point3f> CalibrationStandard::getGridPoints(
             if(x%2 == 1) _y += offset;
             _x *= scaleX;
             _y *= scaleY;
-            pts.push_back(cv::Point3d(_y,_x,0));
+            pts.push_back(cv::Point3f(_y,_x,0));
         }
     }
     return pts;

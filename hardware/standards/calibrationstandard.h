@@ -11,10 +11,10 @@ public:
     CalibrationStandard();
 
     /** Obtain a vector of the points of interest on this board. */
-    virtual std::vector<cv::Point3d> getObjectPoints() = 0;
+    virtual std::vector<cv::Point3f> getObjectPoints() = 0;
 
     /** Obtain a vector of vectors of POI on this board. */
-    std::vector<std::vector<cv::Point3d> > getObjectPoints(unsigned int n);
+    std::vector<std::vector<cv::Point3f> > getObjectPoints(unsigned int n);
 
     /** Find the points in the image corresponding to this standard.
 
@@ -25,11 +25,11 @@ public:
         \param success \a true if the standard was found,
                         \a false otherwise.
         \returns an ordered list of all points in the image. */
-    virtual std::vector<cv::Point2d> getImagePoints(cv::Mat image,
+    virtual std::vector<cv::Point2f> getImagePoints(cv::Mat image,
                                                     bool *success) = 0;
 
     /** Locate the standard in every image. */
-    std::vector<std::vector<cv::Point2d> >
+    std::vector<std::vector<cv::Point2f> >
             getImagePoints(std::vector<cv::Mat> images,
                            bool *success);
 
