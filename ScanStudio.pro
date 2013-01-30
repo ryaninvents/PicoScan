@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     gui/calibrationdialog.cpp \
     gui/calibrationinprogress.cpp \
     hardware/hardwaremanager.cpp \
-    geom/calibrator.cpp
+    geom/calibrator.cpp \
+    hardware/projector/reflectedbinarypattern.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     gui/calibrationdialog.h \
     gui/calibrationinprogress.h \
     hardware/hardwaremanager.h \
-    geom/calibrator.h
+    geom/calibrator.h \
+    hardware/projector/reflectedbinarypattern.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

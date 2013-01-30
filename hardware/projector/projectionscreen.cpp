@@ -4,7 +4,7 @@
 #include <QDesktopWidget>
 
 ProjectionScreen::ProjectionScreen(QWidget *parent) :
-    QWidget(parent)
+    ImageViewWidget(parent)
 {
     setWindowTitle("Projection screen");
     setCursor(QCursor(Qt::BlankCursor));
@@ -13,6 +13,8 @@ ProjectionScreen::ProjectionScreen(QWidget *parent) :
     pal.setColor(QPalette::Background, Qt::black);
     setAutoFillBackground(true);
     setPalette(pal);
+
+    setContentsMargins(0,0,0,0);
 }
 
 void ProjectionScreen::projectOnDisplay(int n)
@@ -29,7 +31,20 @@ int ProjectionScreen::getDisplayCount()
     return QApplication::desktop()->screenCount();
 }
 
-void ProjectionScreen::paintEvent(QPaintEvent *)
+void ProjectionScreen::displayPattern(ProjectionPattern *pattern)
 {
-
+    cv::Mat_<double> m = cv::Mat_<double>(geometry().width(),geometry().height());
+    cv::Mat p = pattern->getPattern();
+    double d;
+    uint x,y;
+    switch(pattern->getType()){
+    case HORIZONTAL:
+        for(x=0;x<pattern->getSize().width;x++){
+            d = p.at<double>(x);
+            for(y=0;y<geometry().height();y++){
+                m.at<double>(x,y) = d;
+            }
+        }
+    }
+    displayImage(m,false);
 }

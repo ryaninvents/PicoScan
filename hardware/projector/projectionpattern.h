@@ -42,6 +42,12 @@ public:
       Generate the pattern into a matrix.
       */
     virtual cv::Mat getPattern() = 0;
+
+    /** Get the type of pattern. */
+    virtual PatternType getType() = 0;
+
+    /** Get the size of the pattern. */
+    cv::Size getSize(){return size;}
 private:
     PatternType type;
     cv::Size size;
