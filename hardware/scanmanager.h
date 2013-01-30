@@ -3,6 +3,7 @@
 
 #include "camera/camera.h"
 #include <vector>
+#include "standards/calibrationstandard.h"
 
 /**
   A class to wrangle the cameras and projector.
@@ -20,16 +21,27 @@ public:
       */
     Camera *getCamera(unsigned int i);
 
+    /** Add a camera to the manager. */
+    void addCamera(Camera *cam);
+
     /** Count the number of cameras this manager is responsible for. */
     unsigned int numCameras();
 
     /** Refresh the list of cameras. */
-    unsigned int refreshCameras();
+    unsigned int getAllCameras();
+
+    /** Assign a standard. */
+    void setStandard(CalibrationStandard *std){standard = std;}
+
+    /** Get the current standard. */
+    CalibrationStandard *getStandard(){return standard;}
 
     void releaseAll();
 
 private:
     std::vector<Camera *> cameras;
+
+    CalibrationStandard *standard;
 };
 
 #endif // SCANMANAGER_H

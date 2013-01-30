@@ -42,6 +42,7 @@ private:
     CameraSettingsDialog camSettings;
     CalibrationStandardDialog stdSettings;
     HardwareManager *hardware;
+    ScanManager *manager;
     ProjectionScreen *screen;
 
     void enableCalibrate();

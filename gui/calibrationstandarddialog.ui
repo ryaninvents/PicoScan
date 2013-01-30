@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
+    <width>466</width>
     <height>286</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="style">
        <item>
         <property name="text">
          <string>Chessboard</string>
@@ -60,7 +60,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="rows">
        <property name="minimum">
         <number>3</number>
        </property>
@@ -74,7 +74,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QSpinBox" name="spinBox_2">
+      <widget class="QSpinBox" name="cols">
        <property name="minimum">
         <number>3</number>
        </property>
@@ -88,7 +88,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox">
+      <widget class="QDoubleSpinBox" name="rowSpace">
        <property name="suffix">
         <string> mm</string>
        </property>
@@ -111,7 +111,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+      <widget class="QDoubleSpinBox" name="colSpace">
        <property name="suffix">
         <string> mm</string>
        </property>
@@ -179,7 +179,7 @@
      <item>
       <widget class="QWidget" name="preview" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
          <horstretch>3</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>

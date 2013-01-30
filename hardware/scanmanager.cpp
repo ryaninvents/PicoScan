@@ -14,12 +14,17 @@ Camera *ScanManager::getCamera(unsigned int i)
     return cameras.at(i);
 }
 
+void ScanManager::addCamera(Camera *cam)
+{
+    cameras.push_back(cam);
+}
+
 unsigned int ScanManager::numCameras()
 {
     return cameras.size();
 }
 
-unsigned int ScanManager::refreshCameras()
+unsigned int ScanManager::getAllCameras()
 {
     unsigned int i;
     Camera *cam;

@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     hardware = new HardwareManager;
     camSettings.setHardwareManager(hardware);
+    stdSettings.setManager(manager);
     screen = new ProjectionScreen;
 
     connect(&stdSettings,SIGNAL(accept()),this,SLOT(adjustCalStd()));
