@@ -2,6 +2,7 @@
 #define CALIBRATIONDIALOG_H
 
 #include <QDialog>
+#include "../hardware/scanmanager.h"
 
 namespace Ui {
 class CalibrationDialog;
@@ -13,10 +14,15 @@ class CalibrationDialog : public QDialog
     
 public:
     explicit CalibrationDialog(QWidget *parent = 0);
+
+    void setManager(ScanManager *m);
+    ScanManager *getManager(){return manager;}
+
     ~CalibrationDialog();
     
 private:
     Ui::CalibrationDialog *ui;
+    ScanManager *manager;
 };
 
 #endif // CALIBRATIONDIALOG_H

@@ -21,8 +21,8 @@ public:
       */
     Camera *getCamera(unsigned int i);
 
-    /** Add a camera to the manager. */
-    void addCamera(Camera *cam);
+    /** Determine whether left and right cameras are ready. */
+    bool areCamerasSet();
 
     /** Count the number of cameras this manager is responsible for. */
     unsigned int numCameras();
@@ -32,6 +32,11 @@ public:
 
     /** Assign a standard. */
     void setStandard(CalibrationStandard *std){standard = std;}
+
+    void setLeft(Camera *cam);
+    void setRight(Camera *cam);
+
+
 
     /** Get the current standard. */
     CalibrationStandard *getStandard(){return standard;}

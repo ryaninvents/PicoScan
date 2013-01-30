@@ -9,11 +9,13 @@ CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     enableControls(false);
+    hardware = new HardwareManager;
+    manager = new ScanManager;
 }
 
 Camera *CameraSettingsDialog::getCurrentCamera()
 {
-    return manager->getCamera(idx);
+    return hardware->getCamera(idx);
 }
 
 CameraSettingsDialog::~CameraSettingsDialog()
@@ -24,14 +26,14 @@ CameraSettingsDialog::~CameraSettingsDialog()
 void CameraSettingsDialog::selectedCameraChanged(int i)
 {
     if(i<0) return;
-    camera = manager->getCamera(i);
+    camera = hardware->getCamera(i);
     idx = i;
     loadCameraDetails();
 }
 
 void CameraSettingsDialog::reloadCameras()
 {
-    manager->refreshCameras();
+    hardware->refreshCameras();
     updateCameraList();
 
     ui->listWidget->setCurrentRow(0);
@@ -45,6 +47,14 @@ void CameraSettingsDialog::renameCamera(QString newName)
     ui->listWidget->item(idx)->setText(newName);
 }
 
+void CameraSettingsDialog::setLeft()
+{
+}
+
+void CameraSettingsDialog::setRight()
+{
+}
+
 
 
 void CameraSettingsDialog::enableControls(bool b)
@@ -53,6 +63,8 @@ void CameraSettingsDialog::enableControls(bool b)
     ui->cellSize->setEnabled(b);
     ui->resolution->setEnabled(b);
     ui->liveFeed->setEnabled(b);
+    ui->setLeft->setEnabled(b);
+    ui->setRight->setEnabled(b);
     if(!b) ui->liveFeed->setChecked(false);
 }
 
@@ -66,8 +78,8 @@ void CameraSettingsDialog::updateCameraList()
 {
     unsigned int i;
     ui->listWidget->clear();
-    for(i=0;i<manager->numCameras();i++){
+    for(i=0;i<hardware->numCameras();i++){
         ui->listWidget->addItem(
-            manager->getCamera(i)->getName());
+            hardware->getCamera(i)->getName());
     }
 }

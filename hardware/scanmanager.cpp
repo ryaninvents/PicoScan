@@ -6,6 +6,8 @@
 
 ScanManager::ScanManager()
 {
+    cameras.push_back(0);
+    cameras.push_back(0);
 }
 
 Camera *ScanManager::getCamera(unsigned int i)
@@ -14,9 +16,9 @@ Camera *ScanManager::getCamera(unsigned int i)
     return cameras.at(i);
 }
 
-void ScanManager::addCamera(Camera *cam)
+bool ScanManager::areCamerasSet()
 {
-    cameras.push_back(cam);
+    return false;
 }
 
 unsigned int ScanManager::numCameras()
@@ -40,6 +42,16 @@ unsigned int ScanManager::getAllCameras()
         }
     }
     return MAX_CAMERAS;
+}
+
+void ScanManager::setLeft(Camera *cam)
+{
+    cameras.at(0) = cam;
+}
+
+void ScanManager::setRight(Camera *cam)
+{
+    cameras.at(1) = cam;
 }
 
 void ScanManager::releaseAll()

@@ -13,6 +13,7 @@ public:
     /** Obtain a vector of the points of interest on this board. */
     virtual std::vector<cv::Point3d> getObjectPoints() = 0;
 
+    /** Obtain a vector of vectors of POI on this board. */
     std::vector<std::vector<cv::Point3d> > getObjectPoints(unsigned int n);
 
     /** Find the points in the image corresponding to this standard.

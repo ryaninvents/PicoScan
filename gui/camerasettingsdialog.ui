@@ -92,38 +92,38 @@
      <property name="fieldGrowthPolicy">
       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
      </property>
-     <item row="1" column="0">
+     <item row="0" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Name:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="0" column="1">
       <widget class="QLineEdit" name="camName"/>
      </item>
-     <item row="2" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Resolution:</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="1" column="1">
       <widget class="QPushButton" name="resolution">
        <property name="text">
         <string>1024 x 768</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Cell size:</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="QDoubleSpinBox" name="cellSize">
        <property name="suffix">
         <string> µm</string>
@@ -139,14 +139,14 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label_7">
        <property name="text">
         <string>Details:</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="1">
       <widget class="QPushButton" name="calibrationDetails">
        <property name="enabled">
         <bool>false</bool>
@@ -156,24 +156,29 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="cams">
+     <item row="4" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <property name="text">
-         <string>Cam1</string>
-        </property>
+        <widget class="QPushButton" name="setLeft">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Set as left</string>
+         </property>
+        </widget>
        </item>
        <item>
-        <property name="text">
-         <string>Cam2</string>
-        </property>
+        <widget class="QPushButton" name="setRight">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Set as right</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>Cam3</string>
-        </property>
-       </item>
-      </widget>
+      </layout>
      </item>
     </layout>
    </item>
@@ -336,10 +341,44 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>setLeft</sender>
+   <signal>clicked()</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>setLeft()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>setRight</sender>
+   <signal>clicked()</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>setRight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>523</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>selectedCameraChanged(int)</slot>
   <slot>reloadCameras()</slot>
   <slot>renameCamera(QString)</slot>
+  <slot>setLeft()</slot>
+  <slot>setRight()</slot>
  </slots>
 </ui>

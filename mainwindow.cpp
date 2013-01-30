@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     camSettings.setHardwareManager(hardware);
     stdSettings.setManager(manager);
     screen = new ProjectionScreen;
+    manager = new ScanManager;
+    calib = new CalibrationDialog;
 
     connect(&stdSettings,SIGNAL(accept()),this,SLOT(adjustCalStd()));
 
@@ -56,6 +58,8 @@ void MainWindow::showProjectionScreen()
 
 void MainWindow::showCalibrationDialog()
 {
+    calib->show();
+    calib->setManager(manager);
 }
 
 void MainWindow::quitProgram()

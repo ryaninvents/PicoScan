@@ -30,7 +30,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QWidget" name="cam1" native="true">
+      <widget class="CameraStreamWidget" name="previewLeft" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
          <horstretch>0</horstretch>
@@ -40,7 +40,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="cam2" native="true">
+      <widget class="CameraStreamWidget" name="previewRight" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
          <horstretch>0</horstretch>
@@ -110,6 +110,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CameraStreamWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/camerastreamwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="icons.qrc"/>
  </resources>

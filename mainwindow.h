@@ -6,6 +6,7 @@
 #include "gui/aboutdialog.h"
 #include "gui/camerasettingsdialog.h"
 #include "gui/calibrationstandarddialog.h"
+#include "gui/calibrationdialog.h"
 
 #include "hardware/hardwaremanager.h"
 #include "hardware/scanmanager.h"
@@ -44,6 +45,7 @@ private:
     HardwareManager *hardware;
     ScanManager *manager;
     ProjectionScreen *screen;
+    CalibrationDialog *calib;
 
     void enableCalibrate();
 };

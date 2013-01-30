@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     hardware/scanmanager.cpp \
     gui/calibrationdialog.cpp \
     gui/calibrationinprogress.cpp \
-    hardware/hardwaremanager.cpp
+    hardware/hardwaremanager.cpp \
+    geom/calibrator.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     hardware/scanmanager.h \
     gui/calibrationdialog.h \
     gui/calibrationinprogress.h \
-    hardware/hardwaremanager.h
+    hardware/hardwaremanager.h \
+    geom/calibrator.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
