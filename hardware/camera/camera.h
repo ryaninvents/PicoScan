@@ -15,6 +15,8 @@ public:
     Camera();
     /** Get a frame from the camera. */
     virtual cv::Mat getFrame() = 0;
+    /// Get a black-and-white frame.
+    cv::Mat getFrameBW();
     /** Are we waiting for a snapshot from
         the camera? */
     bool isWaiting(){ return waiting; }

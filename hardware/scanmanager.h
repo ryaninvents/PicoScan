@@ -4,6 +4,8 @@
 #include "camera/camera.h"
 #include <vector>
 #include "standards/calibrationstandard.h"
+#include "hardware/projector/projectionscreen.h"
+
 
 /**
   A class to wrangle the cameras and projector.
@@ -48,8 +50,12 @@ public:
 
     void releaseAll();
 
+    std::vector<cv::Mat> takeFrame();
+
 private:
     std::vector<Camera *> cameras;
+
+    ProjectionScreen *screen;
 
     CalibrationStandard *standard;
 };

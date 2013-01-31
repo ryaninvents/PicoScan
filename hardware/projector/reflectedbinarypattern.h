@@ -12,7 +12,7 @@ public:
     static uint grayToBinary(uint num);
     void setBit(uint b){bit=b;}
     uint getBit(){return bit;}
-    void setInvert(bool b){inverted=b;}
+    void setInverted(bool b){inverted=b;}
     bool isInverted(){return inverted;}
     cv::Mat getPattern();
 private:

@@ -33,6 +33,7 @@ public slots:
     void showCalibrationDialog();
     void quitProgram();
     void adjustCalStd();
+    void takeFrame();
 
 protected:
     void closeEvent(QCloseEvent *);

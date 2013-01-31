@@ -512,8 +512,8 @@ color:white;</string>
   <connection>
    <sender>actionZoom_best</sender>
    <signal>triggered()</signal>
-   <receiver>modelView</receiver>
-   <slot>zoomFit()</slot>
+   <receiver>MainWindow</receiver>
+   <slot>takeFrame()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -521,7 +521,7 @@ color:white;</string>
     </hint>
     <hint type="destinationlabel">
      <x>353</x>
-     <y>248</y>
+     <y>227</y>
     </hint>
    </hints>
   </connection>
@@ -566,5 +566,6 @@ color:white;</string>
   <slot>showProjectionScreen()</slot>
   <slot>quitProgram()</slot>
   <slot>showCalibrationDialog()</slot>
+  <slot>takeFrame()</slot>
  </slots>
 </ui>

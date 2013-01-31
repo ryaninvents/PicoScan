@@ -62,11 +62,11 @@ bool Calibrator::runCalib()
     left = manager->getLeft();
     right = manager->getRight();
 
-    leftMat = cv::Mat::eye(3,3,CV_64F);
-    rightMat = cv::Mat::eye(3,3,CV_64F);
+    leftMat = cv::Mat::eye(3,3,CV_32F);
+    rightMat = cv::Mat::eye(3,3,CV_32F);
 
-    leftDist = cv::Mat::zeros(8,1,CV_64F);
-    rightDist = cv::Mat::zeros(8,1,CV_64F);
+    leftDist = cv::Mat::zeros(8,1,CV_32F);
+    rightDist = cv::Mat::zeros(8,1,CV_32F);
 
     objectPts = std->getObjectPoints(imagePointsLeft.size());
 
@@ -84,7 +84,7 @@ bool Calibrator::runCalib()
                                   CV_CALIB_FIX_ASPECT_RATIO|
                                   CV_CALIB_FIX_PRINCIPAL_POINT);
 
-    /*
+
     rpeRight = cv::calibrateCamera(objectPts,
                                    imagePointsRight,
                                    rightSize,
@@ -94,14 +94,14 @@ bool Calibrator::runCalib()
                                    rightTrans,
                                    CV_CALIB_FIX_ASPECT_RATIO|
                                    CV_CALIB_FIX_PRINCIPAL_POINT);
-/*
+
     left->setIntrinsics(leftMat);
     left->setDistortion(leftDist);
 
     right->setIntrinsics(rightMat);
     right->setDistortion(rightDist);
 
-    /*
+
 
     for(i=0;i<imagePointsRight.size();i++){
         cornersReal.push_back(cv::Point3d(
@@ -133,7 +133,7 @@ bool Calibrator::runCalib()
                               relativeRot.at<double>(0),
                               relativeRot.at<double>(1),
                               relativeRot.at<double>(2)
-                              ));*/
+                              ));
 
     return true;
 }

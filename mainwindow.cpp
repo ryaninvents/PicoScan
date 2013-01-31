@@ -74,6 +74,10 @@ void MainWindow::adjustCalStd()
     enableCalibrate();
 }
 
+void MainWindow::takeFrame()
+{
+}
+
 void MainWindow::closeEvent(QCloseEvent *)
 {
     quitProgram();
