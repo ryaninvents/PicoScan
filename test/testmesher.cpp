@@ -1,14 +1,17 @@
 #include "testmesher.h"
 
 #include <stdio.h>
+#include <iostream>
+#include <fstream>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
 #include "../hardware/opticaldevice.h"
 #include "../geom/pointcloud.h"
+#include "../geom/triangulator.h"
 
 #define FILE_PATTERN "/home/ryan/Pictures/Round 2/picture_%d.png"
-#define QUALITY_THRESHOLD 20
+#define QUALITY_THRESHOLD 50
 
 /**
   Gray code functions adapted from http://en.wikipedia.org/wiki/Gray_code
@@ -40,6 +43,35 @@ int grayToBinary(int num)
     return num;
 }
 
+
+void TestMesher::unit()
+{
+    cv::Vec3d M_hat = cv::Vec3d(1,-1,0);
+    cv::Vec3d P_up = cv::Vec3d(0,-1,0);
+    cv::Vec3d P_fwd = cv::Vec3d(0,0,1);
+    cv::Vec3d D = cv::Vec3d(1,0,0);
+    cv::Vec3d M = Triangulator::sumTo(M_hat,P_up,P_fwd,D);
+
+    std::cout << "Triangulator::sumTo\t" << cv::Mat(M) << "\n";
+
+    OpticalDevice *projector = new OpticalDevice();
+    projector->setResolution(3,3);
+    projector->setFocalLength(1.0);
+    projector->setPrincipalPoint(1,1);
+
+    M = projector->getPixelRay(0,0);
+    std::cout << "getPixelRay(0,0)\t" << cv::Mat(M) << "\n";
+
+    M = projector->getUpVector();
+    std::cout << "getUpVector\t" << cv::Mat(M) << "\n";
+
+    M = projector->getFwdVector();
+    std::cout << "getFwdVector\t" << cv::Mat(M) << "\n";
+
+    M = projector->getPixelRay(1,1);
+    std::cout << "getPixelRay(1,1)\t" << cv::Mat(M) << "\n";
+
+}
 
 void TestMesher::testMesh(){
 
@@ -79,15 +111,16 @@ void TestMesher::testMesh(){
 
     // set up the camera
     camera->setResolution(640, 480);
-    camera->setFocalLength(50/8);
+    camera->setFocalLength(800);
     camera->setPrincipalPoint(320, 240);
+    camera->setPosition(cv::Vec3d());
 
     // set up the projector
-    projector->setResolution(1024,768);
-    projector->setFocalLength(3*1024/16);
-    projector->setPrincipalPoint(512,384);
-    projector->setPosition(cv::Vec3d(0.3,0.1,0.0));
-    projector->setOrientation(cv::Vec3d(0.0,0.297,0.0));
+    projector->setResolution(1024,1);
+    projector->setFocalLength(5000);
+    projector->setPrincipalPoint(512,0);
+    projector->setPosition(cv::Vec3d(0.3,0.2,0.0));
+    projector->setOrientation(cv::Vec3d(0.0,-0.3,0.0));
 
     // determine the number of bits we need to project
     nmax = (unsigned int) ceil(log(projector->getResolutionU())/log(2));
@@ -154,10 +187,58 @@ void TestMesher::testMesh(){
     for(x=0; x<img.cols; x++){
         for(y=0; y<img.rows; y++){
             if(abs(qmask.at<int>(y,x)) > QUALITY_THRESHOLD){
-                decoded.at<int>(y,x) = grayToBinary(encoded.at<int>(y,x))%256;
+                decoded.at<int>(y,x) = grayToBinary(encoded.at<int>(y,x));
+            }else{
+                decoded.at<int>(y,x) = -1;
             }
         }
     }
 
     cv::imwrite("/home/ryan/Documents/decoded.png",decoded);
+
+    int px;
+    cv::Vec3d P_up, P_fwd, M_hat, D, M;
+    cv::Point3d pt;
+
+    D = projector->getPosition() - camera->getPosition();
+    //std::cout << projector->getOrientation() << "\n";
+    P_up = projector->getUpVector();
+    std::cout << "Principal: ";
+    std::cout << projector->getPixelRay(projector->getPrincipalU(),
+                                   projector->getPrincipalV());
+    std::cout << "\ncorresponding to (" << projector->getPrincipalU();
+    std::cout << "," << projector->getPrincipalV() << ")\n";
+
+    std::ofstream log;
+    log.open("/home/ryan/Documents/geom.csv");
+    log << "u,v,u_p,P_up.x,P_up.y,P_up.z,"
+           "P_fwd.x,P_fwd.y,P_fwd.z,"
+           "M_hat.x,M_hat.y,M_hat.z,"
+           "D.x,D.y,D.z,M.x,M.y,M.z\n";
+
+    for(x=0; x<img.cols; x++){
+        for(y=0; y<img.rows; y++){
+            px = decoded.at<int>(y,x);
+            if(px<0) continue;
+            P_fwd = projector->getPixelRay(px,0);
+            M_hat = camera->getPixelRay(x,y);
+            M = Triangulator::sumTo(M_hat,P_up,P_fwd,D);
+            pt = cv::Point3d(M[0],M[1],M[2]);
+            cloud.add(pt);
+            log << x << ',' << y << ',' << px << ',' <<
+                   P_up[0] << ',' << P_up[1] << ',' <<
+                   P_up[2] << ',' << P_fwd[0] << ',' <<
+                   P_fwd[1] << ',' << P_fwd[2] << ',' <<
+                   M_hat[0] << ',' << M_hat[1] << ',' <<
+                   M_hat[2] << ',' << D[0] << ',' <<
+                   D[1] << ',' << D[2] << ',' << M[0] <<
+                   ',' << M[1] << ',' << M[2] << '\n';
+
+        }
+    }
+
+    log.close();
+
+    cloud.meshlab("/home/ryan/Documents/mqp-data/head.obj");
+
 }

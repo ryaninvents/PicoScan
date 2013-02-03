@@ -41,7 +41,7 @@ public:
 
     /** Update the orientation of this device. */
     void setOrientation(cv::Mat o);
-    void setOrientation(cv::Vec3d o);
+    void setOrientation(cv::Vec3d r);
 
     /** Update the position of this device. */
     void setPosition(cv::Vec3d p);
@@ -85,6 +85,10 @@ public:
         i.e., in the direction of increasing <tt>v</tt>. */
     cv::Mat getUpVector();
 
+    /** Returns a unit vector pointing in this device's "forward" direction;
+        i.e., the local <tt>z</tt> axis. */
+    cv::Mat getFwdVector();
+
     /** Returns the position in 3d space of this device. */
     cv::Vec3d getPosition();
 
@@ -108,6 +112,9 @@ public:
 
     void setPrincipalPoint(double u, double v);
 
+    double getPrincipalU();
+    double getPrincipalV();
+
 private:
     cv::Mat distortion;
     QString name;
@@ -116,7 +123,7 @@ private:
     cv::Vec3d position;
     cv::Size resolution;
 
-    double getNormalizedCoord(int u,int ww);
+    double getNormalizedCoord(int u,double c);
 };
 
 #endif // OPTICALDEVICE_H

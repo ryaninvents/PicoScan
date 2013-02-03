@@ -4,6 +4,7 @@
 class TestMesher
 {
 public:
+    static void unit();
     static void testMesh();
 
 };

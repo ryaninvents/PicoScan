@@ -77,6 +77,7 @@ POSSIBILITY OF SUCH DAMAGE.
 int main(int argc, char** argv)
 {
     TestMesher::testMesh();
+    //TestMesher::unit();
 
 /*
     QApplication a(argc, argv);
