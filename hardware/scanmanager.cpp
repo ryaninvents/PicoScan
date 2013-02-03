@@ -2,6 +2,7 @@
 
 #include "camera/opencvcamera.h"
 #include "hardware/projector/reflectedbinarypattern.h"
+#include <opencv2/core/core.hpp>
 
 #define MAX_CAMERAS 3
 
@@ -76,8 +77,11 @@ std::vector<cv::Mat> ScanManager::takeFrame()
     // current bit
     uint n;
 
+    // for looping through image pixels
+    uint x,y;
+
     // encoded frame
-    cv::Mat encodingLeft;
+    cv::Mat encodingLeft,encodingRight;
 
     // quality mask
     cv::Mat mask;
@@ -94,15 +98,61 @@ std::vector<cv::Mat> ScanManager::takeFrame()
 
     nmax = (uint) ceil(log(screen->size().width())/log(2));
 
+    encodingLeft = cv::Mat::zeros(getLeft()->getResolutionV(),getLeft()->getResolutionU(),CV_32S);
+    encodingRight = cv::Mat::zeros(getRight()->getResolutionV(),getRight()->getResolutionU(),CV_32S);
+
+    screen->projectOnDisplay(1);
+
     for(n=0;n<nmax;n++){
         pattern->setBit(n);
 
         pattern->setInverted(false);
         screen->displayPattern(pattern);
-        imgLeft = getLeft()->getFrame();
+        imgLeft = getLeft()->getFrameBW();
+        imgRight = getRight()->getFrameBW();
+
+        pattern->setInverted(true);
+        screen->displayPattern(pattern);
+        invLeft = getLeft()->getFrameBW();
+        invRight = getRight()->getFrameBW();
+
+        imgLeft = imgLeft - invLeft;
+        imgRight = imgRight - invRight;
+
+        for(x=0;x<encodingLeft.cols;x++){
+            for(y=0;y<encodingLeft.rows;y++){
+                if(imgLeft.at<int>(y,x) >0){
+                    encodingLeft.at<unsigned int>(y,x) += 1<<n;
+                }
+            }
+        }
+        for(x=0;x<encodingRight.cols;x++){
+            for(y=0;y<encodingRight.rows;y++){
+                if(imgRight.at<int>(y,x) >0){
+                    encodingRight.at<unsigned int>(y,x) += 1<<n;
+                }
+            }
+        }
+    }
+
+
+    for(x=0;x<encodingLeft.cols;x++){
+        for(y=0;y<encodingLeft.rows;y++){
+            encodingLeft.at<unsigned int>(y,x) = pattern->grayToBinary(
+                        encodingLeft.at<unsigned int>(y,x));
+        }
+    }
+    for(x=0;x<encodingRight.cols;x++){
+        for(y=0;y<encodingRight.rows;y++){
+            if(imgRight.at<int>(y,x) >0){
+                encodingRight.at<unsigned int>(y,x) = pattern->grayToBinary(
+                        encodingRight.at<unsigned int>(y,x));
+            }
+        }
     }
 
     out.push_back(encodingLeft);
+    out.push_back(encodingRight);
 
     return out;
 }

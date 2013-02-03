@@ -11,5 +11,6 @@ cv::Mat Camera::getFrameBW()
 {
     cv::Mat frame = getFrame();
     cv::cvtColor(frame,frame,CV_RGB2GRAY);
-    frame.assignTo(frame,CV_8U);
+    frame.assignTo(frame,CV_32S);
+    return frame;
 }

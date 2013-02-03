@@ -103,6 +103,11 @@ public:
       returns 1000 then the focal length is 8.0 mm. */
     double getFocalLength();
 
+    /** Sets the intrinsic matrix to the desired focal length. */
+    void setFocalLength(double f);
+
+    void setPrincipalPoint(double u, double v);
+
 private:
     cv::Mat distortion;
     QString name;

@@ -72,10 +72,13 @@ POSSIBILITY OF SUCH DAMAGE.
 \endlegalese
 */
 
+#include "test/testmesher.h"
 
 int main(int argc, char** argv)
 {
-//*
+    TestMesher::testMesh();
+
+/*
     QApplication a(argc, argv);
     MainWindow w;
     //ProjectionScreen w;

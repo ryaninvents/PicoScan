@@ -4,6 +4,10 @@
 
 OpticalDevice::OpticalDevice()
 {
+    orientation = cv::Mat::eye(3,3,CV_64F);
+    position = cv::Vec3d();
+    intrinsicMatrix = cv::Mat::eye(3,3,CV_64F);
+    resolution = cv::Size(800,600);
 }
 
 void OpticalDevice::setDistortion(cv::Mat k)
@@ -28,7 +32,16 @@ void OpticalDevice::setOrientation(cv::Mat o)
 
 void OpticalDevice::setOrientation(cv::Vec3d o)
 {
-    cv::Rodrigues(o,orientation);
+    // rodrigues rotation matrix
+    cv::Mat w, I;
+    cv::Vec3d axis;
+    I = cv::Mat::eye(3,3,CV_64F);
+    double theta = sqrt(o.dot(o));
+    axis[0] = o[0]/theta;
+    axis[1] = o[1]/theta;
+    axis[2] = o[2]/theta;
+    cv::Rodrigues(axis,w);
+    orientation = I + w*sin(theta) + w*w*(1-cos(theta));
 }
 
 void OpticalDevice::setPosition(cv::Vec3d p)
@@ -128,6 +141,18 @@ cv::Size OpticalDevice::getResolution()
 double OpticalDevice::getFocalLength()
 {
     return intrinsicMatrix.at<double>(0,0);
+}
+
+void OpticalDevice::setFocalLength(double f)
+{
+    intrinsicMatrix.at<double>(0,0) = f;
+    intrinsicMatrix.at<double>(1,1) = f;
+}
+
+void OpticalDevice::setPrincipalPoint(double u, double v)
+{
+    intrinsicMatrix.at<double>(0,2) = u;
+    intrinsicMatrix.at<double>(1,2) = v;
 }
 
 double OpticalDevice::getNormalizedCoord(int u, int ww)

@@ -32,7 +32,10 @@ SOURCES += main.cpp\
     hardware/hardwaremanager.cpp \
     geom/calibrator.cpp \
     hardware/projector/reflectedbinarypattern.cpp \
-    hardware/projector/projector.cpp
+    hardware/projector/projector.cpp \
+    geom/triangulator.cpp \
+    test/testmesher.cpp \
+    geom/pointcloud.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -55,7 +58,10 @@ HEADERS  += mainwindow.h \
     hardware/hardwaremanager.h \
     geom/calibrator.h \
     hardware/projector/reflectedbinarypattern.h \
-    hardware/projector/projector.h
+    hardware/projector/projector.h \
+    geom/triangulator.h \
+    test/testmesher.h \
+    geom/pointcloud.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

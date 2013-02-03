@@ -130,9 +130,6 @@ color:white;</string>
    </property>
   </widget>
   <action name="actionCalibrate">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="icon">
     <iconset resource="gui/icons.qrc">
      <normaloff>:/oxygen/icons/oxygen/measure.png</normaloff>:/oxygen/icons/oxygen/measure.png</iconset>
@@ -166,9 +163,6 @@ color:white;</string>
    </property>
   </action>
   <action name="actionTake_snapshot">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="icon">
     <iconset resource="gui/icons.qrc">
      <normaloff>:/oxygen/icons/oxygen/media-record.png</normaloff>:/oxygen/icons/oxygen/media-record.png</iconset>
@@ -546,6 +540,22 @@ color:white;</string>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>showCalibrationDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionTake_snapshot</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>takeFrame()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
