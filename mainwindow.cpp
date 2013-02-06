@@ -7,13 +7,18 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     hardware = new HardwareManager;
-    camSettings.setHardwareManager(hardware);
-    stdSettings.setManager(manager);
     screen = new ProjectionScreen;
     manager = new ScanManager;
     calib = new CalibrationDialog;
 
     connect(&stdSettings,SIGNAL(accept()),this,SLOT(adjustCalStd()));
+
+    camSettings.setHardwareManager(hardware);
+    camSettings.setScanManager(manager);
+
+    stdSettings.setManager(manager);
+
+    hardware->refreshCameras();
 
 }
 

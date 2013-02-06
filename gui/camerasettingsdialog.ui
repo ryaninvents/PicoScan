@@ -38,7 +38,7 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="labelFirstCam">
      <property name="text">
       <string>Camera:</string>
      </property>
@@ -74,7 +74,7 @@
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="labelFirstRes">
      <property name="text">
       <string>Resolution:</string>
      </property>
@@ -88,14 +88,20 @@
     </widget>
    </item>
    <item row="1" column="2">
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="labelSecondCam">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Camera:</string>
      </property>
     </widget>
    </item>
    <item row="2" column="2">
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="labelSecondRes">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Resolution:</string>
      </property>
@@ -103,6 +109,9 @@
    </item>
    <item row="1" column="3">
     <widget class="QSpinBox" name="secondDevice">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -119,6 +128,9 @@
    </item>
    <item row="2" column="3">
     <widget class="QPushButton" name="secondRes">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -165,12 +177,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>useStereo</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>enableStereo(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>95</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>selectedCameraChanged(int)</slot>
-  <slot>reloadCameras()</slot>
-  <slot>renameCamera(QString)</slot>
-  <slot>setLeft()</slot>
-  <slot>setRight()</slot>
+  <slot>enableStereo(bool)</slot>
  </slots>
 </ui>

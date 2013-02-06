@@ -52,12 +52,20 @@ public:
 
     std::vector<cv::Mat> takeFrame();
 
+    /** Set the stereo mode. */
+    void setStereo(bool stereo);
+
+    /** Is this manager in stereo mode? */
+    bool isStereo();
+
 private:
     std::vector<Camera *> cameras;
 
     ProjectionScreen *screen;
 
     CalibrationStandard *standard;
+
+    bool stereo;
 };
 
 #endif // SCANMANAGER_H

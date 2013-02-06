@@ -8,11 +8,35 @@ CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
     ui(new Ui::CameraSettingsDialog)
 {
     ui->setupUi(this);
-    hardware = new HardwareManager;
-    manager = new ScanManager;
 }
 
 CameraSettingsDialog::~CameraSettingsDialog()
 {
     delete ui;
+}
+
+void CameraSettingsDialog::enableStereo(bool b)
+{
+    ui->labelSecondCam->setEnabled(b);
+    ui->labelSecondRes->setEnabled(b);
+    ui->secondDevice->setEnabled(b);
+    ui->secondRes->setEnabled(b);
+    manager->setStereo(b);
+}
+
+void CameraSettingsDialog::setFirstCamera(int idx)
+{
+
+}
+
+void CameraSettingsDialog::setSecondCamera(int idx)
+{
+}
+
+void CameraSettingsDialog::setFirstResolution()
+{
+}
+
+void CameraSettingsDialog::setSecondResolution()
+{
 }

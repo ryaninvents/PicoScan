@@ -156,3 +156,13 @@ std::vector<cv::Mat> ScanManager::takeFrame()
 
     return out;
 }
+
+void ScanManager::setStereo(bool stereo)
+{
+    this->stereo = stereo;
+}
+
+bool ScanManager::isStereo()
+{
+    return stereo;
+}

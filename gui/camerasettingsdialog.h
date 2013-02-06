@@ -27,6 +27,13 @@ public:
     ~CameraSettingsDialog();
 
 public slots:
+    /** Enable or disable stereo. */
+    void enableStereo(bool b);
+
+    void setFirstCamera(int idx);
+    void setSecondCamera(int idx);
+    void setFirstResolution();
+    void setSecondResolution();
     
 private:
     Ui::CameraSettingsDialog *ui;
