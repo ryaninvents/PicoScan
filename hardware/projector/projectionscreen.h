@@ -16,8 +16,7 @@ public:
     explicit ProjectionScreen(QWidget *parent = 0);
     void projectOnDisplay(int n);
     int getDisplayCount();
-    void projectBinary(int bit, bool invert);
-    void displayPattern(ProjectionPattern *pattern);
+    void projectBinary(int bit, bool inverted);
     
 signals:
     

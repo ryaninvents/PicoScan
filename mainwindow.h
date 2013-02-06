@@ -11,7 +11,6 @@
 #include "hardware/hardwaremanager.h"
 #include "hardware/scanmanager.h"
 #include "hardware/projector/projectionscreen.h"
-#include "hardware/projector/reflectedbinarypattern.h"
 
 namespace Ui {
 class MainWindow;
@@ -48,7 +47,6 @@ private:
     ScanManager *manager;
     ProjectionScreen *screen;
     CalibrationDialog *calib;
-    ReflectedBinaryPattern *pattern;
 
     void enableCalibrate();
 };

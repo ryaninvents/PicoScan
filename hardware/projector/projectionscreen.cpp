@@ -17,6 +17,34 @@ ProjectionScreen::ProjectionScreen(QWidget *parent) :
     setContentsMargins(0,0,0,0);
 }
 
+QImage createGray(unsigned int width,
+                  unsigned int height,
+                  unsigned int n,
+                  bool invert){
+    QImage out(width,height,QImage::Format_ARGB32);
+    unsigned int values[width];
+    unsigned int x,y,gray;
+    unsigned int mask = 1<<n;
+
+    for (x = 0; x < width; x++) {
+        gray = binaryToGray(x);
+        if(!invert)
+            values[x] = (gray & mask) ? 0:255;
+        else
+            values[x] = (gray & mask) ? 255:0;
+    }
+
+    for (y = 0; y < height; y++) {
+            QRgb *destrow = (QRgb*)out.scanLine(y);
+            for (x = 0; x < width; ++x) {
+                destrow[x] = qRgba(0,0,0, values[x]);
+            }
+    }
+
+    return out;
+}
+
+
 void ProjectionScreen::projectOnDisplay(int n)
 {
     if(n>=getDisplayCount()) return;
@@ -31,20 +59,9 @@ int ProjectionScreen::getDisplayCount()
     return QApplication::desktop()->screenCount();
 }
 
-void ProjectionScreen::displayPattern(ProjectionPattern *pattern)
+void ProjectionScreen::projectBinary(int bit, bool inverted)
 {
-    cv::Mat_<double> m = cv::Mat_<double>(geometry().width(),geometry().height());
-    cv::Mat p = pattern->getPattern();
-    double d;
-    uint x,y;
-    switch(pattern->getType()){
-    case HORIZONTAL:
-        for(x=0;x<pattern->getSize().width;x++){
-            d = p.at<double>(x);
-            for(y=0;y<geometry().height();y++){
-                m.at<double>(x,y) = d;
-            }
-        }
-    }
-    displayImage(m,false);
+    QImage im = createGray(640,480,0,false);
+    displayImage(im);
 }
+

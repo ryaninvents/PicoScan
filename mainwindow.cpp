@@ -64,8 +64,7 @@ void MainWindow::showProjectionScreen()
 {
     screen->show();
 
-    pattern = (new ReflectedBinaryPattern(640,0,false));
-    screen->displayPattern(pattern);
+    screen->projectBinary(0,false);
     screen->projectOnDisplay(1);
 }
 
