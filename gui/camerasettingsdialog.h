@@ -24,15 +24,9 @@ public:
       */
     void setHardwareManager(HardwareManager *m){hardware = m;}
     void setScanManager(ScanManager *m){manager = m;}
-    Camera *getCurrentCamera();
     ~CameraSettingsDialog();
 
 public slots:
-    void selectedCameraChanged(int i);
-    void reloadCameras();
-    void renameCamera(QString newName);
-    void setLeft();
-    void setRight();
     
 private:
     Ui::CameraSettingsDialog *ui;
@@ -41,15 +35,7 @@ private:
     HardwareManager *hardware;
     /// scan manager
     ScanManager *manager;
-    /// currently selected camera
-    Camera *camera;
-    /// current camera index
-    unsigned int idx;
 
-    void enableControls(bool b);
-
-    void loadCameraDetails();
-    void updateCameraList();
 };
 
 #endif // CAMERASETTINGSDIALOG_H
