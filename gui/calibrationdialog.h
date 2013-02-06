@@ -27,6 +27,7 @@ public slots:
     void calibrate();
     void reset();
     void close();
+    void calibrateProjector();
     
 private:
     Ui::CalibrationDialog *ui;

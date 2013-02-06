@@ -202,3 +202,58 @@ bool Calibrator::runCalibMono()
     return true;
 }
 
+bool Calibrator::addProjectorCalibrationFrame()
+{
+    Camera *camera = manager->getFirst();
+    CalibrationStandard *standard = manager->getStandard();
+
+    cv::Mat frame;
+    std::vector<cv::Point3f> objectPoints;
+    std::vector<cv::Point2f> imagePoints;
+    bool *success;
+
+    cv::Mat rvec;
+    // point on plane
+    cv::Mat P;
+    // rotation mtx for plane
+    cv::Mat rot;
+    // plane normal
+    cv::Mat N;
+    // in-plane vectors
+    cv::Vec3d inPlane1, inPlane2;
+
+    // project white pattern and capture
+    manager->getScreen()->projectWhite();
+    frame = camera->getFrameBW();
+
+    // locate the standard
+    imagePoints = standard->getImagePoints(frame,success);
+
+    if(!(*success)) return false;
+
+    objectPoints = standard->getObjectPoints();
+
+    // calculate the plane eqn
+    cv::solvePnP(objectPoints,
+                 imagePoints,
+                 camera->getIntrinsics(),
+                 camera->getDistortion(),
+                 rvec,
+                 P);
+
+    cv::Rodrigues(rvec,rot);
+
+    // compute the plane's normal
+    N = rot * cv::Mat(cv::Vec3d(0,0,1)).reshape(1);
+    // compute the in-plane vectors
+    // this only works if the standard is NOT facing directly up
+//    inPlane1
+
+    // capture full binary frame
+    // discard points outside board
+    // calculate 3D points by intersecting cam rays w/ std plane
+}
+
+// use least^2 for U_p planes
+// Calc posn/orient/throw
+

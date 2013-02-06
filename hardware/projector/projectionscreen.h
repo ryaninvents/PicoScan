@@ -17,7 +17,7 @@ public:
     void projectOnDisplay(int n);
     int getDisplayCount();
     void projectBinary(int bit, bool inverted);
-    
+    void projectWhite();
     static unsigned int grayToBinary(unsigned int num);
     static unsigned int binaryToGray(unsigned int num);
 signals:

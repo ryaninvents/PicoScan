@@ -43,11 +43,27 @@ unsigned int ProjectionScreen::grayToBinary(unsigned int num)
     return num;
 }
 
+QImage createWhite(unsigned int width,
+                  unsigned int height,
+                   unsigned int maxBright){
+    QImage out(width,height,QImage::Format_ARGB32);
+    unsigned int x,y;
+
+    for (y = 0; y < height; y++) {
+            QRgb *destrow = (QRgb*)out.scanLine(y);
+            for (x = 0; x < width; ++x) {
+                destrow[x] = qRgba(maxBright,maxBright,maxBright,255);
+            }
+    }
+
+    return out;
+}
 
 QImage createGray(unsigned int width,
                   unsigned int height,
                   unsigned int n,
-                  bool invert){
+                  bool invert,
+                  unsigned int maxBright){
     QImage out(width,height,QImage::Format_ARGB32);
     unsigned int values[width];
     unsigned int x,y,gray;
@@ -56,9 +72,9 @@ QImage createGray(unsigned int width,
     for (x = 0; x < width; x++) {
         gray = ProjectionScreen::binaryToGray(x);
         if(!invert)
-            values[x] = (gray & mask) ? 0:255;
+            values[x] = (gray & mask) ? 0:maxBright;
         else
-            values[x] = (gray & mask) ? 255:0;
+            values[x] = (gray & mask) ? maxBright:0;
     }
 
     for (y = 0; y < height; y++) {
@@ -88,7 +104,14 @@ int ProjectionScreen::getDisplayCount()
 
 void ProjectionScreen::projectBinary(int bit, bool inverted)
 {
-    QImage im = createGray(640,480,bit,inverted);
+    QImage im = createGray(640,480,bit,inverted,255);
     displayImage(im);
 }
+
+void ProjectionScreen::projectWhite()
+{
+    QImage im = createWhite(640,480,150);
+    displayImage(im);
+}
+
 

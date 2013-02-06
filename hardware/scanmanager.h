@@ -58,6 +58,8 @@ public:
     /** Is this manager in stereo mode? */
     bool isStereo();
 
+    ProjectionScreen *getScreen();
+
 private:
     std::vector<Camera *> cameras;
 

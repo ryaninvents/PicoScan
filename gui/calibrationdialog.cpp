@@ -90,3 +90,8 @@ void CalibrationDialog::close()
     ui->previewSecond->closeCameraStream();
     QDialog::close();
 }
+
+void CalibrationDialog::calibrateProjector()
+{
+
+}

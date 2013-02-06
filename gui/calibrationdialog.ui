@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>621</width>
+    <width>720</width>
     <height>375</height>
    </rect>
   </property>
@@ -81,6 +81,17 @@
        <property name="icon">
         <iconset resource="icons.qrc">
          <normaloff>:/oxygen/icons/oxygen/media-record.png</normaloff>:/oxygen/icons/oxygen/media-record.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Projector</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons.qrc">
+         <normaloff>:/oxygen/icons/oxygen/video-projector.png</normaloff>:/oxygen/icons/oxygen/video-projector.png</iconset>
        </property>
       </widget>
      </item>

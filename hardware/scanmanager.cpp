@@ -89,6 +89,11 @@ bool ScanManager::isStereo()
     return stereo && numCameras()>=2;
 }
 
+ProjectionScreen *ScanManager::getScreen()
+{
+    return screen;
+}
+
 std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
 {
     // number of binary bits needed to cover the whole image

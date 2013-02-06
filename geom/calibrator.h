@@ -22,6 +22,9 @@ public:
     /** Run the mono calibration sequence. */
     bool runCalibMono();
 
+    /** Calibrate the projector assuming the cameras are calibrated. */
+    bool addProjectorCalibrationFrame();
+
 private:
     std::vector<std::vector<cv::Point2f> > imagePointsLeft;
     std::vector<std::vector<cv::Point2f> > imagePointsRight;
