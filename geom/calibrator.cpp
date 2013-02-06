@@ -59,8 +59,8 @@ bool Calibrator::runCalib()
 
     std = manager->getStandard();
 
-    left = manager->getLeft();
-    right = manager->getRight();
+    left = manager->getFirst();
+    right = manager->getSecond();
 
     leftMat = cv::Mat::eye(3,3,CV_32F);
     rightMat = cv::Mat::eye(3,3,CV_32F);

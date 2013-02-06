@@ -19,8 +19,8 @@ void CalibrationDialog::setManager(ScanManager *m)
         QMessageBox::warning(this,"Not enough cameras","You must have at least two cameras attached to the system.");
         close();
     }
-    ui->previewLeft->setCamera(manager->getLeft());
-    ui->previewRight->setCamera(manager->getRight());
+    ui->previewLeft->setCamera(manager->getFirst());
+    ui->previewRight->setCamera(manager->getSecond());
 
     ui->previewLeft->startCameraStream();
     ui->previewRight->startCameraStream();
@@ -37,8 +37,8 @@ void CalibrationDialog::takeSnap()
 {
     cv::Mat left, right;
     int n;
-    left = manager->getLeft()->getFrame();
-    right = manager->getRight()->getFrame();
+    left = manager->getFirst()->getFrame();
+    right = manager->getSecond()->getFrame();
     n = calibrator->addImagePair(left,right);
     if(n>=0)
         ui->imageCount->setText(QString::number(n));

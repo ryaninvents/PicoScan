@@ -36,14 +36,14 @@ public:
     void setStandard(CalibrationStandard *std){standard = std;}
 
     /** Set the left camera. */
-    void setLeft(Camera *cam);
+    void setFirst(Camera *cam);
     /** Set the right camera. */
-    void setRight(Camera *cam);
+    void setSecond(Camera *cam);
 
     /** Get the left camera. */
-    Camera *getLeft(){return cameras.at(0);}
+    Camera *getFirst(){return cameras.at(0);}
     /** Get the right camera. */
-    Camera *getRight(){return cameras.at(1);}
+    Camera *getSecond(){return cameras.at(1);}
 
     /** Get the current standard. */
     CalibrationStandard *getStandard(){return standard;}

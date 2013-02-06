@@ -47,12 +47,12 @@ unsigned int ScanManager::getAllCameras()
     return MAX_CAMERAS;
 }
 
-void ScanManager::setLeft(Camera *cam)
+void ScanManager::setFirst(Camera *cam)
 {
     cameras.at(0) = cam;
 }
 
-void ScanManager::setRight(Camera *cam)
+void ScanManager::setSecond(Camera *cam)
 {
     cameras.at(1) = cam;
 }
@@ -98,8 +98,8 @@ std::vector<cv::Mat> ScanManager::takeFrame()
 
     nmax = (uint) ceil(log(screen->size().width())/log(2));
 
-    encodingLeft = cv::Mat::zeros(getLeft()->getResolutionV(),getLeft()->getResolutionU(),CV_32S);
-    encodingRight = cv::Mat::zeros(getRight()->getResolutionV(),getRight()->getResolutionU(),CV_32S);
+    encodingLeft = cv::Mat::zeros(getFirst()->getResolutionV(),getFirst()->getResolutionU(),CV_32S);
+    encodingRight = cv::Mat::zeros(getSecond()->getResolutionV(),getSecond()->getResolutionU(),CV_32S);
 
     screen->projectOnDisplay(1);
 
@@ -108,13 +108,13 @@ std::vector<cv::Mat> ScanManager::takeFrame()
 
         pattern->setInverted(false);
         screen->displayPattern(pattern);
-        imgLeft = getLeft()->getFrameBW();
-        imgRight = getRight()->getFrameBW();
+        imgLeft = getFirst()->getFrameBW();
+        imgRight = getSecond()->getFrameBW();
 
         pattern->setInverted(true);
         screen->displayPattern(pattern);
-        invLeft = getLeft()->getFrameBW();
-        invRight = getRight()->getFrameBW();
+        invLeft = getFirst()->getFrameBW();
+        invRight = getSecond()->getFrameBW();
 
         imgLeft = imgLeft - invLeft;
         imgRight = imgRight - invRight;
