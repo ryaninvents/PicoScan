@@ -211,16 +211,19 @@ bool Calibrator::addProjectorCalibrationFrame()
     std::vector<cv::Point3f> objectPoints;
     std::vector<cv::Point2f> imagePoints;
     bool *success;
+    uint x,y;
 
     cv::Mat rvec;
     // point on plane
-    cv::Mat P;
+    cv::Vec3d P;
     // rotation mtx for plane
     cv::Mat rot;
     // plane normal
     cv::Mat N;
     // in-plane vectors
     cv::Vec3d inPlane1, inPlane2;
+    //
+    std::vector<cv::Mat> frames;
 
     // project white pattern and capture
     manager->getScreen()->projectWhite();
@@ -247,11 +250,31 @@ bool Calibrator::addProjectorCalibrationFrame()
     N = rot * cv::Mat(cv::Vec3d(0,0,1)).reshape(1);
     // compute the in-plane vectors
     // this only works if the standard is NOT facing directly up
-//    inPlane1
+    // (which, since up is defined by the camera's orientation,
+    // is a little impossible; the camera would not be able to
+    // resolve such a pose. thank you natural constraints!)
+    inPlane1 = N.cross(cv::Vec3d(0,1,0));
+    inPlane2 = N.cross(inPlane1);
 
     // capture full binary frame
+    frames = manager->takeBinaryFrame();
+    frame = frames.at(0);
+
+    cv::Mat A = rot * cv::Mat(standard->getPointA()).reshape(1) + cv::Mat(P).reshape(1);
+    cv::Mat B = rot * cv::Mat(standard->getPointB()).reshape(1) + cv::Mat(P).reshape(1);
+    cv::Mat C = rot * cv::Mat(standard->getPointC()).reshape(1) + cv::Mat(P).reshape(1);
+    cv::Mat D = rot * cv::Mat(standard->getPointD()).reshape(1) + cv::Mat(P).reshape(1);
+
     // discard points outside board
+    for(x=0;x<frame.cols;x++){
+        for(y=0;y<frame.rows;y++){
+
+        }
+    }
+
     // calculate 3D points by intersecting cam rays w/ std plane
+
+    return true;
 }
 
 // use least^2 for U_p planes

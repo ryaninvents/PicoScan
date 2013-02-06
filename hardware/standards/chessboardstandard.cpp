@@ -36,3 +36,25 @@ std::vector<cv::Point3f> ChessboardStandard::getObjectPoints()
     }
     return pts;
 }
+
+cv::Vec3d ChessboardStandard::getPointA()
+{
+    return cv::Vec3d();
+}
+
+cv::Vec3d ChessboardStandard::getPointB()
+{
+    return cv::Vec3d(0,scale*size.height,0);
+}
+
+cv::Vec3d ChessboardStandard::getPointC()
+{
+    return cv::Vec3d(scale*size.width,
+                     scale*size.height,
+                     0);
+}
+
+cv::Vec3d ChessboardStandard::getPointD()
+{
+    return cv::Vec3d(scale*size.width,0,0);
+}
