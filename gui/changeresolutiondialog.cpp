@@ -21,6 +21,7 @@ void ChangeResolutionDialog::setCamera(Camera *cam)
 void ChangeResolutionDialog::accept()
 {
     camera->setResolution(ui->resU->value(),ui->resV->value());
+    emit resolutionChanged(camera->getResolutionU(),camera->getResolutionV());
     QDialog::accept();
 }
 

@@ -10,6 +10,13 @@ CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
     ui->setupUi(this);
     firstResDialog = new ChangeResolutionDialog;
     secondResDialog = new ChangeResolutionDialog;
+
+
+    connect(firstResDialog,SIGNAL(resolutionChanged(int,int)),
+            this,SLOT(firstResolutionChanged(int,int)));
+
+    connect(secondResDialog,SIGNAL(resolutionChanged(int,int)),
+            this,SLOT(secondResolutionChanged(int,int)));
 }
 
 CameraSettingsDialog::~CameraSettingsDialog()
@@ -50,9 +57,12 @@ void CameraSettingsDialog::setSecondResolution()
 
 void CameraSettingsDialog::firstResolutionChanged(int u, int v)
 {
-
+    QString buttonText = QString("%1 x %2").arg(u).arg(v);
+    ui->firstRes->setText(buttonText);
 }
 
 void CameraSettingsDialog::secondResolutionChanged(int u, int v)
 {
+    QString buttonText = QString("%1 x %2").arg(u).arg(v);
+    ui->secondRes->setText(buttonText);
 }
