@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     hardware/projector/projector.cpp \
     geom/triangulator.cpp \
     test/testmesher.cpp \
-    geom/pointcloud.cpp
+    geom/pointcloud.cpp \
+    gui/changeresolutiondialog.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -61,14 +62,16 @@ HEADERS  += mainwindow.h \
     hardware/projector/projector.h \
     geom/triangulator.h \
     test/testmesher.h \
-    geom/pointcloud.h
+    geom/pointcloud.h \
+    gui/changeresolutiondialog.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
     gui/camerasettingsdialog.ui \
     gui/calibrationstandarddialog.ui \
     gui/calibrationdialog.ui \
-    gui/calibrationinprogress.ui
+    gui/calibrationinprogress.ui \
+    gui/changeresolutiondialog.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`

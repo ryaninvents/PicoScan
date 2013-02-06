@@ -1,9 +1,15 @@
 #include "opencvcamera.h"
 
+#include <stdio.h>
+
 OpenCVCamera::OpenCVCamera(int idx)
 {
     cap = new cv::VideoCapture(idx);
-    setResolution(800,600);
+    setResolution(1024,768);
+    printf("Camera %d: %dx%d\n",
+           idx,
+           getResolutionU(),
+           getResolutionV());
 }
 
 cv::Mat OpenCVCamera::getFrame()
