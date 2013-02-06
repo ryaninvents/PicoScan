@@ -3,6 +3,7 @@
 #include <QMessageBox>
 
 #include <opencv2/core/core.hpp>
+#include <stdio.h>
 
 CalibrationDialog::CalibrationDialog(QWidget *parent) :
     QDialog(parent),
@@ -15,6 +16,13 @@ CalibrationDialog::CalibrationDialog(QWidget *parent) :
 void CalibrationDialog::setManager(ScanManager *m)
 {
     manager = m;
+
+    printf("CalibrationDialog manager\t0x%x\n"
+           "manager->getFirst()\t\t0x%x\n"
+           "manager->getSecond()\t0x%x\n",
+           manager,manager->getFirst(),
+           manager->getSecond());
+
     if(manager->numCameras()<1){
         QMessageBox::warning(this,"No cameras registered",
                              "You must have at least one camera registered. "
@@ -22,10 +30,11 @@ void CalibrationDialog::setManager(ScanManager *m)
         close();
     }
 
-    calibrator = new Calibrator(inProgress,manager);
 
     ui->previewFirst->setCamera(manager->getFirst());
     ui->previewFirst->startCameraStream();
+
+    calibrator = new Calibrator(manager);
 
     if(!manager->isStereo()) return;
 

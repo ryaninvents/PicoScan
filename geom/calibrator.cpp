@@ -4,8 +4,7 @@
 #include <opencv2/calib3d/calib3d.hpp>
 #include <stdio.h>
 
-Calibrator::Calibrator(CalibrationInProgress *dialog, ScanManager *m):
-    progressDialog(dialog),
+Calibrator::Calibrator(ScanManager *m):
     manager(m)
 {
 

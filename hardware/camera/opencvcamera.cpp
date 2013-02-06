@@ -6,10 +6,10 @@ OpenCVCamera::OpenCVCamera(int idx)
 {
     cap = new cv::VideoCapture(idx);
     setResolution(1024,768);
-    printf("Camera %d: %dx%d\n",
+    /*printf("Camera %d: %dx%d\n",
            idx,
            getResolutionU(),
-           getResolutionV());
+           getResolutionV());*/
 }
 
 cv::Mat OpenCVCamera::getFrame()

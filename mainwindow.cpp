@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <stdio.h>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -10,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     screen = new ProjectionScreen;
     manager = new ScanManager;
     calib = new CalibrationDialog;
+
+    printf("MainWindow manager\t\t0x%x\n",manager);
 
     connect(&stdSettings,SIGNAL(accept()),this,SLOT(adjustCalStd()));
 
@@ -64,9 +68,8 @@ void MainWindow::showProjectionScreen()
 
 void MainWindow::showCalibrationDialog()
 {
-    calib->reset();
-    calib->show();
     calib->setManager(manager);
+    calib->show();
 }
 
 void MainWindow::quitProgram()
