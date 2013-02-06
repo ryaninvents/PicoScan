@@ -7,10 +7,11 @@
 
 CalibrationDialog::CalibrationDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CalibrationDialog)
+    ui(new Ui::CalibrationDialog),
+    inProgress(new CalibrationInProgress),
+    calibrator(new Calibrator)
 {
     ui->setupUi(this);
-    inProgress = new CalibrationInProgress;
 }
 
 void CalibrationDialog::setManager(ScanManager *m)
@@ -34,9 +35,11 @@ void CalibrationDialog::setManager(ScanManager *m)
     ui->previewFirst->setCamera(manager->getFirst());
     ui->previewFirst->startCameraStream();
 
-    calibrator = new Calibrator(manager);
+    calibrator->setScanManager(manager);
 
-    if(!manager->isStereo()) return;
+    return;
+
+    if(!(manager->isStereo())) return;
 
     ui->previewSecond->setCamera(manager->getSecond());
     ui->previewSecond->startCameraStream();

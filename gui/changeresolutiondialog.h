@@ -21,8 +21,6 @@ public:
 public slots:
     void accept();
     void reject();
-    void resolutionChangedU(int u);
-    void resolutionChangedV(int v);
 
 signals:
     void resolutionChanged(int u, int v);

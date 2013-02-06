@@ -134,41 +134,9 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>resU</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>ChangeResolutionDialog</receiver>
-   <slot>resolutionChangedU()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>186</x>
-     <y>19</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>154</x>
-     <y>51</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>resV</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>ChangeResolutionDialog</receiver>
-   <slot>resolutionChangedV()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>186</x>
-     <y>46</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>154</x>
-     <y>51</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
-  <slot>resolutionChangedU()</slot>
-  <slot>resolutionChangedV()</slot>
+  <slot>resolutionChangedU(int)</slot>
+  <slot>resolutionChangedV(int)</slot>
  </slots>
 </ui>

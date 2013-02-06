@@ -53,7 +53,7 @@ public:
     std::vector<cv::Mat> takeFrame();
 
     /** Set the stereo mode. */
-    void setStereo(bool stereo);
+    void setStereo(bool ster);
 
     /** Is this manager in stereo mode? */
     bool isStereo();

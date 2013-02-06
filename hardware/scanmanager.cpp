@@ -7,8 +7,10 @@
 #define MAX_CAMERAS 3
 
 
-ScanManager::ScanManager()
+ScanManager::ScanManager():
+    stereo(false)
 {
+    cameras = std::vector<Camera *>();
     cameras.push_back(0);
     cameras.push_back(0);
 }
@@ -157,9 +159,9 @@ std::vector<cv::Mat> ScanManager::takeFrame()
     return out;
 }
 
-void ScanManager::setStereo(bool stereo)
+void ScanManager::setStereo(bool ster)
 {
-    this->stereo = stereo;
+    stereo = ster;
 }
 
 bool ScanManager::isStereo()

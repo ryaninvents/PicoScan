@@ -4,10 +4,15 @@
 #include <opencv2/calib3d/calib3d.hpp>
 #include <stdio.h>
 
-Calibrator::Calibrator(ScanManager *m):
-    manager(m)
+Calibrator::Calibrator()
 {
 
+}
+
+void Calibrator::setScanManager(ScanManager *m)
+{
+    printf("Calibrator manager\t0x%x\n",m);
+    manager = m;
 }
 
 void Calibrator::clearFrames()

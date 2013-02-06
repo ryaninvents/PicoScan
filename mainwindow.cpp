@@ -5,13 +5,13 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    hardware(new HardwareManager),
+    screen(new ProjectionScreen),
+    manager(new ScanManager),
+    calib(new CalibrationDialog)
 {
     ui->setupUi(this);
-    hardware = new HardwareManager;
-    screen = new ProjectionScreen;
-    manager = new ScanManager;
-    calib = new CalibrationDialog;
 
     printf("MainWindow manager\t\t0x%x\n",manager);
 
@@ -63,6 +63,9 @@ void MainWindow::showCalStdSettings()
 void MainWindow::showProjectionScreen()
 {
     screen->show();
+
+    pattern = (new ReflectedBinaryPattern(640,0,false));
+    screen->displayPattern(pattern);
     screen->projectOnDisplay(1);
 }
 

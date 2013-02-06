@@ -8,7 +8,10 @@
 class Calibrator
 {
 public:
-    Calibrator(ScanManager *m);
+    Calibrator();
+
+    void setScanManager(ScanManager *m);
+
     void clearFrames();
     int addImagePair(cv::Mat left, cv::Mat right);
     int addSingleImage(cv::Mat img);
