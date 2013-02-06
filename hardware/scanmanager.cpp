@@ -71,7 +71,25 @@ void ScanManager::releaseAll()
     cameras.clear();
 }
 
-std::vector<cv::Mat> ScanManager::takeFrame()
+std::vector<cv::Mat> ScanManager::takeBinaryFrame()
+{
+    if(isStereo())
+        return takeBinaryStereoFrame();
+    else
+        return takeBinaryMonoFrame();
+}
+
+void ScanManager::setStereo(bool ster)
+{
+    stereo = ster;
+}
+
+bool ScanManager::isStereo()
+{
+    return stereo && numCameras()>=2;
+}
+
+std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
 {
     // number of binary bits needed to cover the whole image
     uint nmax;
@@ -91,10 +109,6 @@ std::vector<cv::Mat> ScanManager::takeFrame()
     // temporary frame holders
     cv::Mat imgLeft, invLeft, imgRight, invRight;
 
-    // pattern
-    ReflectedBinaryPattern *pattern = new ReflectedBinaryPattern(
-                screen->size().width(),0,false);
-
     // return vector
     std::vector<cv::Mat> out;
 
@@ -106,15 +120,16 @@ std::vector<cv::Mat> ScanManager::takeFrame()
     screen->projectOnDisplay(1);
 
     for(n=0;n<nmax;n++){
-        pattern->setBit(n);
-
-        pattern->setInverted(false);
-        screen->displayPattern(pattern);
+//        pattern->setBit(n);
+//        pattern->setInverted(false);
+//        screen->displayPattern(pattern);
+        screen->projectBinary(n,false);
         imgLeft = getFirst()->getFrameBW();
         imgRight = getSecond()->getFrameBW();
 
-        pattern->setInverted(true);
-        screen->displayPattern(pattern);
+//        pattern->setInverted(true);
+//        screen->displayPattern(pattern);
+        screen->projectBinary(n,true);
         invLeft = getFirst()->getFrameBW();
         invRight = getSecond()->getFrameBW();
 
@@ -140,14 +155,14 @@ std::vector<cv::Mat> ScanManager::takeFrame()
 
     for(x=0;x<encodingLeft.cols;x++){
         for(y=0;y<encodingLeft.rows;y++){
-            encodingLeft.at<unsigned int>(y,x) = pattern->grayToBinary(
+            encodingLeft.at<unsigned int>(y,x) = screen->grayToBinary(
                         encodingLeft.at<unsigned int>(y,x));
         }
     }
     for(x=0;x<encodingRight.cols;x++){
         for(y=0;y<encodingRight.rows;y++){
             if(imgRight.at<int>(y,x) >0){
-                encodingRight.at<unsigned int>(y,x) = pattern->grayToBinary(
+                encodingRight.at<unsigned int>(y,x) = screen->grayToBinary(
                         encodingRight.at<unsigned int>(y,x));
             }
         }
@@ -159,12 +174,62 @@ std::vector<cv::Mat> ScanManager::takeFrame()
     return out;
 }
 
-void ScanManager::setStereo(bool ster)
+std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
 {
-    stereo = ster;
-}
+    // number of binary bits needed to cover the whole image
+    uint nmax;
 
-bool ScanManager::isStereo()
-{
-    return stereo && numCameras()>=2;
+    // current bit
+    uint n;
+
+    // for looping through image pixels
+    uint x,y;
+
+    // encoded frame
+    cv::Mat encoding;
+
+    // quality mask
+    cv::Mat mask;
+
+    // temporary frame holders
+    cv::Mat img, inv;
+
+    // return vector
+    std::vector<cv::Mat> out;
+
+    nmax = (uint) ceil(log(screen->size().width())/log(2));
+
+    encoding = cv::Mat::zeros(getFirst()->getResolutionV(),getFirst()->getResolutionU(),CV_32S);
+
+    screen->projectOnDisplay(1);
+
+    for(n=0;n<nmax;n++){
+        screen->projectBinary(n,false);
+        img = getFirst()->getFrameBW();
+
+        screen->projectBinary(n,true);
+        inv = getFirst()->getFrameBW();
+
+        img = img - inv;
+
+        for(x=0;x<encoding.cols;x++){
+            for(y=0;y<encoding.rows;y++){
+                if(img.at<int>(y,x) >0){
+                    encoding.at<unsigned int>(y,x) += 1<<n;
+                }
+            }
+        }
+    }
+
+
+    for(x=0;x<encoding.cols;x++){
+        for(y=0;y<encoding.rows;y++){
+            encoding.at<unsigned int>(y,x) = screen->grayToBinary(
+                        encoding.at<unsigned int>(y,x));
+        }
+    }
+
+    out.push_back(encoding);
+
+    return out;
 }

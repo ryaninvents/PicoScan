@@ -50,7 +50,7 @@ public:
 
     void releaseAll();
 
-    std::vector<cv::Mat> takeFrame();
+    std::vector<cv::Mat> takeBinaryFrame();
 
     /** Set the stereo mode. */
     void setStereo(bool ster);
@@ -66,6 +66,9 @@ private:
     CalibrationStandard *standard;
 
     bool stereo;
+
+    std::vector<cv::Mat> takeBinaryStereoFrame();
+    std::vector<cv::Mat> takeBinaryMonoFrame();
 };
 
 #endif // SCANMANAGER_H

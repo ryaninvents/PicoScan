@@ -113,8 +113,8 @@ color:white;</string>
    <addaction name="actionSelect_standard"/>
    <addaction name="actionSetup_wizard"/>
    <addaction name="actionSelect_cameras"/>
-   <addaction name="actionProjector_settings"/>
    <addaction name="actionCalibrate"/>
+   <addaction name="actionProjector_settings"/>
    <addaction name="actionTake_snapshot"/>
    <addaction name="separator"/>
    <addaction name="actionZoom_out"/>

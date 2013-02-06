@@ -79,6 +79,9 @@ bool Calibrator::runCalibStereo()
 
     unsigned int i;
 
+
+    if(imagePointsLeft.size()<6) return false;
+
     std = manager->getStandard();
 
     left = manager->getFirst();
@@ -93,8 +96,6 @@ bool Calibrator::runCalibStereo()
     objectPts = std->getObjectPoints(imagePointsLeft.size());
 
     printf("imagePointsLeft[%d]\nimagePointsLeft[0][%d]\n",imagePointsLeft.size(),imagePointsLeft.at(0).size());
-
-
 
     rpeLeft = cv::calibrateCamera(objectPts,
                                   imagePointsLeft,
@@ -177,6 +178,8 @@ bool Calibrator::runCalibMono()
     cameraMat = cv::Mat::eye(3,3,CV_32F);
 
     cameraDist = cv::Mat::zeros(8,1,CV_32F);
+
+    if(imagePointsLeft.size()<6) return false;
 
     objectPts = std->getObjectPoints(imagePointsLeft.size());
 

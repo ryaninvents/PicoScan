@@ -83,3 +83,10 @@ void CalibrationDialog::reset()
     calibrator->clearFrames();
     ui->imageCount->setText(QString::number(0));
 }
+
+void CalibrationDialog::close()
+{
+    ui->previewFirst->closeCameraStream();
+    ui->previewSecond->closeCameraStream();
+    QDialog::close();
+}

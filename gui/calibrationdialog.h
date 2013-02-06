@@ -26,6 +26,7 @@ public slots:
     void takeSnap();
     void calibrate();
     void reset();
+    void close();
     
 private:
     Ui::CalibrationDialog *ui;
