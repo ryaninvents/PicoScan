@@ -164,5 +164,5 @@ void ScanManager::setStereo(bool stereo)
 
 bool ScanManager::isStereo()
 {
-    return stereo;
+    return stereo && numCameras()>=2;
 }

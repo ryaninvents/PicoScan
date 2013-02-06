@@ -29,3 +29,15 @@ void ChangeResolutionDialog::reject()
 {
     QDialog::reject();
 }
+
+void ChangeResolutionDialog::resolutionChangedU(int u)
+{
+    camera->setResolution(ui->resU->value(),ui->resV->value());
+    emit resolutionChanged(camera->getResolutionU(),camera->getResolutionV());
+}
+
+void ChangeResolutionDialog::resolutionChangedV(int v)
+{
+    camera->setResolution(ui->resU->value(),ui->resV->value());
+    emit resolutionChanged(camera->getResolutionU(),camera->getResolutionV());
+}

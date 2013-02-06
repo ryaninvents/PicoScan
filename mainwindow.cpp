@@ -64,6 +64,7 @@ void MainWindow::showProjectionScreen()
 
 void MainWindow::showCalibrationDialog()
 {
+    calib->reset();
     calib->show();
     calib->setManager(manager);
 }

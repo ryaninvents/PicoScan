@@ -40,7 +40,25 @@ int Calibrator::addImagePair(cv::Mat left, cv::Mat right)
     return imagePointsLeft.size();
 }
 
-bool Calibrator::runCalib()
+int Calibrator::addSingleImage(cv::Mat img)
+{
+    CalibrationStandard *std = manager->getStandard();
+
+    bool success;
+    std::vector<cv::Point2f> imgPts;
+
+    imgPts = std->getImagePoints(img,&success);
+    if(!success) return -1;
+
+    if(imagePointsLeft.size()==0){
+        leftSize = cv::Size(img.cols,img.rows);
+    }
+
+    imagePointsLeft.push_back(imgPts);
+    return imagePointsLeft.size();
+}
+
+bool Calibrator::runCalibStereo()
 {
     double rpeLeft, rpeRight;
     CalibrationStandard *std;
@@ -134,6 +152,45 @@ bool Calibrator::runCalib()
                               relativeRot.at<double>(1),
                               relativeRot.at<double>(2)
                               ));
+
+    return true;
+}
+
+bool Calibrator::runCalibMono()
+{
+    double rpe;
+    CalibrationStandard *std;
+    cv::Mat cameraMat, cameraDist;
+    std::vector<cv::Mat> cameraRot, cameraTrans;
+    Camera *camera;
+
+    std::vector<std::vector<cv::Point3f> > objectPts;
+
+    std = manager->getStandard();
+
+    camera = manager->getFirst();
+
+    cameraMat = cv::Mat::eye(3,3,CV_32F);
+
+    cameraDist = cv::Mat::zeros(8,1,CV_32F);
+
+    objectPts = std->getObjectPoints(imagePointsLeft.size());
+
+    rpe = cv::calibrateCamera(objectPts,
+                                  imagePointsLeft,
+                                  leftSize,
+                                  cameraMat,
+                                  cameraDist,
+                                  cameraRot,
+                                  cameraTrans,
+                                  CV_CALIB_FIX_ASPECT_RATIO|
+                                  CV_CALIB_FIX_PRINCIPAL_POINT);
+
+    camera->setIntrinsics(cameraMat);
+    camera->setDistortion(cameraDist);
+
+    camera->setPosition(cv::Vec3d());
+    camera->setOrientation(cv::Vec3d());
 
     return true;
 }

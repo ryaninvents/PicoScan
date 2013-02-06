@@ -193,8 +193,76 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>firstDevice</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>setFirstCamera(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>95</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>secondDevice</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>setSecondCamera(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>344</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>95</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>firstRes</sender>
+   <signal>pressed()</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>setFirstResolution()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>95</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>secondRes</sender>
+   <signal>pressed()</signal>
+   <receiver>CameraSettingsDialog</receiver>
+   <slot>setSecondResolution()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>344</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>95</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>enableStereo(bool)</slot>
+  <slot>setFirstCamera(int)</slot>
+  <slot>setSecondCamera(int)</slot>
+  <slot>setFirstResolution()</slot>
+  <slot>setSecondResolution()</slot>
  </slots>
 </ui>
