@@ -8,6 +8,8 @@ CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
     ui(new Ui::CameraSettingsDialog)
 {
     ui->setupUi(this);
+    firstResDialog = new ChangeResolutionDialog;
+    secondResDialog = new ChangeResolutionDialog;
 }
 
 CameraSettingsDialog::~CameraSettingsDialog()
@@ -26,17 +28,31 @@ void CameraSettingsDialog::enableStereo(bool b)
 
 void CameraSettingsDialog::setFirstCamera(int idx)
 {
-
+    manager->setFirst(hardware->getCamera(idx));
 }
 
 void CameraSettingsDialog::setSecondCamera(int idx)
 {
+    manager->setSecond(hardware->getCamera(idx));
 }
 
 void CameraSettingsDialog::setFirstResolution()
 {
+    firstResDialog->setCamera(manager->getFirst());
+    firstResDialog->show();
 }
 
 void CameraSettingsDialog::setSecondResolution()
+{
+    secondResDialog->setCamera(manager->getSecond());
+    secondResDialog->show();
+}
+
+void CameraSettingsDialog::firstResolutionChanged(int u, int v)
+{
+
+}
+
+void CameraSettingsDialog::secondResolutionChanged(int u, int v)
 {
 }

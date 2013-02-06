@@ -6,6 +6,7 @@
 
 #include "../hardware/scanmanager.h"
 #include "../hardware/hardwaremanager.h"
+#include "changeresolutiondialog.h"
 
 namespace Ui {
 class CameraSettingsDialog;
@@ -34,6 +35,9 @@ public slots:
     void setSecondCamera(int idx);
     void setFirstResolution();
     void setSecondResolution();
+
+    void firstResolutionChanged(int u, int v);
+    void secondResolutionChanged(int u, int v);
     
 private:
     Ui::CameraSettingsDialog *ui;
@@ -42,6 +46,9 @@ private:
     HardwareManager *hardware;
     /// scan manager
     ScanManager *manager;
+
+    ChangeResolutionDialog *firstResDialog;
+    ChangeResolutionDialog *secondResDialog;
 
 };
 
