@@ -30,10 +30,10 @@ public:
     std::vector<cv::Point3f> getObjectPoints();
 
 
-    cv::Vec3d getPointA();
-    cv::Vec3d getPointB();
-    cv::Vec3d getPointC();
-    cv::Vec3d getPointD();
+    int getPointA();
+    int getPointB();
+    int getPointC();
+    int getPointD();
 
 
 };

@@ -3,6 +3,7 @@
 #include "hardware/standards/calibrationstandard.h"
 #include <opencv2/calib3d/calib3d.hpp>
 #include <stdio.h>
+#include "geom/triangulator.h"
 
 Calibrator::Calibrator()
 {
@@ -260,19 +261,27 @@ bool Calibrator::addProjectorCalibrationFrame()
     frames = manager->takeBinaryFrame();
     frame = frames.at(0);
 
-    cv::Mat A = rot * cv::Mat(standard->getPointA()).reshape(1) + cv::Mat(P).reshape(1);
-    cv::Mat B = rot * cv::Mat(standard->getPointB()).reshape(1) + cv::Mat(P).reshape(1);
-    cv::Mat C = rot * cv::Mat(standard->getPointC()).reshape(1) + cv::Mat(P).reshape(1);
-    cv::Mat D = rot * cv::Mat(standard->getPointD()).reshape(1) + cv::Mat(P).reshape(1);
+    cv::Vec3d A = objectPoints[manager->getStandard()->getPointA()];
+    cv::Vec3d B = objectPoints[manager->getStandard()->getPointB()];
+    cv::Vec3d C = objectPoints[manager->getStandard()->getPointC()];
+    cv::Vec3d D = objectPoints[manager->getStandard()->getPointD()];
+    cv::Vec3d imPt, camRay;
+    int code;
 
-    // discard points outside board
     for(x=0;x<frame.cols;x++){
         for(y=0;y<frame.rows;y++){
+            imPt = cv::Vec3d(x,y,0);
+            code = frame.at<int>(y,x);
+            // ignore points not on board
+            if( !(  Triangulator::inTri(imPt,A,B,C) ||
+                    Triangulator::inTri(imPt,B,C,D)) || code<0) continue;
 
+            // calculate 3D points by intersecting cam rays w/ std plane
+            camRay = camera->getPixelRay(x,y);
+            imPt = Triangulator::sumTo(camRay,inPlane1,inPlane2,P);
+            projectorPoints.at(code).push_back(imPt);
         }
     }
-
-    // calculate 3D points by intersecting cam rays w/ std plane
 
     return true;
 }

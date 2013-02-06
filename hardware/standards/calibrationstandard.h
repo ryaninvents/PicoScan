@@ -40,10 +40,10 @@ public:
                    std::vector<cv::Mat> tvecs,
                    double *rpe);
 
-    virtual cv::Vec3d getPointA() = 0;
-    virtual cv::Vec3d getPointB() = 0;
-    virtual cv::Vec3d getPointC() = 0;
-    virtual cv::Vec3d getPointD() = 0;
+    virtual int getPointA() = 0;
+    virtual int getPointB() = 0;
+    virtual int getPointC() = 0;
+    virtual int getPointD() = 0;
 
 protected:
     /** Utility function for quickly generating a grid.

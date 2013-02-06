@@ -28,6 +28,7 @@ public:
 private:
     std::vector<std::vector<cv::Point2f> > imagePointsLeft;
     std::vector<std::vector<cv::Point2f> > imagePointsRight;
+    std::vector<std::vector<cv::Point3f> > projectorPoints;
     cv::Size leftSize, rightSize;
     ScanManager *manager;
 };
