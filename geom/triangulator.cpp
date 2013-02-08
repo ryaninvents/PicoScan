@@ -68,3 +68,45 @@ bool Triangulator::inTri(const cv::Vec3d P, const cv::Vec3d A, const cv::Vec3d B
     // Check if point is in triangle
     return (u >= 0) && (v >= 0) && (u + v < 1);
 }
+
+cv::Vec3d Triangulator::getPlane(std::vector<cv::Vec3d> pts)
+{
+    cv::Mat A = cv::Mat::zeros(3,3,CV_64F);
+    cv::Mat b = cv::Mat::zeros(3,1,CV_64F);
+    uint i;
+    cv::Vec3d pt;
+    for(i=0;i<pts.size();i++){
+        pt = pts[i];
+        A.at<double>(0,0) += pt[2] * pt[2];
+        A.at<double>(1,1) += pt[1] * pt[1];
+        A.at<double>(1,0) += pt[2] * pt[1];
+        A.at<double>(2,0) += pt[2];
+        A.at<double>(2,1) += pt[1];
+
+        b.at<double>(0) += pt[0] * pt[2];
+        b.at<double>(1) += pt[0] * pt[1];
+        b.at<double>(2) += pt[0];
+    }
+    A.at<double>(0,1) = A.at<double>(1,0);
+    A.at<double>(0,2) = A.at<double>(2,0);
+    A.at<double>(1,2) = A.at<double>(2,1);
+    A.at<double>(2,2) = (double) pts.size();
+
+    cv::Vec3d m = A.inv() * b;
+    return cv::Vec3d(m[2],m[1],m[0]);
+}
+
+
+
+cv::Vec3d Triangulator::getCentroid(std::vector<cv::Vec3d> pts)
+{
+    double x,y,z;
+    uint i;
+    for(i=0;i<pts.size();i++){
+        x+=pts[i][0];
+        y+=pts[i][1];
+        z+=pts[i][2];
+    }
+    return cv::Vec3d(x/i,y/i,z/i);
+}
+
