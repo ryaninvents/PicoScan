@@ -49,7 +49,7 @@ int ChessboardStandard::getPointB()
 
 int ChessboardStandard::getPointC()
 {
-    return (size.width-1)*height;
+    return (size.width-1)*size.height;
 }
 
 int ChessboardStandard::getPointD()
