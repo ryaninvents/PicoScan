@@ -92,8 +92,8 @@ cv::Vec3d Triangulator::getPlane(std::vector<cv::Vec3d> pts)
     A.at<double>(1,2) = A.at<double>(2,1);
     A.at<double>(2,2) = (double) pts.size();
 
-    cv::Vec3d m = A.inv() * b;
-    return cv::Vec3d(m[2],m[1],m[0]);
+    cv::Mat m = A.inv() * b;
+    return cv::Vec3d(m.at<double>(2),m.at<double>(1),m.at<double>(0));
 }
 
 

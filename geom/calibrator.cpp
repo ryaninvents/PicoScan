@@ -261,11 +261,12 @@ bool Calibrator::addProjectorCalibrationFrame()
     frames = manager->takeBinaryFrame();
     frame = frames.at(0);
 
-    cv::Vec3d A = objectPoints[manager->getStandard()->getPointA()];
-    cv::Vec3d B = objectPoints[manager->getStandard()->getPointB()];
-    cv::Vec3d C = objectPoints[manager->getStandard()->getPointC()];
-    cv::Vec3d D = objectPoints[manager->getStandard()->getPointD()];
-    cv::Vec3d imPt, camRay;
+    cv::Point3d A = objectPoints[manager->getStandard()->getPointA()];
+    cv::Point3d B = objectPoints[manager->getStandard()->getPointB()];
+    cv::Point3d C = objectPoints[manager->getStandard()->getPointC()];
+    cv::Point3d D = objectPoints[manager->getStandard()->getPointD()];
+    cv::Vec3d imPt;
+    cv::Vec3d camRay;
     int code;
 
     for(x=0;x<frame.cols;x++){
@@ -279,7 +280,11 @@ bool Calibrator::addProjectorCalibrationFrame()
             // calculate 3D points by intersecting cam rays w/ std plane
             camRay = camera->getPixelRay(x,y);
             imPt = Triangulator::sumTo(camRay,inPlane1,inPlane2,P);
-            projectorPoints.at(code).push_back(imPt);
+            projectorPoints.at(code).push_back(cv::Point3d(
+                                                   imPt[0],
+                                                   imPt[1],
+                                                   imPt[2]
+                                                   ));
         }
     }
 

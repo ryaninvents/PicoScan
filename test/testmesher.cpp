@@ -73,7 +73,7 @@ void TestMesher::unit()
 
 }
 
-void TestMesher::testMesh(){
+void TestMesher::testMesh(char *configFilename){
 
     // character buffer for generating file names
     char filename[50];
@@ -109,18 +109,92 @@ void TestMesher::testMesh(){
     OpticalDevice *camera = new OpticalDevice();
     OpticalDevice *projector = new OpticalDevice();
 
+    // config file
+    FILE * config;
+
+    config = fopen(configFilename,"r");
+
+    int camResX, camResY;
+    int camFocal;
+
+    int projectorRes;
+    int projectorFocal;
+    double pPosX, pPosY, pPosZ;
+    double pOriX, pOriY, pOriZ;
+    char imPath[128];
+    int ignoreBits;
+
+    //======= start reading config file =======//
+
+    /*
+    if(!fscanf(config,"#CAMERA")){
+        printf("Syntax error: missing \"#CAMERA\"\n");
+        return;
+    }*/
+    if(!fscanf(config,"resolution %dx%d\n",&camResX,&camResY)){
+        printf("Syntax error: missing \"resolution ___x___\"\n");
+        return;
+    }
+    if(!fscanf(config,"focal %d\n",&camFocal)){
+        printf("Syntax error: missing \"focal ___ (camera)\"\n");
+        return;
+    }/*
+    if(!fscanf(config,"#PROJECTOR")){
+        printf("Syntax error: missing \"#PROJECTOR\"\n");
+        return;
+    }*/
+    if(!fscanf(config,"resolution %d\n",&projectorRes)){
+        printf("Syntax error: missing \"resolution ___\"\n");
+        return;
+    }
+    if(!fscanf(config,"focal %d\n",&projectorFocal)){
+        printf("Syntax error: missing \"focal ___ (projector)\"\n");
+        return;
+    }
+    if(!fscanf(config,"posn %lf %lf %lf\n",&pPosX,&pPosY,&pPosZ)){
+        printf("Syntax error: missing \"posn __ __ __\"\n");
+        return;
+    }
+    if(!fscanf(config,"orin %lf %lf %lf\n",&pOriX,&pOriY,&pOriZ)){
+        printf("Syntax error: missing \"orin __ __ __\"\n");
+        return;
+    }/*
+    if(!fscanf(config,"#INPUT")){
+        printf("Syntax error: missing \"#INPUT\"\n");
+        return;
+    }*/
+
+    if(!fscanf(config,"ignore %d\n",&ignoreBits)){
+        printf("Warning: missing \"ignore __\"\n");
+        ignoreBits = 0;
+    }
+    if(!fscanf(config,"images %[^\r\n]s\n",imPath)){
+        printf("Syntax error: missing \"images __________\"\n");
+        return;
+    }
+
+    //======== end reading config file ========//
+    printf("Camera resolution %dx%d\n",camResX,camResY);
+    printf("Camera focal length %d\n", camFocal);
+    printf("Projector resolution %d\n",projectorRes);
+    printf("Projector focal length %d\n",projectorFocal);
+    printf("Projector position %f %f %f\n",pPosX,pPosY,pPosZ);
+    printf("Projector orientation %f %f %f\n",pOriX,pOriY,pOriZ);
+    printf("Image path \"%s\"\n",imPath);
+    printf("Ignore %d bits\n",ignoreBits);
+
     // set up the camera
-    camera->setResolution(640, 480);
-    camera->setFocalLength(800);
-    camera->setPrincipalPoint(320, 240);
+    camera->setResolution(camResX, camResY);
+    camera->setFocalLength(camFocal);
+    camera->setPrincipalPoint(camResX/2, camResY/2);
     camera->setPosition(cv::Vec3d());
 
     // set up the projector
-    projector->setResolution(1024,1);
-    projector->setFocalLength(5000);
-    projector->setPrincipalPoint(512,0);
-    projector->setPosition(cv::Vec3d(0.3,0.2,0.0));
-    projector->setOrientation(cv::Vec3d(0.0,-0.3,0.0));
+    projector->setResolution(projectorRes,1);
+    projector->setFocalLength(projectorFocal);
+    projector->setPrincipalPoint(projectorRes/2,0);
+    projector->setPosition(cv::Vec3d(pPosX,pPosY,pPosZ));
+    projector->setOrientation(cv::Vec3d(pOriX,pOriY,pOriZ));
 
     // determine the number of bits we need to project
     nmax = (unsigned int) ceil(log(projector->getResolutionU())/log(2));
@@ -130,14 +204,14 @@ void TestMesher::testMesh(){
 
 
     // construct the qmask filename
-    sprintf(filename, FILE_PATTERN, 22);
+    sprintf(filename, imPath, 22);
 
     // load the frame
     img = cv::imread(filename,CV_LOAD_IMAGE_GRAYSCALE);
     img.convertTo(img,CV_32S);
 
     // construct the next filename
-    sprintf(filename, FILE_PATTERN, 21);
+    sprintf(filename, imPath, 21);
 
     // load the frame
     inv = cv::imread(filename,CV_LOAD_IMAGE_GRAYSCALE);
@@ -154,14 +228,14 @@ void TestMesher::testMesh(){
     for(n=0;n<nmax;n++){
 
         // construct the next filename
-        sprintf(filename, FILE_PATTERN, idx++);
+        sprintf(filename, imPath, idx++);
 
         // load the frame
         img = cv::imread(filename,CV_LOAD_IMAGE_GRAYSCALE);
         img.convertTo(img,CV_32S);
 
         // construct the next filename
-        sprintf(filename, FILE_PATTERN, idx++);
+        sprintf(filename, imPath, idx++);
 
         // load the frame
         inv = cv::imread(filename,CV_LOAD_IMAGE_GRAYSCALE);

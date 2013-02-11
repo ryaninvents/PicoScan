@@ -1,11 +1,13 @@
 #ifndef TESTMESHER_H
 #define TESTMESHER_H
 
+#include <QString>
+
 class TestMesher
 {
 public:
     static void unit();
-    static void testMesh();
+    static void testMesh(char *configFilename);
 
 };
 

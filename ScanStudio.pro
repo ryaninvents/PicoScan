@@ -164,7 +164,8 @@ OTHER_FILES += \
     gui/icons/oxygen/arrow-down.png \
     gui/icons/oxygen/applications-graphics.png \
     gui/icons/oxygen/view-refresh.png \
-    gui/icons/oxygen/document-revert.png
+    gui/icons/oxygen/document-revert.png \
+    config.geom
 
 RESOURCES += \
     gui/icons.qrc
