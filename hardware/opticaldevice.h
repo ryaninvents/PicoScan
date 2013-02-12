@@ -65,12 +65,12 @@ public:
     /** Get the horizontal component of a vector with
         a unit forward component and passing through
         the image point <tt>(u,0)</tt>.*/
-    double getNormalizedU(int u);
+    double getNormalizedU(double u);
 
     /** Get the vertical component of a vector with
         a unit forward component and passing through
         the image point <tt>(0,v)</tt>.*/
-    double getNormalizedV(int v);
+    double getNormalizedV(double v);
 
     /** Returns the orientation of this device as a
     <a href="http://en.wikipedia.org/wiki/Rodrigues'_rotation_formula">
@@ -79,7 +79,7 @@ public:
 
     /** Returns a unit vector which passes through this device's origin
       and the given pixel in its array. */
-    cv::Mat getPixelRay(int u,int v);
+    cv::Mat getPixelRay(double u,double v);
 
     /** Returns a unit vector pointing in this device's "up" direction;
         i.e., in the direction of increasing <tt>v</tt>. */
@@ -123,7 +123,7 @@ private:
     cv::Vec3d position;
     cv::Size resolution;
 
-    double getNormalizedCoord(int u,double c);
+    double getNormalizedCoord(double u,double c);
 };
 
 #endif // OPTICALDEVICE_H

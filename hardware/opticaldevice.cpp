@@ -76,12 +76,12 @@ QString OpticalDevice::getName()
     return name;
 }
 
-double OpticalDevice::getNormalizedU(int u)
+double OpticalDevice::getNormalizedU(double u)
 {
     return getNormalizedCoord(u,getPrincipalU());
 }
 
-double OpticalDevice::getNormalizedV(int v)
+double OpticalDevice::getNormalizedV(double v)
 {
     return getNormalizedCoord(v,getPrincipalV());
 }
@@ -91,7 +91,7 @@ cv::Mat OpticalDevice::getOrientation()
     return orientation;
 }
 
-cv::Mat OpticalDevice::getPixelRay(int u, int v)
+cv::Mat OpticalDevice::getPixelRay(double u, double v)
 {
     // normalized U and V coordinates
     double uNorm, vNorm;
@@ -190,10 +190,9 @@ double OpticalDevice::getPrincipalV()
     return intrinsicMatrix.at<double>(1,2);
 }
 
-double OpticalDevice::getNormalizedCoord(int u, double c)
+double OpticalDevice::getNormalizedCoord(double u, double c)
 {
-    double uprime = (double)(u) - c;
-    return (uprime/getFocalLength());
+    return (u - c)/getFocalLength();
 }
 
 
