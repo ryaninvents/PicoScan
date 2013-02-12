@@ -17,6 +17,7 @@ public:
     void projectOnDisplay(int n);
     int getDisplayCount();
     void projectBinary(int bit, bool inverted);
+    void projectSinusoid(int period, double shift, int maxBright);
     void projectWhite();
     static unsigned int grayToBinary(unsigned int num);
     static unsigned int binaryToGray(unsigned int num);

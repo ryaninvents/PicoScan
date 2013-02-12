@@ -190,6 +190,8 @@ void TestMesher::testMesh(char *configFilename){
     camera->setPosition(cv::Vec3d());
 
     // set up the projector
+    //projectorRes = projectorRes >> ignoreBits;
+    //projectorFocal = projectorFocal >> ignoreBits;
     projector->setResolution(projectorRes,1);
     projector->setFocalLength(projectorFocal);
     projector->setPrincipalPoint(projectorRes/2,0);
@@ -204,21 +206,21 @@ void TestMesher::testMesh(char *configFilename){
 
 
     // construct the qmask filename
-    sprintf(filename, imPath, 22);
+    sprintf(filename, imPath, 21);
 
     // load the frame
     img = cv::imread(filename,CV_LOAD_IMAGE_GRAYSCALE);
     img.convertTo(img,CV_32S);
 
     // construct the next filename
-    sprintf(filename, imPath, 21);
+    sprintf(filename, imPath, 22);
 
     // load the frame
     inv = cv::imread(filename,CV_LOAD_IMAGE_GRAYSCALE);
     inv.convertTo(inv,CV_32S);
 
     // take the difference between the images
-    qmask = img - inv;
+    qmask = inv - img;
 
     // initialize the encoded/decoded matrices
     encoded = cv::Mat::zeros(camera->getResolution(),CV_32S);
@@ -242,7 +244,7 @@ void TestMesher::testMesh(char *configFilename){
         inv.convertTo(inv,CV_32S);
 
         // take the difference between the images
-        img = img - inv;
+        img = inv - img;
 
         // loop through every pixel
         for(x=0; x<img.cols; x++){
@@ -257,11 +259,16 @@ void TestMesher::testMesh(char *configFilename){
         }
     }
 
+    int bitVal;
+
     // loop through every pixel
     for(x=0; x<img.cols; x++){
         for(y=0; y<img.rows; y++){
             if(abs(qmask.at<int>(y,x)) > QUALITY_THRESHOLD){
-                decoded.at<int>(y,x) = grayToBinary(encoded.at<int>(y,x));
+                bitVal = grayToBinary(encoded.at<int>(y,x));
+                bitVal = bitVal >> ignoreBits;
+                bitVal = bitVal << ignoreBits;
+                decoded.at<int>(y,x) = bitVal;
             }else{
                 decoded.at<int>(y,x) = -1;
             }

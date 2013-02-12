@@ -14,3 +14,13 @@ cv::Mat Camera::getFrameBW()
     frame.assignTo(frame,CV_32S);
     return frame;
 }
+
+cv::Mat Camera::getFrameBW(unsigned int n)
+{
+    cv::Mat out = getFrameBW() / n;
+    unsigned int i;
+    for(i=1;i<n;i++){
+        out = out + (getFrameBW() / n);
+    }
+    return out;
+}

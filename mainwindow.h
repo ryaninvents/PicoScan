@@ -49,6 +49,10 @@ private:
     CalibrationDialog *calib;
 
     void enableCalibrate();
+
+    bool showingScreen;
+    int binBit;
+    bool binInv;
 };
 
 #endif // MAINWINDOW_H

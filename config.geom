@@ -1,10 +1,10 @@
-resolution 640x480
-focal 800
+resolution 1600x1200
+focal 1000
 
-resolution 1024
-focal 5000
-posn 0.3 0.2 0.0
-orin 0.0 -0.3 0.0
+resolution 640
+focal 1408
+posn -0.2 0.2 0.0
+orin 0.0 0.4 0.0
 
-ignore 0
-images /home/ryan/Pictures/Round_2/picture_%d.png
+ignore 4
+images /home/ryan/Pictures/Webcam/snap%d.jpg

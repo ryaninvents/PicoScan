@@ -9,7 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
     hardware(new HardwareManager),
     screen(new ProjectionScreen),
     manager(new ScanManager),
-    calib(new CalibrationDialog)
+    calib(new CalibrationDialog),
+    showingScreen(false),
+    binBit(0),
+    binInv(false)
 {
     ui->setupUi(this);
 
@@ -62,10 +65,20 @@ void MainWindow::showCalStdSettings()
 
 void MainWindow::showProjectionScreen()
 {
-    screen->show();
+    if(!showingScreen){
+        screen->show();
+        showingScreen = true;
 
-    screen->projectBinary(0,false);
-    screen->projectOnDisplay(1);
+        screen->projectBinary(0,false);
+        screen->projectOnDisplay(1);
+    }else if(!binInv){
+        binInv = true;
+        screen->projectBinary(binBit,binInv);
+    }else{
+        binBit++;
+        binInv = false;
+        screen->projectBinary(binBit,binInv);
+    }
 }
 
 void MainWindow::showCalibrationDialog()

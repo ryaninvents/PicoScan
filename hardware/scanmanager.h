@@ -60,6 +60,9 @@ public:
 
     ProjectionScreen *getScreen();
 
+    static void addBinaryBit(cv::Mat encoding, cv::Mat img, cv::Mat inv, int bit);
+    static cv::Mat decodeAndApplyMask(cv::Mat encoding, cv::Mat mask);
+
 private:
     std::vector<Camera *> cameras;
 

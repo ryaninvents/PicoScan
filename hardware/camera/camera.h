@@ -17,6 +17,8 @@ public:
     virtual cv::Mat getFrame() = 0;
     /// Get a black-and-white frame.
     cv::Mat getFrameBW();
+    /// Average several frames together.
+    cv::Mat getFrameBW(unsigned int n);
     /** Are we waiting for a snapshot from
         the camera? */
     bool isWaiting(){ return waiting; }

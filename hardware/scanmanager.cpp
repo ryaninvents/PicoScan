@@ -94,6 +94,49 @@ ProjectionScreen *ScanManager::getScreen()
     return screen;
 }
 
+void ScanManager::addBinaryBit(cv::Mat encoding, cv::Mat img, cv::Mat inv, int bit)
+{
+    unsigned int y,x;
+    cv::Mat i2 = img - inv;
+    for(x=0;x<encoding.cols;x++){
+        for(y=0;y<encoding.rows;y++){
+            if(i2.at<int>(y,x) >0){
+                encoding.at<int>(y,x) += 1<<bit;
+            }
+        }
+    }
+}
+
+cv::Mat ScanManager::decodeAndApplyMask(cv::Mat encoding, cv::Mat mask)
+{
+    unsigned int x,y;
+    for(x=0;x<encoding.cols;x++){
+        for(y=0;y<encoding.rows;y++){
+            if(mask.at<int>(y,x) >0){
+                encoding.at<int>(y,x) = ProjectionScreen::grayToBinary(
+                        encoding.at<int>(y,x));
+            }else {
+                encoding.at<int>(y,x) = -1;
+            }
+        }
+    }
+}
+
+cv::Mat ScanManager::dropBits(cv::Mat input, unsigned int n)
+{
+    cv::Mat output = cv::Mat::zeros(input.rows,input.cols,CV_32S);
+    unsigned int x,y,mask;
+    mask = ~((1<<n)-1);
+    for(x=0;x<input.cols;x++){
+        for(y=0;y<input.rows;y++){
+            output.at<int>(y,x) = input.at<int>(y,x) & mask;
+        }
+    }
+    return output;
+}
+
+
+
 std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
 {
     // number of binary bits needed to cover the whole image
@@ -102,79 +145,61 @@ std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
     // current bit
     uint n;
 
-    // for looping through image pixels
-    uint x,y;
-
     // encoded frame
-    cv::Mat encodingLeft,encodingRight;
+    cv::Mat encodingFirst,encodingSecond;
 
     // quality mask
-    cv::Mat mask;
+    cv::Mat maskFirst, maskSecond;
 
     // temporary frame holders
-    cv::Mat imgLeft, invLeft, imgRight, invRight;
+    cv::Mat imgFirst, invFirst, imgSecond, invSecond;
 
     // return vector
     std::vector<cv::Mat> out;
 
     nmax = (uint) ceil(log(screen->size().width())/log(2));
 
-    encodingLeft = cv::Mat::zeros(getFirst()->getResolutionV(),getFirst()->getResolutionU(),CV_32S);
-    encodingRight = cv::Mat::zeros(getSecond()->getResolutionV(),getSecond()->getResolutionU(),CV_32S);
+    // create matrices for the encoding and zero them out
+    encodingFirst = cv::Mat::zeros(
+                getFirst()->getResolutionV(),
+                getFirst()->getResolutionU(),CV_32S);
+    encodingSecond = cv::Mat::zeros(getSecond()->getResolutionV(),getSecond()->getResolutionU(),CV_32S);
 
+    // turn on the projector
     screen->projectOnDisplay(1);
 
+    // loop through bit values
     for(n=0;n<nmax;n++){
-//        pattern->setBit(n);
-//        pattern->setInverted(false);
-//        screen->displayPattern(pattern);
+        // project binary pattern
         screen->projectBinary(n,false);
-        imgLeft = getFirst()->getFrameBW();
-        imgRight = getSecond()->getFrameBW();
+        imgFirst = getFirst()->getFrameBW();
+        imgSecond = getSecond()->getFrameBW();
 
-//        pattern->setInverted(true);
-//        screen->displayPattern(pattern);
+        // project inverted binary pattern
         screen->projectBinary(n,true);
-        invLeft = getFirst()->getFrameBW();
-        invRight = getSecond()->getFrameBW();
+        invFirst = getFirst()->getFrameBW();
+        invSecond = getSecond()->getFrameBW();
 
-        imgLeft = imgLeft - invLeft;
-        imgRight = imgRight - invRight;
-
-        for(x=0;x<encodingLeft.cols;x++){
-            for(y=0;y<encodingLeft.rows;y++){
-                if(imgLeft.at<int>(y,x) >0){
-                    encodingLeft.at<unsigned int>(y,x) += 1<<n;
-                }
-            }
-        }
-        for(x=0;x<encodingRight.cols;x++){
-            for(y=0;y<encodingRight.rows;y++){
-                if(imgRight.at<int>(y,x) >0){
-                    encodingRight.at<unsigned int>(y,x) += 1<<n;
-                }
-            }
-        }
+        // add the binary bits to the image
+        addBinaryBit(encodingFirst,imgFirst,invFirst,n);
+        addBinaryBit(encodingSecond,imgSecond,invSecond,n);
     }
 
 
-    for(x=0;x<encodingLeft.cols;x++){
-        for(y=0;y<encodingLeft.rows;y++){
-            encodingLeft.at<unsigned int>(y,x) = screen->grayToBinary(
-                        encodingLeft.at<unsigned int>(y,x));
-        }
-    }
-    for(x=0;x<encodingRight.cols;x++){
-        for(y=0;y<encodingRight.rows;y++){
-            if(imgRight.at<int>(y,x) >0){
-                encodingRight.at<unsigned int>(y,x) = screen->grayToBinary(
-                        encodingRight.at<unsigned int>(y,x));
-            }
-        }
-    }
+    // project white and capture
+    screen->projectBinary(nmax+1,false);
+    maskFirst = getFirst()->getFrameBW();
+    maskSecond = getSecond()->getFrameBW();
 
-    out.push_back(encodingLeft);
-    out.push_back(encodingRight);
+    // project black and capture
+    screen->projectBinary(nmax+1,true);
+    maskFirst = maskFirst - getFirst()->getFrameBW();
+    maskSecond = maskSecond - getSecond()->getFrameBW();
+
+
+    // decode, apply mask, and push onto stack
+    out.push_back(decodeAndApplyMask(encodingFirst,maskFirst));
+    out.push_back(decodeAndApplyMask(encodingSecond,maskSecond));
 
     return out;
 }
@@ -220,7 +245,7 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
         for(x=0;x<encoding.cols;x++){
             for(y=0;y<encoding.rows;y++){
                 if(img.at<int>(y,x) >0){
-                    encoding.at<unsigned int>(y,x) += 1<<n;
+                    encoding.at<int>(y,x) += 1<<n;
                 }
             }
         }
@@ -229,8 +254,8 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
 
     for(x=0;x<encoding.cols;x++){
         for(y=0;y<encoding.rows;y++){
-            encoding.at<unsigned int>(y,x) = screen->grayToBinary(
-                        encoding.at<unsigned int>(y,x));
+            encoding.at<int>(y,x) = screen->grayToBinary(
+                        encoding.at<int>(y,x));
         }
     }
 

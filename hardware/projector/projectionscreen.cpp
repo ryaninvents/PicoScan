@@ -80,7 +80,31 @@ QImage createGray(unsigned int width,
     for (y = 0; y < height; y++) {
             QRgb *destrow = (QRgb*)out.scanLine(y);
             for (x = 0; x < width; ++x) {
-                destrow[x] = qRgba(0,0,0, values[x]);
+                destrow[x] = qRgba(values[x],values[x],values[x],255);
+            }
+    }
+
+    return out;
+}
+
+QImage createSinusoid(unsigned int width,
+                  unsigned int height,
+                  int period, double shift,
+                  unsigned int maxBright){
+    QImage out(width,height,QImage::Format_ARGB32);
+    unsigned int values[width];
+    unsigned int x,y;
+    double d;
+
+    for (x = 0; x < width; x++) {
+        d = (1+cos(x*M_2_PI/period - shift*M_2_PI))*maxBright*0.5;
+        values[x] = (unsigned int) d;
+    }
+
+    for (y = 0; y < height; y++) {
+            QRgb *destrow = (QRgb*)out.scanLine(y);
+            for (x = 0; x < width; ++x) {
+                destrow[x] = qRgba(values[x],values[x],values[x],255);
             }
     }
 
@@ -104,7 +128,13 @@ int ProjectionScreen::getDisplayCount()
 
 void ProjectionScreen::projectBinary(int bit, bool inverted)
 {
-    QImage im = createGray(640,480,bit,inverted,255);
+    QImage im = createGray(640,480,bit,inverted,128);
+    displayImage(im);
+}
+
+void ProjectionScreen::projectSinusoid(int period, double shift, int maxBright)
+{
+    QImage im = createSinusoid(640,480,period,shift,maxBright);
     displayImage(im);
 }
 

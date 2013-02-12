@@ -25,6 +25,8 @@ public:
     /** Calibrate the projector assuming the cameras are calibrated. */
     bool addProjectorCalibrationFrame();
 
+
+
 private:
     std::vector<std::vector<cv::Point2f> > imagePointsLeft;
     std::vector<std::vector<cv::Point2f> > imagePointsRight;
