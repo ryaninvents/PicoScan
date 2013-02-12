@@ -8,7 +8,9 @@
 
 
 ScanManager::ScanManager():
-    stereo(false)
+    stereo(false),
+    lowestBit(0),
+    averagedFrames(3)
 {
     cameras = std::vector<Camera *>();
     cameras.push_back(0);
@@ -157,28 +159,31 @@ std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
     // return vector
     std::vector<cv::Mat> out;
 
+    // compute how many bits we need to uniquely ID each projector pixel
     nmax = (uint) ceil(log(screen->size().width())/log(2));
 
     // create matrices for the encoding and zero them out
     encodingFirst = cv::Mat::zeros(
                 getFirst()->getResolutionV(),
                 getFirst()->getResolutionU(),CV_32S);
-    encodingSecond = cv::Mat::zeros(getSecond()->getResolutionV(),getSecond()->getResolutionU(),CV_32S);
+    encodingSecond = cv::Mat::zeros(
+                getSecond()->getResolutionV(),
+                getSecond()->getResolutionU(),CV_32S);
 
     // turn on the projector
     screen->projectOnDisplay(1);
 
     // loop through bit values
-    for(n=0;n<nmax;n++){
+    for(n=lowestBit;n<nmax;n++){
         // project binary pattern
         screen->projectBinary(n,false);
-        imgFirst = getFirst()->getFrameBW();
-        imgSecond = getSecond()->getFrameBW();
+        imgFirst = getFirst()->getFrameBW(averagedFrames);
+        imgSecond = getSecond()->getFrameBW(averagedFrames);
 
         // project inverted binary pattern
         screen->projectBinary(n,true);
-        invFirst = getFirst()->getFrameBW();
-        invSecond = getSecond()->getFrameBW();
+        invFirst = getFirst()->getFrameBW(averagedFrames);
+        invSecond = getSecond()->getFrameBW(averagedFrames);
 
         // add the binary bits to the image
         addBinaryBit(encodingFirst,imgFirst,invFirst,n);
@@ -188,13 +193,13 @@ std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
 
     // project white and capture
     screen->projectBinary(nmax+1,false);
-    maskFirst = getFirst()->getFrameBW();
-    maskSecond = getSecond()->getFrameBW();
+    maskFirst = getFirst()->getFrameBW(averagedFrames);
+    maskSecond = getSecond()->getFrameBW(averagedFrames);
 
     // project black and capture
     screen->projectBinary(nmax+1,true);
-    maskFirst = maskFirst - getFirst()->getFrameBW();
-    maskSecond = maskSecond - getSecond()->getFrameBW();
+    maskFirst = maskFirst - getFirst()->getFrameBW(averagedFrames);
+    maskSecond = maskSecond - getSecond()->getFrameBW(averagedFrames);
 
 
     // decode, apply mask, and push onto stack
@@ -227,39 +232,41 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
     // return vector
     std::vector<cv::Mat> out;
 
+    // compute how many bits we need to uniquely ID each projector pixel
     nmax = (uint) ceil(log(screen->size().width())/log(2));
 
-    encoding = cv::Mat::zeros(getFirst()->getResolutionV(),getFirst()->getResolutionU(),CV_32S);
+    // create a matrix for encoding and zero it out
+    encoding = cv::Mat::zeros(
+                getFirst()->getResolutionV(),
+                getFirst()->getResolutionU(),CV_32S);
 
+    // make sure the projector is working
     screen->projectOnDisplay(1);
 
-    for(n=0;n<nmax;n++){
+    // loop through bit values
+    for(n=lowestBit;n<nmax;n++){
+        // project binary pattern
         screen->projectBinary(n,false);
-        img = getFirst()->getFrameBW();
+        img = getFirst()->getFrameBW(averagedFrames);
 
+        // project inverted binary pattern
         screen->projectBinary(n,true);
-        inv = getFirst()->getFrameBW();
+        inv = getFirst()->getFrameBW(averagedFrames);
 
-        img = img - inv;
-
-        for(x=0;x<encoding.cols;x++){
-            for(y=0;y<encoding.rows;y++){
-                if(img.at<int>(y,x) >0){
-                    encoding.at<int>(y,x) += 1<<n;
-                }
-            }
-        }
+        // add the bit to the image
+        addBinaryBit(encoding,img,inv,n);
     }
 
+    // project white and capture
+    screen->projectBinary(nmax+1,false);
+    mask = getFirst()->getFrameBW(averagedFrames);
 
-    for(x=0;x<encoding.cols;x++){
-        for(y=0;y<encoding.rows;y++){
-            encoding.at<int>(y,x) = screen->grayToBinary(
-                        encoding.at<int>(y,x));
-        }
-    }
+    // project black and capture
+    screen->projectBinary(nmax+1,true);
+    mask = mask - getFirst()->getFrameBW(aver);
 
-    out.push_back(encoding);
+    // decode, apply mask, push
+    out.push_back(decodeAndApplyMask(encoding,mask));
 
     return out;
 }

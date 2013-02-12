@@ -60,8 +60,19 @@ public:
 
     ProjectionScreen *getScreen();
 
+    /// Add a bit matrix to a given encoding matrix.
     static void addBinaryBit(cv::Mat encoding, cv::Mat img, cv::Mat inv, int bit);
+
+    /// Decode a Gray-encoded matrix and apply a quality mask.
     static cv::Mat decodeAndApplyMask(cv::Mat encoding, cv::Mat mask);
+
+    /// Drop the @i n least significant bits from the input.
+    static cv::Mat dropBits(cv::Mat input, unsigned int n);
+
+    void setLowestBit(int n){lowestBit = n;}
+    int getLowestBit(){return lowestBit;}
+    void setAveragedFrames(unsigned int avg){averagedFrames = avg;}
+    unsigned int getAveragedFrames(){return averagedFrames;}
 
 private:
     std::vector<Camera *> cameras;
@@ -71,6 +82,8 @@ private:
     CalibrationStandard *standard;
 
     bool stereo;
+    int lowestBit;
+    unsigned int averagedFrames;
 
     std::vector<cv::Mat> takeBinaryStereoFrame();
     std::vector<cv::Mat> takeBinaryMonoFrame();
