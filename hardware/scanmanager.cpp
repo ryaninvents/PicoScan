@@ -264,7 +264,7 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
 
     // project black and capture
     screen->projectBinary(nmax+1,true);
-    mask = mask - getFirst()->getFrameBW(aver);
+    mask = mask - getFirst()->getFrameBW(avgFrameBinary);
 
     // decode, apply mask, push
     out.push_back(decodeAndApplyMask(encoding,mask));
