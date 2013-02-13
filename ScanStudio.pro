@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     geom/pointcloud.cpp \
     gui/changeresolutiondialog.cpp \
     hardware/camera/filecamera.cpp \
-    hardware/standards/dotmatrixstandard.cpp
+    hardware/standards/dotmatrixstandard.cpp \
+    hardware/qopticaldevice.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -67,7 +68,8 @@ HEADERS  += mainwindow.h \
     geom/pointcloud.h \
     gui/changeresolutiondialog.h \
     hardware/camera/filecamera.h \
-    hardware/standards/dotmatrixstandard.h
+    hardware/standards/dotmatrixstandard.h \
+    hardware/qopticaldevice.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
