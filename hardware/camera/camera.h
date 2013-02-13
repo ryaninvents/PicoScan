@@ -4,6 +4,13 @@
 #include "../opticaldevice.h"
 #include <opencv2/core/core.hpp>
 
+enum CameraMode{
+    CAMERA_CALIBRATION,
+    PROJECTOR_CALIBRATION,
+    BINARY_CAPTURE,
+    FRINGE_CAPTURE
+};
+
 /**
   Represents a generic camera. The specifics
   of obtaining an image are left up to the
@@ -27,6 +34,8 @@ public:
     void notify(){ waiting = true; }
     /// Is the camera available to take frames?
     virtual bool isOpen() = 0;
+
+    void setMode(CameraMode){}
 
     /// Release any resources this camera is using.
     virtual void release() = 0;

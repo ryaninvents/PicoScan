@@ -174,6 +174,10 @@ std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
     // turn on the projector
     screen->projectOnDisplay(1);
 
+    // set camera modes
+    getFirst()->setMode(BINARY_CAPTURE);
+    getSecond()->setMode(BINARY_CAPTURE);
+
     // loop through bit values
     for(n=lowestBit;n<nmax;n++){
         // project binary pattern
@@ -232,6 +236,9 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
 
     // return vector
     std::vector<cv::Mat> out;
+
+    // set camera mode
+    getFirst()->setMode(BINARY_CAPTURE);
 
     // compute how many bits we need to uniquely ID each projector pixel
     nmax = (uint) ceil(log(screen->size().width())/log(2));
