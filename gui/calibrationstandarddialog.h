@@ -21,6 +21,9 @@ public:
 
 signals:
     void accept();
+
+public slots:
+    void standardTypeChanged(int idx);
     
 private:
     Ui::CalibrationStandardDialog *ui;

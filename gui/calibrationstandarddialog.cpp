@@ -29,3 +29,24 @@ CalibrationStandard *CalibrationStandardDialog::getStandard()
     }
     return s;
 }
+
+void CalibrationStandardDialog::standardTypeChanged(int idx)
+{
+    bool circSize=false, stagger=false;
+    switch(idx){
+    case 0:
+        break;
+    case 1:
+        circSize = true;
+        break;
+    case 2:
+        circSize = true;
+        stagger = true;
+        break;
+    }
+
+    ui->circleSizeLabel->setEnabled(circSize);
+    ui->circleSize->setEnabled(circSize);
+    ui->staggerOffsetLabel->setEnabled(stagger);
+    ui->staggerOffset->setEnabled(stagger);
+}
