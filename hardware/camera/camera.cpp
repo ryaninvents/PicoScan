@@ -17,10 +17,18 @@ cv::Mat Camera::getFrameBW()
 
 cv::Mat Camera::getFrameBW(unsigned int n)
 {
-    cv::Mat out = getFrameBW() / n;
+    cv::Mat out = cv::Mat::zeros(getResolutionU(),
+                                         getResolutionV(),
+                                         CV_32S);
+//    return out;
+    //*
     unsigned int i;
-    for(i=1;i<n;i++){
-        out = out + (getFrameBW() / n);
+    for(i=0;i<n;i++){
+//        out = out +
+                getFrameBW();
     }
-    return out;
+    //out = out/n;//*/
+//    out.convertTo(out,CV_32S);
+//    return out;
+    return getFrameBW();
 }

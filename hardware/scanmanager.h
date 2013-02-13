@@ -72,7 +72,7 @@ public:
     static void addBinaryBit(cv::Mat encoding, cv::Mat img, cv::Mat inv, int bit);
 
     /// Decode a Gray-encoded matrix and apply a quality mask.
-    static void decodeAndApplyMask(cv::Mat encoding, cv::Mat mask);
+    static void decodeAndApplyMask(cv::Mat encoding, cv::Mat mask, int threshold);
 
     /// Drop the @em n least significant bits from the input.
     static cv::Mat dropBits(cv::Mat input, unsigned int n);
@@ -102,6 +102,7 @@ private:
     int lowestBit;
     unsigned int avgFmsBinary;
     unsigned int avgFmsFringe;
+    unsigned int avgSkip;
     int maxBright;
 
     std::vector<cv::Mat> takeBinaryStereoFrame();
