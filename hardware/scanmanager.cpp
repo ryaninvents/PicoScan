@@ -3,6 +3,7 @@
 #include "camera/opencvcamera.h"
 #include "hardware/projector/reflectedbinarypattern.h"
 #include <opencv2/core/core.hpp>
+#include <stdio.h>
 
 #define MAX_CAMERAS 3
 
@@ -111,7 +112,7 @@ void ScanManager::addBinaryBit(cv::Mat encoding, cv::Mat img, cv::Mat inv, int b
     }
 }
 
-cv::Mat ScanManager::decodeAndApplyMask(cv::Mat encoding, cv::Mat mask)
+void ScanManager::decodeAndApplyMask(cv::Mat encoding, cv::Mat mask)
 {
     unsigned int x,y;
     for(x=0;x<encoding.cols;x++){
@@ -209,8 +210,10 @@ std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
 
 
     // decode, apply mask, and push onto stack
-    out.push_back(decodeAndApplyMask(encodingFirst,maskFirst));
-    out.push_back(decodeAndApplyMask(encodingSecond,maskSecond));
+    decodeAndApplyMask(encodingFirst,maskFirst);
+    out.push_back(encodingFirst);
+    decodeAndApplyMask(encodingSecond,maskSecond);
+    out.push_back(encodingSecond);
 
     return out;
 }
@@ -238,8 +241,18 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
     // return vector
     std::vector<cv::Mat> out;
 
+    Camera *first = getFirst();
+
     // set camera mode
-    getFirst()->setMode(BINARY_CAPTURE);
+    //first->setMode(BINARY_CAPTURE);
+
+    if(getScreen()==0){
+        printf("Null screen\n");
+        return out;
+    }
+
+
+    printf("projection screen: \t\t0x%7x\n",screen);
 
     // compute how many bits we need to uniquely ID each projector pixel
     nmax = (uint) ceil(log(screen->size().width())/log(2));
@@ -275,7 +288,9 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
     mask = mask - getFirst()->getFrameBW(avgFmsBinary);
 
     // decode, apply mask, push
-    out.push_back(decodeAndApplyMask(encoding,mask));
+    decodeAndApplyMask(encoding,mask);
+
+    out.push_back(encoding);
 
     return out;
 }

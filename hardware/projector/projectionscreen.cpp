@@ -128,7 +128,6 @@ int ProjectionScreen::getDisplayCount()
 
 void ProjectionScreen::projectBinary(int bit, bool inverted, int maxBright)
 {
-    ''
     QImage im = createGray(640,480,bit,inverted,maxBright);
     displayImage(im);
 }

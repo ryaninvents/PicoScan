@@ -506,8 +506,8 @@ color:white;</string>
   <connection>
    <sender>actionZoom_best</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>takeFrame()</slot>
+   <receiver>modelView</receiver>
+   <slot>zoomFit()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -515,7 +515,7 @@ color:white;</string>
     </hint>
     <hint type="destinationlabel">
      <x>353</x>
-     <y>227</y>
+     <y>243</y>
     </hint>
    </hints>
   </connection>

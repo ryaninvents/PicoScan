@@ -65,11 +65,14 @@ public:
     /// Get the projection screen we're using.
     ProjectionScreen *getScreen();
 
+    /// Set the projection screen.
+    void setScreen(ProjectionScreen *screen){this->screen = screen;}
+
     /// Add a bit matrix to a given encoding matrix.
     static void addBinaryBit(cv::Mat encoding, cv::Mat img, cv::Mat inv, int bit);
 
     /// Decode a Gray-encoded matrix and apply a quality mask.
-    static cv::Mat decodeAndApplyMask(cv::Mat encoding, cv::Mat mask);
+    static void decodeAndApplyMask(cv::Mat encoding, cv::Mat mask);
 
     /// Drop the @em n least significant bits from the input.
     static cv::Mat dropBits(cv::Mat input, unsigned int n);

@@ -98,6 +98,7 @@ void MainWindow::showProjectionScreen()
             binaryMode = true;
         }
     }
+    manager->setScreen(screen);
 }
 
 void MainWindow::showCalibrationDialog()
@@ -119,6 +120,7 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
+    manager->takeBinaryFrame();
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

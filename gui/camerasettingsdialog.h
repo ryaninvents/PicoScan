@@ -38,6 +38,9 @@ public slots:
 
     void firstResolutionChanged(int u, int v);
     void secondResolutionChanged(int u, int v);
+
+    void firstModeChanged(int m);
+    void secondModeChanged(int m);
     
 private:
     Ui::CameraSettingsDialog *ui;

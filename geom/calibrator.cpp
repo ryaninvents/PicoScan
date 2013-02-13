@@ -12,7 +12,6 @@ Calibrator::Calibrator()
 
 void Calibrator::setScanManager(ScanManager *m)
 {
-    printf("Calibrator manager\t0x%x\n",m);
     manager = m;
 }
 
