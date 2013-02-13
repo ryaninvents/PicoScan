@@ -6,6 +6,7 @@ OpenCVCamera::OpenCVCamera(int idx)
 {
     cap = new cv::VideoCapture(idx);
     setResolution(1024,768);
+    setFrameRate(1);
     /*printf("Camera %d: %dx%d\n",
            idx,
            getResolutionU(),
@@ -38,6 +39,11 @@ int OpenCVCamera::getResolutionU()
 int OpenCVCamera::getResolutionV()
 {
     return cap->get(CV_CAP_PROP_FRAME_HEIGHT);
+}
+
+void OpenCVCamera::setFrameRate(int fps)
+{
+    cap->set(CV_CAP_PROP_FPS,fps);
 }
 
 void OpenCVCamera::release()

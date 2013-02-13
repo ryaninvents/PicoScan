@@ -43,6 +43,9 @@ public:
                                                    getResolutionV());
                             return Camera::getResolution();}
 
+    /// Set frame rate.
+    void setFrameRate(int fps);
+
 private:
     cv::VideoCapture *cap;
 };

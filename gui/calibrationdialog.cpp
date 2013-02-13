@@ -37,8 +37,6 @@ void CalibrationDialog::setManager(ScanManager *m)
 
     calibrator->setScanManager(manager);
 
-    return;
-
     if(!(manager->isStereo())) return;
 
     ui->previewSecond->setCamera(manager->getSecond());

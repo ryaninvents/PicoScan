@@ -1,6 +1,10 @@
 #include "modelviewwidget.h"
 
 #include <QtOpenGL>
+#include <stdio.h>
+#define MAX_ZOOM -2.0
+#define MIN_ZOOM -30.0
+#define DEFAULT_ZOOM 8.0
 
 ModelViewWidget::ModelViewWidget(QWidget *parent) :
     QGLWidget(parent)
@@ -94,6 +98,8 @@ void ModelViewWidget::mouseMoveEvent(QMouseEvent *ev)
         int y = ev->y() - mY;
         xPlus = (GLdouble)x/10;
         yPlus = (GLdouble)y/10;
+        if(yRot+yPlus > 90) yPlus = 90 - yRot;
+        if(yRot+yPlus < -90) yPlus = -90 - yRot;
         updateGL();
     }
 }
@@ -104,30 +110,35 @@ void ModelViewWidget::mouseReleaseEvent(QMouseEvent *)
     yRot+=yPlus;
     xPlus = 0;
     yPlus = 0;
+    printf("%f %f\n",xRot,yRot);
     releaseMouse();
 }
 
 void ModelViewWidget::wheelEvent(QWheelEvent *ev)
 {
     zoom += (GLdouble)ev->delta()/200.0;
+    if(zoom>MAX_ZOOM) zoom = MAX_ZOOM;
+    if(zoom<MIN_ZOOM) zoom = MIN_ZOOM;
     updateGL();
 }
 
 void ModelViewWidget::zoomIn()
 {
-    if(zoom<-2.0) zoom*=0.9;
+    zoom*=0.9;
+    if(zoom>MAX_ZOOM) zoom = MAX_ZOOM;
     updateGL();
 }
 
 void ModelViewWidget::zoomOut()
 {
-    if(zoom>-30.0) zoom/=0.9;
+    zoom/=0.9;
+    if(zoom<MIN_ZOOM) zoom = MIN_ZOOM;
     updateGL();
 }
 
 void ModelViewWidget::zoomFit()
 {
-    zoom = -8.0;
+    zoom = DEFAULT_ZOOM;
     updateGL();
 }
 

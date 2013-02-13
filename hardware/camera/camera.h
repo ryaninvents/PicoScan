@@ -50,6 +50,9 @@ public:
 
     /// Release any resources this camera is using.
     virtual void release() = 0;
+
+    /// Set the frame rate.
+    void setFrameRate(int fps){}
 private:
     /** Whether or not we are waiting for the
         camera to take a snapshot (since it
