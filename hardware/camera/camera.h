@@ -18,7 +18,6 @@ enum CameraMode{
   */
 class Camera: public OpticalDevice
 {
-    Q_OBJECT
 public:
     /// Instantiate a camera.
     Camera();

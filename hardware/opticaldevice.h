@@ -3,7 +3,6 @@
 
 #include <opencv2/core/core.hpp>
 #include <QString>
-#include <QObject>
 
 
 /**
@@ -13,13 +12,10 @@
   cameras and projectors.
   */
 
-class OpticalDevice:public QObject
+class OpticalDevice
 {
-    Q_OBJECT
 public:
     OpticalDevice();
-
-    ~OpticalDevice();
 
     /** Sets the distortion vector for this device. */
     void setDistortion(cv::Mat k);
@@ -118,9 +114,6 @@ public:
 
     double getPrincipalU();
     double getPrincipalV();
-
-public slots:
-    void deleteLater();
 
 private:
     cv::Mat distortion;
