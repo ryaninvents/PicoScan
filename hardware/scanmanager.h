@@ -99,6 +99,7 @@ private:
     int lowestBit;
     unsigned int avgFmsBinary;
     unsigned int avgFmsFringe;
+    int maxBright;
 
     std::vector<cv::Mat> takeBinaryStereoFrame();
     std::vector<cv::Mat> takeBinaryMonoFrame();

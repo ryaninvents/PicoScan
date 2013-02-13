@@ -53,6 +53,7 @@ private:
     bool showingScreen;
     int binBit;
     bool binInv;
+    bool binaryMode;
 };
 
 #endif // MAINWINDOW_H

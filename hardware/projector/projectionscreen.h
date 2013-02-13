@@ -16,7 +16,7 @@ public:
     explicit ProjectionScreen(QWidget *parent = 0);
     void projectOnDisplay(int n);
     int getDisplayCount();
-    void projectBinary(int bit, bool inverted);
+    void projectBinary(int bit, bool inverted, int maxBright);
     void projectSinusoid(int period, double shift, int maxBright);
     void projectWhite();
     static unsigned int grayToBinary(unsigned int num);

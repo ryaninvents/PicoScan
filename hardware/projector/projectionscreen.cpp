@@ -97,7 +97,7 @@ QImage createSinusoid(unsigned int width,
     double d;
 
     for (x = 0; x < width; x++) {
-        d = (1+cos(x*M_2_PI/period - shift*M_2_PI))*maxBright*0.5;
+        d = (1+cos((x-shift)*M_PI*2/period))*maxBright*0.5;
         values[x] = (unsigned int) d;
     }
 
@@ -126,9 +126,10 @@ int ProjectionScreen::getDisplayCount()
     return QApplication::desktop()->screenCount();
 }
 
-void ProjectionScreen::projectBinary(int bit, bool inverted)
+void ProjectionScreen::projectBinary(int bit, bool inverted, int maxBright)
 {
-    QImage im = createGray(640,480,bit,inverted,128);
+    ''
+    QImage im = createGray(640,480,bit,inverted,maxBright);
     displayImage(im);
 }
 

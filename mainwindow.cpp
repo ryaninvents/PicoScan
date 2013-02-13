@@ -12,7 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     calib(new CalibrationDialog),
     showingScreen(false),
     binBit(0),
-    binInv(false)
+    binInv(false),
+    binaryMode(true)
 {
     ui->setupUi(this);
 
@@ -69,15 +70,33 @@ void MainWindow::showProjectionScreen()
         screen->show();
         showingScreen = true;
 
-        screen->projectBinary(0,false);
+        screen->projectBinary(0,false,255);
         screen->projectOnDisplay(1);
-    }else if(!binInv){
-        binInv = true;
-        screen->projectBinary(binBit,binInv);
-    }else{
+    }else if(binaryMode){
+        if(!binInv){
+            screen->projectBinary(binBit,binInv,255);
+            binInv = true;
+        }else{
+            if(binBit>=12){
+                binBit = 0;
+                binaryMode = false;
+                binBit++;
+                binInv = false;
+            }else{
+                screen->projectBinary(binBit,binInv,255);
+                binBit++;
+                binInv = false;
+            }
+        }
+    }
+    if(!binaryMode){
+        screen->projectSinusoid(8,binBit,255);
         binBit++;
-        binInv = false;
-        screen->projectBinary(binBit,binInv);
+        if(binBit>8){
+            binBit = 0;
+            binInv = false;
+            binaryMode = true;
+        }
     }
 }
 

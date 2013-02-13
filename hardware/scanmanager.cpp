@@ -11,7 +11,8 @@ ScanManager::ScanManager():
     stereo(false),
     lowestBit(0),
     avgFmsBinary(3),
-    avgFmsFringe(5)
+    avgFmsFringe(5),
+    maxBright(255)
 {
     cameras = std::vector<Camera *>();
     cameras.push_back(0);
@@ -181,12 +182,12 @@ std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
     // loop through bit values
     for(n=lowestBit;n<nmax;n++){
         // project binary pattern
-        screen->projectBinary(n,false);
+        screen->projectBinary(n,false,maxBright);
         imgFirst = getFirst()->getFrameBW(avgFmsBinary);
         imgSecond = getSecond()->getFrameBW(avgFmsBinary);
 
         // project inverted binary pattern
-        screen->projectBinary(n,true);
+        screen->projectBinary(n,true,maxBright);
         invFirst = getFirst()->getFrameBW(avgFmsBinary);
         invSecond = getSecond()->getFrameBW(avgFmsBinary);
 
@@ -197,12 +198,12 @@ std::vector<cv::Mat> ScanManager::takeBinaryStereoFrame()
 
 
     // project white and capture
-    screen->projectBinary(nmax+1,false);
+    screen->projectBinary(nmax+1,false,maxBright);
     maskFirst = getFirst()->getFrameBW(avgFmsBinary);
     maskSecond = getSecond()->getFrameBW(avgFmsBinary);
 
     // project black and capture
-    screen->projectBinary(nmax+1,true);
+    screen->projectBinary(nmax+1,true,maxBright);
     maskFirst = maskFirst - getFirst()->getFrameBW(avgFmsBinary);
     maskSecond = maskSecond - getSecond()->getFrameBW(avgFmsBinary);
 
@@ -254,11 +255,11 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
     // loop through bit values
     for(n=lowestBit;n<nmax;n++){
         // project binary pattern
-        screen->projectBinary(n,false);
+        screen->projectBinary(n,false,maxBright);
         img = getFirst()->getFrameBW(avgFmsBinary);
 
         // project inverted binary pattern
-        screen->projectBinary(n,true);
+        screen->projectBinary(n,true,maxBright);
         inv = getFirst()->getFrameBW(avgFmsBinary);
 
         // add the bit to the image
@@ -266,11 +267,11 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
     }
 
     // project white and capture
-    screen->projectBinary(nmax+1,false);
+    screen->projectBinary(nmax+1,false,maxBright);
     mask = getFirst()->getFrameBW(avgFmsBinary);
 
     // project black and capture
-    screen->projectBinary(nmax+1,true);
+    screen->projectBinary(nmax+1,true,maxBright);
     mask = mask - getFirst()->getFrameBW(avgFmsBinary);
 
     // decode, apply mask, push
