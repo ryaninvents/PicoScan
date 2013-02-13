@@ -80,13 +80,13 @@ public:
     /** Get the lowest bit used for binary. */
     int getLowestBit(){return lowestBit;}
     /** Set the number of frames averaged together for binary shots. */
-    void setAveragedFramesForBinary(unsigned int avg){avgFrameBinary = avg;}
+    void setAveragedFramesForBinary(unsigned int avg){avgFmsBinary = avg;}
     /** Get the number of frames averaged together for binary shots. */
-    unsigned int getAveragedFramesForBinary(){return avgFrameBinary;}
+    unsigned int getAveragedFramesForBinary(){return avgFmsBinary;}
     /** Set the number of frames averaged together for sinusoidal fringe shots. */
-    void setAveragedFramesForFringes(unsigned int avg){avgFrameFringe = avg;}
+    void setAveragedFramesForFringes(unsigned int avg){avgFmsFringe = avg;}
     /** Get the number of frames averaged together for sinusoidal fringe shots. */
-    unsigned int getAveragedFramesForFringes(){return avgFrameFringe;}
+    unsigned int getAveragedFramesForFringes(){return avgFmsFringe;}
 
 private:
     std::vector<Camera *> cameras;
@@ -97,8 +97,8 @@ private:
 
     bool stereo;
     int lowestBit;
-    unsigned int avgFrameBinary;
-    unsigned int avgFrameFringe;
+    unsigned int avgFmsBinary;
+    unsigned int avgFmsFringe;
 
     std::vector<cv::Mat> takeBinaryStereoFrame();
     std::vector<cv::Mat> takeBinaryMonoFrame();
