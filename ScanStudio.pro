@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     test/testmesher.cpp \
     geom/pointcloud.cpp \
     gui/changeresolutiondialog.cpp \
-    hardware/camera/filecamera.cpp
+    hardware/camera/filecamera.cpp \
+    hardware/standards/dotmatrixstandard.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -65,7 +66,8 @@ HEADERS  += mainwindow.h \
     test/testmesher.h \
     geom/pointcloud.h \
     gui/changeresolutiondialog.h \
-    hardware/camera/filecamera.h
+    hardware/camera/filecamera.h \
+    hardware/standards/dotmatrixstandard.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
