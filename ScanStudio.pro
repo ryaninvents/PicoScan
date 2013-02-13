@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     geom/triangulator.cpp \
     test/testmesher.cpp \
     geom/pointcloud.cpp \
-    gui/changeresolutiondialog.cpp
+    gui/changeresolutiondialog.cpp \
+    hardware/camera/filecamera.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -63,7 +64,8 @@ HEADERS  += mainwindow.h \
     geom/triangulator.h \
     test/testmesher.h \
     geom/pointcloud.h \
-    gui/changeresolutiondialog.h
+    gui/changeresolutiondialog.h \
+    hardware/camera/filecamera.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
