@@ -3,11 +3,9 @@
 #include <stdio.h>
 #include <opencv2/highgui/highgui.hpp>
 
-#define FILE_PATTERN "%s%s%4d.png"
-
-FileCamera::FileCamera(char *fnm):
+FileCamera::FileCamera(char *finm):
     Camera(),
-    fnm(fnm),
+    fnm(finm),
     idx(0)
 {
 }
@@ -20,8 +18,23 @@ void FileCamera::setMode(CameraMode m)
 
 cv::Mat FileCamera::getFrame()
 {
-    return cv::imread(getNextFilename());
+    char *fnm = getNextFilename();
+    printf("%s\n",fnm);
+    cv::Mat frame = cv::imread(fnm);
+    //frame.convertTo(frame,CV_16U);
+    return frame;
 }
+
+cv::Mat FileCamera::getFrameBW()
+{
+    char *fnm = getNextFilename();
+    printf("%s\n",fnm);
+    cv::Mat frame = cv::imread(fnm,CV_LOAD_IMAGE_GRAYSCALE);
+    frame.convertTo(frame,CV_16U);
+    return frame;
+}
+
+
 
 bool FileCamera::isOpen()
 {
@@ -41,8 +54,10 @@ char *FileCamera::getEnumValueAsString()
 
 char *FileCamera::getNextFilename()
 {
-    char buffer[128];
-    sprintf(buffer,FILE_PATTERN,getEnumValueAsString(),idx);
+    char buffer[256];
+    sprintf(buffer,"%s%d.png","/home/ryan/Downloads/2013 Feb 13/Round 1/*-",idx);
+    printf("filename\t\t%s\n",buffer);
     idx++;
+    if(idx>22) idx=0;
     return buffer;
 }

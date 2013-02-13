@@ -262,13 +262,13 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
     for(n=lowestBit;n<nmax;n++){
         // project binary pattern
         screen->projectBinary(n,false,maxBright);
-        getFirst()->getFrameBW(avgSkip);
-        img = getFirst()->getFrameBW(avgFmsBinary);
+//        getFirst()->getFrameBW(avgSkip);
+        img = getFirst()->getFrameBW();
 
         // project inverted binary pattern
         screen->projectBinary(n,true,maxBright);
-        getFirst()->getFrameBW(avgSkip);
-        inv = getFirst()->getFrameBW(avgFmsBinary);
+//        getFirst()->getFrameBW(avgSkip);
+        inv = getFirst()->getFrameBW();
 
         // add the bit to the image
         addBinaryBit(encoding,img,inv,n);
@@ -276,13 +276,13 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
 
     // project white and capture
     screen->projectBinary(nmax+1,false,maxBright);
-    getFirst()->getFrameBW(avgSkip);
-    mask = getFirst()->getFrameBW(avgFmsBinary);
+    //getFirst()->getFrameBW(avgSkip);
+    mask = getFirst()->getFrameBW();
 
     // project black and capture
     screen->projectBinary(nmax+1,true,maxBright);
-    getFirst()->getFrameBW(avgSkip);
-    mask = getFirst()->getFrameBW(avgFmsBinary) - mask;
+    //getFirst()->getFrameBW(avgSkip);
+    mask = mask - getFirst()->getFrameBW();
 
     // decode, apply mask, push
     decodeAndApplyMask(encoding,mask,20);

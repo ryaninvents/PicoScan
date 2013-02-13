@@ -2,6 +2,7 @@
 #include "ui_camerasettingsdialog.h"
 
 #include "../hardware/camera/opencvcamera.h"
+#include "../hardware/camera/filecamera.h"
 
 CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
     QDialog(parent),
@@ -40,7 +41,12 @@ void CameraSettingsDialog::enableStereo(bool b)
 
 void CameraSettingsDialog::setFirstCamera(int idx)
 {
-    manager->setFirst(hardware->getCamera(idx));
+    switch(ui->firstMode->currentIndex()){
+    case 0:
+        manager->setFirst(hardware->getCamera(idx));
+    default:
+        manager->setFirst(new FileCamera(ui->firstFile->text().toLocal8Bit().data()));
+    }
 }
 
 void CameraSettingsDialog::setSecondCamera(int idx)
@@ -79,6 +85,8 @@ void CameraSettingsDialog::firstModeChanged(int m)
 
     ui->firstFile->setEnabled(m==1);
     ui->labelFirstFile->setEnabled(m==1);
+
+    setFirstCamera(ui->firstDevice->value());
 }
 
 void CameraSettingsDialog::secondModeChanged(int m)

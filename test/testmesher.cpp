@@ -11,7 +11,7 @@
 #include "../geom/triangulator.h"
 
 #define FILE_PATTERN "/home/ryan/Pictures/Round 2/picture_%d.png"
-#define QUALITY_THRESHOLD 50
+#define QUALITY_THRESHOLD 5
 
 /**
   Gray code functions adapted from http://en.wikipedia.org/wiki/Gray_code

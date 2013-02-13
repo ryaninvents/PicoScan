@@ -8,13 +8,15 @@ class FileCamera : public Camera
 public:
     /// Create a new FileCamera, using the passed directory as the
     /// image source. Files are of the form [fnm][enum string][number].png
-    FileCamera(char *fnm);
+    FileCamera(char *finm);
 
     /// Set the camera mode
     void setMode(CameraMode m);
 
     /// Get a color frame.
     cv::Mat getFrame();
+
+    cv::Mat getFrameBW();
 
     /// Is the camera open?
     bool isOpen();
