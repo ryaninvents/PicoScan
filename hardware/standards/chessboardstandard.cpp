@@ -4,7 +4,8 @@
 
 ChessboardStandard::ChessboardStandard(cv::Size size, double scale):
     size(size),
-    scale(scale)
+    scaleX(scale),
+    scaleY(scale)
 {
 }
 
@@ -21,17 +22,17 @@ std::vector<cv::Point2f> ChessboardStandard::getImagePoints(
 
 std::vector<cv::Point3f> ChessboardStandard::getObjectPoints()
 {
-    int x,y;
-    double _x, _y;
+    int y,x;
+    double _y, _x;
     std::vector<cv::Point3f> pts;
 
-    for(x=0;x<size.height;x++){
-        for(y=0;y<size.width;y++){
-            _x = x;
+    for(y=0;y<size.height;y++){
+        for(x=0;x<size.width;x++){
             _y = y;
-            _x *= scale;
-            _y *= scale;
-            pts.push_back(cv::Point3f(_y,_x,0));
+            _x = x;
+            _y *= scaleY;
+            _x *= scaleX;
+            pts.push_back(cv::Point3f(_x,_y,0));
         }
     }
     return pts;

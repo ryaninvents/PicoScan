@@ -14,8 +14,11 @@ private:
       regulation 8x8 chessboard, then, would have a @a size of 7x7. */
     cv::Size size;
 
-    /** The length of a square size, in millimeters. */
-    double scale;
+    /// The width of a square, in millimeters.
+    double scaleX;
+
+    /// The height of a square, in millimeters.
+    double scaleY;
 
 public:
     /** Create a new chessboard.
