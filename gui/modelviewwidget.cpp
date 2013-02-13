@@ -110,7 +110,6 @@ void ModelViewWidget::mouseReleaseEvent(QMouseEvent *)
     yRot+=yPlus;
     xPlus = 0;
     yPlus = 0;
-    printf("%f %f\n",xRot,yRot);
     releaseMouse();
 }
 

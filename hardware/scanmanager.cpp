@@ -11,7 +11,7 @@
 ScanManager::ScanManager():
     stereo(false),
     lowestBit(0),
-    avgFmsBinary(3),
+    avgFmsBinary(30),
     avgFmsFringe(5),
     maxBright(255)
 {
@@ -289,7 +289,6 @@ std::vector<cv::Mat> ScanManager::takeBinaryMonoFrame()
 
     // decode, apply mask, push
     decodeAndApplyMask(encoding,mask);
-
     out.push_back(encoding);
 
     return out;
