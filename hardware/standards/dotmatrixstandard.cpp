@@ -21,7 +21,7 @@ DotMatrixStandard::DotMatrixStandard(cv::Size size, double scale):
 {
 }
 
-std::vector DotMatrixStandard::getImagePoints(
+std::vector<cv::Point2f> DotMatrixStandard::getImagePoints(
         cv::Mat image,
         bool *success)
 {
@@ -33,7 +33,7 @@ std::vector DotMatrixStandard::getImagePoints(
     return corners;
 }
 
-std::vector DotMatrixStandard::getObjectPoints()
+std::vector<cv::Point3f> DotMatrixStandard::getObjectPoints()
 {
     return getGridPoints(size,scaleX,scaleY,offset);
 }

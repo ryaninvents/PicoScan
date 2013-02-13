@@ -9,6 +9,13 @@ ChessboardStandard::ChessboardStandard(cv::Size size, double scale):
 {
 }
 
+ChessboardStandard::ChessboardStandard(cv::Size size, double scaleX, double scaleY):
+    size(size),
+    scaleX(scaleX),
+    scaleY(scaleY)
+{
+}
+
 std::vector<cv::Point2f> ChessboardStandard::getImagePoints(
         cv::Mat image,
         bool *success)

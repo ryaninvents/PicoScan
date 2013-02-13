@@ -28,6 +28,8 @@ public:
         \param scale The length of a square's side, in millimeters. */
     ChessboardStandard(cv::Size size, double scale);
 
+    ChessboardStandard(cv::Size size, double scaleX, double scaleY);
+
     std::vector<cv::Point2f> getImagePoints(cv::Mat image, bool *success);
 
     std::vector<cv::Point3f> getObjectPoints();
