@@ -5,6 +5,7 @@
 
 class FileCamera : public Camera
 {
+    Q_OBJECT
 public:
     /// Create a new FileCamera, using the passed directory as the
     /// image source. Files are of the form [fnm][enum string][number].png

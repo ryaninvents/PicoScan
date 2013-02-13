@@ -3,12 +3,18 @@
 #include <opencv2/calib3d/calib3d.hpp>
 #include <iostream>
 
-OpticalDevice::OpticalDevice()
+OpticalDevice::OpticalDevice():
+    QObject()
 {
     orientation = cv::Mat::eye(3,3,CV_64F);
     position = cv::Vec3d();
     intrinsicMatrix = cv::Mat::eye(3,3,CV_64F);
     resolution = cv::Size(800,600);
+}
+
+OpticalDevice::~OpticalDevice()
+{
+
 }
 
 void OpticalDevice::setDistortion(cv::Mat k)
@@ -188,6 +194,10 @@ double OpticalDevice::getPrincipalU()
 double OpticalDevice::getPrincipalV()
 {
     return intrinsicMatrix.at<double>(1,2);
+}
+
+void OpticalDevice::deleteLater()
+{
 }
 
 double OpticalDevice::getNormalizedCoord(double u, double c)

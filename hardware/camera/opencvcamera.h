@@ -10,6 +10,7 @@
   */
 class OpenCVCamera: public Camera
 {
+    Q_OBJECT
 public:
     /**
       Create a camera by selecting its index.

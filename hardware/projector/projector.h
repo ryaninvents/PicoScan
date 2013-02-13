@@ -6,6 +6,7 @@
 
 class Projector : public OpticalDevice
 {
+    Q_OBJECT
 public:
     Projector(ProjectionScreen *screen);
 private:
