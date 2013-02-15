@@ -76,8 +76,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 int main(int argc, char** argv)
 {
-    TestMesher::testMesh("/home/ryan/Code/ScanStudio/config.geom");
-return 0;
+   // TestMesher::testMesh("/home/ryan/Code/ScanStudio/config.geom");
+//return 0;
     //*
     QApplication a(argc, argv);
     MainWindow w;
