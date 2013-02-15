@@ -106,7 +106,8 @@ cv::Vec3d Triangulator::getCentroid(std::vector<cv::Vec3d> pts)
     return cv::Vec3d(x/i,y/i,z/i);
 }
 
-cv::Mat Triangulator::computePhase(std::vector input, double scale)
+cv::Mat Triangulator::computePhase(std::vector<cv::Mat> input,
+                                   double scale)
 {
     uint m = input.size();
     cv::Mat omega = cv::Mat::zeros(input[0].size,CV_64F);
