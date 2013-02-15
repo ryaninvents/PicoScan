@@ -5,6 +5,10 @@
 QOpticalDevice::QOpticalDevice(QObject *parent) :
     QObject(parent)
 {
+    orientation = cv::Mat::eye(3,3,CV_64F);
+    position = cv::Vec3d();
+    intrinsicMatrix = cv::Mat::eye(3,3,CV_64F);
+    resolution = cv::Size(800,600);
 }
 
 void QOpticalDevice::setDistortion(cv::Mat k)

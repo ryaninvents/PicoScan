@@ -75,6 +75,15 @@ public:
       */
     cv::Point3d getCentroid();
 
+    /// Add a point to the sheet.
+    void setPoint(unsigned int u, unsigned int v, cv::Vec3d pt);
+
+    /// Save to STL format.
+    void saveSTL(char *fnm);
+
+    /// Set quad
+    void enableQuad(unsigned int u, unsigned int v);
+
 
 private:
     /**

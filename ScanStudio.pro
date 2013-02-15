@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     gui/changeresolutiondialog.cpp \
     hardware/camera/filecamera.cpp \
     hardware/standards/dotmatrixstandard.cpp \
-    hardware/qopticaldevice.cpp
+    hardware/qopticaldevice.cpp \
+    hardware/camera/qcamera.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -69,7 +70,8 @@ HEADERS  += mainwindow.h \
     gui/changeresolutiondialog.h \
     hardware/camera/filecamera.h \
     hardware/standards/dotmatrixstandard.h \
-    hardware/qopticaldevice.h
+    hardware/qopticaldevice.h \
+    hardware/camera/qcamera.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

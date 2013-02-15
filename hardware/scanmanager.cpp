@@ -14,7 +14,7 @@ ScanManager::ScanManager():
     avgFmsBinary(5),
     avgSkip(10),
     avgFmsFringe(5),
-    maxBright(255)
+    maxBright(128)
 {
     cameras = std::vector<Camera *>();
     cameras.push_back(0);

@@ -9,6 +9,7 @@
 #include "../hardware/opticaldevice.h"
 #include "../geom/pointcloud.h"
 #include "../geom/triangulator.h"
+#include "../geom/sheet.h"
 
 #define FILE_PATTERN "/home/ryan/Pictures/Round 2/picture_%d.png"
 #define QUALITY_THRESHOLD 5
@@ -79,7 +80,7 @@ void TestMesher::testMesh(char *configFilename){
     char filename[50];
 
     // current image index
-    unsigned int idx = 1;
+    unsigned int idx = 0;
 
     // bits necessary to uniquely identify each pixel
     unsigned int nmax;
@@ -235,9 +236,11 @@ void TestMesher::testMesh(char *configFilename){
         // load the frame
         img = cv::imread(filename,CV_LOAD_IMAGE_GRAYSCALE);
         img.convertTo(img,CV_32S);
+        printf("%s\n",filename);
 
         // construct the next filename
         sprintf(filename, imPath, idx++);
+        printf("%s\n",filename);
 
         // load the frame
         inv = cv::imread(filename,CV_LOAD_IMAGE_GRAYSCALE);
@@ -290,36 +293,32 @@ void TestMesher::testMesh(char *configFilename){
     std::cout << "\ncorresponding to (" << projector->getPrincipalU();
     std::cout << "," << projector->getPrincipalV() << ")\n";
 
-    std::ofstream log;
-    log.open("/home/ryan/Documents/geom.csv");
-    log << "u,v,u_p,P_up.x,P_up.y,P_up.z,"
-           "P_fwd.x,P_fwd.y,P_fwd.z,"
-           "M_hat.x,M_hat.y,M_hat.z,"
-           "D.x,D.y,D.z,M.x,M.y,M.z\n";
+    uint decimation=3;
 
-    for(x=0; x<img.cols; x++){
-        for(y=0; y<img.rows; y++){
+    Sheet sheet(cv::Size(img.cols,img.rows));
+
+    for(x=0; x<img.cols-decimation; x+=decimation){
+        for(y=0; y<img.rows-decimation; y+=decimation){
             px = decoded.at<int>(y,x);
             if(px<0) continue;
             P_fwd = projector->getPixelRay(px,0);
             M_hat = camera->getPixelRay(x,y);
             M = Triangulator::sumTo(M_hat,P_up,P_fwd,D);
             pt = cv::Point3d(M[0],M[1],M[2]);
-            cloud.add(pt);
-            log << x << ',' << y << ',' << px << ',' <<
-                   P_up[0] << ',' << P_up[1] << ',' <<
-                   P_up[2] << ',' << P_fwd[0] << ',' <<
-                   P_fwd[1] << ',' << P_fwd[2] << ',' <<
-                   M_hat[0] << ',' << M_hat[1] << ',' <<
-                   M_hat[2] << ',' << D[0] << ',' <<
-                   D[1] << ',' << D[2] << ',' << M[0] <<
-                   ',' << M[1] << ',' << M[2] << '\n';
+            //cloud.add(pt);
+
+            sheet.setPoint(x/decimation,y/decimation,M);
+            if(     (decoded.at<int>(y+decimation,x)>0)&&
+                    (decoded.at<int>(y,x+decimation)>0)&&
+                    (decoded.at<int>(y+decimation,x+decimation)>0)){
+                sheet.enableQuad(x/decimation,y/decimation);
+            }
 
         }
     }
 
-    log.close();
+    sheet.saveSTL("/home/ryan/Documents/mqp-data/output.stl");
 
-    cloud.meshlab("/home/ryan/Documents/mqp-data/head.obj");
+    //cloud.meshlab("/home/ryan/Documents/mqp-data/head.obj");
 
 }
