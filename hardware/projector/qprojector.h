@@ -20,18 +20,13 @@ public:
         virtual QImage generatePattern(int width, int height) = 0;
     };
 
-    /// Convert Gray code to binary.
-    static unsigned int grayToBinary(unsigned int num);
-    /// Convert binary code to Gray.
-    static unsigned int binaryToGray(unsigned int num);
-
 signals:
     /// Notify listeners that a pattern has been projected.
     void patternProjected(uint frameID);
 
 public slots:
     /// Project a pattern.
-    
+    //virtual void projectPattern(QProjector::Pattern p);
 };
 
 #endif // QPROJECTOR_H
