@@ -34,13 +34,24 @@ public:
 signals:
     /// Signal that a frame has been captured.
     void frameCaptured(cv::Mat frame,
-                       unsigned long timestamp,
+                       qint64 timestamp,
                        uint frameID,
                        uint cameraID);
-    
+    /// Signal that a grayscale frame has been captured.
+    void frameCapturedGray(cv::Mat frame,
+                           qint64 timestamp,
+                           uint frameID,
+                           uint cameraID);
+
 public slots:
     /// Request a frame from the camera.
     virtual void requestFrame(uint frameID);
+
+    /// Request a grayscale frame.
+    virtual void requestGrayscaleFrame(uint frameID);
+
+protected:
+    qint64 now();
 
 
 private:

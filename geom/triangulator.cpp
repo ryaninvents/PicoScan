@@ -1,9 +1,5 @@
 #include "triangulator.h"
 
-Triangulator::Triangulator()
-{
-}
-
 cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
                               const cv::Vec3d P_up,
                               const cv::Vec3d P_fwd,

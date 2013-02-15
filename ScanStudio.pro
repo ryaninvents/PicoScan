@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     hardware/camera/filecamera.cpp \
     hardware/standards/dotmatrixstandard.cpp \
     hardware/qopticaldevice.cpp \
-    hardware/camera/qcamera.cpp
+    hardware/camera/qcamera.cpp \
+    hardware/camera/qopencvcamera.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -71,7 +72,8 @@ HEADERS  += mainwindow.h \
     hardware/camera/filecamera.h \
     hardware/standards/dotmatrixstandard.h \
     hardware/qopticaldevice.h \
-    hardware/camera/qcamera.h
+    hardware/camera/qcamera.h \
+    hardware/camera/qopencvcamera.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

@@ -4,7 +4,9 @@
 class Triangulator
 {
 public:
-    Triangulator();
+    /// Given a line <tt>L = M_hat * s</tt>,
+    /// and a plane <tt>P = D + P_up * s + P_fwd * t</tt>,
+    /// find the point of intersection.
     static cv::Vec3d sumTo(const cv::Vec3d M_hat,
                            const cv::Vec3d P_up,
                            const cv::Vec3d P_fwd,
