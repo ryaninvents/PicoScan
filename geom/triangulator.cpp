@@ -106,3 +106,24 @@ cv::Vec3d Triangulator::getCentroid(std::vector<cv::Vec3d> pts)
     return cv::Vec3d(x/i,y/i,z/i);
 }
 
+cv::Mat Triangulator::computePhase(std::vector input, double scale)
+{
+    uint m = input.size();
+    cv::Mat omega = cv::Mat::zeros(input[0].size,CV_64F);
+    double alpha,numer,denom;
+    uint i,x,y;
+    for(x=0;x<input[i].cols;x++){
+        for(y=0;y<input[i].rows;y++){
+            numer = 0;
+            denom = 0;
+            for(i=0;i<m;i++){
+                alpha = 2*M_PI*i/m;
+                numer += input[i].at<int>(y,x)*sin(alpha);
+                denom += input[i].at<int>(y,x)*cos(alpha);
+            }
+            omega.at<double>(i) = -numer*scale/denom;
+        }
+    }
+    return omega;
+}
+

@@ -1,6 +1,8 @@
 #ifndef TRIANGULATOR_H
 #define TRIANGULATOR_H
 #include <opencv2/core/core.hpp>
+
+/// Provides triangulation as well as other utilities.
 class Triangulator
 {
 public:
@@ -30,6 +32,10 @@ public:
 
     /** Get the normal of a plane returned by getPlane(). */
     //static cv::Vec3d getPlaneNormal(cv::Vec3d plane);
+
+    /// Compute wrapped phase from set of images.
+    static cv::Mat computePhase(std::vector<cv::Mat> input,
+                                double scale);
 };
 
 #endif // TRIANGULATOR_H
