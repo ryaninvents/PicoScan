@@ -45,10 +45,10 @@ signals:
 
 public slots:
     /// Request a frame from the camera.
-    virtual void requestFrame(uint frameID);
+    virtual void requestFrame(uint frameID) = 0;
 
     /// Request a grayscale frame.
-    virtual void requestGrayscaleFrame(uint frameID);
+    virtual void requestGrayscaleFrame(uint frameID) = 0;
 
 protected:
 
@@ -57,8 +57,6 @@ protected:
 
 
 private:
-    /// Current mode
-    CameraMode mode;
 
     /// Camera ID
     uint id;
