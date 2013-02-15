@@ -106,25 +106,31 @@ cv::Vec3d Triangulator::getCentroid(std::vector<cv::Vec3d> pts)
     return cv::Vec3d(x/i,y/i,z/i);
 }
 
-cv::Mat Triangulator::computePhase(std::vector<cv::Mat> input,
+void Triangulator::computePhase(std::vector<cv::Mat> fringes,
+                                   cv::Mat output,
                                    double scale)
 {
-    uint m = input.size();
-    cv::Mat omega = cv::Mat::zeros(input[0].size,CV_64F);
+    uint m = fringes.size();
     double alpha,numer,denom;
     uint i,x,y;
-    for(x=0;x<input[i].cols;x++){
-        for(y=0;y<input[i].rows;y++){
-            numer = 0;
-            denom = 0;
-            for(i=0;i<m;i++){
-                alpha = 2*M_PI*i/m;
-                numer += input[i].at<int>(y,x)*sin(alpha);
-                denom += input[i].at<int>(y,x)*cos(alpha);
-            }
-            omega.at<double>(i) = -numer*scale/denom;
-        }
+
+    for(x=0;x<output.cols;x++){
+       for(y=0;y<output.rows;y++){
+           numer = 0;
+           denom = 0;
+           for(i=0;i<m;i++){
+               alpha = 2*M_PI*(i)/m;
+               numer += fringes[i].at<unsigned char>(y,x)*sin(alpha);
+               denom += fringes[i].at<unsigned char>(y,x)*cos(alpha);
+           }
+           if((denom<1e-10 && denom>-1e-10))
+               output.at<double>(y,x) = 0;
+           else{
+               denom = numer/(denom*2*M_PI)+0.5;
+               //if(denom<0) denom += 1.0;
+               output.at<double>(y,x) = scale*denom;
+           }
+       }
     }
-    return omega;
 }
 

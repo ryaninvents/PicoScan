@@ -6,5 +6,5 @@ focal 1350
 posn 0.5 0.0 0.0
 orin 0.0 0.5 0.0
 
-ignore 0
+ignore 2
 images /home/ryan/Downloads/fr/round1/gum%04d.jpg

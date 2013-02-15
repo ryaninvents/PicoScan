@@ -74,6 +74,8 @@ POSSIBILITY OF SUCH DAMAGE.
 /// Entry point for ScanStudio.
 int main(int argc, char** argv)
 {
+    TestMesher::testPhase("/home/ryan/Code/ScanStudio/config.geom");
+    return 0;
     QApplication a(argc, argv);
     MainWindow w;
     w.showMaximized();

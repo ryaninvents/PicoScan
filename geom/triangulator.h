@@ -34,8 +34,9 @@ public:
     //static cv::Vec3d getPlaneNormal(cv::Vec3d plane);
 
     /// Compute wrapped phase from set of images.
-    static cv::Mat computePhase(std::vector<cv::Mat> input,
-                                double scale);
+    static void computePhase(std::vector<cv::Mat> fringes,
+                             cv::Mat output,
+                             double scale);
 };
 
 #endif // TRIANGULATOR_H
