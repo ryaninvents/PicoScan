@@ -41,7 +41,9 @@ SOURCES += main.cpp\
     hardware/standards/dotmatrixstandard.cpp \
     hardware/qopticaldevice.cpp \
     hardware/camera/qcamera.cpp \
-    hardware/camera/qopencvcamera.cpp
+    hardware/camera/qopencvcamera.cpp \
+    hardware/camera/qfilecamera.cpp \
+    hardware/projector/qprojector.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -73,7 +75,9 @@ HEADERS  += mainwindow.h \
     hardware/standards/dotmatrixstandard.h \
     hardware/qopticaldevice.h \
     hardware/camera/qcamera.h \
-    hardware/camera/qopencvcamera.h
+    hardware/camera/qopencvcamera.h \
+    hardware/camera/qfilecamera.h \
+    hardware/projector/qprojector.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

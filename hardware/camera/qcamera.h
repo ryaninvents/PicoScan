@@ -51,6 +51,8 @@ public slots:
     virtual void requestGrayscaleFrame(uint frameID);
 
 protected:
+
+    /// Get the current time in milliseconds.
     qint64 now();
 
 
