@@ -8,15 +8,17 @@ QFileCamera::QFileCamera(QString fnm, QObject *parent) :
 {
 }
 
-void QFileCamera::requestFrame(uint frameID)
+void QFileCamera::requestFrame(ImageDescriptor desc)
 {
-    cv::Mat m = cv::imread(fnm.arg(frameID).toLocal8Bit().data());
-    frameCaptured(m,now(),frameID,getID());
+    cv::Mat frame;
+    if(desc.isColor())
+        frame = cv::imread(getFilename(desc));
+    else
+        frame = cv::imread(getFilename(desc), CV_LOAD_IMAGE_GRAYSCALE);
+    processFrame(frame,desc);
 }
 
-void QFileCamera::requestGrayscaleFrame(uint frameID)
+char *QFileCamera::getFilename(ImageDescriptor desc)
 {
-    cv::Mat m = cv::imread(fnm.arg(frameID).toLocal8Bit().data(),
-                           CV_LOAD_IMAGE_GRAYSCALE);
-    frameCaptured(m,now(),frameID,getID());
+    return fnm.arg(desc.getFrameID()).toLocal8Bit().data();
 }

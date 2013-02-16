@@ -18,7 +18,8 @@ public:
     {
     public:
         /// Get the pattern.
-        virtual QImage generatePattern(int width, int height){}
+        virtual QImage generatePattern(int width,
+                                       int height){}
         /// Get an ID that uniquely identifies this pattern's
         /// configuration. This identifies the pattern among
         /// other patterns in the same sequence, so it need

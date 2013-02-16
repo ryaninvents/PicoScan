@@ -7,6 +7,7 @@
 #include "camera/qcamera.h"
 #include "standards/calibrationstandard.h"
 #include "../geom/uniqueimage.h"
+#include "../image/imageprocessor.h"
 
 /// Scan manager using signals and slots.
 class QScanMananger : public QObject
@@ -19,8 +20,8 @@ public:
     /// Fetch an image based on its camera ID and frame ID.
     /// The image has already been captured. To request
     /// frames, use needFrame().
-    UniqueImage fetchImage(unsigned int camera,
-                           unsigned int frame);
+    UniqueImage fetchCapturedImage(unsigned int camera,
+                                   unsigned int frame);
 
     /// Set the projector to use.
     void setProjector(QProjector *p);
@@ -46,6 +47,7 @@ signals:
 public slots:
     /// A frame has come back from the capturing system.
     void frameReturned(UniqueImage image);
+    void requestFullFrame();
 
 private:
     /// All cameras in use by the manager.
@@ -61,13 +63,18 @@ private:
     std::vector<UniqueImage> images;
     /// Images we're still waiting for
     std::vector<ImageDescriptor> waiting;
+    /// The image processor that will handle images
+    ImageProcessor *processor;
 
     /// Connect signals and slots in a camera to this manager.
     void connectCameraSignals(QCamera *cam);
     /// Disconnect signals and slots before removing the camera
     /// from the manager.
     void disconnectCameraSignals(QCamera *cam);
-    
+
+protected:
+    /// Capture a frame from each camera.
+    void captureFrame(ImageDescriptor desc);
 };
 
 #endif // QSCANMANANGER_H

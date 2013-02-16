@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     geom/uniqueimage.cpp \
     geom/imagedescriptor.cpp \
     image/imageprocessor.cpp \
-    image/binaryimageprocessor.cpp
+    image/binaryimageprocessor.cpp \
+    hardware/projector/graycodepattern.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -91,7 +92,8 @@ HEADERS  += mainwindow.h \
     geom/uniqueimage.h \
     geom/imagedescriptor.h \
     image/imageprocessor.h \
-    image/binaryimageprocessor.h
+    image/binaryimageprocessor.h \
+    hardware/projector/graycodepattern.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

@@ -23,3 +23,14 @@ bool ImageDescriptor::isColor()
 {
     return color;
 }
+
+unsigned int ImageDescriptor::getInfoFromID(
+        unsigned int position,
+        unsigned int size)
+{
+    unsigned int mask;
+    unsigned int raw = getFrameID();
+    raw = raw >> position;
+    mask = (1U << size)-1;
+    return raw & mask;
+}

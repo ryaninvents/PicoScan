@@ -21,7 +21,7 @@ signals:
     
 public slots:
     void projectPattern(QProjector::Pattern *p,
-                        uint frameID);
+                        ImageDescriptor desc);
 
 private:
     Widget w;

@@ -28,15 +28,15 @@ signals:
     
 public slots:
     /// Request a frame from file.
-    void requestFrame(uint frameID);
-
-    /// Request a grayscale frame from file.
-    void requestGrayscaleFrame(uint frameID);
+    void requestFrame(ImageDescriptor desc);
 
 private:
 
     /// Filename pattern.
     QString fnm;
+
+    /// Get filename
+    char *getFilename(ImageDescriptor desc);
     
 };
 

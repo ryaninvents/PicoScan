@@ -6,8 +6,18 @@ QScanMananger::QScanMananger(QObject *parent) :
 {
 }
 
+UniqueImage QScanMananger::fetchCapturedImage(unsigned int camera, unsigned int frame)
+{
+}
+
 void QScanMananger::frameReturned(UniqueImage image){
 
+}
+
+void QScanMananger::requestFullFrame()
+{
+    // neededFrames = ImageProcessor.getRequiredFrames()
+    // captureFrame();
 }
 
 void QScanMananger::connectCameraSignals(QCamera *cam)
@@ -19,6 +29,12 @@ void QScanMananger::connectCameraSignals(QCamera *cam)
 void QScanMananger::disconnectCameraSignals(QCamera *cam)
 {
     cam->disconnect(this);
+}
+
+void QScanMananger::captureFrame(ImageDescriptor desc)
+{
+    // figure out what pattern we need based on descriptor
+    /// emit needFrame()
 }
 
 void QScanMananger::setProjector(QProjector *p)

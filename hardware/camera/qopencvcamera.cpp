@@ -29,5 +29,5 @@ void QOpenCVCamera::requestFrame(ImageDescriptor desc)
     cap->read(m);
     if(!desc.isColor())
         cv::cvtColor(m,m,CV_RGB2GRAY);
-    frameCaptured(m,now(),frameID,getID());
+    processFrame(m,desc);
 }

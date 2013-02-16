@@ -22,6 +22,9 @@ public:
     /// Get a list of ImageDescriptors representing
     /// the frames needed for binary processing.
     std::vector<ImageDescriptor> getRequiredFrames();
+
+    /// Get a binary pattern from a descriptor.
+    QProjector::Pattern *getPattern(ImageDescriptor desc);
     
 signals:
     
