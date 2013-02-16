@@ -12,32 +12,22 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    hardware/opticaldevice.cpp \
-    hardware/camera/camera.cpp \
-    hardware/camera/opencvcamera.cpp \
     hardware/standards/calibrationstandard.cpp \
     hardware/standards/chessboardstandard.cpp \
     gui/modelviewwidget.cpp \
     gui/aboutdialog.cpp \
     gui/camerasettingsdialog.cpp \
     geom/sheet.cpp \
-    hardware/projector/projectionscreen.cpp \
-    hardware/projector/projectionpattern.cpp \
     gui/imageviewwidget.cpp \
     gui/camerastreamwidget.cpp \
     gui/calibrationstandarddialog.cpp \
-    hardware/scanmanager.cpp \
     gui/calibrationdialog.cpp \
     gui/calibrationinprogress.cpp \
-    hardware/hardwaremanager.cpp \
     geom/calibrator.cpp \
-    hardware/projector/reflectedbinarypattern.cpp \
-    hardware/projector/projector.cpp \
     geom/triangulator.cpp \
     test/testmesher.cpp \
     geom/pointcloud.cpp \
     gui/changeresolutiondialog.cpp \
-    hardware/camera/filecamera.cpp \
     hardware/standards/dotmatrixstandard.cpp \
     hardware/qopticaldevice.cpp \
     hardware/camera/qcamera.cpp \
@@ -45,7 +35,6 @@ SOURCES += main.cpp\
     hardware/camera/qfilecamera.cpp \
     hardware/projector/qprojector.cpp \
     hardware/projector/seconddisplayprojector.cpp \
-    hardware/patterns/structuredlightpattern.cpp \
     hardware/qscanmananger.cpp \
     geom/uniqueimage.cpp \
     geom/imagedescriptor.cpp \
@@ -54,32 +43,22 @@ SOURCES += main.cpp\
     hardware/projector/graycodepattern.cpp
 
 HEADERS  += mainwindow.h \
-    hardware/opticaldevice.h \
-    hardware/camera/camera.h \
-    hardware/camera/opencvcamera.h \
     hardware/standards/calibrationstandard.h \
     hardware/standards/chessboardstandard.h \
     gui/modelviewwidget.h \
     gui/aboutdialog.h \
     gui/camerasettingsdialog.h \
     geom/sheet.h \
-    hardware/projector/projectionscreen.h \
-    hardware/projector/projectionpattern.h \
     gui/imageviewwidget.h \
     gui/camerastreamwidget.h \
     gui/calibrationstandarddialog.h \
-    hardware/scanmanager.h \
     gui/calibrationdialog.h \
     gui/calibrationinprogress.h \
-    hardware/hardwaremanager.h \
     geom/calibrator.h \
-    hardware/projector/reflectedbinarypattern.h \
-    hardware/projector/projector.h \
     geom/triangulator.h \
     test/testmesher.h \
     geom/pointcloud.h \
     gui/changeresolutiondialog.h \
-    hardware/camera/filecamera.h \
     hardware/standards/dotmatrixstandard.h \
     hardware/qopticaldevice.h \
     hardware/camera/qcamera.h \
@@ -87,7 +66,6 @@ HEADERS  += mainwindow.h \
     hardware/camera/qfilecamera.h \
     hardware/projector/qprojector.h \
     hardware/projector/seconddisplayprojector.h \
-    hardware/patterns/structuredlightpattern.h \
     hardware/qscanmananger.h \
     geom/uniqueimage.h \
     geom/imagedescriptor.h \
