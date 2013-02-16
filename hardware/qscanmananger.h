@@ -61,8 +61,10 @@ private:
     std::vector<QProjector::Pattern> patternQueue;
     /// The images we've collected so far
     std::vector<UniqueImage> images;
-    /// Images we're still waiting for
+    /// Images we've requested but that are not back
     std::vector<ImageDescriptor> waiting;
+    /// Images we still need
+    std::vector<ImageDescriptor> neededFrames;
     /// The image processor that will handle images
     ImageProcessor *processor;
 

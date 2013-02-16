@@ -12,11 +12,11 @@ QImage GrayCodePattern::generatePattern(int width, int height)
     unsigned int mask = 1<<bit;
 
     for (x = 0; x < width; x++) {
-        gray = ProjectionScreen::binaryToGray(x);
+        gray = binaryToGray(x);
         if(!inverted)
-            values[x] = (gray & mask) ? 0:maxBright;
+            values[x] = (gray & mask) ? 0:255;
         else
-            values[x] = (gray & mask) ? maxBright:0;
+            values[x] = (gray & mask) ? 255:0;
     }
 
     for (y = 0; y < height; y++) {
