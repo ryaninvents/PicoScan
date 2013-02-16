@@ -44,7 +44,9 @@ SOURCES += main.cpp\
     hardware/camera/qopencvcamera.cpp \
     hardware/camera/qfilecamera.cpp \
     hardware/projector/qprojector.cpp \
-    hardware/projector/seconddisplayprojector.cpp
+    hardware/projector/seconddisplayprojector.cpp \
+    hardware/patterns/structuredlightpattern.cpp \
+    hardware/qscanmananger.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -79,7 +81,9 @@ HEADERS  += mainwindow.h \
     hardware/camera/qopencvcamera.h \
     hardware/camera/qfilecamera.h \
     hardware/projector/qprojector.h \
-    hardware/projector/seconddisplayprojector.h
+    hardware/projector/seconddisplayprojector.h \
+    hardware/patterns/structuredlightpattern.h \
+    hardware/qscanmananger.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

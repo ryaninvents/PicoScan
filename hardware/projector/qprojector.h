@@ -26,7 +26,7 @@ signals:
 
 public slots:
     /// Project a pattern.
-    //virtual void projectPattern(QProjector::Pattern p);
+    virtual void projectPattern(QProjector::Pattern *p) = 0;
 };
 
 #endif // QPROJECTOR_H
