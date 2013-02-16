@@ -8,9 +8,7 @@
 #include "gui/calibrationstandarddialog.h"
 #include "gui/calibrationdialog.h"
 
-#include "hardware/hardwaremanager.h"
-#include "hardware/scanmanager.h"
-#include "hardware/projector/projectionscreen.h"
+#include "hardware/qscanmananger.h"
 
 namespace Ui {
 class MainWindow;

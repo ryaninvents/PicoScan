@@ -14,7 +14,7 @@ CalibrationDialog::CalibrationDialog(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void CalibrationDialog::setManager(ScanManager *m)
+void CalibrationDialog::setManager(QScanManager *m)
 {
     manager = m;
 

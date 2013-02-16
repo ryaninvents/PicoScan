@@ -84,3 +84,8 @@ uint QScanMananger::numCameras()
 {
     return cameras.size();
 }
+
+void QScanMananger::limitNumCameras(int n)
+{
+    while(numCameras()>n) cameras.pop_back();
+}

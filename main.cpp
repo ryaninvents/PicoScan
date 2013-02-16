@@ -1,20 +1,6 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/calib3d/calib3d.hpp>
-
-#include <stdio.h>
-#include <iostream>
-#include <vector>
-
-#include "hardware/camera/camera.h"
-#include "hardware/camera/opencvcamera.h"
-#include "hardware/standards/calibrationstandard.h"
-#include "hardware/standards/chessboardstandard.h"
-#include "hardware/projector/projectionscreen.h"
 /*!
 \mainpage ScanStudio Scan Studio
 
@@ -68,8 +54,6 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
-
-#include "test/testmesher.h"
 
 /// Entry point for ScanStudio.
 int main(int argc, char** argv)

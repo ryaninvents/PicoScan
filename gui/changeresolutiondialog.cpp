@@ -13,7 +13,7 @@ ChangeResolutionDialog::~ChangeResolutionDialog()
     delete ui;
 }
 
-void ChangeResolutionDialog::setCamera(Camera *cam)
+void ChangeResolutionDialog::setCamera(QCamera *cam)
 {
     camera = cam;
 }

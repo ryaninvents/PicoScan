@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "../hardware/camera/camera.h"
+#include "../hardware/camera/qcamera.h"
 
 namespace Ui {
 class ChangeResolutionDialog;
@@ -16,7 +16,7 @@ class ChangeResolutionDialog : public QDialog
 public:
     explicit ChangeResolutionDialog(QWidget *parent = 0);
     ~ChangeResolutionDialog();
-    void setCamera(Camera *cam);
+    void setCamera(QCamera *cam);
 
 public slots:
     void accept();
@@ -27,7 +27,7 @@ signals:
     
 private:
     Ui::ChangeResolutionDialog *ui;
-    Camera *camera;
+    QCamera *camera;
 };
 
 #endif // CHANGERESOLUTIONDIALOG_H

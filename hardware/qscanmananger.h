@@ -37,6 +37,10 @@ public:
 
     /// Count the cameras
     uint numCameras();
+
+    /// If there are more than \a n cameras, remove some until there's
+    /// at most \a n.
+    void limitNumCameras(int n);
     
 signals:
     /// Request a grayscale frame. Will be passed back in through

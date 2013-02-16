@@ -1,9 +1,6 @@
 #include "camerasettingsdialog.h"
 #include "ui_camerasettingsdialog.h"
 
-#include "../hardware/camera/opencvcamera.h"
-#include "../hardware/camera/filecamera.h"
-
 CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CameraSettingsDialog)
@@ -33,7 +30,6 @@ void CameraSettingsDialog::enableStereo(bool b)
     ui->secondDevice->setEnabled(b);
     ui->secondRes->setEnabled(b);
     ui->secondMode->setEnabled(b);
-    manager->setStereo(b);
     if(b){
         secondModeChanged(ui->secondMode->currentIndex());
     }
@@ -43,26 +39,26 @@ void CameraSettingsDialog::setFirstCamera(int idx)
 {
     switch(ui->firstMode->currentIndex()){
     case 0:
-        manager->setFirst(hardware->getCamera(idx));
+//        manager->setFirst(hardware->getCamera(idx));
     default:
-        manager->setFirst(new FileCamera(ui->firstFile->text().toLocal8Bit().data()));
+//        manager->setFirst(new FileCamera(ui->firstFile->text().toLocal8Bit().data()));
     }
 }
 
 void CameraSettingsDialog::setSecondCamera(int idx)
 {
-    manager->setSecond(hardware->getCamera(idx));
+//    manager->setSecond(hardware->getCamera(idx));
 }
 
 void CameraSettingsDialog::setFirstResolution()
 {
-    firstResDialog->setCamera(manager->getFirst());
+//    firstResDialog->setCamera(manager->getFirst());
     firstResDialog->show();
 }
 
 void CameraSettingsDialog::setSecondResolution()
 {
-    secondResDialog->setCamera(manager->getSecond());
+//    secondResDialog->setCamera(manager->getSecond());
     secondResDialog->show();
 }
 

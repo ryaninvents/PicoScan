@@ -10,7 +10,7 @@ Calibrator::Calibrator()
 
 }
 
-void Calibrator::setScanManager(ScanManager *m)
+void Calibrator::setScanManager(QScanManager *m)
 {
     manager = m;
 }

@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <opencv2/core/core.hpp>
-#include "../camera/camera.h"
+#include "../camera/qcamera.h"
 
 class CalibrationStandard
 {
@@ -34,7 +34,7 @@ public:
                            bool *success);
 
     /** Calibrate a single camera. */
-    bool calibrate(Camera *camera,
+    bool calibrate(QCamera *camera,
                    std::vector<cv::Mat> images,
                    std::vector<cv::Mat> rvecs,
                    std::vector<cv::Mat> tvecs,

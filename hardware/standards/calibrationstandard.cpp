@@ -42,7 +42,7 @@ std::vector<std::vector<cv::Point2f> > CalibrationStandard::getImagePoints(
     return out;
 }
 
-bool CalibrationStandard::calibrate(Camera *camera,
+bool CalibrationStandard::calibrate(QCamera *camera,
                                     std::vector<cv::Mat> images,
                                     std::vector<cv::Mat> rvecs,
                                     std::vector<cv::Mat> tvecs,
