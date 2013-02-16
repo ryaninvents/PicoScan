@@ -48,7 +48,9 @@ SOURCES += main.cpp\
     hardware/patterns/structuredlightpattern.cpp \
     hardware/qscanmananger.cpp \
     geom/uniqueimage.cpp \
-    geom/imagedescriptor.cpp
+    geom/imagedescriptor.cpp \
+    image/imageprocessor.cpp \
+    image/binaryimageprocessor.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -87,7 +89,9 @@ HEADERS  += mainwindow.h \
     hardware/patterns/structuredlightpattern.h \
     hardware/qscanmananger.h \
     geom/uniqueimage.h \
-    geom/imagedescriptor.h
+    geom/imagedescriptor.h \
+    image/imageprocessor.h \
+    image/binaryimageprocessor.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
