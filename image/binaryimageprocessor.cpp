@@ -27,7 +27,13 @@ uint BinaryImageProcessor::getLowBit()
 
 std::vector<ImageDescriptor> BinaryImageProcessor::getRequiredFrames()
 {
-
+    uint bit;
+    std::vector<ImageDescriptor> out;
+    for(bit = loBit;bit<=hiBit;bit++){
+        out.push_back(ImageDescriptor(0,1<<12+bit<<1,false));
+        out.push_back(ImageDescriptor(0,1<<12+bit<<1+1,false));
+    }
+    return out;
 }
 
 QProjector::Pattern *BinaryImageProcessor::getPattern(ImageDescriptor desc)

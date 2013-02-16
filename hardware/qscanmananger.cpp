@@ -16,7 +16,7 @@ void QScanMananger::frameReturned(UniqueImage image){
 
 void QScanMananger::requestFullFrame()
 {
-    // neededFrames = ImageProcessor.getRequiredFrames()
+    neededFrames = processor.getRequiredFrames()
     // captureFrame();
 }
 
