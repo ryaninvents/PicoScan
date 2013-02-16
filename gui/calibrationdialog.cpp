@@ -14,7 +14,7 @@ CalibrationDialog::CalibrationDialog(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void CalibrationDialog::setManager(QScanManager *m)
+void CalibrationDialog::setManager(QScanMananger *m)
 {
     manager = m;
 
@@ -52,7 +52,7 @@ CalibrationDialog::~CalibrationDialog()
 void CalibrationDialog::takeSnap()
 {
     cv::Mat left, right;
-    int n;
+    int n;/*
     left = manager->getFirst()->getFrame();
 
     if(manager->isStereo()){
@@ -63,7 +63,7 @@ void CalibrationDialog::takeSnap()
     }
 
     if(n>=0)
-        ui->imageCount->setText(QString::number(n));
+        ui->imageCount->setText(QString::number(n));*/
 }
 
 void CalibrationDialog::calibrate()

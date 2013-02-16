@@ -29,6 +29,11 @@ public:
     /// Get the projector
     QProjector *getProjector();
 
+    /// Set the calibration standard
+    void setStandard(CalibrationStandard *std);
+    /// Get the current calibration standard
+    CalibrationStandard *getStandard();
+
     /// Get a specific camera
     QCamera *getCamera(uint i);
 
@@ -41,6 +46,18 @@ public:
     /// If there are more than \a n cameras, remove some until there's
     /// at most \a n.
     void limitNumCameras(int n);
+
+    /// Get the first camera.
+    /// \deprecated use getCamera(0)
+    QCamera *getFirst();
+
+    /// Get the second camera.
+    /// \deprecated use getCamera(1)
+    QCamera *getSecond();
+
+    /// Is this manager stereo?
+    /// \deprecated use numCameras()>1
+    bool isStereo();
     
 signals:
     /// Request a grayscale frame. Will be passed back in through

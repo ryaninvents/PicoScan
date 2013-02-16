@@ -64,6 +64,16 @@ QProjector *QScanMananger::getProjector()
     return projector;
 }
 
+void QScanMananger::setStandard(CalibrationStandard *std)
+{
+    standard = std;
+}
+
+CalibrationStandard *QScanMananger::getStandard()
+{
+    return standard;
+}
+
 QCamera *QScanMananger::getCamera(uint i)
 {
     return cameras.at(i);
@@ -88,4 +98,19 @@ uint QScanMananger::numCameras()
 void QScanMananger::limitNumCameras(int n)
 {
     while(numCameras()>n) cameras.pop_back();
+}
+
+QCamera *QScanMananger::getFirst()
+{
+    return getCamera(0);
+}
+
+QCamera *QScanMananger::getSecond()
+{
+    return getCamera(1);
+}
+
+bool QScanMananger::isStereo()
+{
+    return numCameras()>1;
 }

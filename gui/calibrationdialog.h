@@ -19,9 +19,9 @@ public:
     /// Create the dialog
     explicit CalibrationDialog(QWidget *parent = 0);
     /// Set the scan manager
-    void setManager(QScanManager *m);
+    void setManager(QScanMananger *m);
     /// Get the scan manager
-    QScanManager *getManager(){return manager;}
+    QScanMananger *getManager(){return manager;}
     /// Destroy the dialog
     ~CalibrationDialog();
 
@@ -41,7 +41,7 @@ private:
     /// UI
     Ui::CalibrationDialog *ui;
     /// manager
-    QScanManager *manager;
+    QScanMananger *manager;
     /// calibrator
     Calibrator *calibrator;
     /// dialog to display progress to the user

@@ -37,16 +37,7 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <property name="leftMargin">
-     <number>5</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
+    <property name="margin">
      <number>0</number>
     </property>
     <item>
@@ -154,12 +145,7 @@ color:white;</string>
    <addaction name="separator"/>
    <addaction name="actionFull_screen"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar">
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(14,41,71);
-color:white;</string>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionCalibrate">
    <property name="icon">
     <iconset resource="gui/icons.qrc">

@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include "changeresolutiondialog.h"
-#include "../hardware/qscanmananger.h"
 
 namespace Ui {
 class CameraSettingsDialog;
@@ -53,8 +52,6 @@ private:
     /// Resolution dialog for second camera
     ChangeResolutionDialog *secondResDialog;
 
-    /// The QScanManager this dialog edits
-    QScanManager *manager;
 
 };
 

@@ -10,7 +10,7 @@ Calibrator::Calibrator()
 
 }
 
-void Calibrator::setScanManager(QScanManager *m)
+void Calibrator::setScanManager(QScanMananger *m)
 {
     manager = m;
 }
@@ -68,7 +68,7 @@ bool Calibrator::runCalibStereo()
     CalibrationStandard *std;
     cv::Mat leftMat, leftDist, rightMat, rightDist;
     std::vector<cv::Mat> leftRot, leftTrans, rightRot, rightTrans;
-    Camera *left, *right;
+    QCamera *left, *right;
 
     std::vector<cv::Point3d> cornersReal;
     std::vector<cv::Point2d> cornersImage;
@@ -167,7 +167,7 @@ bool Calibrator::runCalibMono()
     CalibrationStandard *std;
     cv::Mat cameraMat, cameraDist;
     std::vector<cv::Mat> cameraRot, cameraTrans;
-    Camera *camera;
+    QCamera *camera;
 
     std::vector<std::vector<cv::Point3f> > objectPts;
 
@@ -204,7 +204,7 @@ bool Calibrator::runCalibMono()
 
 bool Calibrator::addProjectorCalibrationFrame()
 {
-    Camera *camera = manager->getFirst();
+    QCamera *camera = manager->getFirst();
     CalibrationStandard *standard = manager->getStandard();
 
     cv::Mat frame;
@@ -224,9 +224,9 @@ bool Calibrator::addProjectorCalibrationFrame()
     cv::Vec3d inPlane1, inPlane2;
     //
     std::vector<cv::Mat> frames;
-
+/*
     // project white pattern and capture
-    manager->getScreen()->projectWhite();
+    //manager->getScreen()->projectWhite();
     frame = camera->getFrameBW();
 
     // locate the standard
@@ -286,7 +286,7 @@ bool Calibrator::addProjectorCalibrationFrame()
                                                    ));
         }
     }
-
+*/
     return true;
 }
 

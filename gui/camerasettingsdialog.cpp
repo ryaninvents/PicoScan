@@ -37,12 +37,13 @@ void CameraSettingsDialog::enableStereo(bool b)
 
 void CameraSettingsDialog::setFirstCamera(int idx)
 {
+    /*
     switch(ui->firstMode->currentIndex()){
     case 0:
 //        manager->setFirst(hardware->getCamera(idx));
     default:
 //        manager->setFirst(new FileCamera(ui->firstFile->text().toLocal8Bit().data()));
-    }
+    }*/
 }
 
 void CameraSettingsDialog::setSecondCamera(int idx)

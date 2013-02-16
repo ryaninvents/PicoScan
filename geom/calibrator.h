@@ -10,7 +10,7 @@ class Calibrator
 public:
     Calibrator();
 
-    void setScanManager(QScanManager *m);
+    void setScanManager(QScanMananger *m);
 
     void clearFrames();
     int addImagePair(cv::Mat left, cv::Mat right);
@@ -32,7 +32,7 @@ private:
     std::vector<std::vector<cv::Point2f> > imagePointsRight;
     std::vector<std::vector<cv::Point3f> > projectorPoints;
     cv::Size leftSize, rightSize;
-    QScanManager *manager;
+    QScanMananger *manager;
 };
 
 #endif // CALIBRATOR_H

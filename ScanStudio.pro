@@ -25,7 +25,6 @@ SOURCES += main.cpp\
     gui/calibrationinprogress.cpp \
     geom/calibrator.cpp \
     geom/triangulator.cpp \
-    test/testmesher.cpp \
     geom/pointcloud.cpp \
     gui/changeresolutiondialog.cpp \
     hardware/standards/dotmatrixstandard.cpp \
@@ -56,7 +55,6 @@ HEADERS  += mainwindow.h \
     gui/calibrationinprogress.h \
     geom/calibrator.h \
     geom/triangulator.h \
-    test/testmesher.h \
     geom/pointcloud.h \
     gui/changeresolutiondialog.h \
     hardware/standards/dotmatrixstandard.h \

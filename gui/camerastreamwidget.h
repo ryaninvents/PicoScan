@@ -2,7 +2,7 @@
 #define CAMERASTREAMWIDGET_H
 
 #include <QTimer>
-#include "../hardware/camera/camera.h"
+#include "../hardware/camera/qcamera.h"
 #include "imageviewwidget.h"
 
 /**
@@ -23,7 +23,7 @@ public:
       Change the camera attached to the widget.
       \param cam The camera to stream to the widget.
       */
-    void setCamera(Camera *cam){camera = cam;noCamera = false;}
+    void setCamera(QCamera *cam){camera = cam;noCamera = false;}
 
     /**
       Set the frame-taking interval of the widget, in milliseconds.
@@ -49,7 +49,7 @@ public slots:
 
 private:
     QTimer *timer;
-    Camera *camera;
+    QCamera *camera;
     bool running;
     bool noCamera;
     unsigned int interval;

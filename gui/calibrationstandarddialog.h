@@ -19,7 +19,7 @@ public:
     /// Destroy the dialog
     ~CalibrationStandardDialog();
     /// Set the QScanManager
-    void setManager(QScanManager *m){manager = m;}
+    void setManager(QScanMananger *m){manager = m;}
     /// Get the calibration standard
     CalibrationStandard *getStandard();
 
@@ -35,7 +35,7 @@ private:
     /// UI
     Ui::CalibrationStandardDialog *ui;
     /// Manager
-    QScanManager *manager;
+    QScanMananger *manager;
 };
 
 #endif // CALIBRATIONSTANDARDDIALOG_H
