@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     hardware/projector/qprojector.cpp \
     hardware/projector/seconddisplayprojector.cpp \
     hardware/patterns/structuredlightpattern.cpp \
-    hardware/qscanmananger.cpp
+    hardware/qscanmananger.cpp \
+    geom/uniqueimage.cpp
 
 HEADERS  += mainwindow.h \
     hardware/opticaldevice.h \
@@ -83,7 +84,8 @@ HEADERS  += mainwindow.h \
     hardware/projector/qprojector.h \
     hardware/projector/seconddisplayprojector.h \
     hardware/patterns/structuredlightpattern.h \
-    hardware/qscanmananger.h
+    hardware/qscanmananger.h \
+    geom/uniqueimage.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

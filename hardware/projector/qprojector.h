@@ -18,6 +18,9 @@ public:
     public:
         /// Get the pattern.
         virtual QImage generatePattern(int width, int height) = 0;
+        /// Get an ID that uniquely identifies this pattern's
+        /// configuration.
+        virtual unsigned int getPatternID() = 0;
     };
 
 signals:
@@ -26,7 +29,8 @@ signals:
 
 public slots:
     /// Project a pattern.
-    virtual void projectPattern(QProjector::Pattern *p) = 0;
+    virtual void projectPattern(QProjector::Pattern *p,
+                                uint frameID) = 0;
 };
 
 #endif // QPROJECTOR_H
