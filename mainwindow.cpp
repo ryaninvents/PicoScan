@@ -17,7 +17,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    printf("MainWindow manager\t\t0x%x\n",manager);
+    ui->debug->setPlainText(QString("ScanStudio started."));
+
+    debug("ScanManager created.");
 
     connect(&stdSettings,SIGNAL(accept()),this,SLOT(adjustCalStd()));
 
@@ -38,6 +40,18 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::debug(QString str)
+{
+    ui->debug->setPlainText(QString("%1\n%2")
+                            .arg(ui->debug->toPlainText())
+                            .arg(str));
+}
+
+void MainWindow::debug(const char *str)
+{
+    debug(QString(str));
+}
+
 void MainWindow::showAbout()
 {
     about.show();
@@ -54,6 +68,7 @@ void MainWindow::setFullScreen(bool fs)
 
 void MainWindow::showCameraSettings()
 {
+    debug("Showing camera settings.");
     camSettings.show();
     camSettings.setScanManager(manager);
     enableCalibrate();
@@ -61,6 +76,7 @@ void MainWindow::showCameraSettings()
 
 void MainWindow::showCalStdSettings()
 {
+    debug("Show calibration standard settings.");
     stdSettings.show();
 }
 
