@@ -25,10 +25,7 @@ signals:
     
 public slots:
     /// Request a frame from the camera.
-    void requestFrame(uint frameID);
-
-    /// Request a grayscale frame from the camera.
-    void requestGrayscaleFrame(uint frameID);
+    void requestFrame(ImageDescriptor desc);
 
 private:
 

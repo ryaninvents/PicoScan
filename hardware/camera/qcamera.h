@@ -2,6 +2,7 @@
 #define QCAMERA_H
 
 #include "../qopticaldevice.h"
+#include "../../geom/uniqueimage.h"
 
 /**
   Represents a generic camera. The specifics
@@ -17,10 +18,10 @@ public:
     explicit QCamera(QObject *parent = 0);
 
     /// Is the camera available to take frames?
-    virtual bool isOpen() = 0;
+    virtual bool isOpen(){}
 
     /// Release any resources this camera is using.
-    virtual void release() = 0;
+    virtual void release(){}
 
     /// Set the frame rate.
     void setFrameRate(int fps){}
@@ -32,28 +33,23 @@ public:
     void setID(uint i){id=i;}
     
 signals:
+
     /// Signal that a frame has been captured.
-    void frameCaptured(cv::Mat frame,
-                       qint64 timestamp,
-                       uint frameID,
-                       uint cameraID);
-    /// Signal that a grayscale frame has been captured.
-    void frameCapturedGray(cv::Mat frame,
-                           qint64 timestamp,
-                           uint frameID,
-                           uint cameraID);
+    /// Subclasses shouldn't emit this signal directly;
+    /// instead, use processFrame().
+    void frameCaptured(UniqueImage im);
 
 public slots:
     /// Request a frame from the camera.
-    virtual void requestFrame(uint frameID) = 0;
-
-    /// Request a grayscale frame.
-    virtual void requestGrayscaleFrame(uint frameID) = 0;
+    virtual void requestFrame(ImageDescriptor desc){}
 
 protected:
 
     /// Get the current time in milliseconds.
     qint64 now();
+
+    /// Process a frame and emit it.
+    void processFrame(cv::Mat frame, ImageDescriptor desc);
 
 
 private:

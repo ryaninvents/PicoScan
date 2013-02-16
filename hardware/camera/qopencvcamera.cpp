@@ -23,17 +23,11 @@ void QOpenCVCamera::setFrameRate(int fps)
     cap->set(CV_CAP_PROP_FPS,fps);
 }
 
-void QOpenCVCamera::requestFrame(uint frameID)
+void QOpenCVCamera::requestFrame(ImageDescriptor desc)
 {
     cv::Mat m;
     cap->read(m);
+    if(!desc.isColor())
+        cv::cvtColor(m,m,CV_RGB2GRAY);
     frameCaptured(m,now(),frameID,getID());
-}
-
-void QOpenCVCamera::requestGrayscaleFrame(uint frameID)
-{
-    cv::Mat m;
-    cap->read(m);
-    cv::cvtColor(m,m,CV_RGB2GRAY);
-    frameCapturedGray(m,now(),frameID,getID());
 }

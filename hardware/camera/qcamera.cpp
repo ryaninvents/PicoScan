@@ -12,3 +12,9 @@ qint64 QCamera::now()
 {
     return QDateTime::currentMSecsSinceEpoch();
 }
+
+void QCamera::processFrame(cv::Mat frame, ImageDescriptor desc)
+{
+    UniqueImage im(desc,now(),frame);
+    emit frameCaptured(im);
+}

@@ -3,6 +3,7 @@
 
 #include "../qopticaldevice.h"
 #include "../../gui/imageviewwidget.h"
+#include "../../geom/imagedescriptor.h"
 
 /// Represents a projector.
 class QProjector : public QOpticalDevice
@@ -17,20 +18,24 @@ public:
     {
     public:
         /// Get the pattern.
-        virtual QImage generatePattern(int width, int height) = 0;
+        virtual QImage generatePattern(int width, int height){}
         /// Get an ID that uniquely identifies this pattern's
-        /// configuration.
-        virtual unsigned int getPatternID() = 0;
+        /// configuration. This identifies the pattern among
+        /// other patterns in the same sequence, so it need
+        /// not encode size; rather, it should include data
+        /// that changes over the course of the measurement,
+        /// e.g., fringe density or phase shift.
+        virtual unsigned int getPatternID(){}
     };
 
 signals:
     /// Notify listeners that a pattern has been projected.
-    void patternProjected(uint frameID);
+    void patternProjected(ImageDescriptor);
 
 public slots:
     /// Project a pattern.
-    virtual void projectPattern(QProjector::Pattern *p,
-                                uint frameID) = 0;
+    virtual void projectPattern(QProjector::Pattern *,
+                                ImageDescriptor){}
 };
 
 #endif // QPROJECTOR_H
