@@ -31,6 +31,9 @@ public:
     /// Get a specific camera
     QCamera *getCamera(uint i);
 
+    /// Add a camera to the manager
+    void setCamera(uint i, QCamera *camera);
+
     /// Count the cameras
     uint numCameras();
     
@@ -58,6 +61,12 @@ private:
     std::vector<UniqueImage> images;
     /// Images we're still waiting for
     std::vector<ImageDescriptor> waiting;
+
+    /// Connect signals and slots in a camera to this manager.
+    void connectCameraSignals(QCamera *cam);
+    /// Disconnect signals and slots before removing the camera
+    /// from the manager.
+    void disconnectCameraSignals(QCamera *cam);
     
 };
 
