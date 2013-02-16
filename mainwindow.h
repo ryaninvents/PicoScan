@@ -23,8 +23,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void debug(QString str);
-    void debug(const char *str);
 
 public slots:
     void showAbout();
@@ -36,6 +34,8 @@ public slots:
     void quitProgram();
     void adjustCalStd();
     void takeFrame();
+    void debug(QString str);
+    void debug(const char *str);
 
 protected:
     void closeEvent(QCloseEvent *);
