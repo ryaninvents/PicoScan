@@ -3,7 +3,7 @@
 #include "../projector/graycodepattern.h"
 
 BinaryCaptureCamera::BinaryCaptureCamera(QObject *parent) :
-    QCamera(parent),
+    PixelEncodedCamera(parent),
     inProgress(false)
 {
 }
@@ -13,16 +13,6 @@ bool BinaryCaptureCamera::setBitRange(uint lo, uint hi)
     if(lo>=hi) return false;
     loBit = lo;
     hiBit = hi;
-}
-
-void BinaryCaptureCamera::setCapturingCamera(QCamera *cam)
-{
-    camera = cam;
-}
-
-void BinaryCaptureCamera::setProjector(QProjector *proj)
-{
-    projector = proj;
 }
 
 int BinaryCaptureCamera::grayToBinary(int num)
@@ -100,6 +90,7 @@ cv::Mat BinaryCaptureCamera::getRawFrame(uint bit, bool inv)
 cv::Mat BinaryCaptureCamera::compileFrames()
 {
     uint bit,x,y;
+    bool capturedAll = true;
     cv::Mat encoding = cv::Mat::zeros(
                 getResolutionU(),
                 getResolutionV(),
@@ -107,8 +98,10 @@ cv::Mat BinaryCaptureCamera::compileFrames()
     cv::Mat img;
     for(bit=loBit;bit<=hiBit;bit++){
         if(!(hasCapturedRawFrame(bit,true)&&
-             hasCapturedRawFrame(bit,false)))
+             hasCapturedRawFrame(bit,false))){
+            capturedAll = false;
             continue;
+        }
         img = getRawFrame(bit,false) - getRawFrame(bit,true);
         img.convertTo(img,CV_32S);
         for(x=0;x<img.cols;x++){
@@ -120,5 +113,8 @@ cv::Mat BinaryCaptureCamera::compileFrames()
         }
     }
     encoding.convertTo(encoding,getOpenCVFlagFromType(type));
-    emit intermediateFrame(encoding);
+    if(capturedAll)
+        emit frameCaptured(encoding,type);
+    else
+        emit intermediateFrame(encoding);
 }

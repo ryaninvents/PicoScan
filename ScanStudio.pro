@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     gui/projectorsettingsdialog.cpp \
     gui/secondmonitorprojectordialog.cpp \
     gui/povrayprojectordialog.cpp \
-    gui/fileprojectordialog.cpp
+    gui/fileprojectordialog.cpp \
+    hardware/camera/pixelencodedcamera.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -73,7 +74,8 @@ HEADERS  += mainwindow.h \
     gui/projectorsettingsdialog.h \
     gui/secondmonitorprojectordialog.h \
     gui/povrayprojectordialog.h \
-    gui/fileprojectordialog.h
+    gui/fileprojectordialog.h \
+    hardware/camera/pixelencodedcamera.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

@@ -1,7 +1,7 @@
 #ifndef BINARYCAPTURECAMERA_H
 #define BINARYCAPTURECAMERA_H
 
-#include "qcamera.h"
+#include "pixelencodedcamera.h"
 #include "../projector/qprojector.h"
 
 /// A "binary camera", which is capable of capturing
@@ -17,7 +17,7 @@
 /// probably max out around 1 frame every 10 to 30
 /// seconds or so. Don't say I didn't warn you...
 
-class BinaryCaptureCamera : public QCamera
+class BinaryCaptureCamera : public PixelEncodedCamera
 {
     Q_OBJECT
 public:
@@ -30,11 +30,6 @@ public:
     /// \b false if not. A failure might indicate
     /// that \b loBit &gt;= \b hiBit.
     bool setBitRange(uint lo, uint hi);
-
-    /// Set the camera with which to capture the frames.
-    void setCapturingCamera(QCamera *cam);
-    /// Set the projector with which to project the binary patterns.
-    void setProjector(QProjector *proj);
 
     /// Convert Gray code to binary.
     static int grayToBinary(int num);
@@ -69,12 +64,6 @@ private:
 
     /// compile the frames
     cv::Mat compileFrames();
-
-    /// the camera we will capture with
-    QCamera *camera;
-
-    /// the projector we will be using for binary patterns
-    QProjector *projector;
 
     /// the lowest bit we will capture
     uint loBit;
