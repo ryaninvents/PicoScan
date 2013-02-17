@@ -30,6 +30,11 @@ public:
     /// \b false if not. A failure might indicate
     /// that \b loBit &ge; \b hiBit.
     bool setBitRange(uint lo, uint hi);
+
+    /// Set the camera with which to capture the frames.
+    void setCapturingCamera(QCamera *cam);
+    /// Set the projector with which to project the binary patterns.
+    void setProjector(QProjector *proj);
     
 signals:
     /// We're still working on the full binary,

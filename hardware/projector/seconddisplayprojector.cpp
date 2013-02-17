@@ -5,12 +5,19 @@
 
 SecondDisplayProjector::SecondDisplayProjector(QObject *parent) :
     QProjector(parent),
-    w()
+    w(this),
+    displayIdx(1)
 {
+}
+
+void SecondDisplayProjector::setScreen(uint screen)
+{
+    displayIdx = screen;
 }
 
 void SecondDisplayProjector::projectPattern(QProjector::Pattern *p)
 {
+    w.projectOnDisplay(displayIdx);
     w.projectPattern(p);
     emit patternProjected(p);
 }

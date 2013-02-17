@@ -26,6 +26,9 @@ public:
         /// Project a particular pattern.
         void projectPattern(QProjector::Pattern *p);
     };
+
+    /// Select the screen to project on.
+    void setScreen(uint screen);
     
 signals:
     
@@ -36,6 +39,9 @@ protected:
 private:
     /// The widget we're using to project.
     Widget w;
+
+    /// The display we're projecting on.
+    uint displayIdx;
     
 };
 

@@ -15,6 +15,16 @@ bool BinaryCaptureCamera::setBitRange(uint lo, uint hi)
     hiBit = hi;
 }
 
+void BinaryCaptureCamera::setCapturingCamera(QCamera *cam)
+{
+    camera = cam;
+}
+
+void BinaryCaptureCamera::setProjector(QProjector *proj)
+{
+    projector = proj;
+}
+
 bool BinaryCaptureCamera::requestFrame(QCamera::FrameType type)
 {
     uint i;

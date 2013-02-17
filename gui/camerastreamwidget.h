@@ -48,10 +48,17 @@ public slots:
     void closeCameraStream();
 
 private:
+    /// Timer for controlling streaming
+    /// \deprecated streaming will be controlled by camera instead
     QTimer *timer;
+    /// The camera to stream from
     QCamera *camera;
+    /// whether or not we're live
     bool running;
+    /// if we have no camera
     bool noCamera;
+    /// the interval to update on
+    /// \deprecated see note on \a timer
     unsigned int interval;
     
 };

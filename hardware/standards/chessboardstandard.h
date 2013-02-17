@@ -6,6 +6,7 @@
 #include <vector>
 #include <opencv2/core/core.hpp>
 
+/// Represents a plain chessboard standard.
 class ChessboardStandard : public CalibrationStandard
 {
 private:
@@ -28,16 +29,22 @@ public:
         \param scale The length of a square's side, in millimeters. */
     ChessboardStandard(cv::Size size, double scale);
 
+    /// Create a new rectangular chessboard.
     ChessboardStandard(cv::Size size, double scaleX, double scaleY);
 
+    /// Find the chessboard in the image.
     std::vector<cv::Point2f> getImagePoints(cv::Mat image, bool *success);
 
+    /// Get a list of points on this chessboard.
     std::vector<cv::Point3f> getObjectPoints();
 
-
+    /// First corner
     int getPointA();
+    /// Second corner
     int getPointB();
+    /// Third corner
     int getPointC();
+    /// Fourth corner
     int getPointD();
 
 
