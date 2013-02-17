@@ -74,6 +74,10 @@ void CameraSettingsDialog::firstModeChanged(int m)
                     SIGNAL(clicked()),
                     povDialog,
                     SLOT(show()));
+            connect(povDialog,
+                    SIGNAL(cameraChanged(QCamera*)),
+                    this,
+                    SLOT(firstCameraSettingsChanged(QCamera*)));
             firstSettingsDialog = povDialog;
         }
         break;
@@ -101,6 +105,9 @@ void CameraSettingsDialog::secondModeChanged(int m)
 void CameraSettingsDialog::firstCameraSettingsChanged(
         QCamera *cam)
 {
+    emit debug(QString("=== First camera changed ===\n%1\n"
+                       "========================")
+               .arg(cam->describe()));
 }
 
 void CameraSettingsDialog::secondCameraSettingsChanged(

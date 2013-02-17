@@ -25,26 +25,39 @@ public:
 
     /// Set simulated X
     void setSimX(double x);
+
     /// Set simulated Y
     void setSimY(double y);
+
     /// Set simulated Z
     void setSimZ(double z);
+
     /// Set simulated orientation (Rodrigues vector)
     void setSimOrientation(cv::Vec3d r);
+
     /// Set simulated focal length
     void setSimFocalLength(double f);
+
     /// Set simulated cell size
     void setSimCellSize(double c);
+
     /// Set antialiasing value
     void setAntialiasing(int aa);
+
     /// Set parameter filename
     void setParameterFilename(QString fnm);
+
     /// Set ini filename
     void setIniFilename(QString fnm);
+
     /// Set scene filename
     void setSceneFilename(QString fnm);
+
     /// Set render filename
     void setRenderFilename(QString fnm);
+
+    /// Describe the camera in detail
+    QString describe();
 
 signals:
     

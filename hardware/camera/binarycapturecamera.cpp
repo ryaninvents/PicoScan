@@ -29,7 +29,7 @@ bool BinaryCaptureCamera::requestFrame(QCamera::FrameType type)
     this->type = type;
 
     // resize the frames buffer
-    frames.resize((hiBit-loBit)*2);
+    frames.resize((hiBit-loBit)*2+2);
 
     // push the projection patterns to the projector
     // and null out the frame buffer
@@ -61,4 +61,43 @@ void BinaryCaptureCamera::patternProjected(
 
     // request a frame
     camera->requestFrame(UNSIGNED_16);
+}
+
+bool BinaryCaptureCamera::hasCapturedRawFrame(uint bit, bool inv)
+{
+    if(bit<loBit || bit>hiBit) return false;
+    uint idx = (bit-loBit)*2+(inv?1:0);
+    return (frames.at(idx).rows>1 && frames.at(idx).cols>1);
+}
+
+cv::Mat BinaryCaptureCamera::getRawFrame(uint bit, bool inv)
+{
+    uint idx = (bit-loBit)*2+(inv?1:0);
+    return (frames.at(idx));
+}
+
+cv::Mat BinaryCaptureCamera::compileFrames()
+{
+    uint bit,x,y;
+    cv::Mat encoding = cv::Mat::zeros(
+                getResolutionU(),
+                getResolutionV(),
+                CV_32S);
+    cv::Mat img;
+    for(bit=loBit;bit<=hiBit;bit++){
+        if(!(hasCapturedRawFrame(bit,true)&&
+             hasCapturedRawFrame(bit,false)))
+            continue;
+        img = getRawFrame(bit,false) - getRawFrame(bit,true);
+        img.convertTo(img,CV_32S);
+        for(x=0;x<img.cols;x++){
+            for(y=0;y<img.rows;y++){
+                if(img.at<int>(y,x)>0){
+                    encoding.at<int>(y,x) += 1<<bit;
+                }
+            }
+        }
+    }
+    encoding.convertTo(encoding,getOpenCVFlagFromType(type));
+    emit intermediateFrame(encoding);
 }

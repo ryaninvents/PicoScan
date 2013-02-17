@@ -17,6 +17,7 @@ public:
     explicit PovRayCameraDialog(QWidget *parent = 0);
     /// Destroy the dialog
     ~PovRayCameraDialog();
+
 signals:
     /// The user has accepted changes.
     void cameraChanged(QCamera *cam);
@@ -63,6 +64,11 @@ public slots:
 
     /// user wants to change the render file
     void changeRenderFile();
+
+    /// user has accepted changes
+    void accept();
+
+
 private:
 
     /// UI

@@ -10,6 +10,7 @@
 #include "gui/calibrationdialog.h"
 
 #include "hardware/qscanmananger.h"
+#include "gui/projectorsettingsdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +33,8 @@ public slots:
     void setFullScreen(bool fs);
     /// Show the camera settings dialog.
     void showCameraSettings();
+    /// Show the projector settings dialog.
+    void showProjectorSettings();
     /// Show the calibration settings dialog.
     void showCalStdSettings();
     /// Show the calibration dialog.
@@ -64,6 +67,8 @@ private:
     CalibrationStandardDialog stdSettings;
     /// Calibration dialog with the two views
     CalibrationDialog *calib;
+    /// Projector settings dialog
+    ProjectorSettingsDialog projSettings;
 
     /// Enable calibration
     void enableCalibrate();

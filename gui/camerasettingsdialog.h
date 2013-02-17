@@ -20,6 +20,10 @@ public:
     /// Destroy this dialog.
     ~CameraSettingsDialog();
 
+signals:
+    /// emit debug information
+    void debug(QString);
+
 public slots:
     /** Enable or disable stereo. */
     void enableStereo(bool b);

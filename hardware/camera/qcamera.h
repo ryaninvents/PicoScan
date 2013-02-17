@@ -31,6 +31,9 @@ public:
     /// Set the camera's id
     void setID(uint i);
 
+    /// Get a detailed description of the camera.
+    virtual QString describe()=0;
+
     /// Different types of frame that you can
     /// request from a camera.
     enum FrameType{
@@ -58,6 +61,9 @@ public slots:
     virtual bool requestFrame(FrameType)=0;
 
 protected:
+
+    /// Convert an image type to an OpenCV flag.
+    static int getOpenCVFlagFromType(FrameType type);
 
 private:
 

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #define MAX_ZOOM -2.0
 #define MIN_ZOOM -30.0
-#define DEFAULT_ZOOM 8.0
+#define DEFAULT_ZOOM -8.0
 
 ModelViewWidget::ModelViewWidget(QWidget *parent) :
     QGLWidget(parent)

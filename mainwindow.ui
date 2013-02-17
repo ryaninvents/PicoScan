@@ -578,16 +578,32 @@ color:white;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionProjector_settings</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showProjectorSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAbout()</slot>
   <slot>setFullScreen(bool)</slot>
   <slot>showCameraSettings()</slot>
   <slot>showCalStdSettings()</slot>
-  <slot>showProjectionScreen()</slot>
   <slot>quitProgram()</slot>
   <slot>showCalibrationDialog()</slot>
   <slot>takeFrame()</slot>
   <slot>showDebug()</slot>
+  <slot>showProjectorSettings()</slot>
  </slots>
 </ui>

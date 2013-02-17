@@ -7,6 +7,7 @@
 PovRayCamera::PovRayCamera(QObject *parent) :
     QCamera(parent),
     simCellSize(8e-6),
+    simFocalLength(8e-3),
     antialiasing(4)
 {
 }
@@ -76,6 +77,25 @@ void PovRayCamera::setRenderFilename(QString fnm)
     renderFilename = fnm;
 }
 
+QString PovRayCamera::describe()
+{
+    return QString(
+                "POV-Ray Camera\n"
+                "Simulated location (%1, %2, %3)\n"
+                "Simulated rotation (%4, %5, %6)\n"
+                "Simulated focal length %7 mm\n"
+                "Simulated cell size %8 um"
+                )
+            .arg(simPosition[0])
+            .arg(simPosition[1])
+            .arg(simPosition[2])
+            .arg(simRotation[0])
+            .arg(simRotation[1])
+            .arg(simRotation[2])
+            .arg(simFocalLength*1e3)
+            .arg(simCellSize*1e6);
+}
+
 bool PovRayCamera::requestFrame(QCamera::FrameType type)
 {
     FILE *file;
@@ -122,7 +142,7 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
     fclose(file);
 
     // run the simulation; we'll wait
-    command = QString("povray %1").arg(iniFilename);
+    command = QString("povray \"%1\"").arg(iniFilename);
     system(command.toLocal8Bit().data());
 
     // read the image from disk

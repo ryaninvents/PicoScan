@@ -38,3 +38,18 @@ bool QCamera::startStream()
             SLOT(requestFrame()));
     return true;
 }
+
+int QCamera::getOpenCVFlagFromType(QCamera::FrameType type)
+{
+    switch(type){
+    case FULL_COLOR:
+        return CV_8UC3;
+    case DOUBLE:
+        return CV_64F;
+    case SIGNED_32:
+        return CV_32S;
+    case UNSIGNED_16:
+        return CV_16U;
+    }
+    return 0;
+}

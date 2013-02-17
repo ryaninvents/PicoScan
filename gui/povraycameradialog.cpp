@@ -119,9 +119,21 @@ void PovRayCameraDialog::changeRenderFile()
     cam->setRenderFilename(s);
 }
 
+void PovRayCameraDialog::accept()
+{
+    emit cameraChanged(cam);
+    QDialog::accept();
+}
+
 void PovRayCameraDialog::recalculateCameraRotation()
 {
-    double scaleFactor = rotationAngle/
-            rotationAxis.dot(rotationAxis);
-    cam->setOrientation(rotationAxis*scaleFactor);
+    double scale = sqrt(rotationAxis.dot(rotationAxis));
+    // if the vector has length zero, assume no rotation
+    // to avoid a divide-by-zero error
+    if(scale<1e-6){
+        cam->setSimOrientation(cv::Vec3d());
+        return;
+    }
+    double scaleFactor = rotationAngle/scale;
+    cam->setSimOrientation(rotationAxis*scaleFactor);
 }

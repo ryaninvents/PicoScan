@@ -17,8 +17,15 @@ MainWindow::MainWindow(QWidget *parent) :
     debugWin->setWindowIcon(
                 QIcon(tr(":/icons/oxygen/camera-web-64.png")));
     debugWin->setWindowFlags(Qt::WindowStaysOnTopHint);
+    debugWin->setReadOnly(true);
 
     connect(&stdSettings,SIGNAL(accept()),this,SLOT(adjustCalStd()));
+    connect(&camSettings,
+            SIGNAL(debug(QString)),
+            this,
+            SLOT(debug(QString)));
+
+    ui->modelView->zoomFit();
 
 }
 
@@ -67,6 +74,11 @@ void MainWindow::showCameraSettings()
     debug("Showing camera settings.");
     camSettings.show();
     enableCalibrate();
+}
+
+void MainWindow::showProjectorSettings()
+{
+    projSettings.show();
 }
 
 void MainWindow::showCalStdSettings()

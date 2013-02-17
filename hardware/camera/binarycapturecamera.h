@@ -14,8 +14,8 @@
 /// One thing to note: while it is possible to stream
 /// from a BinaryCaptureCamera, you're not really
 /// going to have a whole lot of fun doing it. You'll
-/// probably max out around 1 frame every 10 seconds
-/// or so. Don't say I didn't warn you...
+/// probably max out around 1 frame every 10 to 30
+/// seconds or so. Don't say I didn't warn you...
 
 class BinaryCaptureCamera : public QCamera
 {
@@ -32,6 +32,10 @@ public:
     bool setBitRange(uint lo, uint hi);
     
 signals:
+    /// We're still working on the full binary,
+    /// but in the meantime, here's something pretty
+    /// to look at.
+    void intermediateFrame(cv::Mat frame);
     
 public slots:
 
@@ -48,6 +52,15 @@ public slots:
     void patternProjected(QProjector::Pattern *pattern);
 
 private:
+    /// do we have a frame for the selected bit and
+    /// inversion?
+    bool hasCapturedRawFrame(uint bit, bool inv);
+
+    /// get raw frame for desired bit and inversion
+    cv::Mat getRawFrame(uint bit, bool inv);
+
+    /// compile the frames
+    cv::Mat compileFrames();
 
     /// the camera we will capture with
     QCamera *camera;
