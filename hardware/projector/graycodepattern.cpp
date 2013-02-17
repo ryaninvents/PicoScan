@@ -1,6 +1,8 @@
 #include "graycodepattern.h"
 
-GrayCodePattern::GrayCodePattern()
+GrayCodePattern::GrayCodePattern(uint bit, bool inverted):
+    bit(bit),
+    inverted(inverted)
 {
 }
 

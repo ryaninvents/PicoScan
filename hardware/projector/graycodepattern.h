@@ -12,7 +12,7 @@ class GrayCodePattern : public QProjector::Pattern
 {
 public:
     /// Create a new Gray code pattern.
-    GrayCodePattern();
+    GrayCodePattern(uint bit, bool inverted);
     /// Generate the pattern to project.
     QImage generatePattern(int width, int height);
     /// Get the ID for this pattern.

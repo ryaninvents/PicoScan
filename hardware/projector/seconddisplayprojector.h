@@ -19,7 +19,7 @@ public:
     
 signals:
     
-public slots:
+protected:
     void projectPattern(QProjector::Pattern *p);
 
 private:

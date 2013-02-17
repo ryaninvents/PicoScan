@@ -17,13 +17,29 @@ bool BinaryCaptureCamera::setBitRange(uint lo, uint hi)
 
 bool BinaryCaptureCamera::requestFrame(QCamera::FrameType type)
 {
+    uint i;
+
     // we can't handle more than one thing at a time
     // we also can't handle color
     if(inProgress || type==FULL_COLOR)
         return false;
 
+    // do some bookkeeping
+    inProgress = true;
     this->type = type;
+
+    // resize the frames buffer
     frames.resize((hiBit-loBit)*2);
+
+    // push the projection patterns to the projector
+    // and null out the frame buffer
+    for(i=loBit;i<=hiBit;i++){
+        projector->queue(new GrayCodePattern(i,true));
+        projector->queue(new GrayCodePattern(i,false));
+        frames.at(2*(i-loBit)) = cv::Mat::zeros(1,1,CV_8U);
+        frames.at(2*(i-loBit)+1) = cv::Mat::zeros(1,1,CV_8U);
+    }
+
 }
 
 void BinaryCaptureCamera::patternProjected(

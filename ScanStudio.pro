@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     hardware/qscanmananger.cpp \
     hardware/projector/graycodepattern.cpp \
     hardware/projector/projectordependent.cpp \
-    hardware/camera/binarycapturecamera.cpp
+    hardware/camera/binarycapturecamera.cpp \
+    hardware/projector/povrayprojector.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -61,7 +62,8 @@ HEADERS  += mainwindow.h \
     hardware/qscanmananger.h \
     hardware/projector/graycodepattern.h \
     hardware/projector/projectordependent.h \
-    hardware/camera/binarycapturecamera.h
+    hardware/camera/binarycapturecamera.h \
+    hardware/projector/povrayprojector.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

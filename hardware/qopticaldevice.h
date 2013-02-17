@@ -35,8 +35,10 @@ public:
         */
     void setIntrinsics(cv::Mat m);
 
-    /// Update the orientation of this device.
+    /// Update the orientation of this device with a
+    /// Rodrigues vector.
     void setOrientation(cv::Mat o);
+    /// Update the orientation of this device.
     void setOrientation(cv::Vec3d r);
 
     /// Update the position of this device.

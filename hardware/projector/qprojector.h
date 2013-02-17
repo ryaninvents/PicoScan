@@ -40,12 +40,13 @@ signals:
     void patternProjected(QProjector::Pattern*);
 
 public slots:
-    /// Project a pattern.
-    virtual void projectPattern(QProjector::Pattern *){}
+
     /// Check to see if all dependents are satisfied.
     void checkDependents();
+
     /// Deregister a dependent.
     void deregisterDependent(uint id);
+
     /// Project the next pattern in the queue.
     /// \bug May emit patternProjected() before
     /// pattern is actually projected, depending
@@ -53,7 +54,13 @@ public slots:
     /// that to child processes.
     void processQueue();
 
+protected:
+
+    /// Project a pattern.
+    virtual void projectPattern(QProjector::Pattern *){}
+
 private:
+
     /// Queue of patterns waiting to be projected.
     std::vector<QProjector::Pattern*> patternQueue;
 
