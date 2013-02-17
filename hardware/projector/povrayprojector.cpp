@@ -3,7 +3,8 @@
 #include <fstream>
 
 PovRayProjector::PovRayProjector(QObject *parent) :
-    QProjector(parent)
+    QProjector(parent),
+    simCellSize(8e-6)
 {
 }
 
@@ -19,9 +20,8 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
     file = fopen(projFilename.toLocal8Bit().data(),"w");
     fprintf(file,"/// Scan Studio simulated projector\n"
             "/// If your simulation isn't working, make\n"
-            "/// sure you have included this file,\n"
-            "/// in your .pov setup.");
-    fprintf(file,"\n\n"
+            "/// sure you have included this file\n"
+            "/// in your .pov setup.\n\n"
             "#declare projX  %f\n"
             "#declare projY  %f\n"
             "#declare projZ  %f\n"
@@ -37,12 +37,12 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
             simRotation[0], // projRX
             simRotation[1], // projRY
             simRotation[2], // projRZ
-            cellSize*getResolutionU(),          // projSlmSize
-            cellSize*getFocalLength(),          // projFocal
+            simCellSize*getResolutionU(),       // projSlmSize
+            simCellSize*getFocalLength(),       // projFocal
             imageFilename.toLocal8Bit().data()  // imageFile
             );
     fprintf(file,
-            "light_source { <projX,projY,projZ> color <1,1,1> }"
+            "light_source { <projX,projY,projZ> color <1,1,1> }\n"
             "mesh {\n"
             "   triangle {\n"
             "       <-.5,-.5,0>, <0.5,-.5,0>, <0.5,0.5,0>\n"

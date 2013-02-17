@@ -134,6 +134,9 @@ private:
 
     /// Get a normalized coordinate
     double getNormalizedCoord(double u,double c);
+
+    /// Cell size
+    double cellSize;
     
 };
 

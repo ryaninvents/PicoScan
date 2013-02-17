@@ -55,7 +55,7 @@ private:
 
     /// Simulated cell size, you probably
     /// don't need to worry about this
-    double cellSize;
+    double simCellSize;
 
 };
 

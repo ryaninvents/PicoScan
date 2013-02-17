@@ -3,12 +3,13 @@
 #include <opencv2/calib3d/calib3d.hpp>
 
 QOpticalDevice::QOpticalDevice(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    position(),
+    resolution(800,600),
+    cellSize(8e-6)
 {
     orientation = cv::Mat::eye(3,3,CV_64F);
-    position = cv::Vec3d();
     intrinsicMatrix = cv::Mat::eye(3,3,CV_64F);
-    resolution = cv::Size(800,600);
 }
 
 void QOpticalDevice::setDistortion(cv::Mat k)
