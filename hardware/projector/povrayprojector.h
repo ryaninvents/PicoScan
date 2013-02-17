@@ -10,7 +10,7 @@
 /// projector will write to. In addition, you
 /// need to pass an image file that this projector
 /// can write to. Then, when you request an image
-/// from a POVRayCamera, POV-Ray will use the info
+/// from a PovRayCamera, POV-Ray will use the info
 /// from the projector and the camera to render
 /// the scene! Nifty, huh?
 /// \bug If you're going to try to simulate a 2D
@@ -19,14 +19,14 @@
 /// but for vertically- or 2D-varying patterns you'll
 /// have to rewrite some of this code. Should be
 /// simple, you'd just have to introduce an aspect
-/// ratio scale factor when the POVRayProjector is
+/// ratio scale factor when the PovRayProjector is
 /// writing to the parameters file.
-class POVRayProjector : public QProjector
+class PovRayProjector : public QProjector
 {
     Q_OBJECT
 public:
-    /// Create a POVRayProjector.
-    explicit POVRayProjector(QObject *parent = 0);
+    /// Create a POV-Ray Projector.
+    explicit PovRayProjector(QObject *parent = 0);
 
 
     

@@ -107,6 +107,7 @@ private:
       */
     cv::Mat3d color;
 
+    /// Set up the matrices
     void initialize(cv::Size size, bool useColor);
 };
 

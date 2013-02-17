@@ -2,12 +2,12 @@
 
 #include <fstream>
 
-POVRayProjector::POVRayProjector(QObject *parent) :
+PovRayProjector::PovRayProjector(QObject *parent) :
     QProjector(parent)
 {
 }
 
-void POVRayProjector::projectPattern(QProjector::Pattern *pattern)
+void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
 {
     QImage im;
     FILE *file;
