@@ -55,7 +55,7 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
     file = fopen(iniFilename.toLocal8Bit().data(),"w");
     fprintf(file,
             "Width=%d\nHeight=%d\n-D\n"
-            "+A%d\n"
+            "-GA\n+A%d\n"
             "Input_File_Name=%s\n"
             "Output_File_Name=%s",
             getResolutionU(), // width

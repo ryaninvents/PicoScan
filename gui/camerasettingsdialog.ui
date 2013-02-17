@@ -30,83 +30,7 @@
    <property name="margin">
     <number>6</number>
    </property>
-   <item row="2" column="2">
-    <widget class="QLabel" name="labelSecondCam">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Camera:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="3">
-    <widget class="QPushButton" name="secondRes">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>640 x 480</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="labelFirstMode">
-     <property name="text">
-      <string>Mode:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="3">
-    <widget class="QComboBox" name="secondMode">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <item>
-      <property name="text">
-       <string>OpenCV</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>File sequence</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="2" column="3">
-    <widget class="QSpinBox" name="secondDevice">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="prefix">
-      <string>Device </string>
-     </property>
-     <property name="maximum">
-      <number>3</number>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="3">
-    <widget class="QPushButton" name="closeButton">
-     <property name="text">
-      <string>Close</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
+   <item row="2" column="1">
     <widget class="QPushButton" name="firstRes">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -116,45 +40,6 @@
      </property>
      <property name="text">
       <string>640 x 480</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QLabel" name="labelSecondRes">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Resolution:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="3">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="1">
-    <widget class="QSpinBox" name="firstDevice">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="prefix">
-      <string>Device </string>
-     </property>
-     <property name="maximum">
-      <number>3</number>
      </property>
     </widget>
    </item>
@@ -168,14 +53,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2" colspan="2">
-    <widget class="QCheckBox" name="useStereo">
-     <property name="text">
-      <string>Use stereo</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
+   <item row="2" column="0">
     <widget class="QLabel" name="labelFirstRes">
      <property name="text">
       <string>Resolution:</string>
@@ -191,49 +69,95 @@
      </item>
      <item>
       <property name="text">
+       <string>POV-Ray</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>File sequence</string>
       </property>
      </item>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="labelFirstCam">
-     <property name="text">
-      <string>Camera:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="labelFirstFile">
+   <item row="2" column="2">
+    <widget class="QLabel" name="labelSecondRes">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>File source:</string>
+      <string>Resolution:</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QLineEdit" name="firstFile">
-     <property name="enabled">
-      <bool>false</bool>
+   <item row="3" column="3">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelFirstMode">
+     <property name="text">
+      <string>Mode:</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="2">
-    <widget class="QLabel" name="labelSecondFile">
+   <item row="0" column="2" colspan="2">
+    <widget class="QCheckBox" name="useStereo">
+     <property name="text">
+      <string>Use stereo</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QComboBox" name="secondMode">
      <property name="enabled">
       <bool>false</bool>
+     </property>
+     <item>
+      <property name="text">
+       <string>OpenCV</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>POV-Ray</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>File sequence</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QPushButton" name="secondRes">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="text">
-      <string>File source:</string>
+      <string>640 x 480</string>
      </property>
     </widget>
    </item>
    <item row="4" column="3">
-    <widget class="QLineEdit" name="secondFile">
-     <property name="enabled">
-      <bool>false</bool>
+    <widget class="QPushButton" name="closeButton">
+     <property name="text">
+      <string>Close</string>
      </property>
     </widget>
    </item>
@@ -268,38 +192,6 @@
     <hint type="sourcelabel">
      <x>310</x>
      <y>16</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>208</x>
-     <y>95</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>firstDevice</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>CameraSettingsDialog</receiver>
-   <slot>setFirstCamera(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>140</x>
-     <y>42</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>208</x>
-     <y>95</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>secondDevice</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>CameraSettingsDialog</receiver>
-   <slot>setSecondCamera(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>344</x>
-     <y>42</y>
     </hint>
     <hint type="destinationlabel">
      <x>208</x>
