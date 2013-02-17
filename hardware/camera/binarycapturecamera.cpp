@@ -25,6 +25,17 @@ void BinaryCaptureCamera::setProjector(QProjector *proj)
     projector = proj;
 }
 
+int BinaryCaptureCamera::grayToBinary(int num)
+{
+    unsigned int numBits = 8 * sizeof(num);
+    unsigned int shift;
+    for (shift = 1; shift < numBits; shift = 2 * shift)
+    {
+        num = num ^ (num >> shift);
+    }
+    return num;
+}
+
 bool BinaryCaptureCamera::requestFrame(QCamera::FrameType type)
 {
     uint i;

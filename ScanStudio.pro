@@ -32,7 +32,6 @@ SOURCES += main.cpp\
     hardware/camera/qopencvcamera.cpp \
     hardware/projector/qprojector.cpp \
     hardware/projector/seconddisplayprojector.cpp \
-    hardware/qscanmananger.cpp \
     hardware/projector/graycodepattern.cpp \
     hardware/projector/projectordependent.cpp \
     hardware/camera/binarycapturecamera.cpp \
@@ -65,7 +64,6 @@ HEADERS  += mainwindow.h \
     hardware/camera/qopencvcamera.h \
     hardware/projector/qprojector.h \
     hardware/projector/seconddisplayprojector.h \
-    hardware/qscanmananger.h \
     hardware/projector/graycodepattern.h \
     hardware/projector/projectordependent.h \
     hardware/camera/binarycapturecamera.h \

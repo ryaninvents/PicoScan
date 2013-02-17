@@ -19,8 +19,6 @@ public:
     unsigned int getPatternID();
     /// Convert binary to Gray code.
     static int binaryToGray(int num);
-    /// Convert Gray code to binary.
-    static int grayToBinary(int num);
 
     /// Get the bit
     unsigned int getBit();

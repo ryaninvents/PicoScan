@@ -8,8 +8,6 @@
 #include "gui/camerasettingsdialog.h"
 #include "gui/calibrationstandarddialog.h"
 #include "gui/calibrationdialog.h"
-
-#include "hardware/qscanmananger.h"
 #include "gui/projectorsettingsdialog.h"
 
 namespace Ui {

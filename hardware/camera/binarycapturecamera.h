@@ -6,7 +6,7 @@
 
 /// A "binary camera", which is capable of capturing
 /// a binary frame all by itself.
-/// Just pass in a QCamera* and a QProjector* to use
+/// Just pass in a QCamera * and a QProjector * to use
 /// for capture and projection, respectively. If
 /// there is another BinaryCaptureCamera working,
 /// then this one will hook into the same projector
@@ -28,13 +28,16 @@ public:
     /// Set high and low bits simultaneously.
     /// \returns \b true if the bits were set,
     /// \b false if not. A failure might indicate
-    /// that \b loBit &ge; \b hiBit.
+    /// that \b loBit &gt;= \b hiBit.
     bool setBitRange(uint lo, uint hi);
 
     /// Set the camera with which to capture the frames.
     void setCapturingCamera(QCamera *cam);
     /// Set the projector with which to project the binary patterns.
     void setProjector(QProjector *proj);
+
+    /// Convert Gray code to binary.
+    static int grayToBinary(int num);
     
 signals:
     /// We're still working on the full binary,

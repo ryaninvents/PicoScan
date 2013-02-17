@@ -2,7 +2,6 @@
 #define CALIBRATIONDIALOG_H
 
 #include <QDialog>
-#include "../hardware/qscanmananger.h"
 #include "../geom/calibrator.h"
 #include "../gui/calibrationinprogress.h"
 
@@ -18,10 +17,6 @@ class CalibrationDialog : public QDialog
 public:
     /// Create the dialog
     explicit CalibrationDialog(QWidget *parent = 0);
-    /// Set the scan manager
-    void setManager(QScanMananger *m);
-    /// Get the scan manager
-    QScanMananger *getManager(){return manager;}
     /// Destroy the dialog
     ~CalibrationDialog();
 
@@ -40,8 +35,6 @@ public slots:
 private:
     /// UI
     Ui::CalibrationDialog *ui;
-    /// manager
-    QScanMananger *manager;
     /// calibrator
     Calibrator *calibrator;
     /// dialog to display progress to the user

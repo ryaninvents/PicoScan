@@ -3,14 +3,11 @@
 
 #include <vector>
 #include <opencv2/core/core.hpp>
-#include "../hardware/qscanmananger.h"
 
 class Calibrator
 {
 public:
     Calibrator();
-
-    void setScanManager(QScanMananger *m);
 
     void clearFrames();
     int addImagePair(cv::Mat left, cv::Mat right);
@@ -32,7 +29,6 @@ private:
     std::vector<std::vector<cv::Point2f> > imagePointsRight;
     std::vector<std::vector<cv::Point3f> > projectorPoints;
     cv::Size leftSize, rightSize;
-    QScanMananger *manager;
 };
 
 #endif // CALIBRATOR_H

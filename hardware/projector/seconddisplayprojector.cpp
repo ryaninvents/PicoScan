@@ -5,7 +5,7 @@
 
 SecondDisplayProjector::SecondDisplayProjector(QObject *parent) :
     QProjector(parent),
-    w(this),
+    w(),
     displayIdx(1)
 {
 }

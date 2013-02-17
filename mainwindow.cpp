@@ -104,6 +104,7 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
+
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

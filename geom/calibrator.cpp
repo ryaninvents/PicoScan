@@ -10,11 +10,6 @@ Calibrator::Calibrator()
 
 }
 
-void Calibrator::setScanManager(QScanMananger *m)
-{
-    manager = m;
-}
-
 void Calibrator::clearFrames()
 {
     imagePointsLeft.clear();
@@ -23,6 +18,7 @@ void Calibrator::clearFrames()
 
 int Calibrator::addImagePair(cv::Mat left, cv::Mat right)
 {
+    /*
     CalibrationStandard *std = manager->getStandard();
 
     bool success;
@@ -41,11 +37,13 @@ int Calibrator::addImagePair(cv::Mat left, cv::Mat right)
 
     imagePointsLeft.push_back(leftPts);
     imagePointsRight.push_back(rightPts);
-    return imagePointsLeft.size();
+    return imagePointsLeft.size();*/
+    return 0;
 }
 
 int Calibrator::addSingleImage(cv::Mat img)
 {
+    /*
     CalibrationStandard *std = manager->getStandard();
 
     bool success;
@@ -59,11 +57,12 @@ int Calibrator::addSingleImage(cv::Mat img)
     }
 
     imagePointsLeft.push_back(imgPts);
-    return imagePointsLeft.size();
+    return imagePointsLeft.size();*/
+    return 0;
 }
 
 bool Calibrator::runCalibStereo()
-{
+{/*
     double rpeLeft, rpeRight;
     CalibrationStandard *std;
     cv::Mat leftMat, leftDist, rightMat, rightDist;
@@ -157,12 +156,13 @@ bool Calibrator::runCalibStereo()
                               relativeRot.at<double>(1),
                               relativeRot.at<double>(2)
                               ));
-
+*/
     return true;
 }
 
 bool Calibrator::runCalibMono()
 {
+    /*
     double rpe;
     CalibrationStandard *std;
     cv::Mat cameraMat, cameraDist;
@@ -198,12 +198,12 @@ bool Calibrator::runCalibMono()
 
     camera->setPosition(cv::Vec3d());
     camera->setOrientation(cv::Vec3d());
-
+*/
     return true;
 }
 
 bool Calibrator::addProjectorCalibrationFrame()
-{
+{/*
     QCamera *camera = manager->getFirst();
     CalibrationStandard *standard = manager->getStandard();
 

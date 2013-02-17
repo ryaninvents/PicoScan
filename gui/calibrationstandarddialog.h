@@ -2,7 +2,6 @@
 #define CALIBRATIONSTANDARDDIALOG_H
 
 #include <QDialog>
-#include "../hardware/qscanmananger.h"
 #include "../hardware/standards/calibrationstandard.h"
 
 namespace Ui {
@@ -18,8 +17,6 @@ public:
     explicit CalibrationStandardDialog(QWidget *parent = 0);
     /// Destroy the dialog
     ~CalibrationStandardDialog();
-    /// Set the QScanManager
-    void setManager(QScanMananger *m){manager = m;}
     /// Get the calibration standard
     CalibrationStandard *getStandard();
 
@@ -34,8 +31,6 @@ public slots:
 private:
     /// UI
     Ui::CalibrationStandardDialog *ui;
-    /// Manager
-    QScanMananger *manager;
 };
 
 #endif // CALIBRATIONSTANDARDDIALOG_H
