@@ -1,6 +1,8 @@
 #ifndef QCAMERA_H
 #define QCAMERA_H
 
+#include <QTimer>
+
 #include "../qopticaldevice.h"
 #include "../../geom/uniqueimage.h"
 
@@ -33,29 +35,29 @@ public:
     void setID(uint i){id=i;}
     
 signals:
-
-    /// Signal that a frame has been captured.
-    /// Subclasses shouldn't emit this signal directly;
-    /// instead, use processFrame().
-    void frameCaptured(UniqueImage im);
+    /// A frame has been captured.
+    void frameCaptured(cv::Mat frame);
 
 public slots:
     /// Request a frame from the camera.
     virtual void requestFrame(ImageDescriptor desc){}
+    /// Start streaming.
+    void startStream();
+    /// Capture a frame and emit it when it's ready.
+    void captureRawFrame();
 
 protected:
-
-    /// Get the current time in milliseconds.
-    qint64 now();
-
-    /// Process a frame and emit it.
-    void processFrame(cv::Mat frame, ImageDescriptor desc);
-
 
 private:
 
     /// Camera ID
     uint id;
+
+    /// Timer for controlling stream
+    QTimer *timer;
+
+    /// Is the camera currently streaming?
+    bool streaming;
     
 };
 

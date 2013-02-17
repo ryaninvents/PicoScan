@@ -4,17 +4,14 @@
 #include <QDateTime>
 
 QCamera::QCamera(QObject *parent) :
-    QOpticalDevice(parent)
+    QOpticalDevice(parent),
+    streaming(false)
 {
 }
 
-qint64 QCamera::now()
+void QCamera::startStream()
 {
-    return QDateTime::currentMSecsSinceEpoch();
-}
+    if(streaming) return;
+    timer = new QTimer(this);
 
-void QCamera::processFrame(cv::Mat frame, ImageDescriptor desc)
-{
-    UniqueImage im(desc,now(),frame);
-    emit frameCaptured(im);
 }
