@@ -81,6 +81,18 @@ public:
     /// Save to STL format.
     void saveSTL(char *fnm);
 
+    /// Get a particular point.
+    cv::Vec3d getPoint(uint u, uint v);
+
+    /// Does the mesh have a point at the given (u,v)?
+    bool hasPointAt(uint u, uint v);
+
+    /// Get the parametric width
+    uint getWidth();
+    /// Get the parametric height
+    uint getHeight();
+
+
 
 private:
     /**
