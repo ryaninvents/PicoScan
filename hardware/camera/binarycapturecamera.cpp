@@ -29,6 +29,7 @@ int BinaryCaptureCamera::grayToBinary(int num)
 bool BinaryCaptureCamera::requestFrame(QCamera::FrameType type)
 {
     uint i;
+    QProjector *projector = getProjector();
 
     // we can't handle more than one thing at a time
     // we also can't handle color
@@ -58,6 +59,7 @@ void BinaryCaptureCamera::patternProjected(
 {
     GrayCodePattern *gray;
     gray = dynamic_cast<GrayCodePattern*>(pattern);
+    QCamera *camera = getCapturingCamera();
 
     // if it's not Gray code we're not interested
     if(gray==0) return;

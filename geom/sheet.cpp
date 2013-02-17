@@ -12,12 +12,26 @@ Sheet::Sheet(cv::Size size, bool useColor)
     initialize(size,useColor);
 }
 
+std::vector<GLdouble> Sheet::getPoints()
+{
+    uint v,u;
+    std::vector<GLdouble> pts;
+    cv::Vec3d pt;
+    for(u=0;u<cloud.cols;u++){
+        for(v=0;v<cloud.rows;v++){
+            if(!alpha.at<bool>(v,u)) continue;
+            pt = cloud.at<cv::Vec3d>(v,u);
+            pts.push_back();
+        }
+    }
+}
+
 void Sheet::initialize(cv::Size size, bool useColor)
 {
-    cloud = cv::Mat3d(size);
-    quads = cv::Mat_<bool>(size);
+    cloud = cv::Mat3d(size.height,size.width);
+    alpha = cv::Mat_<bool>(size.height,size.width);
     if(useColor){
-        color = cv::Mat3d(size);
+        color = cv::Mat3d(size.height,size.width);
     }else{
         color = cv::Mat3d();
     }
@@ -25,14 +39,14 @@ void Sheet::initialize(cv::Size size, bool useColor)
 
 cv::Point3d Sheet::getCentroid()
 {
-    int u,v,ct=0;
+    int v,u,ct=0;
     double x=0,y=0,z=0;
     cv::Vec3d pt;
     for(u=0;u<cloud.cols;u++){
         for(v=0;v<cloud.rows;v++){
-            if(quads.at<bool>(u,v)){
+            if(alpha.at<bool>(v,u)){
                 ct++;
-                pt = cloud.at<cv::Vec3d>(u,v);
+                pt = cloud.at<cv::Vec3d>(v,u);
                 x += pt[0];
                 y += pt[1];
                 z += pt[2];
@@ -45,7 +59,8 @@ cv::Point3d Sheet::getCentroid()
 
 void Sheet::setPoint(unsigned int u, unsigned int v, cv::Vec3d pt)
 {
-    cloud.at<cv::Vec3d>(u,v) = pt;
+    cloud.at<cv::Vec3d>(v,u) = pt;
+    alpha.at<bool>(v,u) = true;
 }
 
 void Sheet::saveSTL(char *fnm)
@@ -55,13 +70,15 @@ void Sheet::saveSTL(char *fnm)
     cv::Vec3d ptA,ptB,ptC;
 
     fprintf(file,"solid\n");
-    int u,v;
-    for(u=0;u<cloud.cols-1;u++){
-        for(v=0;v<cloud.rows-1;v++){
-            if(quads.at<bool>(u,v)){
-                ptA = cloud.at<cv::Vec3d>(u,v);
-                ptB = cloud.at<cv::Vec3d>(u,v+1);
-                ptC = cloud.at<cv::Vec3d>(u+1,v);
+    uint v,u;
+    for(u=0;u<getWidth();u++){
+        for(v=0;v<getHeight();v++){
+            if(     hasPointAt(u,v) &&
+                    hasPointAt(u+1,v) &&
+                    hasPointAt(u,v+1)){
+                ptA = getPoint(u,v);
+                ptB = getPoint(u+1,v);
+                ptC = getPoint(u,v+1);
                 if(ptA[2]-ptC[2]>1 || ptA[2]-ptC[2]<-1) continue;
                 fprintf(file, "facet normal 0 0 0\n");
                 fprintf(file, " outer loop\n");
@@ -69,7 +86,8 @@ void Sheet::saveSTL(char *fnm)
                 fprintf(file, "  vertex %f %f %f\n", ptB[0],ptB[1],ptB[2]);
                 fprintf(file, "  vertex %f %f %f\n", ptC[0],ptC[1],ptC[2]);
                 fprintf(file, " endloop\nendfacet\n");
-                ptA = cloud.at<cv::Vec3d>(u+1,v+1);
+                if(!hasPointAt(u+1,v+1)) continue;
+                ptA = getPoint(u+1,v+1);
                 fprintf(file, "facet normal 0 0 0\n");
                 fprintf(file, " outer loop\n");
                 fprintf(file, "  vertex %f %f %f\n", ptB[0],ptB[1],ptB[2]);
@@ -85,24 +103,40 @@ void Sheet::saveSTL(char *fnm)
     fclose(file);
 }
 
+cv::Vec3d Sheet::getPoint(uint u, uint v)
+{
+    return cloud.at<cv::Vec3d>(v,u);
+}
+
+bool Sheet::hasPointAt(uint u, uint v)
+{
+    return alpha.at<bool>(v,u);
+}
+
+uint Sheet::getWidth()
+{
+    return cloud.cols;
+}
+
+uint Sheet::getHeight()
+{
+    return cloud.rows;
+}
+
 void Sheet::enableQuad(unsigned int u, unsigned int v)
 {
-    quads.at<bool>(u,v) = true;
+    alpha.at<bool>(v,u) = true;
 }
 
 Sheet Sheet::decimate(int n)
 {
-    cv::Size nuSize(cloud.rows/(n-1),cloud.cols/(n-1));
-    cv::Mat3d nuCloud(nuSize);
-    cv::Mat_<bool> nuQuads(nuSize);
-    uint u,v;
-    for(u=0;u<nuSize.width;u++){
-        for(v=0;v<nuSize.height;v++){
-            nuCloud.at<cv::Vec3d>(u,v) = cloud.at<cv::Vec3d>(u*n,v*n);
-            nuQuads.at<bool>(u,v) = quads.at<bool>(u*n,v*n);
+    Sheet sheet(cv::Size(getWidth()/n+1,getHeight()/n+1));
+    uint v,u;
+    for(u=0;u<getWidth();u+=n){
+        for(v=0;v<getHeight();v+=n){
+            sheet.setPoint(u/n,v/n,getPoint(u,v));
         }
     }
-    cloud = nuCloud;
-    quads = nuQuads;
+    return sheet;
 }
 

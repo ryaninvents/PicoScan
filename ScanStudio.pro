@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     gui/secondmonitorprojectordialog.cpp \
     gui/povrayprojectordialog.cpp \
     gui/fileprojectordialog.cpp \
-    hardware/camera/pixelencodedcamera.cpp
+    hardware/camera/pixelencodedcamera.cpp \
+    geom/monotriangulator.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -75,7 +76,8 @@ HEADERS  += mainwindow.h \
     gui/secondmonitorprojectordialog.h \
     gui/povrayprojectordialog.h \
     gui/fileprojectordialog.h \
-    hardware/camera/pixelencodedcamera.h
+    hardware/camera/pixelencodedcamera.h \
+    geom/monotriangulator.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

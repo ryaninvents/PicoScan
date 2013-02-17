@@ -50,7 +50,7 @@ public:
       OpenGL rendering. This will allow the surface to be rendered
       as a surface.
       */
-    std::vector<std::vector<GLdouble> > getQuadStrips();
+    //std::vector<std::vector<GLdouble> > getQuadStrips(int decimation);
 
     /**
       Reduce the resolution of the mesh, primarily to improve response time of a
@@ -81,9 +81,6 @@ public:
     /// Save to STL format.
     void saveSTL(char *fnm);
 
-    /// Set quad
-    void enableQuad(unsigned int u, unsigned int v);
-
 
 private:
     /**
@@ -94,13 +91,13 @@ private:
       */
     cv::Mat3d cloud;
     /**
-      Determines which points on the sheet form quads.
+      Determines which points are actually on the sheet.
       A value of \c true in a given position means that the matching point
-      from \b cloud is the upper-left corner of a quad. This roughly acts
+      from \b cloud is a corner of a quad. This roughly acts
       in a similar manner to an alpha value.
       Must be the same size as \b cloud (and \b color if it exists).
       */
-    cv::Mat_<bool> quads;
+    cv::Mat_<bool> alpha;
     /**
       The RGB color of each point.
       May remain uninitialized if not needed.

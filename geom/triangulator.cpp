@@ -42,6 +42,7 @@ cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
     return M;
 }
 
+
 bool Triangulator::inTri(const cv::Vec3d P, const cv::Vec3d A, const cv::Vec3d B, const cv::Vec3d C)
 {
     // Compute vectors
@@ -132,5 +133,10 @@ void Triangulator::computePhase(std::vector<cv::Mat> fringes,
            }
        }
     }
+}
+
+Triangulator::Triangulator(QObject *parent) :
+    QObject(parent)
+{
 }
 
