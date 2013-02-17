@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <stdio.h>
+#include <QScrollBar>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -28,6 +29,8 @@ void MainWindow::debug(QString str)
     ui->debug->setPlainText(QString("%1\n%2")
                             .arg(ui->debug->toPlainText())
                             .arg(str));
+    QScrollBar *sb = ui->debug->verticalScrollBar();
+    sb->setValue(sb->maximum());
 }
 
 void MainWindow::debug(const char *str)

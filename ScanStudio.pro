@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     hardware/projector/projectordependent.cpp \
     hardware/camera/binarycapturecamera.cpp \
     hardware/projector/povrayprojector.cpp \
-    hardware/camera/povraycamera.cpp
+    hardware/camera/povraycamera.cpp \
+    gui/povraycameradialog.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -65,7 +66,8 @@ HEADERS  += mainwindow.h \
     hardware/projector/projectordependent.h \
     hardware/camera/binarycapturecamera.h \
     hardware/projector/povrayprojector.h \
-    hardware/camera/povraycamera.h
+    hardware/camera/povraycamera.h \
+    gui/povraycameradialog.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
@@ -73,7 +75,8 @@ FORMS    += mainwindow.ui \
     gui/calibrationstandarddialog.ui \
     gui/calibrationdialog.ui \
     gui/calibrationinprogress.ui \
-    gui/changeresolutiondialog.ui
+    gui/changeresolutiondialog.ui \
+    gui/povraycameradialog.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`
