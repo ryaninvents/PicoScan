@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPlainTextEdit>
 
 #include "gui/aboutdialog.h"
 #include "gui/camerasettingsdialog.h"
@@ -45,6 +46,8 @@ public slots:
     void debug(QString str);
     /// Write debug info to the side panel.
     void debug(const char *str);
+    /// Show the debug window.
+    void showDebug();
 
 protected:
     /// Quit on close.
@@ -64,6 +67,9 @@ private:
 
     /// Enable calibration
     void enableCalibrate();
+
+    /// Debug window
+    QPlainTextEdit *debugWin;
 
 };
 

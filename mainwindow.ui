@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="gui/icons.qrc">
-    <normaloff>:/oxygen/icons/oxygen/camera-web.png</normaloff>:/oxygen/icons/oxygen/camera-web.png</iconset>
+    <normaloff>:/oxygen/icons/oxygen/camera-web-64.png</normaloff>:/oxygen/icons/oxygen/camera-web-64.png</iconset>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -40,22 +40,6 @@
     <property name="margin">
      <number>0</number>
     </property>
-    <item>
-     <widget class="QPlainTextEdit" name="debug">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="undoRedoEnabled">
-       <bool>false</bool>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
     <item>
      <widget class="ModelViewWidget" name="modelView" native="true">
       <property name="sizePolicy">
@@ -110,6 +94,7 @@ color:white;</string>
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionDebugging"/>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -389,6 +374,15 @@ color:white;</string>
     <bool>true</bool>
    </property>
   </action>
+  <action name="actionDebugging">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/code-context.png</normaloff>:/oxygen/icons/oxygen/code-context.png</iconset>
+   </property>
+   <property name="text">
+    <string>Debugging</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -568,6 +562,22 @@ color:white;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionDebugging</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showDebug()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAbout()</slot>
@@ -578,5 +588,6 @@ color:white;</string>
   <slot>quitProgram()</slot>
   <slot>showCalibrationDialog()</slot>
   <slot>takeFrame()</slot>
+  <slot>showDebug()</slot>
  </slots>
 </ui>

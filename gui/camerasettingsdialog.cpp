@@ -1,6 +1,8 @@
 #include "camerasettingsdialog.h"
 #include "ui_camerasettingsdialog.h"
 
+#include "povraycameradialog.h"
+
 CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CameraSettingsDialog)
@@ -28,22 +30,8 @@ void CameraSettingsDialog::enableStereo(bool b)
     ui->labelSecondMode->setEnabled(b);
     ui->secondRes->setEnabled(b);
     ui->secondMode->setEnabled(b);
-}
+    ui->secondSettings->setEnabled(b);
 
-void CameraSettingsDialog::setFirstCamera(int idx)
-{
-    /*
-    switch(ui->firstMode->currentIndex()){
-    case 0:
-//        manager->setFirst(hardware->getCamera(idx));
-    default:
-//        manager->setFirst(new FileCamera(ui->firstFile->text().toLocal8Bit().data()));
-    }*/
-}
-
-void CameraSettingsDialog::setSecondCamera(int idx)
-{
-//    manager->setSecond(hardware->getCamera(idx));
 }
 
 void CameraSettingsDialog::setFirstResolution()
@@ -72,10 +60,50 @@ void CameraSettingsDialog::secondResolutionChanged(int u, int v)
 
 void CameraSettingsDialog::firstModeChanged(int m)
 {
-
+    if(ui->firstSettings != 0)
+        ui->firstSettings->disconnect();
+    switch(m){
+    case 0: // OpenCV
+        ui->firstSettings->setEnabled(false);
+        break;
+    case 1: {// POV-Ray
+            PovRayCameraDialog *povDialog =
+                    new PovRayCameraDialog(this);
+            ui->firstSettings->setEnabled(true);
+            connect(ui->firstSettings,
+                    SIGNAL(clicked()),
+                    povDialog,
+                    SLOT(show()));
+            firstSettingsDialog = povDialog;
+        }
+        break;
+    case 2: // files
+        ui->firstSettings->setEnabled(false);
+        break;
+    }
 }
 
 void CameraSettingsDialog::secondModeChanged(int m)
 {
+    switch(m){
+    case 0: // OpenCV
+        ui->secondSettings->setEnabled(false);
+        break;
+    case 1: // POV-Ray
+        ui->secondSettings->setEnabled(true);
+        break;
+    case 2: // files
+        ui->secondSettings->setEnabled(false);
+        break;
+    }
+}
 
+void CameraSettingsDialog::firstCameraSettingsChanged(
+        QCamera *cam)
+{
+}
+
+void CameraSettingsDialog::secondCameraSettingsChanged(
+        QCamera *cam)
+{
 }

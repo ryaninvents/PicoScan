@@ -21,6 +21,61 @@ void PovRayCamera::release()
 
 }
 
+void PovRayCamera::setSimX(double x)
+{
+    simPosition[0] = x;
+}
+
+void PovRayCamera::setSimY(double y)
+{
+    simPosition[1] = y;
+}
+
+void PovRayCamera::setSimZ(double z)
+{
+    simPosition[2] = z;
+}
+
+void PovRayCamera::setSimOrientation(cv::Vec3d r)
+{
+    simRotation = r;
+}
+
+void PovRayCamera::setSimFocalLength(double f)
+{
+    simFocalLength = f;
+}
+
+void PovRayCamera::setSimCellSize(double c)
+{
+    simCellSize = c;
+}
+
+void PovRayCamera::setAntialiasing(int aa)
+{
+    antialiasing = aa;
+}
+
+void PovRayCamera::setParameterFilename(QString fnm)
+{
+    paramFilename = fnm;
+}
+
+void PovRayCamera::setIniFilename(QString fnm)
+{
+    iniFilename = fnm;
+}
+
+void PovRayCamera::setSceneFilename(QString fnm)
+{
+    sceneFilename = fnm;
+}
+
+void PovRayCamera::setRenderFilename(QString fnm)
+{
+    renderFilename = fnm;
+}
+
 bool PovRayCamera::requestFrame(QCamera::FrameType type)
 {
     FILE *file;

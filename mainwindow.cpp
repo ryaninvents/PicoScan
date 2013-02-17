@@ -7,11 +7,16 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    calib(new CalibrationDialog)
+    calib(new CalibrationDialog),
+    debugWin(new QPlainTextEdit)
 {
     ui->setupUi(this);
 
-    ui->debug->setPlainText(QString("ScanStudio started."));
+    debugWin->setPlainText(QString("ScanStudio started."));
+    debugWin->setWindowTitle(QString("Debugging info"));
+    debugWin->setWindowIcon(
+                QIcon(tr(":/icons/oxygen/camera-web-64.png")));
+    debugWin->setWindowFlags(Qt::WindowStaysOnTopHint);
 
     connect(&stdSettings,SIGNAL(accept()),this,SLOT(adjustCalStd()));
 
@@ -26,16 +31,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::debug(QString str)
 {
-    ui->debug->setPlainText(QString("%1\n%2")
-                            .arg(ui->debug->toPlainText())
+    debugWin->setPlainText(QString("%1\n%2")
+                            .arg(debugWin->toPlainText())
                             .arg(str));
-    QScrollBar *sb = ui->debug->verticalScrollBar();
+    QScrollBar *sb = debugWin->verticalScrollBar();
     sb->setValue(sb->maximum());
 }
 
 void MainWindow::debug(const char *str)
 {
     debug(QString(str));
+}
+
+void MainWindow::showDebug()
+{
+    debugWin->show();
 }
 
 void MainWindow::showAbout()

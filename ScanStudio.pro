@@ -170,7 +170,9 @@ OTHER_FILES += \
     gui/icons/oxygen/applications-graphics.png \
     gui/icons/oxygen/view-refresh.png \
     gui/icons/oxygen/document-revert.png \
-    config.geom
+    config.geom \
+    gui/icons/oxygen/camera-web-64.png \
+    gui/icons/oxygen/code-context.png
 
 RESOURCES += \
     gui/icons.qrc

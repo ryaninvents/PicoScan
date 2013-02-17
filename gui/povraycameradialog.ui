@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>POV-Ray simulated camera</string>
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
@@ -247,7 +247,7 @@
       </widget>
      </item>
      <item row="4" column="3">
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="antialiasing">
        <property name="maximum">
         <number>16</number>
        </property>
@@ -319,5 +319,245 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>camLocX</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>locXChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>camLocY</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>locYChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>camLocZ</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>locZChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>camAxisX</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>rotAxisXChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>camAxisY</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>rotAxisYChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>camAxisZ</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>rotAxisZChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>camRotAngle</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>rotationAngleChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>focal</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>focalLengthChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cellSize</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>cellSizeChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>iniFile</sender>
+   <signal>clicked()</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>changeIniFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sceneFile</sender>
+   <signal>clicked()</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>changeSceneFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraFile</sender>
+   <signal>clicked()</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>changeCameraFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>179</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>renderFile</sender>
+   <signal>clicked()</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>changeRenderFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>179</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>antialiasing</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>PovRayCameraDialog</receiver>
+   <slot>antialiasingChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>locXChanged(double)</slot>
+  <slot>locYChanged(double)</slot>
+  <slot>locZChanged(double)</slot>
+  <slot>rotAxisXChanged(double)</slot>
+  <slot>rotAxisYChanged(double)</slot>
+  <slot>rotAxisZChanged(double)</slot>
+  <slot>rotationAngleChanged(double)</slot>
+  <slot>focalLengthChanged(double)</slot>
+  <slot>cellSizeChanged(double)</slot>
+  <slot>antialiasingChanged(int)</slot>
+  <slot>changeIniFile()</slot>
+  <slot>changeSceneFile()</slot>
+  <slot>changeCameraFile()</slot>
+  <slot>changeRenderFile()</slot>
+ </slots>
 </ui>

@@ -24,24 +24,29 @@ public slots:
     /** Enable or disable stereo. */
     void enableStereo(bool b);
 
-    /// Set the first camera
-    void setFirstCamera(int idx);
-    /// Set the second camera
-    void setSecondCamera(int idx);
     /// Set the resolution of the first camera
     void setFirstResolution();
+
     /// Set the resolution of the second camera
     void setSecondResolution();
 
     /// The user has changed the resolution on camera 1
     void firstResolutionChanged(int u, int v);
+
     /// The user has changed the resolution on camera 2
     void secondResolutionChanged(int u, int v);
 
     /// The first camera's mode has changed
     void firstModeChanged(int m);
+
     /// The second camera's mode has changed
     void secondModeChanged(int m);
+
+    /// The user has accepted settings for the first camera
+    void firstCameraSettingsChanged(QCamera *cam);
+
+    /// The user has accepted settings for the second camera
+    void secondCameraSettingsChanged(QCamera *cam);
     
 private:
     /// UI
@@ -49,8 +54,15 @@ private:
 
     /// Resolution dialog for first camera
     ChangeResolutionDialog *firstResDialog;
+
     /// Resolution dialog for second camera
     ChangeResolutionDialog *secondResDialog;
+
+    /// Settings dialog for first camera
+    QDialog *firstSettingsDialog;
+
+    /// Settings dialog for second camera
+    QDialog *secondSettingsDialog;
 
 
 };
