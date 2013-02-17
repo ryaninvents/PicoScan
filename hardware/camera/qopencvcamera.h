@@ -19,13 +19,13 @@ public:
 
     /// Set frame rate.
     /// \bug This method does not seem to actually do anything.
-    void setFrameRate(int fps);
+    void setFrameRate(uint fps);
 
 signals:
     
 public slots:
     /// Request a frame from the camera.
-    void requestFrame(ImageDescriptor desc);
+    bool requestFrame(FrameType type);
 
 private:
 

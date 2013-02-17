@@ -22,6 +22,12 @@ public:
     /// Convert Gray code to binary.
     static int grayToBinary(int num);
 
+    /// Get the bit
+    unsigned int getBit();
+
+    /// Is the binary pattern inverted?
+    bool isInverted();
+
 private:
     /// Which bit this is.
     unsigned int bit;

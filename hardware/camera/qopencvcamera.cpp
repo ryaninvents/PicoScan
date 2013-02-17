@@ -18,16 +18,33 @@ void QOpenCVCamera::release()
     delete cap;
 }
 
-void QOpenCVCamera::setFrameRate(int fps)
+void QOpenCVCamera::setFrameRate(uint fps)
 {
     cap->set(CV_CAP_PROP_FPS,fps);
+    QCamera::setFrameRate(fps);
 }
 
-void QOpenCVCamera::requestFrame(ImageDescriptor desc)
+bool QOpenCVCamera::requestFrame(FrameType type)
 {
+    if(!isOpen()) return false;
     cv::Mat m;
     cap->read(m);
-    if(!desc.isColor())
+    switch(type){
+    case FULL_COLOR:
+        break;
+    case DOUBLE:
         cv::cvtColor(m,m,CV_RGB2GRAY);
-    processFrame(m,desc);
+        m.convertTo(m,CV_64F);
+        break;
+    case SIGNED_32:
+        cv::cvtColor(m,m,CV_RGB2GRAY);
+        m.convertTo(m,CV_32S);
+        break;
+    case UNSIGNED_16:
+        cv::cvtColor(m,m,CV_RGB2GRAY);
+        m.convertTo(m,CV_16U);
+        break;
+    }
+    emit frameCaptured(m,type);
+    return true;
 }

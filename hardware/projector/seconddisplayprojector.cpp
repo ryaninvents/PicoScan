@@ -9,11 +9,10 @@ SecondDisplayProjector::SecondDisplayProjector(QObject *parent) :
 {
 }
 
-void SecondDisplayProjector::projectPattern(QProjector::Pattern *p,
-                                            ImageDescriptor desc)
+void SecondDisplayProjector::projectPattern(QProjector::Pattern *p)
 {
     w.projectPattern(p);
-    emit patternProjected(desc);
+    emit patternProjected(p);
 }
 
 void SecondDisplayProjector::Widget::projectOnDisplay(int n)

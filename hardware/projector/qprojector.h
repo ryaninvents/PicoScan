@@ -3,7 +3,7 @@
 
 #include "../qopticaldevice.h"
 #include "../../gui/imageviewwidget.h"
-#include "../../geom/imagedescriptor.h"
+#include "projectordependent.h"
 
 /// Represents a projector.
 class QProjector : public QOpticalDevice
@@ -13,6 +13,14 @@ public:
     /// Create a new projector.
     explicit QProjector(QObject *parent = 0);
 
+    /// Queue up a pattern.
+    void queue(Pattern *p);
+
+    /// Register a ProjectorDependent, meaning
+    /// the projector can't move on until all
+    /// dependents have been satisfied.
+    void registerDependent(ProjectorDependent *dp);
+
     /// Represents the actual pattern being projected.
     class Pattern
     {
@@ -21,22 +29,36 @@ public:
         virtual QImage generatePattern(int width,
                                        int height){}
         /// Get an ID that uniquely identifies this pattern's
-        /// configuration. This identifies the pattern among
-        /// other patterns in the same sequence, so it need
-        /// not encode size; rather, it should include data
-        /// that changes over the course of the measurement,
-        /// e.g., fringe density or phase shift.
+        /// configuration. This uniquely identifies the pattern
+        /// within the queue, so it should be a determinate
+        /// function of the pattern's class and parameters.
         virtual unsigned int getPatternID(){}
     };
 
 signals:
     /// Notify listeners that a pattern has been projected.
-    void patternProjected(ImageDescriptor);
+    void patternProjected(Pattern*);
 
 public slots:
     /// Project a pattern.
-    virtual void projectPattern(QProjector::Pattern *,
-                                ImageDescriptor){}
+    virtual void projectPattern(QProjector::Pattern *){}
+    /// Check to see if all dependents are satisfied.
+    void checkDependents();
+    /// Deregister a dependent.
+    void deregisterDependent(uint id);
+    /// Project the next pattern in the queue.
+    /// \bug May emit patternProjected() before
+    /// pattern is actually projected, depending
+    /// on the implementation. Might want to move
+    /// that to child processes.
+    void processQueue();
+
+private:
+    /// Queue of patterns waiting to be projected.
+    std::vector<Pattern*> patternQueue;
+
+    /// List of dependents
+    std::vector<ProjectorDependent*> dependents;
 };
 
 #endif // QPROJECTOR_H

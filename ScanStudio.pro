@@ -31,15 +31,12 @@ SOURCES += main.cpp\
     hardware/qopticaldevice.cpp \
     hardware/camera/qcamera.cpp \
     hardware/camera/qopencvcamera.cpp \
-    hardware/camera/qfilecamera.cpp \
     hardware/projector/qprojector.cpp \
     hardware/projector/seconddisplayprojector.cpp \
     hardware/qscanmananger.cpp \
-    geom/uniqueimage.cpp \
-    geom/imagedescriptor.cpp \
-    image/imageprocessor.cpp \
-    image/binaryimageprocessor.cpp \
-    hardware/projector/graycodepattern.cpp
+    hardware/projector/graycodepattern.cpp \
+    hardware/projector/projectordependent.cpp \
+    hardware/camera/binarycapturecamera.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -61,15 +58,12 @@ HEADERS  += mainwindow.h \
     hardware/qopticaldevice.h \
     hardware/camera/qcamera.h \
     hardware/camera/qopencvcamera.h \
-    hardware/camera/qfilecamera.h \
     hardware/projector/qprojector.h \
     hardware/projector/seconddisplayprojector.h \
     hardware/qscanmananger.h \
-    geom/uniqueimage.h \
-    geom/imagedescriptor.h \
-    image/imageprocessor.h \
-    image/binaryimageprocessor.h \
-    hardware/projector/graycodepattern.h
+    hardware/projector/graycodepattern.h \
+    hardware/projector/projectordependent.h \
+    hardware/camera/binarycapturecamera.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

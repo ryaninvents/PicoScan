@@ -51,3 +51,13 @@ int GrayCodePattern::grayToBinary(int num)
     }
     return num;
 }
+
+unsigned int GrayCodePattern::getBit()
+{
+    return bit;
+}
+
+bool GrayCodePattern::isInverted()
+{
+    return inverted;
+}

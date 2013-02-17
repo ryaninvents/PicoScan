@@ -20,8 +20,7 @@ public:
 signals:
     
 public slots:
-    void projectPattern(QProjector::Pattern *p,
-                        ImageDescriptor desc);
+    void projectPattern(QProjector::Pattern *p);
 
 private:
     Widget w;
