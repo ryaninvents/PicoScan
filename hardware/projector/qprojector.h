@@ -19,12 +19,12 @@ public:
     public:
         /// Get the pattern.
         virtual QImage generatePattern(int width,
-                                       int height){}
+                                       int height)=0;
         /// Get an ID that uniquely identifies this pattern's
         /// configuration. This uniquely identifies the pattern
         /// within the queue, so it should be a determinate
         /// function of the pattern's class and parameters.
-        virtual unsigned int getPatternID(){}
+        virtual unsigned int getPatternID()=0;
     };
 
     /// Queue up a pattern.

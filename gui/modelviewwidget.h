@@ -45,9 +45,11 @@ public slots:
     void zoomFit();
 
 private:
-    /// model rotation about Y axis in 3D space
+    /// model rotation about Y axis in 3D space; that is,
+    /// in response to mouse X-movement
     GLdouble xRot;
-    /// model rotation about X axis in 3D space
+    /// model rotation about X axis in 3D space; that is,
+    /// in response to mouse Y-movement
     GLdouble yRot;
     /// zoom level
     GLdouble zoom;

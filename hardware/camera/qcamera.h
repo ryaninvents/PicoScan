@@ -17,10 +17,10 @@ public:
     explicit QCamera(QObject *parent = 0);
 
     /// Is the camera available to take frames?
-    virtual bool isOpen(){}
+    virtual bool isOpen()=0;
 
     /// Release any resources this camera is using.
-    virtual void release(){}
+    virtual void release()=0;
 
     /// Set the frame rate.
     void setFrameRate(uint fps);
@@ -55,7 +55,7 @@ public slots:
     /// \returns \b true if the camera will emit the
     /// frame, \b false if the camera is incapable of
     /// emitting the desired type of frame.
-    virtual bool requestFrame(FrameType type){}
+    virtual bool requestFrame(FrameType)=0;
 
 protected:
 
