@@ -25,7 +25,6 @@ SOURCES += main.cpp\
     gui/calibrationinprogress.cpp \
     geom/calibrator.cpp \
     geom/triangulator.cpp \
-    geom/pointcloud.cpp \
     gui/changeresolutiondialog.cpp \
     hardware/standards/dotmatrixstandard.cpp \
     hardware/qopticaldevice.cpp \
@@ -52,7 +51,6 @@ HEADERS  += mainwindow.h \
     gui/calibrationinprogress.h \
     geom/calibrator.h \
     geom/triangulator.h \
-    geom/pointcloud.h \
     gui/changeresolutiondialog.h \
     hardware/standards/dotmatrixstandard.h \
     hardware/qopticaldevice.h \

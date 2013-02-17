@@ -13,14 +13,6 @@ public:
     /// Create a new projector.
     explicit QProjector(QObject *parent = 0);
 
-    /// Queue up a pattern.
-    void queue(Pattern *p);
-
-    /// Register a ProjectorDependent, meaning
-    /// the projector can't move on until all
-    /// dependents have been satisfied.
-    void registerDependent(ProjectorDependent *dp);
-
     /// Represents the actual pattern being projected.
     class Pattern
     {
@@ -35,9 +27,17 @@ public:
         virtual unsigned int getPatternID(){}
     };
 
+    /// Queue up a pattern.
+    void queue(QProjector::Pattern *p);
+
+    /// Register a ProjectorDependent, meaning
+    /// the projector can't move on until all
+    /// dependents have been satisfied.
+    void registerDependent(ProjectorDependent *dp);
+
 signals:
     /// Notify listeners that a pattern has been projected.
-    void patternProjected(Pattern*);
+    void patternProjected(QProjector::Pattern*);
 
 public slots:
     /// Project a pattern.
@@ -55,7 +55,7 @@ public slots:
 
 private:
     /// Queue of patterns waiting to be projected.
-    std::vector<Pattern*> patternQueue;
+    std::vector<QProjector::Pattern*> patternQueue;
 
     /// List of dependents
     std::vector<ProjectorDependent*> dependents;

@@ -16,7 +16,7 @@ void QProjector::queue(QProjector::Pattern *p)
             return;
         }
     }
-    patternQueue.push_back(*p);
+    patternQueue.push_back(p);
 }
 
 void QProjector::registerDependent(ProjectorDependent *dp)
@@ -37,7 +37,8 @@ void QProjector::deregisterDependent(uint id)
 
 void QProjector::processQueue()
 {
-    Pattern *pattern = patternQueue.pop_back();
+    Pattern *pattern = patternQueue.at(patternQueue.size()-1);
+    patternQueue.pop_back();
     projectPattern(pattern);
     emit patternProjected(pattern);
 }
