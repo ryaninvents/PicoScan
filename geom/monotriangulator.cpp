@@ -8,7 +8,10 @@ MonoTriangulator::MonoTriangulator(QObject *parent) :
 void MonoTriangulator::setCamera(PixelEncodedCamera *cam)
 {
     camera = cam;
-
+    connect(camera,
+            SIGNAL(frameCaptured(cv::Mat,FrameType)),
+            this,
+            SLOT(frameReturned(cv::Mat,QCamera::FrameType)));
 }
 
 void MonoTriangulator::setProjector(QProjector *proj)
@@ -26,8 +29,7 @@ void MonoTriangulator::frameReturned(
         QCamera::FrameType)
 {
     uint x,y;
-    cv::Vec3d P_up, P_fringe, M_hat, D, M;
-    cv::Point3d pt;
+    cv::Vec3d P_up, P_fge, M_hat, D, pt;
     double ppx;
     Sheet sheet(cv::Size(frame.cols,frame.rows));
 
@@ -38,11 +40,11 @@ void MonoTriangulator::frameReturned(
         for(y=0;y<frame.rows;y++){
             ppx = frame.at<double>(y,x);
             if(ppx<0) continue;
-            P_fringe = projector->getPixelRay(ppx,0);
+            P_fge = projector->getPixelRay(ppx,0);
             M_hat = camera->getPixelRay(y,x);
-            M = sumTo(M_hat,P_up,P_fringe,D);
-            pt = cv::Point3d(M[0],M[1],M[2]);
-
+            pt = sumTo(M_hat,P_up,P_fge,D);
+            sheet.setPoint(x,y,pt);
         }
     }
+    emit sheetComputed(sheet);
 }

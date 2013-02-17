@@ -21,9 +21,12 @@ std::vector<GLdouble> Sheet::getPoints()
         for(v=0;v<cloud.rows;v++){
             if(!alpha.at<bool>(v,u)) continue;
             pt = cloud.at<cv::Vec3d>(v,u);
-            pts.push_back();
+            pts.push_back((GLdouble)pt[0]);
+            pts.push_back((GLdouble)pt[1]);
+            pts.push_back((GLdouble)pt[2]);
         }
     }
+    return pts;
 }
 
 void Sheet::initialize(cv::Size size, bool useColor)
@@ -121,11 +124,6 @@ uint Sheet::getWidth()
 uint Sheet::getHeight()
 {
     return cloud.rows;
-}
-
-void Sheet::enableQuad(unsigned int u, unsigned int v)
-{
-    alpha.at<bool>(v,u) = true;
 }
 
 Sheet Sheet::decimate(int n)
