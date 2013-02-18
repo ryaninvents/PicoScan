@@ -2,7 +2,7 @@
 #define CAMERASTREAMWIDGET_H
 
 #include <QTimer>
-#include "../hardware/camera/camera.h"
+#include "../hardware/camera/qcamera.h"
 #include "imageviewwidget.h"
 
 /**
@@ -12,6 +12,7 @@ class CameraStreamWidget : public ImageViewWidget
 {
     Q_OBJECT
 public:
+    /// Create the widget
     explicit CameraStreamWidget(QWidget *parent = 0);
     /**
       Is this widget currently streaming from a camera?
@@ -23,7 +24,7 @@ public:
       Change the camera attached to the widget.
       \param cam The camera to stream to the widget.
       */
-    void setCamera(Camera *cam){camera = cam;noCamera = false;}
+    void setCamera(QCamera *cam){camera = cam;noCamera = false;}
 
     /**
       Set the frame-taking interval of the widget, in milliseconds.
@@ -48,10 +49,17 @@ public slots:
     void closeCameraStream();
 
 private:
+    /// Timer for controlling streaming
+    /// \deprecated streaming will be controlled by camera instead
     QTimer *timer;
-    Camera *camera;
+    /// The camera to stream from
+    QCamera *camera;
+    /// whether or not we're live
     bool running;
+    /// if we have no camera
     bool noCamera;
+    /// the interval to update on
+    /// \deprecated see note on \a timer
     unsigned int interval;
     
 };

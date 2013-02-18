@@ -1,9 +1,5 @@
 #include "triangulator.h"
 
-Triangulator::Triangulator()
-{
-}
-
 cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
                               const cv::Vec3d P_up,
                               const cv::Vec3d P_fwd,
@@ -45,6 +41,7 @@ cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
 
     return M;
 }
+
 
 bool Triangulator::inTri(const cv::Vec3d P, const cv::Vec3d A, const cv::Vec3d B, const cv::Vec3d C)
 {
@@ -92,8 +89,8 @@ cv::Vec3d Triangulator::getPlane(std::vector<cv::Vec3d> pts)
     A.at<double>(1,2) = A.at<double>(2,1);
     A.at<double>(2,2) = (double) pts.size();
 
-    cv::Vec3d m = A.inv() * b;
-    return cv::Vec3d(m[2],m[1],m[0]);
+    cv::Mat m = A.inv() * b;
+    return cv::Vec3d(m.at<double>(2),m.at<double>(1),m.at<double>(0));
 }
 
 
@@ -108,5 +105,38 @@ cv::Vec3d Triangulator::getCentroid(std::vector<cv::Vec3d> pts)
         z+=pts[i][2];
     }
     return cv::Vec3d(x/i,y/i,z/i);
+}
+
+void Triangulator::computePhase(std::vector<cv::Mat> fringes,
+                                   cv::Mat output,
+                                   double scale)
+{
+    uint m = fringes.size();
+    double alpha,numer,denom;
+    uint i,x,y;
+
+    for(x=0;x<output.cols;x++){
+       for(y=0;y<output.rows;y++){
+           numer = 0;
+           denom = 0;
+           for(i=0;i<m;i++){
+               alpha = 2*M_PI*(i)/m;
+               numer += fringes[i].at<unsigned char>(y,x)*sin(alpha);
+               denom += fringes[i].at<unsigned char>(y,x)*cos(alpha);
+           }
+           if((denom<1e-10 && denom>-1e-10))
+               output.at<double>(y,x) = 0;
+           else{
+               denom = numer/(denom*2*M_PI)+0.5;
+               //if(denom<0) denom += 1.0;
+               output.at<double>(y,x) = scale*denom;
+           }
+       }
+    }
+}
+
+Triangulator::Triangulator(QObject *parent) :
+    QObject(parent)
+{
 }
 

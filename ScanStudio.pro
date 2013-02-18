@@ -12,58 +12,70 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    hardware/opticaldevice.cpp \
-    hardware/camera/camera.cpp \
-    hardware/camera/opencvcamera.cpp \
     hardware/standards/calibrationstandard.cpp \
     hardware/standards/chessboardstandard.cpp \
     gui/modelviewwidget.cpp \
     gui/aboutdialog.cpp \
     gui/camerasettingsdialog.cpp \
     geom/sheet.cpp \
-    hardware/projector/projectionscreen.cpp \
-    hardware/projector/projectionpattern.cpp \
     gui/imageviewwidget.cpp \
     gui/camerastreamwidget.cpp \
     gui/calibrationstandarddialog.cpp \
-    hardware/scanmanager.cpp \
     gui/calibrationdialog.cpp \
-    gui/calibrationinprogress.cpp \
-    hardware/hardwaremanager.cpp \
-    geom/calibrator.cpp \
-    hardware/projector/reflectedbinarypattern.cpp \
-    hardware/projector/projector.cpp \
     geom/triangulator.cpp \
-    test/testmesher.cpp \
-    geom/pointcloud.cpp \
-    gui/changeresolutiondialog.cpp
+    gui/changeresolutiondialog.cpp \
+    hardware/standards/dotmatrixstandard.cpp \
+    hardware/qopticaldevice.cpp \
+    hardware/camera/qcamera.cpp \
+    hardware/camera/qopencvcamera.cpp \
+    hardware/projector/qprojector.cpp \
+    hardware/projector/seconddisplayprojector.cpp \
+    hardware/projector/graycodepattern.cpp \
+    hardware/projector/projectordependent.cpp \
+    hardware/camera/binarycapturecamera.cpp \
+    hardware/projector/povrayprojector.cpp \
+    hardware/camera/povraycamera.cpp \
+    gui/povraycameradialog.cpp \
+    gui/projectorsettingsdialog.cpp \
+    gui/secondmonitorprojectordialog.cpp \
+    gui/povrayprojectordialog.cpp \
+    gui/fileprojectordialog.cpp \
+    hardware/camera/pixelencodedcamera.cpp \
+    geom/monotriangulator.cpp \
+    gui/opencvcameradialog.cpp
 
 HEADERS  += mainwindow.h \
-    hardware/opticaldevice.h \
-    hardware/camera/camera.h \
-    hardware/camera/opencvcamera.h \
     hardware/standards/calibrationstandard.h \
     hardware/standards/chessboardstandard.h \
     gui/modelviewwidget.h \
     gui/aboutdialog.h \
     gui/camerasettingsdialog.h \
     geom/sheet.h \
-    hardware/projector/projectionscreen.h \
-    hardware/projector/projectionpattern.h \
     gui/imageviewwidget.h \
     gui/camerastreamwidget.h \
     gui/calibrationstandarddialog.h \
-    hardware/scanmanager.h \
     gui/calibrationdialog.h \
-    gui/calibrationinprogress.h \
-    hardware/hardwaremanager.h \
-    geom/calibrator.h \
-    hardware/projector/reflectedbinarypattern.h \
-    hardware/projector/projector.h \
     geom/triangulator.h \
-    test/testmesher.h \
-    geom/pointcloud.h \
-    gui/changeresolutiondialog.h
+    gui/changeresolutiondialog.h \
+    hardware/standards/dotmatrixstandard.h \
+    hardware/qopticaldevice.h \
+    hardware/camera/qcamera.h \
+    hardware/camera/qopencvcamera.h \
+    hardware/projector/qprojector.h \
+    hardware/projector/seconddisplayprojector.h \
+    hardware/projector/graycodepattern.h \
+    hardware/projector/projectordependent.h \
+    hardware/camera/binarycapturecamera.h \
+    hardware/projector/povrayprojector.h \
+    hardware/camera/povraycamera.h \
+    gui/povraycameradialog.h \
+    gui/projectorsettingsdialog.h \
+    gui/secondmonitorprojectordialog.h \
+    gui/povrayprojectordialog.h \
+    gui/fileprojectordialog.h \
+    hardware/camera/pixelencodedcamera.h \
+    geom/monotriangulator.h \
+    gui/opencvcameradialog.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
@@ -71,7 +83,13 @@ FORMS    += mainwindow.ui \
     gui/calibrationstandarddialog.ui \
     gui/calibrationdialog.ui \
     gui/calibrationinprogress.ui \
-    gui/changeresolutiondialog.ui
+    gui/changeresolutiondialog.ui \
+    gui/povraycameradialog.ui \
+    gui/projectorsettingsdialog.ui \
+    gui/secondmonitorprojectordialog.ui \
+    gui/povrayprojectordialog.ui \
+    gui/fileprojectordialog.ui \
+    gui/opencvcameradialog.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`
@@ -164,7 +182,11 @@ OTHER_FILES += \
     gui/icons/oxygen/arrow-down.png \
     gui/icons/oxygen/applications-graphics.png \
     gui/icons/oxygen/view-refresh.png \
-    gui/icons/oxygen/document-revert.png
+    gui/icons/oxygen/document-revert.png \
+    config.geom \
+    gui/icons/oxygen/camera-web-64.png \
+    gui/icons/oxygen/code-context.png \
+    gui/icons/oxygen/document-edit-encrypt.png
 
 RESOURCES += \
     gui/icons.qrc

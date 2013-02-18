@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="gui/icons.qrc">
-    <normaloff>:/oxygen/icons/oxygen/camera-web.png</normaloff>:/oxygen/icons/oxygen/camera-web.png</iconset>
+    <normaloff>:/oxygen/icons/oxygen/camera-web-64.png</normaloff>:/oxygen/icons/oxygen/camera-web-64.png</iconset>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -42,6 +42,12 @@
     </property>
     <item>
      <widget class="ModelViewWidget" name="modelView" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="cursor">
        <cursorShape>OpenHandCursor</cursorShape>
       </property>
@@ -79,15 +85,14 @@ color:white;</string>
      <string>Hardware</string>
     </property>
     <addaction name="actionSelect_standard"/>
-    <addaction name="actionSetup_wizard"/>
     <addaction name="actionSelect_cameras"/>
     <addaction name="actionProjector_settings"/>
-    <addaction name="actionCalibrate"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionDebugging"/>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -98,9 +103,18 @@ color:white;</string>
     <addaction name="separator"/>
     <addaction name="actionFull_screen"/>
    </widget>
+   <widget class="QMenu" name="menuSetup">
+    <property name="title">
+     <string>Setup</string>
+    </property>
+    <addaction name="actionSetup_wizard"/>
+    <addaction name="actionConfigure_pattern"/>
+    <addaction name="actionCalibrate"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuHardware"/>
+   <addaction name="menuSetup"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -113,8 +127,9 @@ color:white;</string>
    <addaction name="actionSelect_standard"/>
    <addaction name="actionSetup_wizard"/>
    <addaction name="actionSelect_cameras"/>
-   <addaction name="actionCalibrate"/>
+   <addaction name="actionConfigure_pattern"/>
    <addaction name="actionProjector_settings"/>
+   <addaction name="actionCalibrate"/>
    <addaction name="actionTake_snapshot"/>
    <addaction name="separator"/>
    <addaction name="actionZoom_out"/>
@@ -123,12 +138,7 @@ color:white;</string>
    <addaction name="separator"/>
    <addaction name="actionFull_screen"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar">
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(14,41,71);
-color:white;</string>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionCalibrate">
    <property name="icon">
     <iconset resource="gui/icons.qrc">
@@ -306,7 +316,7 @@ color:white;</string>
     <string>Zoom to fit</string>
    </property>
    <property name="toolTip">
-    <string>Zoom to fit the scene</string>
+    <string>Zoom to fit</string>
    </property>
    <property name="statusTip">
     <string>Fit the scene in the window</string>
@@ -370,6 +380,33 @@ color:white;</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionDebugging">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/code-context.png</normaloff>:/oxygen/icons/oxygen/code-context.png</iconset>
+   </property>
+   <property name="text">
+    <string>Debugging</string>
+   </property>
+  </action>
+  <action name="actionConfigure_pattern">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/document-edit-encrypt.png</normaloff>:/oxygen/icons/oxygen/document-edit-encrypt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Configure pattern</string>
+   </property>
+   <property name="iconText">
+    <string>Configure patterns</string>
+   </property>
+   <property name="toolTip">
+    <string>Configure encoding patterns</string>
+   </property>
+   <property name="statusTip">
+    <string>Select the encoding patterns to project</string>
    </property>
   </action>
  </widget>
@@ -506,8 +543,8 @@ color:white;</string>
   <connection>
    <sender>actionZoom_best</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>takeFrame()</slot>
+   <receiver>modelView</receiver>
+   <slot>zoomFit()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -515,23 +552,7 @@ color:white;</string>
     </hint>
     <hint type="destinationlabel">
      <x>353</x>
-     <y>227</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionProjector_settings</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>showProjectionScreen()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>353</x>
-     <y>227</y>
+     <y>243</y>
     </hint>
    </hints>
   </connection>
@@ -567,15 +588,48 @@ color:white;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionDebugging</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showDebug()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionProjector_settings</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showProjectorSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAbout()</slot>
   <slot>setFullScreen(bool)</slot>
   <slot>showCameraSettings()</slot>
   <slot>showCalStdSettings()</slot>
-  <slot>showProjectionScreen()</slot>
   <slot>quitProgram()</slot>
   <slot>showCalibrationDialog()</slot>
   <slot>takeFrame()</slot>
+  <slot>showDebug()</slot>
+  <slot>showProjectorSettings()</slot>
  </slots>
 </ui>

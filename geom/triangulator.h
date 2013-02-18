@@ -1,14 +1,27 @@
 #ifndef TRIANGULATOR_H
 #define TRIANGULATOR_H
+
+#include <QObject>
 #include <opencv2/core/core.hpp>
-class Triangulator
+
+/// Provides triangulation as well as other utilities.
+class Triangulator : public QObject
 {
+    Q_OBJECT
 public:
-    Triangulator();
+    /// Create a Triangulator. Calling this constructor
+    /// is fairly useless, as this class consists entirely
+    /// of static methods, but I want to be able to subclass it.
+    explicit Triangulator(QObject *parent = 0);
+
+    /// Given a line <tt>L = M_hat * s</tt>,
+    /// and a plane <tt>P = D + P_up * s + P_fwd * t</tt>,
+    /// find the point of intersection.
     static cv::Vec3d sumTo(const cv::Vec3d M_hat,
                            const cv::Vec3d P_up,
                            const cv::Vec3d P_fwd,
                            const cv::Vec3d D);
+
     /** Find out if point P is within triangle ABC.
         Thanks to <a href="http://www.blackpawn.com/texts/pointinpoly/default.html">
         blackpawn.com</a> for the code. */
@@ -28,6 +41,11 @@ public:
 
     /** Get the normal of a plane returned by getPlane(). */
     //static cv::Vec3d getPlaneNormal(cv::Vec3d plane);
+
+    /// Compute wrapped phase from set of images.
+    static void computePhase(std::vector<cv::Mat> fringes,
+                             cv::Mat output,
+                             double scale);
 };
 
 #endif // TRIANGULATOR_H

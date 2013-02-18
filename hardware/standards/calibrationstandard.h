@@ -3,11 +3,13 @@
 
 #include <vector>
 #include <opencv2/core/core.hpp>
-#include "../camera/camera.h"
+#include "../camera/qcamera.h"
 
+/// A generic, planar calibration standard.
 class CalibrationStandard
 {
 public:
+    /// Create a new standard.
     CalibrationStandard();
 
     /** Obtain a vector of the points of interest on this board. */
@@ -34,15 +36,19 @@ public:
                            bool *success);
 
     /** Calibrate a single camera. */
-    bool calibrate(Camera *camera,
+    bool calibrate(QCamera *camera,
                    std::vector<cv::Mat> images,
                    std::vector<cv::Mat> rvecs,
                    std::vector<cv::Mat> tvecs,
                    double *rpe);
 
+    /// Get the first corner of the board.
     virtual int getPointA() = 0;
+    /// Get the second corner of the board.
     virtual int getPointB() = 0;
+    /// Get the third corner of the board.
     virtual int getPointC() = 0;
+    /// Get the fourth corner of the board.
     virtual int getPointD() = 0;
 
 protected:

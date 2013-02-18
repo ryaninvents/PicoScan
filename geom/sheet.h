@@ -50,7 +50,7 @@ public:
       OpenGL rendering. This will allow the surface to be rendered
       as a surface.
       */
-    std::vector<std::vector<GLdouble> > getQuadStrips();
+    //std::vector<std::vector<GLdouble> > getQuadStrips(int decimation);
 
     /**
       Reduce the resolution of the mesh, primarily to improve response time of a
@@ -75,6 +75,24 @@ public:
       */
     cv::Point3d getCentroid();
 
+    /// Add a point to the sheet.
+    void setPoint(unsigned int u, unsigned int v, cv::Vec3d pt);
+
+    /// Save to STL format.
+    void saveSTL(char *fnm);
+
+    /// Get a particular point.
+    cv::Vec3d getPoint(uint u, uint v);
+
+    /// Does the mesh have a point at the given (u,v)?
+    bool hasPointAt(uint u, uint v);
+
+    /// Get the parametric width
+    uint getWidth();
+    /// Get the parametric height
+    uint getHeight();
+
+
 
 private:
     /**
@@ -85,19 +103,20 @@ private:
       */
     cv::Mat3d cloud;
     /**
-      Determines which points on the sheet form quads.
+      Determines which points are actually on the sheet.
       A value of \c true in a given position means that the matching point
-      from \b cloud is the upper-left corner of a quad. This roughly acts
+      from \b cloud is a corner of a quad. This roughly acts
       in a similar manner to an alpha value.
       Must be the same size as \b cloud (and \b color if it exists).
       */
-    cv::Mat_<bool> quads;
+    cv::Mat_<bool> alpha;
     /**
       The RGB color of each point.
       May remain uninitialized if not needed.
       */
     cv::Mat3d color;
 
+    /// Set up the matrices
     void initialize(cv::Size size, bool useColor);
 };
 

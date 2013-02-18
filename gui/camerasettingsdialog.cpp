@@ -1,7 +1,8 @@
 #include "camerasettingsdialog.h"
 #include "ui_camerasettingsdialog.h"
 
-#include "../hardware/camera/opencvcamera.h"
+#include "povraycameradialog.h"
+#include "opencvcameradialog.h"
 
 CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
     QDialog(parent),
@@ -17,6 +18,9 @@ CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
 
     connect(secondResDialog,SIGNAL(resolutionChanged(int,int)),
             this,SLOT(secondResolutionChanged(int,int)));
+
+    firstModeChanged(0);
+    secondModeChanged(0);
 }
 
 CameraSettingsDialog::~CameraSettingsDialog()
@@ -26,32 +30,23 @@ CameraSettingsDialog::~CameraSettingsDialog()
 
 void CameraSettingsDialog::enableStereo(bool b)
 {
-    ui->labelSecondCam->setEnabled(b);
     ui->labelSecondRes->setEnabled(b);
-    ui->secondDevice->setEnabled(b);
+    ui->labelSecondMode->setEnabled(b);
     ui->secondRes->setEnabled(b);
-    manager->setStereo(b);
-}
+    ui->secondMode->setEnabled(b);
+    ui->secondSettings->setEnabled(b);
 
-void CameraSettingsDialog::setFirstCamera(int idx)
-{
-    manager->setFirst(hardware->getCamera(idx));
-}
-
-void CameraSettingsDialog::setSecondCamera(int idx)
-{
-    manager->setSecond(hardware->getCamera(idx));
 }
 
 void CameraSettingsDialog::setFirstResolution()
 {
-    firstResDialog->setCamera(manager->getFirst());
+    firstResDialog->setCamera(firstCamera);
     firstResDialog->show();
 }
 
 void CameraSettingsDialog::setSecondResolution()
 {
-    secondResDialog->setCamera(manager->getSecond());
+    secondResDialog->setCamera(secondCamera);
     secondResDialog->show();
 }
 
@@ -65,4 +60,83 @@ void CameraSettingsDialog::secondResolutionChanged(int u, int v)
 {
     QString buttonText = QString("%1 x %2").arg(u).arg(v);
     ui->secondRes->setText(buttonText);
+}
+
+void CameraSettingsDialog::firstModeChanged(int m)
+{
+    if(ui->firstSettings != 0)
+        ui->firstSettings->disconnect();
+    switch(m){
+    case 0: // OpenCV
+    {
+        OpenCVCameraDialog *ocv =
+                new OpenCVCameraDialog(this);
+        ui->firstSettings->setEnabled(true);
+        connect(ui->firstSettings,
+                SIGNAL(clicked()),
+                ocv,
+                SLOT(show()));
+        connect(ocv,
+                SIGNAL(cameraAccepted(QCamera*)),
+                this,
+                SLOT(firstCameraSettingsChanged(QCamera*)));
+        firstSettingsDialog = ocv;
+        break;
+    }
+    case 1: // POV-Ray
+    {
+        PovRayCameraDialog *povDialog =
+                new PovRayCameraDialog(this);
+        ui->firstSettings->setEnabled(true);
+        connect(ui->firstSettings,
+                SIGNAL(clicked()),
+                povDialog,
+                SLOT(show()));
+        connect(povDialog,
+                SIGNAL(cameraChanged(QCamera*)),
+                this,
+                SLOT(firstCameraSettingsChanged(QCamera*)));
+        firstSettingsDialog = povDialog;
+        break;
+    }
+    case 2: // files
+    {
+        ui->firstSettings->setEnabled(false);
+        break;
+    }
+    }
+}
+
+void CameraSettingsDialog::secondModeChanged(int m)
+{
+    switch(m){
+    case 0: // OpenCV
+        ui->secondSettings->setEnabled(false);
+        break;
+    case 1: // POV-Ray
+        ui->secondSettings->setEnabled(true);
+        break;
+    case 2: // files
+        ui->secondSettings->setEnabled(false);
+        break;
+    }
+}
+
+void CameraSettingsDialog::firstCameraSettingsChanged(
+        QCamera *cam)
+{
+    emit debug(QString("=== First camera changed ===\n%1\n"
+                       "========================")
+               .arg(cam->describe()));
+}
+
+void CameraSettingsDialog::secondCameraSettingsChanged(
+        QCamera *cam)
+{
+}
+
+void CameraSettingsDialog::accept()
+{
+    emit acceptedCameras(firstCamera,secondCamera);
+    QDialog::accept();
 }

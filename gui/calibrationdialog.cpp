@@ -7,44 +7,11 @@
 
 CalibrationDialog::CalibrationDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CalibrationDialog),
-    inProgress(new CalibrationInProgress),
-    calibrator(new Calibrator)
+    ui(new Ui::CalibrationDialog)
 {
     ui->setupUi(this);
 }
 
-void CalibrationDialog::setManager(ScanManager *m)
-{
-    manager = m;
-
-    printf("CalibrationDialog manager\t0x%x\n"
-           "manager->getFirst()\t\t0x%x\n"
-           "manager->getSecond()\t0x%x\n",
-           manager,manager->getFirst(),
-           manager->getSecond());
-
-    if(manager->numCameras()<1){
-        QMessageBox::warning(this,"No cameras registered",
-                             "You must have at least one camera registered. "
-                             "Please go to Camera Settings and select a camera.");
-        close();
-    }
-
-
-    ui->previewFirst->setCamera(manager->getFirst());
-    ui->previewFirst->startCameraStream();
-
-    calibrator->setScanManager(manager);
-
-    return;
-
-    if(!(manager->isStereo())) return;
-
-    ui->previewSecond->setCamera(manager->getSecond());
-    ui->previewSecond->startCameraStream();
-
-}
 
 CalibrationDialog::~CalibrationDialog()
 {
@@ -53,8 +20,8 @@ CalibrationDialog::~CalibrationDialog()
 
 void CalibrationDialog::takeSnap()
 {
-    cv::Mat left, right;
-    int n;
+    /*cv::Mat left, right;
+    int n;/*
     left = manager->getFirst()->getFrame();
 
     if(manager->isStereo()){
@@ -65,22 +32,22 @@ void CalibrationDialog::takeSnap()
     }
 
     if(n>=0)
-        ui->imageCount->setText(QString::number(n));
+        ui->imageCount->setText(QString::number(n));*/
 }
 
 void CalibrationDialog::calibrate()
-{
+{/*
     if(manager->isStereo())
         calibrator->runCalibStereo();
     else
         calibrator->runCalibMono();
-    reset();
+    reset();*/
     close();
 }
 
 void CalibrationDialog::reset()
 {
-    calibrator->clearFrames();
+    //calibrator->clearFrames();
     ui->imageCount->setText(QString::number(0));
 }
 
