@@ -7,6 +7,7 @@ MonoTriangulator::MonoTriangulator(QObject *parent) :
 
 void MonoTriangulator::setEncodingCamera(PixelEncodedCamera *cam)
 {
+    camera->disconnect(this);
     camera = cam;
     connect(camera,
             SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
