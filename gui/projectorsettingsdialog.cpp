@@ -9,6 +9,7 @@ ProjectorSettingsDialog::ProjectorSettingsDialog(QWidget *parent) :
     ui(new Ui::ProjectorSettingsDialog)
 {
     ui->setupUi(this);
+    projectorTypeChanged(PROJECTOR_TYPE_MONITOR);
 }
 
 ProjectorSettingsDialog::~ProjectorSettingsDialog()

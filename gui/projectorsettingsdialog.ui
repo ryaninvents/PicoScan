@@ -56,7 +56,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Pattern:</string>
+        <string>Method:</string>
        </property>
       </widget>
      </item>
@@ -80,7 +80,7 @@
       </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QPushButton" name="patternConfig">
+      <widget class="QPushButton" name="methodConfig">
        <property name="text">
         <string>Configure...</string>
        </property>

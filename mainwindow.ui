@@ -85,10 +85,8 @@ color:white;</string>
      <string>Hardware</string>
     </property>
     <addaction name="actionSelect_standard"/>
-    <addaction name="actionSetup_wizard"/>
     <addaction name="actionSelect_cameras"/>
     <addaction name="actionProjector_settings"/>
-    <addaction name="actionCalibrate"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -105,9 +103,18 @@ color:white;</string>
     <addaction name="separator"/>
     <addaction name="actionFull_screen"/>
    </widget>
+   <widget class="QMenu" name="menuSetup">
+    <property name="title">
+     <string>Setup</string>
+    </property>
+    <addaction name="actionSetup_wizard"/>
+    <addaction name="actionConfigure_pattern"/>
+    <addaction name="actionCalibrate"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuHardware"/>
+   <addaction name="menuSetup"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -120,8 +127,9 @@ color:white;</string>
    <addaction name="actionSelect_standard"/>
    <addaction name="actionSetup_wizard"/>
    <addaction name="actionSelect_cameras"/>
-   <addaction name="actionCalibrate"/>
+   <addaction name="actionConfigure_pattern"/>
    <addaction name="actionProjector_settings"/>
+   <addaction name="actionCalibrate"/>
    <addaction name="actionTake_snapshot"/>
    <addaction name="separator"/>
    <addaction name="actionZoom_out"/>
@@ -308,7 +316,7 @@ color:white;</string>
     <string>Zoom to fit</string>
    </property>
    <property name="toolTip">
-    <string>Zoom to fit the scene</string>
+    <string>Zoom to fit</string>
    </property>
    <property name="statusTip">
     <string>Fit the scene in the window</string>
@@ -381,6 +389,24 @@ color:white;</string>
    </property>
    <property name="text">
     <string>Debugging</string>
+   </property>
+  </action>
+  <action name="actionConfigure_pattern">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/document-edit-encrypt.png</normaloff>:/oxygen/icons/oxygen/document-edit-encrypt.png</iconset>
+   </property>
+   <property name="text">
+    <string>Configure pattern</string>
+   </property>
+   <property name="iconText">
+    <string>Configure patterns</string>
+   </property>
+   <property name="toolTip">
+    <string>Configure encoding patterns</string>
+   </property>
+   <property name="statusTip">
+    <string>Select the encoding patterns to project</string>
    </property>
   </action>
  </widget>

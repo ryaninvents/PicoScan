@@ -8,7 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     calib(new CalibrationDialog),
-    debugWin(new QPlainTextEdit)
+    debugWin(new QPlainTextEdit),
+    tri(new MonoTriangulator)
 {
     ui->setupUi(this);
 
@@ -53,6 +54,11 @@ void MainWindow::debug(const char *str)
 void MainWindow::showDebug()
 {
     debugWin->show();
+}
+
+void MainWindow::cameraSettingsChanged(QCamera *first, QCamera *)
+{
+    capture = first;
 }
 
 void MainWindow::showAbout()

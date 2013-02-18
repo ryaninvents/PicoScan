@@ -24,6 +24,9 @@ signals:
     /// emit debug information
     void debug(QString);
 
+    /// The user has accepted overall camera settings
+    void acceptedCameras(QCamera*,QCamera*);
+
 public slots:
     /** Enable or disable stereo. */
     void enableStereo(bool b);
@@ -51,6 +54,9 @@ public slots:
 
     /// The user has accepted settings for the second camera
     void secondCameraSettingsChanged(QCamera *cam);
+
+    /// The user has accepted the camera settings
+    void accept();
     
 private:
     /// UI
@@ -67,6 +73,12 @@ private:
 
     /// Settings dialog for second camera
     QDialog *secondSettingsDialog;
+
+    /// First camera
+    QCamera *firstCamera;
+
+    /// Second camera
+    QCamera *secondCamera;
 
 
 };

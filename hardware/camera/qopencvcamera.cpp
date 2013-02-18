@@ -24,6 +24,11 @@ void QOpenCVCamera::setFrameRate(uint fps)
     QCamera::setFrameRate(fps);
 }
 
+QString QOpenCVCamera::describe()
+{
+    return QString("OpenCV Camera");
+}
+
 bool QOpenCVCamera::requestFrame(FrameType type)
 {
     if(!isOpen()) return false;

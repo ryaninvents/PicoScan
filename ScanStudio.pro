@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     gui/povrayprojectordialog.cpp \
     gui/fileprojectordialog.cpp \
     hardware/camera/pixelencodedcamera.cpp \
-    geom/monotriangulator.cpp
+    geom/monotriangulator.cpp \
+    gui/opencvcameradialog.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -77,7 +78,8 @@ HEADERS  += mainwindow.h \
     gui/povrayprojectordialog.h \
     gui/fileprojectordialog.h \
     hardware/camera/pixelencodedcamera.h \
-    geom/monotriangulator.h
+    geom/monotriangulator.h \
+    gui/opencvcameradialog.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
@@ -90,7 +92,8 @@ FORMS    += mainwindow.ui \
     gui/projectorsettingsdialog.ui \
     gui/secondmonitorprojectordialog.ui \
     gui/povrayprojectordialog.ui \
-    gui/fileprojectordialog.ui
+    gui/fileprojectordialog.ui \
+    gui/opencvcameradialog.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`
@@ -186,7 +189,8 @@ OTHER_FILES += \
     gui/icons/oxygen/document-revert.png \
     config.geom \
     gui/icons/oxygen/camera-web-64.png \
-    gui/icons/oxygen/code-context.png
+    gui/icons/oxygen/code-context.png \
+    gui/icons/oxygen/document-edit-encrypt.png
 
 RESOURCES += \
     gui/icons.qrc

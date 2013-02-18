@@ -10,6 +10,8 @@
 #include "gui/calibrationdialog.h"
 #include "gui/projectorsettingsdialog.h"
 
+#include "geom/monotriangulator.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -25,30 +27,45 @@ public:
     ~MainWindow();
 
 public slots:
+
     /// Show the About dialog.
     void showAbout();
+
     /// Show Scan Studio in fullscreen.
     void setFullScreen(bool fs);
+
     /// Show the camera settings dialog.
     void showCameraSettings();
+
     /// Show the projector settings dialog.
     void showProjectorSettings();
+
     /// Show the calibration settings dialog.
     void showCalStdSettings();
+
     /// Show the calibration dialog.
     void showCalibrationDialog();
+
     /// Quit Scan Studio.
     void quitProgram();
+
     /// Adjust the calibration standard.
     void adjustCalStd();
+
     /// Take a snapshot.
     void takeFrame();
+
     /// Write debug info to the side panel.
     void debug(QString str);
+
     /// Write debug info to the side panel.
     void debug(const char *str);
+
     /// Show the debug window.
     void showDebug();
+
+    /// User has selected camera settings.
+    void cameraSettingsChanged(QCamera *first, QCamera*);
 
 protected:
     /// Quit on close.
@@ -73,6 +90,11 @@ private:
 
     /// Debug window
     QPlainTextEdit *debugWin;
+
+    /// Triangulator
+    MonoTriangulator *tri;
+    /// Capture camera
+    QCamera *capture;
 
 };
 

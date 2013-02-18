@@ -21,6 +21,9 @@ public:
     /// \bug This method does not seem to actually do anything.
     void setFrameRate(uint fps);
 
+    /// Describe
+    QString describe();
+
 signals:
     
 public slots:

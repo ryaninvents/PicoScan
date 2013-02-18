@@ -88,5 +88,6 @@
         <file>icons/oxygen/document-revert.png</file>
         <file>icons/oxygen/code-context.png</file>
         <file>icons/oxygen/camera-web-64.png</file>
+        <file>icons/oxygen/document-edit-encrypt.png</file>
     </qresource>
 </RCC>

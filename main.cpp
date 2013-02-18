@@ -2,7 +2,7 @@
 #include "mainwindow.h"
 
 /*!
-\mainpage ScanStudio Scan Studio
+\mainpage Scan Studio
 
 Scan Studio allows users to quickly and easily scan 3D objects into the
 industry-standard STL format.
