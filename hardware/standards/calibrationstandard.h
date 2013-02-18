@@ -5,9 +5,11 @@
 #include <opencv2/core/core.hpp>
 #include "../camera/qcamera.h"
 
+/// A generic, planar calibration standard.
 class CalibrationStandard
 {
 public:
+    /// Create a new standard.
     CalibrationStandard();
 
     /** Obtain a vector of the points of interest on this board. */
@@ -40,9 +42,13 @@ public:
                    std::vector<cv::Mat> tvecs,
                    double *rpe);
 
+    /// Get the first corner of the board.
     virtual int getPointA() = 0;
+    /// Get the second corner of the board.
     virtual int getPointB() = 0;
+    /// Get the third corner of the board.
     virtual int getPointC() = 0;
+    /// Get the fourth corner of the board.
     virtual int getPointD() = 0;
 
 protected:

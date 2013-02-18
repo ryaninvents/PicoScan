@@ -4,6 +4,8 @@
 #include "qcamera.h"
 #include <opencv2/highgui/highgui.hpp>
 
+/// OpenCV camera using QObject capabilities
+/// to (hopefully) stay in sync with the projector.
 class QOpenCVCamera : public QCamera
 {
     Q_OBJECT

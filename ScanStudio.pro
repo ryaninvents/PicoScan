@@ -22,8 +22,6 @@ SOURCES += main.cpp\
     gui/camerastreamwidget.cpp \
     gui/calibrationstandarddialog.cpp \
     gui/calibrationdialog.cpp \
-    gui/calibrationinprogress.cpp \
-    geom/calibrator.cpp \
     geom/triangulator.cpp \
     gui/changeresolutiondialog.cpp \
     hardware/standards/dotmatrixstandard.cpp \
@@ -57,8 +55,6 @@ HEADERS  += mainwindow.h \
     gui/camerastreamwidget.h \
     gui/calibrationstandarddialog.h \
     gui/calibrationdialog.h \
-    gui/calibrationinprogress.h \
-    geom/calibrator.h \
     geom/triangulator.h \
     gui/changeresolutiondialog.h \
     hardware/standards/dotmatrixstandard.h \

@@ -43,7 +43,7 @@ public slots:
     
 private:
     /// ID; also the position in the QProjector's list
-    uint id;
+    uint dependencyId;
 
     /// Is this dependency satisfied?
     bool satisfied;

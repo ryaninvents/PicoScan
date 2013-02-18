@@ -8,7 +8,7 @@ ProjectorDependent::ProjectorDependent(QObject *parent) :
 
 void ProjectorDependent::setID(uint i)
 {
-    id = i;
+    dependencyId = i;
 }
 
 bool ProjectorDependent::isSatisfied()
@@ -29,5 +29,5 @@ void ProjectorDependent::satisfy()
 
 void ProjectorDependent::deregister()
 {
-    emit deregister(id);
+    emit deregister(dependencyId);
 }

@@ -59,6 +59,7 @@ void MainWindow::showDebug()
 void MainWindow::cameraSettingsChanged(QCamera *first, QCamera *)
 {
     capture = first;
+
 }
 
 void MainWindow::showAbout()

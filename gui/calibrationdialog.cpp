@@ -7,9 +7,7 @@
 
 CalibrationDialog::CalibrationDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CalibrationDialog),
-    inProgress(new CalibrationInProgress),
-    calibrator(new Calibrator)
+    ui(new Ui::CalibrationDialog)
 {
     ui->setupUi(this);
 }
@@ -49,7 +47,7 @@ void CalibrationDialog::calibrate()
 
 void CalibrationDialog::reset()
 {
-    calibrator->clearFrames();
+    //calibrator->clearFrames();
     ui->imageCount->setText(QString::number(0));
 }
 

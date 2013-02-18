@@ -63,7 +63,7 @@ private:
     cv::Mat getRawFrame(uint bit, bool inv);
 
     /// compile the frames
-    cv::Mat compileFrames();
+    void compileFrames();
 
     /// the lowest bit we will capture
     uint loBit;
@@ -73,9 +73,6 @@ private:
 
     /// the frame index we're waiting to fill
     uint currentFrameIndex;
-
-    /// the frames we capture, before processing
-    std::vector<cv::Mat> frames;
 
     /// the type of frame we've been tasked with getting
     FrameType type;

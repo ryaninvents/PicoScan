@@ -14,8 +14,11 @@ public:
     /// Create the triangulator
     explicit MonoTriangulator(QObject *parent = 0);
 
-    /// Set the camera
-    void setCamera(PixelEncodedCamera *cam);
+    /// Set the encoding camera
+    void setEncodingCamera(PixelEncodedCamera *cam);
+
+    /// Set the capture camera
+    void setCaptureCamera(QCamera *cam);
 
     /// Set the projector
     void setProjector(QProjector *proj);

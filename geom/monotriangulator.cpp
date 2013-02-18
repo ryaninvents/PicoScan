@@ -5,13 +5,18 @@ MonoTriangulator::MonoTriangulator(QObject *parent) :
 {
 }
 
-void MonoTriangulator::setCamera(PixelEncodedCamera *cam)
+void MonoTriangulator::setEncodingCamera(PixelEncodedCamera *cam)
 {
     camera = cam;
     connect(camera,
             SIGNAL(frameCaptured(cv::Mat,FrameType)),
             this,
             SLOT(frameReturned(cv::Mat,QCamera::FrameType)));
+}
+
+void MonoTriangulator::setCaptureCamera(QCamera *cam)
+{
+    camera->setCapturingCamera(cam);
 }
 
 void MonoTriangulator::setProjector(QProjector *proj)

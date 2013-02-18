@@ -33,7 +33,7 @@ public:
     /// Register a ProjectorDependent, meaning
     /// the projector can't move on until all
     /// dependents have been satisfied.
-    void registerDependent(ProjectorDependent *dp);
+    void registerDependency(ProjectorDependent *dp);
 
 signals:
     /// Notify listeners that a pattern has been projected.
@@ -42,10 +42,13 @@ signals:
 public slots:
 
     /// Check to see if all dependents are satisfied.
-    void checkDependents();
+    bool checkDependencies();
 
     /// Deregister a dependent.
-    void deregisterDependent(uint id);
+    void deregisterDependency(uint id);
+
+    /// Deregister all dependents.
+    void deregisterDependencies();
 
     /// Project the next pattern in the queue.
     /// \bug May emit patternProjected() before

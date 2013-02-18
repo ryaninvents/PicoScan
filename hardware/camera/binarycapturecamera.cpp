@@ -41,15 +41,12 @@ bool BinaryCaptureCamera::requestFrame(QCamera::FrameType type)
     this->type = type;
 
     // resize the frames buffer
-    frames.resize((hiBit-loBit)*2+2);
+    allocateFrames((hiBit-loBit)*2+2);
 
     // push the projection patterns to the projector
-    // and null out the frame buffer
     for(i=loBit;i<=hiBit;i++){
         projector->queue(new GrayCodePattern(i,true));
         projector->queue(new GrayCodePattern(i,false));
-        frames.at(2*(i-loBit)) = cv::Mat::zeros(1,1,CV_8U);
-        frames.at(2*(i-loBit)+1) = cv::Mat::zeros(1,1,CV_8U);
     }
 
 }
@@ -80,19 +77,18 @@ bool BinaryCaptureCamera::hasCapturedRawFrame(uint bit, bool inv)
 {
     if(bit<loBit || bit>hiBit) return false;
     uint idx = (bit-loBit)*2+(inv?1:0);
-    return (frames.at(idx).rows>1 && frames.at(idx).cols>1);
+    return hasCapturedFrame(idx);
 }
 
 cv::Mat BinaryCaptureCamera::getRawFrame(uint bit, bool inv)
 {
     uint idx = (bit-loBit)*2+(inv?1:0);
-    return (frames.at(idx));
+    return getCapturedFrame(idx);
 }
 
-cv::Mat BinaryCaptureCamera::compileFrames()
+void BinaryCaptureCamera::compileFrames()
 {
     uint bit,x,y;
-    bool capturedAll = true;
     cv::Mat encoding = cv::Mat::zeros(
                 getResolutionU(),
                 getResolutionV(),
@@ -101,7 +97,6 @@ cv::Mat BinaryCaptureCamera::compileFrames()
     for(bit=loBit;bit<=hiBit;bit++){
         if(!(hasCapturedRawFrame(bit,true)&&
              hasCapturedRawFrame(bit,false))){
-            capturedAll = false;
             continue;
         }
         img = getRawFrame(bit,false) - getRawFrame(bit,true);
@@ -115,7 +110,7 @@ cv::Mat BinaryCaptureCamera::compileFrames()
         }
     }
     encoding.convertTo(encoding,getOpenCVFlagFromType(type));
-    if(capturedAll)
+    if(capturedAllFrames())
         emit frameCaptured(encoding,type);
     else
         emit intermediateFrame(encoding);

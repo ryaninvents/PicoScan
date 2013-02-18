@@ -112,9 +112,14 @@ public:
 
     /// Get the principal point V
     double getPrincipalV();
+
 signals:
+
+    /// Announce debugging information.
+    void debug(QString);
     
 public slots:
+
 private:
 
     /// Distortion coefficients

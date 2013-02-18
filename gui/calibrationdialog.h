@@ -2,8 +2,6 @@
 #define CALIBRATIONDIALOG_H
 
 #include <QDialog>
-#include "../geom/calibrator.h"
-#include "../gui/calibrationinprogress.h"
 
 namespace Ui {
 class CalibrationDialog;
@@ -35,10 +33,6 @@ public slots:
 private:
     /// UI
     Ui::CalibrationDialog *ui;
-    /// calibrator
-    Calibrator *calibrator;
-    /// dialog to display progress to the user
-    CalibrationInProgress *inProgress;
 };
 
 #endif // CALIBRATIONDIALOG_H

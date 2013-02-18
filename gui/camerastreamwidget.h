@@ -12,6 +12,7 @@ class CameraStreamWidget : public ImageViewWidget
 {
     Q_OBJECT
 public:
+    /// Create the widget
     explicit CameraStreamWidget(QWidget *parent = 0);
     /**
       Is this widget currently streaming from a camera?

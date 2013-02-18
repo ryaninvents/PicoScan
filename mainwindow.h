@@ -93,6 +93,7 @@ private:
 
     /// Triangulator
     MonoTriangulator *tri;
+
     /// Capture camera
     QCamera *capture;
 
