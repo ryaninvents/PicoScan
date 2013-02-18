@@ -49,6 +49,8 @@ signals:
 public slots:
     /// A frame has been returned.
     void frameReturned(cv::Mat frame, QCamera::FrameType);
+    /// Test?
+    void testSlot(cv::Mat,QCamera::FrameType);
 
 protected:
 

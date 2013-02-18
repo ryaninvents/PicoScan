@@ -1,13 +1,16 @@
 #include "monotriangulator.h"
 
 MonoTriangulator::MonoTriangulator(QObject *parent) :
-    Triangulator(parent)
+    Triangulator(parent),
+    camera(0)
 {
+
 }
 
 void MonoTriangulator::setEncodingCamera(PixelEncodedCamera *cam)
 {
-    camera->disconnect(this);
+    if(camera!=0)
+        camera->disconnect(this);
     camera = cam;
     connect(camera,
             SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
@@ -17,6 +20,7 @@ void MonoTriangulator::setEncodingCamera(PixelEncodedCamera *cam)
 
 void MonoTriangulator::setCaptureCamera(QCamera *cam)
 {
+    if(camera==0) return;
     camera->setCapturingCamera(cam);
 }
 

@@ -6,7 +6,8 @@
 
 ProjectorSettingsDialog::ProjectorSettingsDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ProjectorSettingsDialog)
+    ui(new Ui::ProjectorSettingsDialog),
+    settingsDialog(0)
 {
     ui->setupUi(this);
     projectorTypeChanged(PROJECTOR_TYPE_MONITOR);
@@ -19,7 +20,7 @@ ProjectorSettingsDialog::~ProjectorSettingsDialog()
 
 void ProjectorSettingsDialog::projectorTypeChanged(int t)
 {
-    if(settingsDialog != 0){
+    if(this->settingsDialog != 0){
         settingsDialog->disconnect();
         ui->typeConfig->disconnect();
     }

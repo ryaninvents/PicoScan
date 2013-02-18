@@ -4,6 +4,8 @@
 #include "povraycameradialog.h"
 #include "opencvcameradialog.h"
 
+/// \todo make sure everything is initialized to some sort
+/// of value on startup
 CameraSettingsDialog::CameraSettingsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CameraSettingsDialog)
@@ -128,6 +130,7 @@ void CameraSettingsDialog::firstCameraSettingsChanged(
     emit debug(QString("=== First camera changed ===\n%1\n"
                        "========================")
                .arg(cam->describe()));
+    firstCamera = cam;
 }
 
 void CameraSettingsDialog::secondCameraSettingsChanged(

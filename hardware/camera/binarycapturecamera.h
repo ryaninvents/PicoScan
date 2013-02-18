@@ -42,6 +42,8 @@ signals:
     /// but in the meantime, here's something pretty
     /// to look at.
     void intermediateFrame(cv::Mat frame);
+    /// A frame has been captured.
+    void frameCaptured(cv::Mat frame,QCamera::FrameType type);
     
 public slots:
 

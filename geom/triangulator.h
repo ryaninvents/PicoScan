@@ -7,7 +7,6 @@
 /// Provides triangulation as well as other utilities.
 class Triangulator : public QObject
 {
-    Q_OBJECT
 public:
     /// Create a Triangulator. Calling this constructor
     /// is fairly useless, as this class consists entirely
@@ -24,7 +23,12 @@ public:
 
     /** Find out if point P is within triangle ABC.
         Thanks to <a href="http://www.blackpawn.com/texts/pointinpoly/default.html">
-        blackpawn.com</a> for the code. */
+        blackpawn.com</a> for the code.
+        \param P point to test
+        \param A first triangle point
+        \param B second triangle point
+        \param C third triangle point
+     */
     static bool inTri(const cv::Vec3d P,
                       const cv::Vec3d A,
                       const cv::Vec3d B,

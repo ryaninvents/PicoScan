@@ -1,5 +1,10 @@
 #include "triangulator.h"
 
+Triangulator::Triangulator(QObject *parent) :
+    QObject(parent)
+{
+}
+
 cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
                               const cv::Vec3d P_up,
                               const cv::Vec3d P_fwd,
@@ -134,9 +139,3 @@ void Triangulator::computePhase(std::vector<cv::Mat> fringes,
        }
     }
 }
-
-Triangulator::Triangulator(QObject *parent) :
-    QObject(parent)
-{
-}
-

@@ -4,9 +4,24 @@
 #include "qcamera.h"
 
 /// A POV-Ray camera used for simulation.
-/// Technically you can stream from this,
+///
+/// <a href="http://www.povray.org/">POV-Ray</a>
+/// is a powerful procedural ray-tracing program.
+/// By writing scripts, you can simulate the
+/// effects of light interaction very precisely.
+///
+/// POV-Ray maintains <a href="http://bit.ly/VZep0l">
+/// a list of model repositories</a> you can use
+/// to test out your scanning methods. Ultimately,
+/// though, you're going to want to simulate a perfect
+/// plane or sphere--something you can mathematically
+/// compute deviations with so you can validate your
+/// method before moving to real hardware.
+///
+/// Technically you can stream from this camera,
 /// but you're likely going to wait quite
-/// a while between frames.
+/// a while between frames depending on your
+/// setup.
 class PovRayCamera : public QCamera
 {
     Q_OBJECT
@@ -60,7 +75,10 @@ public:
     QString describe();
 
 signals:
-    
+
+    /// A frame has been captured.
+    void frameCaptured(cv::Mat frame,QCamera::FrameType type);
+
 public slots:
     /// Write camera parameters to disk, render
     /// the scene, and emit the frame when it's

@@ -1,19 +1,25 @@
 #include "pixelencodedcamera.h"
 
+#include <opencv2/core/core.hpp>
+
 PixelEncodedCamera::PixelEncodedCamera(QObject *parent) :
     QCamera(parent),
-    inProgress(false)
+    inProgress(false),
+    camera(0)
 {
 }
 
 void PixelEncodedCamera::setCapturingCamera(QCamera *cam)
 {
-    camera->disconnect(this);
-    camera = cam;
+    if(camera!=0)
+        camera->disconnect(this);
+    camera = dynamic_cast<QCamera*>(cam);
+    if(camera==0) return;
     connect(camera,
-            SIGNAL(frameCaptured(cv::Mat,FrameType)),
+            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
             this,
-            SLOT(frameReturned(cv::Mat,FrameType)));
+            SLOT(testSlot(cv::Mat,QCamera::FrameType)));
+    return;
 }
 
 QCamera *PixelEncodedCamera::getCapturingCamera()
@@ -53,11 +59,17 @@ void PixelEncodedCamera::release()
     camera->release();
 }
 
-void PixelEncodedCamera::frameReturned(cv::Mat frame, QCamera::FrameType )
+void PixelEncodedCamera::frameReturned(
+        cv::Mat frame,
+        QCamera::FrameType )
 {
     setCapturedFrame(frameIdx,frame);
     dpcy->satisfy();
     compileFrames();
+}
+
+void PixelEncodedCamera::testSlot(cv::Mat, QCamera::FrameType)
+{
 }
 
 void PixelEncodedCamera::allocateFrames(uint n)
