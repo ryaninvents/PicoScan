@@ -36,13 +36,19 @@ public:
     bool isScanInProgress();
 
     /// Requested frame type
-    FrameType getFrameType();
+    QCamera::FrameType getFrameType();
+
+    /// Is this camera open? Depends on child camera.
+    bool isOpen();
+
+    /// Release this camera... release child camera
+    void release();
 
 signals:
     
 public slots:
     /// A frame has been returned.
-    void frameReturned(cv::Mat frame, FrameType);
+    void frameReturned(cv::Mat frame, QCamera::FrameType);
 
 protected:
 
@@ -97,7 +103,7 @@ private:
     bool inProgress;
 
     /// the type of frame we're working on
-    FrameType requestedType;
+    QCamera::FrameType requestedType;
 
     /// the frame we're waiting for
     uint frameIdx;

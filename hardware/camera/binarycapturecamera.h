@@ -33,6 +33,9 @@ public:
 
     /// Convert Gray code to binary.
     static int grayToBinary(int num);
+
+    /// Describe
+    QString describe();
     
 signals:
     /// We're still working on the full binary,
@@ -49,7 +52,7 @@ public slots:
     /// frame, \b false if the camera will not. Likely
     /// reasons for a false return value: color frame
     /// request, or capture already in progress.
-    bool requestFrame(FrameType type);
+    bool requestFrame(QCamera::FrameType type);
 
     /// A particular pattern has been projected.
     void patternProjected(QProjector::Pattern *pattern);
@@ -75,7 +78,7 @@ private:
     uint currentFrameIndex;
 
     /// the type of frame we've been tasked with getting
-    FrameType type;
+    QCamera::FrameType type;
 
     /// is there a capture in progress?
     bool inProgress;

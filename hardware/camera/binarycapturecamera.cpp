@@ -26,6 +26,13 @@ int BinaryCaptureCamera::grayToBinary(int num)
     return num;
 }
 
+QString BinaryCaptureCamera::describe()
+{
+    return QString("Binary capture\n bits %1 through %2")
+            .arg(loBit)
+            .arg(hiBit);
+}
+
 bool BinaryCaptureCamera::requestFrame(QCamera::FrameType type)
 {
     uint i;

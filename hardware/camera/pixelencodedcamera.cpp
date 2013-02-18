@@ -43,6 +43,16 @@ QCamera::FrameType PixelEncodedCamera::getFrameType()
     return requestedType;
 }
 
+bool PixelEncodedCamera::isOpen()
+{
+    return camera->isOpen();
+}
+
+void PixelEncodedCamera::release()
+{
+    camera->release();
+}
+
 void PixelEncodedCamera::frameReturned(cv::Mat frame, QCamera::FrameType )
 {
     setCapturedFrame(frameIdx,frame);

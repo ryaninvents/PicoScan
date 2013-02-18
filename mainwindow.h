@@ -72,16 +72,22 @@ protected:
     void closeEvent(QCloseEvent *);
     
 private:
+
     /// UI
     Ui::MainWindow *ui;
+
     /// About dialog
     AboutDialog about;
+
     /// Camera settings dialog
     CameraSettingsDialog camSettings;
+
     /// Calibration standard dialog
     CalibrationStandardDialog stdSettings;
+
     /// Calibration dialog with the two views
     CalibrationDialog *calib;
+
     /// Projector settings dialog
     ProjectorSettingsDialog projSettings;
 

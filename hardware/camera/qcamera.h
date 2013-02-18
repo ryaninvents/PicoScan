@@ -49,7 +49,7 @@ public:
     
 signals:
     /// A frame has been captured.
-    void frameCaptured(cv::Mat frame,FrameType type);
+    void frameCaptured(cv::Mat frame,QCamera::FrameType type);
 
 public slots:
     /// Start streaming.
@@ -58,12 +58,12 @@ public slots:
     /// \returns \b true if the camera will emit the
     /// frame, \b false if the camera is incapable of
     /// emitting the desired type of frame.
-    virtual bool requestFrame(FrameType)=0;
+    virtual bool requestFrame(QCamera::FrameType)=0;
 
 protected:
 
     /// Convert an image type to an OpenCV flag.
-    static int getOpenCVFlagFromType(FrameType type);
+    static int getOpenCVFlagFromType(QCamera::FrameType type);
 
 private:
 

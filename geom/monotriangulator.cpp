@@ -9,7 +9,7 @@ void MonoTriangulator::setEncodingCamera(PixelEncodedCamera *cam)
 {
     camera = cam;
     connect(camera,
-            SIGNAL(frameCaptured(cv::Mat,FrameType)),
+            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
             this,
             SLOT(frameReturned(cv::Mat,QCamera::FrameType)));
 }

@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <QScrollBar>
+#include "hardware/camera/binarycapturecamera.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,8 +26,15 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
+    connect(&camSettings,
+            SIGNAL(acceptedCameras(QCamera*,QCamera*)),
+            this,
+            SLOT(cameraSettingsChanged(QCamera*,QCamera*)));
+
+    tri->setEncodingCamera(new BinaryCaptureCamera);
 
     ui->modelView->zoomFit();
+    showDebug();
 
 }
 
@@ -59,7 +67,8 @@ void MainWindow::showDebug()
 void MainWindow::cameraSettingsChanged(QCamera *first, QCamera *)
 {
     capture = first;
-
+    tri->setCaptureCamera(capture);
+    debug("tri->setCaptureCamera(capture);");
 }
 
 void MainWindow::showAbout()
@@ -111,7 +120,7 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-
+    tri->requestSheet();
 }
 
 void MainWindow::closeEvent(QCloseEvent *)
