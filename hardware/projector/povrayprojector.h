@@ -39,6 +39,10 @@ public:
     void setParamFilename(QString fnm);
     /// Get the filename where the pattern will be saved
     QString getFilterFilename();
+    /// Set simulated position
+    void setSimPosition(double x,double y,double z);
+    /// Set simulated orientation
+    void setSimRotation(double x,double y,double z);
     
 signals:
     

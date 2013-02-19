@@ -68,6 +68,11 @@ public slots:
     /// User has selected camera settings.
     void cameraSettingsChanged(QCamera *first, QCamera*);
 
+    /// Show a debug image.
+    void debugImage(cv::Mat im, QCamera::FrameType type);
+
+
+
 protected:
     /// Quit on close.
     void closeEvent(QCloseEvent *);
@@ -106,6 +111,14 @@ private:
 
     /// Gray code pattern
     GrayCodePattern *graycode;
+
+    /// Testing camera capture
+    QCamera *testCam;
+    /// Testing projector
+    QProjector *testProjector;
+
+    /// Image debugger
+    ImageViewWidget *dbgIm;
 
 };
 

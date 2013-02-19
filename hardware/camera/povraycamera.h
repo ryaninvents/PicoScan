@@ -75,7 +75,6 @@ public:
     QString describe();
 
 signals:
-
     /// A frame has been captured.
     void frameCaptured(cv::Mat frame,QCamera::FrameType type);
 
@@ -83,7 +82,7 @@ public slots:
     /// Write camera parameters to disk, render
     /// the scene, and emit the frame when it's
     /// ready.
-    bool requestFrame(FrameType type);
+    bool requestFrame(QCamera::FrameType type);
 
 private:
 

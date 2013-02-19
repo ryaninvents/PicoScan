@@ -24,6 +24,16 @@ QString PovRayProjector::getFilterFilename()
     return imageFilename;
 }
 
+void PovRayProjector::setSimPosition(double x, double y, double z)
+{
+    simPosition = cv::Vec3d(x,y,z);
+}
+
+void PovRayProjector::setSimRotation(double x, double y, double z)
+{
+    simRotation = cv::Vec3d(x,y,z);
+}
+
 void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
 {
     QImage im;
@@ -39,15 +49,15 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
             "/// If your simulation isn't working, make\n"
             "/// sure you have included this file\n"
             "/// in your .pov setup.\n\n"
-            "#declare projX  %f\n"
-            "#declare projY  %f\n"
-            "#declare projZ  %f\n"
-            "#declare projRX %f\n"
-            "#declare projRY %f\n"
-            "#declare projRZ %f\n"
-            "#declare projSlmSize %f\n"
-            "#declare projFocal %f\n"
-            "#declare imageFile \"%s\"\n\n",
+            "#declare projX = %f;\n"
+            "#declare projY = %f;\n"
+            "#declare projZ = %f;\n"
+            "#declare projRX = %f;\n"
+            "#declare projRY = %f;\n"
+            "#declare projRZ = %f;\n"
+            "#declare projSlmSize = %f;\n"
+            "#declare projFocal = %f;\n"
+            "#declare patternImageFile = \"%s\";\n\n",
             simPosition[0], // projX
             simPosition[1], // projY
             simPosition[2], // projZ
@@ -55,7 +65,7 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
             simRotation[1], // projRY
             simRotation[2], // projRZ
             simCellSize*getResolutionU(),       // projSlmSize
-            simFocal,      // projFocal
+            simFocal,       // projFocal
             imageFilename.toLocal8Bit().data()  // imageFile
             );
     fprintf(file,
@@ -72,7 +82,7 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
             "   texture {\n"
             "       uv_mapping pigment {\n"
             "           image_map {\n"
-            "               png \"filter.png\""
+            "               png patternImageFile"
             "               filter all 0.9\n"
             "               map_type 0\n"
             "               interpolate 4\n"

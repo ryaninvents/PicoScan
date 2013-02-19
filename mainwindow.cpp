@@ -12,7 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     calib(new CalibrationDialog),
     debugWin(new QPlainTextEdit),
-    graycode(new GrayCodePattern(5,false))
+    graycode(new GrayCodePattern(1,false)),
+    dbgIm(new ImageViewWidget)
 {
     ui->setupUi(this);
 
@@ -35,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->modelView->zoomFit();
     //showDebug();
+    dbgIm->setWindowTitle("Debugging -- camera view");
 
     BinaryCaptureCamera *codeCam = new BinaryCaptureCamera();
     codeCam->setBitRange(0,10);
@@ -59,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->setSimZ(-1);
     capCam->setSimFocalLength(12e-3);
 
-    codeCam->setCapturingCamera(capCam);
+    //codeCam->setCapturingCamera(capCam);
 
     PovRayProjector *pov = new PovRayProjector();
     pov->setFilterFilename(
@@ -70,11 +72,22 @@ MainWindow::MainWindow(QWidget *parent) :
                 tr("/home/ryan/Documents/mqp-data/"
                    "simulation/butterfly-valve/"
                    "projector.inc"));
+    pov->setSimPosition(0.1,0,-1);
+    pov->setSimRotation(0,0,0);
 
+    testCam = capCam;
+    testProjector = pov;
+
+    // debug all images out of testCam
+    connect(testCam,
+            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
+            this,
+            SLOT(debugImage(cv::Mat,QCamera::FrameType)));
+/*
     tri = new MonoTriangulator();
     tri->setEncodingCamera(codeCam);
     tri->setCaptureCamera(capCam);
-    tri->setProjector(pov);
+    tri->setProjector(pov);*/
 
 }
 
@@ -107,9 +120,23 @@ void MainWindow::showDebug()
 void MainWindow::cameraSettingsChanged(QCamera *first, QCamera *)
 {
     capture = first;
-    tri->setCaptureCamera(capture);
-    debug("cameraSettingsChanged(QCamera*, QCamera*);");
-//    debug("tri->setCaptureCamera(capture);");
+    //tri->setCaptureCamera(capture);
+    //    debug("tri->setCaptureCamera(capture);");
+}
+
+void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type)
+{
+    if(type==QCamera::FULL_COLOR){
+        cv::Mat3b img;
+        im.convertTo(img,CV_8UC3);
+        dbgIm->displayImage(img,true);
+        dbgIm->show();
+        return;
+    }
+    cv::Mat_<double> m;
+    im.convertTo(m,CV_64F);
+    dbgIm->displayImage(m,true);
+    dbgIm->show();
 }
 
 void MainWindow::showAbout()
@@ -162,8 +189,10 @@ void MainWindow::adjustCalStd()
 void MainWindow::takeFrame()
 {
     //tri->requestSheet();
-    tri->getProjector()->queue(graycode);
-    tri->getCaptureCamera()->requestFrame(QCamera::DOUBLE);
+   /* tri->getProjector()->queue(graycode);
+    tri->getCaptureCamera()->requestFrame(QCamera::DOUBLE);*/
+    testProjector->queue(graycode);
+    testCam->requestFrame(QCamera::FULL_COLOR);
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

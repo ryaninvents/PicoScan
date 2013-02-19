@@ -130,7 +130,7 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
     file = fopen(iniFilename.toLocal8Bit().data(),"w");
     fprintf(file,
             "Width=%d\nHeight=%d\n-D\n"
-            "-GA\n+A%d\n"
+            "-GA\n+R%d\n+A\n"
             "Input_File_Name=%s\n"
             "Output_File_Name=%s\n"
             "Library_Path=%s",
