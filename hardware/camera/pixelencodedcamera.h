@@ -45,9 +45,13 @@ public:
     void release();
 
 signals:
+    /// We're still working on the full binary,
+    /// but in the meantime, here's something pretty
+    /// to look at.
+    void intermediateFrame(cv::Mat frame);
     
 public slots:
-    /// A frame has been returned.
+    /// A frame has been returned from the capturing camera.
     void frameReturned(cv::Mat frame, QCamera::FrameType);
     /// A pattern has been projected.
     void patternProjected(QProjector::Pattern *pattern);

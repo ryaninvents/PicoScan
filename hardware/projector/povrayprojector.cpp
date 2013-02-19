@@ -5,8 +5,9 @@
 PovRayProjector::PovRayProjector(QObject *parent) :
     QProjector(parent),
     simCellSize(8e-6),
-    simFocal(12e-3)
+    simFocal(8e-3)
 {
+    setResolution(640,640);
 }
 
 void PovRayProjector::setFilterFilename(QString fnm)
@@ -61,9 +62,9 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
             simPosition[0], // projX
             simPosition[1], // projY
             simPosition[2], // projZ
-            simRotation[0], // projRX
-            simRotation[1], // projRY
-            simRotation[2], // projRZ
+            simRotation[0]*180/M_PI, // projRX
+            -simRotation[1]*180/M_PI, // projRY
+            simRotation[2]*180/M_PI, // projRZ
             simCellSize*getResolutionU(),       // projSlmSize
             simFocal,       // projFocal
             imageFilename.toLocal8Bit().data()  // imageFile

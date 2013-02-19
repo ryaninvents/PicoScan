@@ -24,6 +24,7 @@ void QProjector::queue(QProjector::Pattern *p)
 
 void QProjector::registerDependency(ProjectorDependent *dp)
 {
+    if(dp==0) return;
     dp->setID(dependents.size());
     dependents.push_back(dp);
     connect(dp,SIGNAL(permitRelease()),
@@ -34,6 +35,7 @@ void QProjector::registerDependency(ProjectorDependent *dp)
 
 void QProjector::deregisterDependency(uint id)
 {
+    if(dependents.at(id)==0) return;
     dependents.at(id)->disconnect();
     dependents.at(id) = 0;
 }

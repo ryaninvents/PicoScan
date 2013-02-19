@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>411</width>
-    <height>244</height>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,34 +29,10 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Focal length:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QPushButton" name="cameraFile">
-       <property name="text">
-        <string>...</string>
-       </property>
-      </widget>
-     </item>
      <item row="5" column="2">
       <widget class="QLabel" name="label_9">
        <property name="text">
         <string>Antialiasing:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="3">
-      <widget class="QSpinBox" name="antialiasing">
-       <property name="maximum">
-        <number>16</number>
-       </property>
-       <property name="value">
-        <number>4</number>
        </property>
       </widget>
      </item>
@@ -76,24 +52,34 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="3">
-      <widget class="QPushButton" name="sceneFile">
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>...</string>
+        <string>INI file:</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Cell size:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="3">
+      <widget class="QSpinBox" name="antialiasing">
+       <property name="maximum">
+        <number>16</number>
+       </property>
+       <property name="value">
+        <number>4</number>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
       <widget class="QLabel" name="label_7">
        <property name="text">
         <string>Camera file:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QPushButton" name="iniFile">
-       <property name="text">
-        <string>...</string>
        </property>
       </widget>
      </item>
@@ -107,41 +93,6 @@
        </property>
        <property name="value">
         <double>8.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>INI file:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="2">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Render file:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="3">
-      <widget class="QPushButton" name="renderFile">
-       <property name="text">
-        <string>...</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Cell size:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="2">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Scene file:</string>
        </property>
       </widget>
      </item>
@@ -212,6 +163,13 @@
        </layout>
       </widget>
      </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Focal length:</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="2" rowspan="5" colspan="2">
       <widget class="QFrame" name="frame_2">
        <property name="frameShape">
@@ -272,6 +230,48 @@
          </widget>
         </item>
        </layout>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Scene file:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Render file:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1" colspan="3">
+      <widget class="QPushButton" name="iniFile">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1" colspan="3">
+      <widget class="QPushButton" name="sceneFile">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1" colspan="3">
+      <widget class="QPushButton" name="cameraFile">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1" colspan="3">
+      <widget class="QPushButton" name="renderFile">
+       <property name="text">
+        <string>...</string>
+       </property>
       </widget>
      </item>
     </layout>

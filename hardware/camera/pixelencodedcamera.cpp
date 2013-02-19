@@ -7,7 +7,8 @@ PixelEncodedCamera::PixelEncodedCamera(QObject *parent) :
     inProgress(false),
     camera(0),
     projector(0),
-    dpcy(new ProjectorDependent)
+    dpcy(0),
+    frameIdx(0)
 {
 
 }
@@ -75,7 +76,7 @@ void PixelEncodedCamera::frameReturned(
         QCamera::FrameType )
 {
     setCapturedFrame(frameIdx,frame);
-    dpcy->satisfy();
+    if(dpcy!=0) dpcy->satisfy();
     compileFrames();
 }
 
@@ -110,6 +111,7 @@ cv::Mat PixelEncodedCamera::getCapturedFrame(uint idx)
 
 void PixelEncodedCamera::setCapturedFrame(uint idx, cv::Mat frame)
 {
+    if(idx>=framesAllocated()) return;
     frames.at(idx) = frame;
 }
 

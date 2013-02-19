@@ -12,6 +12,7 @@
 
 #include "geom/monotriangulator.h"
 #include "hardware/projector/graycodepattern.h"
+#include "hardware/camera/binarycapturecamera.h"
 
 namespace Ui {
 class MainWindow;
@@ -70,6 +71,7 @@ public slots:
 
     /// Show a debug image.
     void debugImage(cv::Mat im, QCamera::FrameType type);
+    void debugImage(cv::Mat im);
 
 
 
@@ -116,6 +118,8 @@ private:
     QCamera *testCam;
     /// Testing projector
     QProjector *testProjector;
+    /// Testing binary camera
+    BinaryCaptureCamera *codeCam;
 
     /// Image debugger
     ImageViewWidget *dbgIm;
