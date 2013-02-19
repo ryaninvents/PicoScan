@@ -160,7 +160,7 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
         frame = cv::imread(
                     renderFilename.toLocal8Bit().data());
         emit frameCaptured(frame,type);
-        return;
+        return true;
     }
 
     frame = cv::imread(
@@ -179,6 +179,7 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
         break;
     }
     emit frameCaptured(frame,type);
+    return true;
 
 
     /*
