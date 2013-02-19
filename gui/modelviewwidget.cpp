@@ -12,7 +12,7 @@ ModelViewWidget::ModelViewWidget(QWidget *parent) :
 }
 
 void ModelViewWidget::initializeGL() {
-    QColor bgBlue(14,41,71);
+    QColor bgBlue(200,200,200);
     qglClearColor(bgBlue);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -39,7 +39,7 @@ void ModelViewWidget::paintGL()
     GLfloat LO=-.5, HI=.5, gap = 1;
     drawFloor();
     glBegin(GL_LINES);
-    glColor3f(1.0,1.0,1.0);
+    glColor3f(0,0,0);
     for(x=LO;x<=HI;x+=gap){
         for(y=LO;y<=HI;y+=gap){
             for(z=LO;z<=HI;z+=gap){
@@ -145,7 +145,7 @@ void ModelViewWidget::drawFloor()
 {
     glPushMatrix();
     glTranslatef(0.0,-1.0,0.0);
-    glColor3f(7.0/255,20.0/255,35.0/255);
+    glColor3f(0.5,0.5,0.5);
     double r, theta;
     double rMax = 5;
     double rMin = 0.5;

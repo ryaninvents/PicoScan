@@ -5,21 +5,31 @@
 PixelEncodedCamera::PixelEncodedCamera(QObject *parent) :
     QCamera(parent),
     inProgress(false),
-    camera(0)
+    camera(0),
+    projector(0),
+    dpcy(new ProjectorDependent)
 {
+
 }
 
 void PixelEncodedCamera::setCapturingCamera(QCamera *cam)
 {
-    if(camera!=0)
+    if(camera!=0){
         camera->disconnect(this);
+    }
     camera = dynamic_cast<QCamera*>(cam);
-    if(camera==0) return;
-    connect(camera,
-            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
-            this,
-            SLOT(testSlot(cv::Mat,QCamera::FrameType)));
-    return;
+    if(camera!=0){
+        connect(camera,
+                SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
+                this,
+                SLOT(frameReturned(cv::Mat,QCamera::FrameType)));
+        if(projector!=0){
+            connect(projector,
+                    SIGNAL(patternProjected(QProjector::Pattern*)),
+                    camera,
+                    SLOT());
+        }
+    }
 }
 
 QCamera *PixelEncodedCamera::getCapturingCamera()
@@ -29,7 +39,8 @@ QCamera *PixelEncodedCamera::getCapturingCamera()
 
 void PixelEncodedCamera::setProjector(QProjector *proj)
 {
-    projector->deregisterDependencies();
+    if(projector!=0)
+        projector->deregisterDependencies();
     projector = proj;
     projector->registerDependency(dpcy);
 }
@@ -68,8 +79,17 @@ void PixelEncodedCamera::frameReturned(
     compileFrames();
 }
 
-void PixelEncodedCamera::testSlot(cv::Mat, QCamera::FrameType)
+void PixelEncodedCamera::patternProjected(QProjector::Pattern *pattern)
 {
+    // get the pattern's index
+    int patternIndex = getPatternIndex(pattern);
+    // if the pattern index is <0 then it's not
+    // one of ours
+    if(patternIndex<0) return;
+    // remember which pattern we're waiting for
+    waitingFor((uint)patternIndex);
+    // request a frame
+    camera->requestFrame(QCamera::DOUBLE);
 }
 
 void PixelEncodedCamera::allocateFrames(uint n)

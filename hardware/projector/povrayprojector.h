@@ -13,8 +13,13 @@
 /// from a PovRayCamera, POV-Ray will use the info
 /// from the projector and the camera to render
 /// the scene! Nifty, huh?
+///
+/// See PovRayCamera for more information and links
+/// to sample model repositories.
+///
 /// \bug If you're going to try to simulate a 2D
-/// pattern, this will only project square patterns.
+/// pattern, this will only (accurately) project
+/// square patterns.
 /// For horizontally-varying patterns this is ok,
 /// but for vertically- or 2D-varying patterns you'll
 /// have to rewrite some of this code. Should be
@@ -28,7 +33,12 @@ public:
     /// Create a POV-Ray Projector.
     explicit PovRayProjector(QObject *parent = 0);
 
-
+    /// Set the image filename
+    void setFilterFilename(QString fnm);
+    /// Set the parameters filename
+    void setParamFilename(QString fnm);
+    /// Get the filename where the pattern will be saved
+    QString getFilterFilename();
     
 signals:
     
@@ -56,6 +66,12 @@ private:
     /// Simulated cell size, you probably
     /// don't need to worry about this
     double simCellSize;
+
+    /// Simulated focal
+    double simFocal;
+
+    /// Last projected pattern.
+    QProjector::Pattern *lastProjected;
 
 };
 

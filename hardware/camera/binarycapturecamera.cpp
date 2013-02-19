@@ -74,10 +74,24 @@ void BinaryCaptureCamera::patternProjected(
     // (boy we're picky)
     if(bit<loBit || bit>hiBit) return;
 
-    currentFrameIndex = 2*(bit-loBit) + gray->isInverted()?1:0;
+    currentFrameIndex = getPatternIndex(pattern);
+}
 
-    // request a frame
-    camera->requestFrame(UNSIGNED_16);
+int BinaryCaptureCamera::getPatternIndex(QProjector::Pattern *pattern)
+{
+    GrayCodePattern *gray;
+    gray = dynamic_cast<GrayCodePattern*>(pattern);
+
+    // if it's not Gray code we're not interested
+    if(gray==0) return -1;
+
+    uint bit = gray->getBit();
+
+    // if the bit's out of range we're not interested
+    // (boy we're picky)
+    if(bit<loBit || bit>hiBit) return-1;
+
+    return 2*(bit-loBit) + gray->isInverted()?1:0;
 }
 
 bool BinaryCaptureCamera::hasCapturedRawFrame(uint bit, bool inv)

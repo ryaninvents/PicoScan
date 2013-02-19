@@ -4,14 +4,31 @@
 
 PovRayProjector::PovRayProjector(QObject *parent) :
     QProjector(parent),
-    simCellSize(8e-6)
+    simCellSize(8e-6),
+    simFocal(12e-3)
 {
+}
+
+void PovRayProjector::setFilterFilename(QString fnm)
+{
+    imageFilename = fnm;
+}
+
+void PovRayProjector::setParamFilename(QString fnm)
+{
+    projFilename = fnm;
+}
+
+QString PovRayProjector::getFilterFilename()
+{
+    return imageFilename;
 }
 
 void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
 {
     QImage im;
     FILE *file;
+    lastProjected = pattern;
     // save the projector pattern to disk
     im = pattern->generatePattern(getResolutionU(),getResolutionV());
     im.save(imageFilename,"png");
@@ -38,7 +55,7 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
             simRotation[1], // projRY
             simRotation[2], // projRZ
             simCellSize*getResolutionU(),       // projSlmSize
-            simCellSize*getFocalLength(),       // projFocal
+            simFocal,      // projFocal
             imageFilename.toLocal8Bit().data()  // imageFile
             );
     fprintf(file,
@@ -69,4 +86,5 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
             "}\n\n");
     fclose(file);
     // phew! glad that's over
+    emit patternProjected(pattern);
 }

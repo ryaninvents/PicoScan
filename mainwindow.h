@@ -11,6 +11,7 @@
 #include "gui/projectorsettingsdialog.h"
 
 #include "geom/monotriangulator.h"
+#include "hardware/projector/graycodepattern.h"
 
 namespace Ui {
 class MainWindow;
@@ -102,6 +103,9 @@ private:
 
     /// Capture camera
     QCamera *capture;
+
+    /// Gray code pattern
+    GrayCodePattern *graycode;
 
 };
 

@@ -77,7 +77,7 @@ void PovRayCameraDialog::changeIniFile()
                 this,
                 tr("Choose INI file location"),
                 QDir::home().absolutePath(),
-                tr("POV-Ray INI (*.ini)")
+                tr("POV-Ray INI(*.ini)")
                 );
     ui->iniFile->setText(s);
     cam->setIniFilename(s);
@@ -87,9 +87,9 @@ void PovRayCameraDialog::changeSceneFile()
 {
     QString s = QFileDialog::getOpenFileName(
                 this,
-                tr("Choose INI file location"),
+                tr("Choose scene file"),
                 QDir::home().absolutePath(),
-                tr("POV-Ray INI (*.ini)")
+                tr("POV-Ray Scene(*.pov)")
                 );
     ui->sceneFile->setText(s);
     cam->setSceneFilename(s);
@@ -101,7 +101,7 @@ void PovRayCameraDialog::changeCameraFile()
                 this,
                 tr("Choose camera INC file location"),
                 QDir::home().absolutePath(),
-                tr("POV-Ray include (*.inc)")
+                tr("POV-Ray include(*.inc)")
                 );
     ui->cameraFile->setText(s);
     cam->setParameterFilename(s);
@@ -113,7 +113,7 @@ void PovRayCameraDialog::changeRenderFile()
                 this,
                 tr("Choose render output location"),
                 QDir::home().absolutePath(),
-                tr("PNG image (*.png)")
+                tr("PNG image(*.png)")
                 );
     ui->renderFile->setText(s);
     cam->setRenderFilename(s);

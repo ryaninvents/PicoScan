@@ -20,8 +20,14 @@ public:
     /// Set the capture camera
     void setCaptureCamera(QCamera *cam);
 
+    /// Get the capture camera
+    QCamera *getCaptureCamera();
+
     /// Set the projector
     void setProjector(QProjector *proj);
+
+    /// Get the projector
+    QProjector *getProjector();
     
 signals:
     /// The triangulator has computed a Sheet.

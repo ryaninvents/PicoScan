@@ -4,13 +4,15 @@
 #include <stdio.h>
 #include <QScrollBar>
 #include "hardware/camera/binarycapturecamera.h"
-#include "hardware/camera/qopencvcamera.h"
+#include "hardware/camera/povraycamera.h"
+#include "hardware/projector/povrayprojector.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     calib(new CalibrationDialog),
-    debugWin(new QPlainTextEdit)
+    debugWin(new QPlainTextEdit),
+    graycode(new GrayCodePattern(5,false))
 {
     ui->setupUi(this);
 
@@ -32,14 +34,47 @@ MainWindow::MainWindow(QWidget *parent) :
             SLOT(cameraSettingsChanged(QCamera*,QCamera*)));
 
     ui->modelView->zoomFit();
-    showDebug();
+    //showDebug();
 
     BinaryCaptureCamera *codeCam = new BinaryCaptureCamera();
-    QCamera *capCam = new QOpenCVCamera(0);
+    codeCam->setBitRange(0,10);
+
+    PovRayCamera *capCam = new PovRayCamera();
+    capCam->setParameterFilename(
+                tr("/home/ryan/Documents/mqp-data/"
+                   "simulation/butterfly-valve/"
+                   "camera.inc"));
+    capCam->setIniFilename(
+                tr("/home/ryan/Documents/mqp-data/"
+                   "simulation/butterfly-valve/"
+                   "scene.ini"));
+    capCam->setRenderFilename(
+                tr("/home/ryan/Documents/mqp-data/"
+                   "simulation/butterfly-valve/"
+                   "sim-out.png"));
+    capCam->setSceneFilename(
+                tr("/home/ryan/Documents/mqp-data/"
+                   "simulation/butterfly-valve/"
+                   "valve.pov"));
+    capCam->setSimZ(-1);
+    capCam->setSimFocalLength(12e-3);
+
+    codeCam->setCapturingCamera(capCam);
+
+    PovRayProjector *pov = new PovRayProjector();
+    pov->setFilterFilename(
+                tr("/home/ryan/Documents/mqp-data/"
+                   "simulation/butterfly-valve/"
+                   "projector-filter.png"));
+    pov->setParamFilename(
+                tr("/home/ryan/Documents/mqp-data/"
+                   "simulation/butterfly-valve/"
+                   "projector.inc"));
 
     tri = new MonoTriangulator();
     tri->setEncodingCamera(codeCam);
     tri->setCaptureCamera(capCam);
+    tri->setProjector(pov);
 
 }
 
@@ -127,6 +162,8 @@ void MainWindow::adjustCalStd()
 void MainWindow::takeFrame()
 {
     //tri->requestSheet();
+    tri->getProjector()->queue(graycode);
+    tri->getCaptureCamera()->requestFrame(QCamera::DOUBLE);
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

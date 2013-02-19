@@ -49,8 +49,8 @@ signals:
 public slots:
     /// A frame has been returned.
     void frameReturned(cv::Mat frame, QCamera::FrameType);
-    /// Test?
-    void testSlot(cv::Mat,QCamera::FrameType);
+    /// A pattern has been projected.
+    void patternProjected(QProjector::Pattern *pattern);
 
 protected:
 
@@ -81,6 +81,9 @@ protected:
 
     /// Compile the frames into an encoded frame.
     virtual void compileFrames() = 0;
+
+    /// Get a pattern index, given a pattern.
+    virtual int getPatternIndex(QProjector::Pattern *)=0;
 
 private:
 

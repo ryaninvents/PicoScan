@@ -24,9 +24,20 @@ void MonoTriangulator::setCaptureCamera(QCamera *cam)
     camera->setCapturingCamera(cam);
 }
 
+QCamera *MonoTriangulator::getCaptureCamera()
+{
+    return camera->getCapturingCamera();
+}
+
 void MonoTriangulator::setProjector(QProjector *proj)
 {
     projector = proj;
+    camera->setProjector(proj);
+}
+
+QProjector *MonoTriangulator::getProjector()
+{
+    return projector;
 }
 
 void MonoTriangulator::requestSheet()

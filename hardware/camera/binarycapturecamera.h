@@ -59,6 +59,10 @@ public slots:
     /// A particular pattern has been projected.
     void patternProjected(QProjector::Pattern *pattern);
 
+protected:
+    /// Get a binary pattern's index.
+    int getPatternIndex(QProjector::Pattern *pattern);
+
 private:
     /// do we have a frame for the selected bit and
     /// inversion?

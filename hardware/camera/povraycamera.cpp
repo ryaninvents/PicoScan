@@ -3,6 +3,7 @@
 #include <fstream>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <QDir>
 
 PovRayCamera::PovRayCamera(QObject *parent) :
     QCamera(parent),
@@ -107,37 +108,40 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
             "/// If your simulation isn't working, make\n"
             "/// sure you have included this file\n"
             "/// in your .pov setup.\n\n"
-            "camera {\n"
-            "   up -y*%f\n"
-            "   right x*%f\n"
-            "   direction z*%f\n"
-            "   rotate <%f,%f,%f>\n"
-            "   translate <%f,%f,%f>\n"
-            "}\n",
-            simCellSize*getResolutionV(), // up
-            simCellSize*getResolutionU(), // right
-            simCellSize*getFocalLength(), // focal
+            "camera {\n");
+    fprintf(file,"   up -y*%f\n",simCellSize*getResolutionV());
+    fprintf(file,"   right x*%f\n",simCellSize*getResolutionU());
+    fprintf(file,"   direction z*%f\n",simFocalLength);
+    fprintf(file,"   rotate <%f,%f,%f>\n",
             simRotation[0], // rotate X
             simRotation[1], // rotate Y
-            simRotation[2], // rotate Z
+            simRotation[2]  // rotate Z
+            );
+    fprintf(file,"   translate <%f,%f,%f>\n}\n",
             simPosition[0], // translate X
             simPosition[1], // translate Y
             simPosition[2]  // translate Z
             );
     fclose(file);
 
+    QDir dir(sceneFilename);
+    dir.cdUp();
     // write ini parameters to disk
     file = fopen(iniFilename.toLocal8Bit().data(),"w");
     fprintf(file,
             "Width=%d\nHeight=%d\n-D\n"
             "-GA\n+A%d\n"
             "Input_File_Name=%s\n"
-            "Output_File_Name=%s",
+            "Output_File_Name=%s\n"
+            "Library_Path=%s",
             getResolutionU(), // width
             getResolutionV(), // height
             antialiasing,     // anti-aliasing
-            sceneFilename.toLocal8Bit().data(), // input file
-            renderFilename.toLocal8Bit().data() // output file
+            QDir::toNativeSeparators(
+                sceneFilename).toLocal8Bit().data(),  // input file
+            QDir::toNativeSeparators(
+                renderFilename).toLocal8Bit().data(), // output file
+            dir.path().toLocal8Bit().data()           // folder
             );
     fclose(file);
 
@@ -147,22 +151,48 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
 
     // read the image from disk
     int flags = 1;
-    switch(type){
-    case FULL_COLOR:
-        flags = CV_LOAD_IMAGE_COLOR;
-        break;
-    case DOUBLE:
-    case SIGNED_32:
-    case UNSIGNED_16:
-        flags = CV_LOAD_IMAGE_GRAYSCALE;
-        break;
+
+    printf("%s\n",renderFilename.toLocal8Bit().data());
+
+    cv::Mat frame;
+
+    if(type==QCamera::FULL_COLOR){
+        frame = cv::imread(
+                    renderFilename.toLocal8Bit().data());
+        emit frameCaptured(frame,type);
+        return;
     }
 
-    cv::Mat frame = cv::imread(
+    frame = cv::imread(
+                renderFilename.toLocal8Bit().data(),
+                CV_LOAD_IMAGE_GRAYSCALE);
+
+    switch(type){
+    case DOUBLE:
+        frame.convertTo(frame,CV_64F);
+        break;
+    case SIGNED_32:
+        frame.convertTo(frame,CV_32S);
+        break;
+    case UNSIGNED_16:
+        frame.convertTo(frame,CV_16U);
+        break;
+    }
+    emit frameCaptured(frame,type);
+
+
+    /*
+    cv::Mat frame;
+
+    frame = cv::imread(renderFilename.toLocal8Bit().data(),flags);
+    if(!frame.empty())
+        cv::imwrite(renderFilename.append("1").toLocal8Bit().data(),frame);
+
+    /*= cv::imread(
                 renderFilename.toLocal8Bit().data(),
                 flags);
 
     // emit the frame!
-    emit frameCaptured(frame,type);
+    //emit frameCaptured(frame,type);*/
 
 }
