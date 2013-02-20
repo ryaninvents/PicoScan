@@ -7,7 +7,7 @@ BinaryCamera::BinaryCamera(uint bit, QObject *parent):
     QCamera(parent),
     bit(bit),
     camera(0),
-    projecctor(0),
+    projector(0),
     isWorking(false),
     projectorCanAdvance(true)
 {

@@ -115,10 +115,9 @@ void BinaryEncodedCamera::decodeAndEmit()
                 CV_32S);
     for(y=0;y<encoding.rows;y++){
         for(x=0;x<encoding.cols;x++){
-            if(frame.at<int>(y,x)>0)
-                decoded.at<int>(y,x) =
-                        grayToBinary(
-                            encoding.at<int>(y,x));
+            decoded.at<int>(y,x) =
+                    grayToBinary(
+                        encoding.at<int>(y,x));
         }
     }
     decoded.convertTo(decoded,
