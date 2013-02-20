@@ -64,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this,
             SLOT(debug(QString)));
     capCam->startStream();
+    capCam->setResolution(1600,1200);
 
     PovRayProjector *pov = new PovRayProjector();
     pov->setFilterFilename(
@@ -82,9 +83,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // debug all images out of testCam
     connect(testCam,
-            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
+            SIGNAL(
+                frameCaptured(cv::Mat,
+                              QCamera::FrameType,
+                              QCamera*)),
             this,
-            SLOT(debugImage(cv::Mat,QCamera::FrameType)));
+            SLOT(
+                debugImage(
+                    cv::Mat,
+                    QCamera::FrameType,
+                    QCamera*)));
 
 }
 
@@ -119,7 +127,7 @@ void MainWindow::cameraSettingsChanged(QCamera *first, QCamera *)
 
 }
 
-void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type)
+void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type, QCamera *)
 {
     if(type==QCamera::FULL_COLOR){
         cv::Mat3b img;
@@ -137,9 +145,9 @@ void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type)
 void MainWindow::debugImage(cv::Mat im)
 {
     if(im.channels()==3)
-        debugImage(im,QCamera::FULL_COLOR);
+        debugImage(im,QCamera::FULL_COLOR,0);
     else
-        debugImage(im,QCamera::DOUBLE);
+        debugImage(im,QCamera::DOUBLE,0);
 }
 
 void MainWindow::showAbout()

@@ -97,5 +97,5 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
             "}\n\n");
     fclose(file);
     // phew! glad that's over
-    emit patternProjected(pattern);
+    emit patternProjected(pattern,this);
 }

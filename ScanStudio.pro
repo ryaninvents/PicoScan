@@ -31,7 +31,6 @@ SOURCES += main.cpp\
     hardware/projector/qprojector.cpp \
     hardware/projector/seconddisplayprojector.cpp \
     hardware/projector/graycodepattern.cpp \
-    hardware/projector/projectordependent.cpp \
     hardware/projector/povrayprojector.cpp \
     hardware/camera/povraycamera.cpp \
     gui/povraycameradialog.cpp \
@@ -62,7 +61,6 @@ HEADERS  += mainwindow.h \
     hardware/projector/qprojector.h \
     hardware/projector/seconddisplayprojector.h \
     hardware/projector/graycodepattern.h \
-    hardware/projector/projectordependent.h \
     hardware/projector/povrayprojector.h \
     hardware/camera/povraycamera.h \
     gui/povraycameradialog.h \

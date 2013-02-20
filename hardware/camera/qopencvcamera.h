@@ -26,11 +26,23 @@ public:
     /// Describe
     QString describe();
 
+    /// Returns the horizontal resolution of this device.
+    int getResolutionU();
+
+    /// Returns the vertical resolution of this device.
+    int getResolutionV();
+
+    /// Returns the resolution of this device.
+    cv::Size getResolution();
+
 signals:
     
 public slots:
     /// Request a frame from the camera.
     bool requestFrame(FrameType type);
+
+    /// Adjust the device's resolution.
+    void adjustDeviceResolution(int u, int v);
 
 private:
 

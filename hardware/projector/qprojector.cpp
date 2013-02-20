@@ -4,8 +4,7 @@
 #include <QDesktopWidget>
 
 QProjector::QProjector(QObject *parent) :
-    QOpticalDevice(parent),
-    dependents()
+    QOpticalDevice(parent)
 {
 }
 
@@ -22,31 +21,9 @@ void QProjector::queue(QProjector::Pattern *p)
     processQueue();
 }
 
-void QProjector::registerDependency(ProjectorDependent *dp)
+bool QProjector::checkDependencies()
 {
-    if(dp==0) return;
-    dp->setID(dependents.size());
-    dependents.push_back(dp);
-    connect(dp,SIGNAL(permitRelease()),
-            this,SLOT(processQueue()));
-    connect(dp,SIGNAL(deregister(uint)),
-            this,SLOT(deregisterDependency(uint)));
-}
-
-void QProjector::deregisterDependency(uint id)
-{
-    if(dependents.at(id)==0) return;
-    dependents.at(id)->disconnect();
-    dependents.at(id) = 0;
-}
-
-void QProjector::deregisterDependencies()
-{
-    uint i;
-    for(i=0;i<dependents.size();i++){
-        deregisterDependency(i);
-    }
-    dependents.clear();
+    return dependencies.empty();
 }
 
 void QProjector::processQueue()
@@ -59,22 +36,29 @@ void QProjector::processQueue()
             return;
         }
         projectPattern(pattern);
-        emit patternProjected(pattern);
+        emit patternProjected(pattern,this);
     }
 }
 
-bool QProjector::checkDependencies()
+void QProjector::waitFor(QObject *holdup)
 {
     uint i;
-    if(dependents.empty()) return true;
-    for(i=0;i<dependents.size();i++){
-        if(dependents.at(i)==0) continue;
-        if(!(dependents.at(i)->isSatisfied())) return false;
+    for(i=0;i<dependencies.size();i++){
+        if(dependencies.at(i)==holdup){
+            return;
+        }
     }
-    for(i=0;i<dependents.size();i++){
-        if(dependents.at(i)==0) continue;
-        dependents.at(i)->reset();
-    }
-    return true;
+    dependencies.push_back(holdup);
+}
 
+void QProjector::stopWaitingFor(QObject *holdup)
+{
+    int i,idx=-1;
+    for(i=0;i<dependencies.size();i++){
+        if(dependencies.at(i)==holdup){
+            idx = i;
+        }
+    }
+    if(idx<0) return;
+    dependencies.erase(dependencies.begin()+idx);
 }

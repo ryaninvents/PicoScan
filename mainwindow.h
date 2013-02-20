@@ -65,10 +65,13 @@ public slots:
     void showDebug();
 
     /// User has selected camera settings.
-    void cameraSettingsChanged(QCamera *first, QCamera*);
+    void cameraSettingsChanged(QCamera *first,
+                               QCamera*);
 
     /// Show a debug image.
-    void debugImage(cv::Mat im, QCamera::FrameType type);
+    void debugImage(cv::Mat im,
+                    QCamera::FrameType type,
+                    QCamera*);
     /// Show a debug image.
     void debugImage(cv::Mat im);
 

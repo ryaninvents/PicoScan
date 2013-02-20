@@ -19,7 +19,7 @@ void SecondDisplayProjector::projectPattern(QProjector::Pattern *p)
 {
     w.projectOnDisplay(displayIdx);
     w.projectPattern(p);
-    emit patternProjected(p);
+    emit patternProjected(p,this);
 }
 
 void SecondDisplayProjector::Widget::projectOnDisplay(int n)

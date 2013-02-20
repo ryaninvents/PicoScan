@@ -40,11 +40,14 @@ void QOpticalDevice::setPosition(cv::Vec3d p)
 void QOpticalDevice::setResolution(int u, int v)
 {
     resolution = cv::Size(u,v);
+    emit resolutionChanged(u,v);
 }
 
 void QOpticalDevice::setResolution(cv::Size s)
 {
     this->resolution = s;
+    emit resolutionChanged(s.width,
+                           s.height);
 }
 
 cv::Mat QOpticalDevice::getDistortion()
@@ -175,5 +178,3 @@ double QOpticalDevice::getNormalizedCoord(double u, double c)
 {
     return (u - c)/getFocalLength();
 }
-
-

@@ -6,6 +6,10 @@ QOpenCVCamera::QOpenCVCamera(uint idx, QObject *parent) :
 {
     cap = new cv::VideoCapture();
     cap->open(idx);
+    connect(this,
+            SIGNAL(resolutionChanged(int,int)),
+            this,
+            SLOT(adjustDeviceResolution(int,int)));
 }
 
 bool QOpenCVCamera::isOpen()
@@ -53,4 +57,35 @@ bool QOpenCVCamera::requestFrame(FrameType type)
     }
     emit frameCaptured(m,type,this);
     return true;
+}
+
+void QOpenCVCamera::adjustDeviceResolution(int u, int v)
+{
+    bool uSuccess, vSuccess;
+    uSuccess = cap->set(CV_CAP_PROP_FRAME_WIDTH,u);
+    vSuccess = cap->set(CV_CAP_PROP_FRAME_HEIGHT,v);
+    emit debug(QString("Horiz res change: %1\n"
+                       "Vert res change: %2")
+               .arg(uSuccess?"success":"failure")
+               .arg(vSuccess?"success":"failure"));
+    emit debug(QString("Horiz res: %1\n"
+                       "Vert res: %2")
+               .arg(getResolutionU())
+               .arg(getResolutionV()));
+}
+
+int QOpenCVCamera::getResolutionU()
+{
+    return cap->get(CV_CAP_PROP_FRAME_WIDTH);
+}
+
+int QOpenCVCamera::getResolutionV()
+{
+    return cap->get(CV_CAP_PROP_FRAME_HEIGHT);
+}
+
+cv::Size QOpenCVCamera::getResolution()
+{
+    return cv::Size(getResolutionU(),
+                    getResolutionV());
 }

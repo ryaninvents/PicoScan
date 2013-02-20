@@ -117,8 +117,13 @@ signals:
 
     /// Announce debugging information.
     void debug(QString);
+
+    /// Resolution has changed.
+    void resolutionChanged(int,int);
     
 public slots:
+
+protected:
 
 private:
 

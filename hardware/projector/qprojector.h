@@ -3,7 +3,6 @@
 
 #include "../qopticaldevice.h"
 #include "../../gui/imageviewwidget.h"
-#include "projectordependent.h"
 
 /// Represents a projector.
 class QProjector : public QOpticalDevice
@@ -30,25 +29,14 @@ public:
     /// Queue up a pattern.
     void queue(QProjector::Pattern *p);
 
-    /// Register a ProjectorDependent, meaning
-    /// the projector can't move on until all
-    /// dependents have been satisfied.
-    void registerDependency(ProjectorDependent *dp);
+    /// Check to see if we're waiting for something.
+    bool checkDependencies();
 
 signals:
     /// Notify listeners that a pattern has been projected.
-    void patternProjected(QProjector::Pattern*);
+    void patternProjected(QProjector::Pattern*,QProjector*);
 
 public slots:
-
-    /// Check to see if all dependents are satisfied.
-    bool checkDependencies();
-
-    /// Deregister a dependent.
-    void deregisterDependency(uint id);
-
-    /// Deregister all dependents.
-    void deregisterDependencies();
 
     /// Project the next pattern in the queue.
     /// \bug May emit patternProjected() before
@@ -57,18 +45,27 @@ public slots:
     /// that to child processes.
     void processQueue();
 
+    /// Tell the projector to hold up, we're doing
+    /// something else.
+    void waitFor(QObject *holdup);
+
+    /// Tell the projector we're done with whatever
+    /// we were doing and move on.
+    void stopWaitingFor(QObject *holdup);
+
 protected:
 
     /// Project a pattern.
-    virtual void projectPattern(QProjector::Pattern *){}
+    virtual void projectPattern(QProjector::Pattern *)=0;
 
 private:
 
     /// Queue of patterns waiting to be projected.
     std::vector<QProjector::Pattern*> patternQueue;
 
-    /// List of dependents
-    std::vector<ProjectorDependent*> dependents;
+    /// Stuff we're waiting for
+    std::vector<QObject*> dependencies;
+
 };
 
 #endif // QPROJECTOR_H

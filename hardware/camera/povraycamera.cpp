@@ -159,7 +159,7 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
     if(type==QCamera::FULL_COLOR){
         frame = cv::imread(
                     renderFilename.toLocal8Bit().data());
-        emit frameCaptured(frame,type);
+        emit frameCaptured(frame,type,this);
         return true;
     }
 
