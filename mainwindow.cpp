@@ -6,7 +6,6 @@
 #include "hardware/camera/povraycamera.h"
 #include "hardware/projector/povrayprojector.h"
 #include "hardware/camera/qopencvcamera.h"
-#include "hardware/camera/binarycamera.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -82,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pov->setSimPosition(1,0,-1);
     pov->setSimRotation(0,M_PI*0.25,0);
 
-    BinaryCamera *binCam = new BinaryCamera(
+    binCam = new BinaryCamera(
                 capCam,
                 pov,
                 0);

@@ -2,35 +2,33 @@
 
 #include <opencv2/highgui/highgui.hpp>
 
+
+BinaryCamera::BinaryCamera(uint bit, QObject *parent):
+    QCamera(parent),
+    bit(bit),
+    camera(0),
+    projecctor(0),
+    isWorking(false),
+    projectorCanAdvance(true)
+{
+}
+
+
+
 BinaryCamera::BinaryCamera(
         QCamera *captureCamera,
         QProjector *projector,
         uint bit,
         QObject *parent) :
     QCamera(parent),
-    threshold(20),
     bit(bit),
     isWorking(false),
     camera(captureCamera),
     projector(projector),
     projectorCanAdvance(true)
 {
-    connect(projector,
-            SIGNAL(aboutToAdvance()),
-            this,
-            SLOT(projectorAboutToAdvance()));
-    connect(this,
-            SIGNAL(allowProjectorToAdvance(bool)),
-            projector,
-            SLOT(permissionToAdvance(bool)));
-    connect(projector,
-            SIGNAL(patternProjected(QProjector::Pattern*,QProjector*)),
-            this,
-            SLOT(patternProjected(QProjector::Pattern*,QProjector*)));
-    connect(camera,
-            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType,QCamera*)),
-            this,
-            SLOT(rawFrameCaptured(cv::Mat,QCamera::FrameType,QCamera*)));
+    connectProjector();
+    connectCaptureCamera();
 }
 
 bool BinaryCamera::isOpen()
@@ -48,11 +46,32 @@ QString BinaryCamera::describe()
     return QString("Binary camera");
 }
 
+void BinaryCamera::setCaptureCamera(QCamera *capCam)
+{
+    disconnectCaptureCamera();
+    camera = capCam;
+    connectCaptureCamera();
+}
+
+void BinaryCamera::setProjector(QProjector *pj)
+{
+    disconnectProjector();
+    projector = pj;
+    connectProjector();
+}
+
+uint BinaryCamera::getBit()
+{
+    return bit;
+}
+
 bool BinaryCamera::requestFrame(QCamera::FrameType type)
 {
     if(     isWorking
-            ||type==QCamera::FULL_COLOR
-            ||type==QCamera::UNSIGNED_16)
+            || type==QCamera::FULL_COLOR
+            || type==QCamera::UNSIGNED_16
+            || camera==0
+            || projector==0)
         return false;
     emit debug(tr("Someone has requested a frame from the BinaryCamera"));
     havePositive = false;
@@ -145,6 +164,45 @@ void BinaryCamera::rawFrameCaptured(cv::Mat frame,
     }
 }
 
+void BinaryCamera::disconnectCaptureCamera()
+{
+    if(camera==0) return;
+    camera->disconnect(this);
+}
+
+void BinaryCamera::disconnectProjector()
+{
+    if(projector==0) return;
+    projector->disconnect(this);
+    this->disconnect(projector);
+}
+
+void BinaryCamera::connectCaptureCamera()
+{
+
+    connect(camera,
+            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType,QCamera*)),
+            this,
+            SLOT(rawFrameCaptured(cv::Mat,QCamera::FrameType,QCamera*)));
+}
+
+void BinaryCamera::connectProjector()
+{
+
+    connect(projector,
+            SIGNAL(aboutToAdvance()),
+            this,
+            SLOT(projectorAboutToAdvance()));
+    connect(this,
+            SIGNAL(allowProjectorToAdvance(bool)),
+            projector,
+            SLOT(permissionToAdvance(bool)));
+    connect(projector,
+            SIGNAL(patternProjected(QProjector::Pattern*,QProjector*)),
+            this,
+            SLOT(patternProjected(QProjector::Pattern*,QProjector*)));
+}
+
 void BinaryCamera::projectorAboutToAdvance()
 {
     emit debug(QString("BinaryCamera recieves signal: projector is about to advance."));
@@ -152,4 +210,3 @@ void BinaryCamera::projectorAboutToAdvance()
                .arg(projectorCanAdvance?"not to":"that it must"));
     emit allowProjectorToAdvance(projectorCanAdvance);
 }
-
