@@ -18,18 +18,29 @@ void QProjector::queue(QProjector::Pattern *p)
         }
     }
     patternQueue.push_back(p);
-    processQueue();
+    if(hasDependencies())
+        emit aboutToAdvance();
+    else
+        processQueue();
 }
 
 bool QProjector::checkDependencies()
 {
-    return receivers(SIGNAL(hold()))==0;
+    if(!hasDependencies()){
+        return true;
+    }
+    return listenersWaitingFor==0
+            && listenersDenyingPermission==0;
+}
+
+bool QProjector::hasDependencies()
+{
+    return receivers(SIGNAL(aboutToAdvance()))>0;
 }
 
 void QProjector::processQueue()
 {
-    if(checkDependencies()
-            && patternQueue.size()>0) {
+    if(patternQueue.size()>0) {
         Pattern *pattern = patternQueue.at(patternQueue.size()-1);
         patternQueue.pop_back();
         if(pattern==0){
@@ -37,26 +48,20 @@ void QProjector::processQueue()
             return;
         }
         projectPattern(pattern);
+        listenersWaitingFor = 0;
+        listenersDenyingPermission = 0;
         emit patternProjected(pattern,this);
     }
 }
 
-void QProjector::waitFor(QObject *obj, const char *slot)
+void QProjector::permissionToAdvance(bool canAdvance)
 {
-    connect(this,
-            SIGNAL(hold()),
-            obj,
-            slot);
-}
-
-void QProjector::stopWaitingFor(QObject *obj)
-{
-    disconnect(SIGNAL(hold()),obj);
-}
-
-void QProjector::disconnectNotify(const char *signal)
-{
-    if(signal==SIGNAL(hold())){
+    listenersWaitingFor--;
+    if(!canAdvance){
+        listenersDenyingPermission++;
+    }
+    if(listenersWaitingFor==0
+            && listenersDenyingPermission==0){
         processQueue();
     }
 }

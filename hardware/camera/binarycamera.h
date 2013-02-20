@@ -25,6 +25,9 @@ public:
 
     
 signals:
+    /// Allow or deny the projector permission to
+    /// advance.
+    void allowProjectorToAdvance(bool);
     
 public slots:
     /// Request a frame.
@@ -37,9 +40,8 @@ public slots:
     void frameCaptured(cv::Mat frame,
                        QCamera::FrameType type,
                        QCamera *cam);
-    /// Dummy slot to let the projector know
-    /// the pattern has been projected
-    void patternCaptured();
+    /// The projector is about to advance.
+    void projectorAboutToAdvance();
 
 private:
 
@@ -72,6 +74,9 @@ private:
 
     /// Have we captured the negative frame?
     bool haveNegative;
+
+    /// Do we want the projector to advance?
+    bool projectorCanAdvance;
     
 };
 

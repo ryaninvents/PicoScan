@@ -34,6 +34,9 @@ public:
     /// Check to see if we're waiting for something.
     bool checkDependencies();
 
+    /// Check to see if we have any dependencies.
+    bool hasDependencies();
+
 signals:
     /// Signal to determine whether the projector can
     /// move on or not.
@@ -43,11 +46,25 @@ signals:
     /// projector,SLOT(hold()) \endcode
     /// to cause the projector to wait. When the object
     /// has finished, <tt>disconnect</tt> it.
-    void hold();
+    void aboutToAdvance();
     /// Notify listeners that a pattern has been projected.
     void patternProjected(QProjector::Pattern*,QProjector*);
 
 public slots:
+
+    /// Received when a camera decides whether or not
+    /// it would like the projector to continue.
+    void permissionToAdvance(bool canAdvance);
+
+protected:
+
+    /// Project a pattern.
+    virtual void projectPattern(QProjector::Pattern *)=0;
+
+private:
+
+    /// Queue of patterns waiting to be projected.
+    std::vector<QProjector::Pattern*> patternQueue;
 
     /// Project the next pattern in the queue.
     /// \bug May emit patternProjected() before
@@ -56,24 +73,11 @@ public slots:
     /// that to child processes.
     void processQueue();
 
-    /// Wait for a QObject.
-    void waitFor(QObject *obj, const char* slot);
+    /// How many listeners are we waiting for?
+    uint listenersWaitingFor;
 
-    /// Stop waiting for a QObject.
-    void stopWaitingFor(QObject *obj);
-
-protected:
-
-    /// Project a pattern.
-    virtual void projectPattern(QProjector::Pattern *)=0;
-
-    /// Advance the pattern on disconnect.
-    void disconnectNotify(const char *signal);
-
-private:
-
-    /// Queue of patterns waiting to be projected.
-    std::vector<QProjector::Pattern*> patternQueue;
+    /// How many listeners have denied permission to advance?
+    uint listenersDenyingPermission;
 
 };
 

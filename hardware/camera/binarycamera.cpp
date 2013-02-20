@@ -51,7 +51,7 @@ void BinaryCamera::patternProjected(
     if(gray->getBit()!=bit) return;
 
     // tell the projector to wait; we're taking a pic
-    projector->waitFor(this,SLOT(patternCaptured()));
+    projectorCanAdvance = false;
 
     // save the pattern
     this->pattern = gray;
@@ -80,7 +80,7 @@ void BinaryCamera::frameCaptured(cv::Mat frame,
     }
 
     // release the projector
-    projector->stopWaitingFor(this);
+    projectorCanAdvance = true;
 
     // can we calculate the binary frame?
     if(havePositive && haveNegative){
@@ -93,6 +93,7 @@ void BinaryCamera::frameCaptured(cv::Mat frame,
     }
 }
 
-void BinaryCamera::patternCaptured()
+void BinaryCamera::projectorAboutToAdvance()
 {
+    emit allowProjectorToAdvance(projectorCanAdvance);
 }
