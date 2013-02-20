@@ -9,17 +9,19 @@ ImageViewWidget::ImageViewWidget(QWidget *parent) :
 
 void ImageViewWidget::displayImage(cv::Mat_<double> image, bool scale)
 {
-    double inScale = 255.0;
+    double inScale = 1.0;
 
     QImage dest(image.cols, image.rows, QImage::Format_ARGB32);
     for (int y = 0; y < image.rows; ++y) {
             const double *srcrow = image[y];
             QRgb *destrow = (QRgb*)dest.scanLine(y);
             for (int x = 0; x < image.cols; ++x) {
-                    unsigned int color = (unsigned int)(srcrow[x] * inScale);
-                    if(color<0) color = 0;
-                    if(color>0) color = 255-color;
-                    destrow[x] = qRgba(color, color, color, 255);
+                    int color = 255u-(unsigned int)(srcrow[x] * inScale);
+                    uint ucolor;
+                    if(color<0) ucolor = 0;
+                    else if(color>255) ucolor = 255;
+                    else ucolor = 255-color;
+                    destrow[x] = qRgba(ucolor, ucolor, ucolor, 255);
             }
     }
 
