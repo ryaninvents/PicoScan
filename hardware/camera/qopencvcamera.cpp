@@ -2,9 +2,10 @@
 #include <opencv2/imgproc/imgproc.hpp>
 
 QOpenCVCamera::QOpenCVCamera(uint idx, QObject *parent) :
-    QCamera(parent),
-    cap(new cv::VideoCapture(idx))
+    QCamera(parent)
 {
+    cap = new cv::VideoCapture();
+    cap->open(idx);
 }
 
 bool QOpenCVCamera::isOpen()

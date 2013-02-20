@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include "../hardware/projector/qprojector.h"
-#include "../hardware/camera/pixelencodedcamera.h"
 
 #define PROJECTOR_TYPE_MONITOR 0
 #define PROJECTOR_TYPE_POVRAY 1
@@ -47,12 +46,6 @@ private:
     /// with the settings that are specific
     /// to each subclass.
     QDialog *settingsDialog;
-
-    /// The method we'll be using. This is actually
-    /// a camera, since a pixel-encoded camera is smart
-    /// enough to know what projected patterns it needs
-    /// to operate.
-    PixelEncodedCamera *method;
 };
 
 #endif // PROJECTORSETTINGSDIALOG_H

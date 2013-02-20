@@ -36,7 +36,13 @@ bool QCamera::startStream()
             SIGNAL(timeout()),
             this,
             SLOT(requestFrame()));
+    timer->start();
     return true;
+}
+
+bool QCamera::requestFrame()
+{
+    requestFrame(QCamera::FULL_COLOR);
 }
 
 int QCamera::getOpenCVFlagFromType(QCamera::FrameType type)

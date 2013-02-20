@@ -59,6 +59,8 @@ public slots:
     /// frame, \b false if the camera is incapable of
     /// emitting the desired type of frame.
     virtual bool requestFrame(QCamera::FrameType)=0;
+    /// Capture a full-color frame and emit when ready.
+    bool requestFrame();
 
 protected:
 

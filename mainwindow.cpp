@@ -5,6 +5,7 @@
 #include <QScrollBar>
 #include "hardware/camera/povraycamera.h"
 #include "hardware/projector/povrayprojector.h"
+#include "hardware/camera/qopencvcamera.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,10 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
             SLOT(cameraSettingsChanged(QCamera*,QCamera*)));
 
     ui->modelView->zoomFit();
-    //showDebug();
+    showDebug();
     dbgIm->setWindowTitle("Debugging -- camera view");
 
-    PovRayCamera *capCam = new PovRayCamera();
+    /*PovRayCamera *capCam = new PovRayCamera();
     capCam->setParameterFilename(
                 tr("/home/ryan/Documents/mqp-data/"
                    "simulation/butterfly-valve/"
@@ -55,9 +56,14 @@ MainWindow::MainWindow(QWidget *parent) :
                    "simulation/butterfly-valve/"
                    "valve.pov"));
     capCam->setSimZ(-1);
-    capCam->setSimFocalLength(12e-3);
+    capCam->setSimFocalLength(12e-3);*/
 
-    codeCam->setCapturingCamera(capCam);
+    QOpenCVCamera *capCam = new QOpenCVCamera(1);
+    connect(capCam,
+            SIGNAL(debug(QString)),
+            this,
+            SLOT(debug(QString)));
+    capCam->startStream();
 
     PovRayProjector *pov = new PovRayProjector();
     pov->setFilterFilename(
@@ -75,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     testProjector = pov;
 
     // debug all images out of testCam
-    connect(capCam,
+    connect(testCam,
             SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
             this,
             SLOT(debugImage(cv::Mat,QCamera::FrameType)));
