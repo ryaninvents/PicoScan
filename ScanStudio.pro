@@ -32,7 +32,6 @@ SOURCES += main.cpp\
     hardware/projector/seconddisplayprojector.cpp \
     hardware/projector/graycodepattern.cpp \
     hardware/projector/projectordependent.cpp \
-    hardware/camera/binarycapturecamera.cpp \
     hardware/projector/povrayprojector.cpp \
     hardware/camera/povraycamera.cpp \
     gui/povraycameradialog.cpp \
@@ -40,7 +39,6 @@ SOURCES += main.cpp\
     gui/secondmonitorprojectordialog.cpp \
     gui/povrayprojectordialog.cpp \
     gui/fileprojectordialog.cpp \
-    hardware/camera/pixelencodedcamera.cpp \
     geom/monotriangulator.cpp \
     gui/opencvcameradialog.cpp
 
@@ -65,7 +63,6 @@ HEADERS  += mainwindow.h \
     hardware/projector/seconddisplayprojector.h \
     hardware/projector/graycodepattern.h \
     hardware/projector/projectordependent.h \
-    hardware/camera/binarycapturecamera.h \
     hardware/projector/povrayprojector.h \
     hardware/camera/povraycamera.h \
     gui/povraycameradialog.h \
@@ -73,7 +70,6 @@ HEADERS  += mainwindow.h \
     gui/secondmonitorprojectordialog.h \
     gui/povrayprojectordialog.h \
     gui/fileprojectordialog.h \
-    hardware/camera/pixelencodedcamera.h \
     geom/monotriangulator.h \
     gui/opencvcameradialog.h
 
