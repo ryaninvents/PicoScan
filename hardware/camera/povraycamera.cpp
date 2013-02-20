@@ -178,22 +178,7 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
         frame.convertTo(frame,CV_16U);
         break;
     }
-    emit frameCaptured(frame,type);
+    emit frameCaptured(frame,type,this);
     return true;
-
-
-    /*
-    cv::Mat frame;
-
-    frame = cv::imread(renderFilename.toLocal8Bit().data(),flags);
-    if(!frame.empty())
-        cv::imwrite(renderFilename.append("1").toLocal8Bit().data(),frame);
-
-    /*= cv::imread(
-                renderFilename.toLocal8Bit().data(),
-                flags);
-
-    // emit the frame!
-    //emit frameCaptured(frame,type);*/
 
 }

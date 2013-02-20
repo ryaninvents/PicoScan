@@ -69,6 +69,7 @@ public slots:
 
     /// Show a debug image.
     void debugImage(cv::Mat im, QCamera::FrameType type);
+    /// Show a debug image.
     void debugImage(cv::Mat im);
 
 

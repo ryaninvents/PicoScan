@@ -76,7 +76,9 @@ public:
 
 signals:
     /// A frame has been captured.
-    void frameCaptured(cv::Mat frame,QCamera::FrameType type);
+    void frameCaptured(cv::Mat frame,
+                       QCamera::FrameType type,
+                       QCamera *cam);
 
 public slots:
     /// Write camera parameters to disk, render

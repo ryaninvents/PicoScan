@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     gui/secondmonitorprojectordialog.cpp \
     gui/povrayprojectordialog.cpp \
     gui/fileprojectordialog.cpp \
-    gui/opencvcameradialog.cpp
+    gui/opencvcameradialog.cpp \
+    hardware/camera/binarycamera.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -69,7 +70,8 @@ HEADERS  += mainwindow.h \
     gui/secondmonitorprojectordialog.h \
     gui/povrayprojectordialog.h \
     gui/fileprojectordialog.h \
-    gui/opencvcameradialog.h
+    gui/opencvcameradialog.h \
+    hardware/camera/binarycamera.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

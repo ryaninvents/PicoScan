@@ -136,7 +136,10 @@ void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type)
 
 void MainWindow::debugImage(cv::Mat im)
 {
-    debugImage(im,QCamera::DOUBLE);
+    if(im.channels()==3)
+        debugImage(im,QCamera::FULL_COLOR);
+    else
+        debugImage(im,QCamera::DOUBLE);
 }
 
 void MainWindow::showAbout()

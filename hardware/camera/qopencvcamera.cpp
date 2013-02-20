@@ -51,6 +51,6 @@ bool QOpenCVCamera::requestFrame(FrameType type)
         m.convertTo(m,CV_16U);
         break;
     }
-    emit frameCaptured(m,type);
+    emit frameCaptured(m,type,this);
     return true;
 }
