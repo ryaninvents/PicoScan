@@ -6,6 +6,7 @@
 #include "hardware/camera/povraycamera.h"
 #include "hardware/projector/povrayprojector.h"
 #include "hardware/camera/qopencvcamera.h"
+#include "hardware/camera/binarycamera.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -37,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->modelView->zoomFit();
     showDebug();
     dbgIm->setWindowTitle("Debugging -- camera view");
+    dbgIm->show();
 
     //*
     PovRayCamera *capCam = new PovRayCamera();
@@ -59,13 +61,14 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->setSimZ(-1);
     capCam->setSimFocalLength(12e-3);//*/
 
-    /*QOpenCVCamera *capCam = new QOpenCVCamera(1);
+    /*
+    QOpenCVCamera *capCam = new QOpenCVCamera(1);
     connect(capCam,
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
     capCam->startStream();
-    capCam->setResolution(1600,1200);*/
+    capCam->setResolution(1600,1200);//*/
 
     PovRayProjector *pov = new PovRayProjector();
     pov->setFilterFilename(
@@ -79,21 +82,27 @@ MainWindow::MainWindow(QWidget *parent) :
     pov->setSimPosition(1,0,-1);
     pov->setSimRotation(0,M_PI*0.25,0);
 
-    testCam = capCam;
+    BinaryCamera *binCam = new BinaryCamera(
+                capCam,
+                pov,
+                0);
+
+    testCam = binCam;
     testProjector = pov;
 
-    // debug all images out of testCam
-    connect(testCam,
-            SIGNAL(
-                frameCaptured(cv::Mat,
-                              QCamera::FrameType,
-                              QCamera*)),
+    // debug our components
+    connect(pov,
+            SIGNAL(debug(QString)),
             this,
-            SLOT(
-                debugImage(
-                    cv::Mat,
-                    QCamera::FrameType,
-                    QCamera*)));
+            SLOT(debug(QString)));
+    connect(binCam,
+            SIGNAL(debug(QString)),
+            this,
+            SLOT(debug(QString)));
+    connect(binCam,
+            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType,QCamera*)),
+            this,
+            SLOT(debugImage(cv::Mat,QCamera::FrameType,QCamera*)));
 
 }
 
@@ -130,6 +139,7 @@ void MainWindow::cameraSettingsChanged(QCamera *first, QCamera *)
 
 void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type, QCamera *)
 {
+    debug("User interface displays image.");
     if(type==QCamera::FULL_COLOR){
         cv::Mat3b img;
         im.convertTo(img,CV_8UC3);
@@ -200,8 +210,8 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-    testProjector->queue(graycode);
-    testCam->requestFrame(QCamera::FULL_COLOR);
+    //testProjector->queue(graycode);
+    testCam->requestFrame(QCamera::DOUBLE);
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

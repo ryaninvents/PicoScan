@@ -13,11 +13,17 @@ class BinaryCamera : public QCamera
     Q_OBJECT
 public:
     /// Create the binary camera.
-    explicit BinaryCamera(uint bit,
-                          QObject *parent = 0);
+    explicit BinaryCamera(
+            QCamera *captureCamera,
+            QProjector *projector,
+            uint bit,
+            QObject *parent = 0);
 
     /// Is the camera open?
     bool isOpen();
+
+    /// Release the child camera
+    void release();
 
     /// Describe the camera
     QString describe();
@@ -35,13 +41,12 @@ public slots:
     /// A pattern has been projected.
     void patternProjected(QProjector::Pattern *p,
                           QProjector *pj);
-    /// A frame has been captured from the
-    /// capturing camera.
-    void frameCaptured(cv::Mat frame,
-                       QCamera::FrameType type,
-                       QCamera *cam);
     /// The projector is about to advance.
     void projectorAboutToAdvance();
+    /// Child camera has taken a picture.
+    void rawFrameCaptured(cv::Mat frame,
+                          QCamera::FrameType type,
+                          QCamera *cam);
 
 private:
 

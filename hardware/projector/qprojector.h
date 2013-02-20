@@ -37,6 +37,9 @@ public:
     /// Check to see if we have any dependencies.
     bool hasDependencies();
 
+    /// Count dependencies
+    uint countDependencies();
+
 signals:
     /// Signal to determine whether the projector can
     /// move on or not.
@@ -55,6 +58,9 @@ public slots:
     /// Received when a camera decides whether or not
     /// it would like the projector to continue.
     void permissionToAdvance(bool canAdvance);
+
+    /// Request an advance.
+    void requestAdvance();
 
 protected:
 

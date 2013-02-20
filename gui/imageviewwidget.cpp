@@ -17,6 +17,7 @@ void ImageViewWidget::displayImage(cv::Mat_<double> image, bool scale)
             QRgb *destrow = (QRgb*)dest.scanLine(y);
             for (int x = 0; x < image.cols; ++x) {
                     unsigned int color = (unsigned int)(srcrow[x] * inScale);
+                    if(color<0) color = 0;
                     if(color>0) color = 255-color;
                     destrow[x] = qRgba(color, color, color, 255);
             }
