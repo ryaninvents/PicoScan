@@ -178,3 +178,7 @@ double QOpticalDevice::getNormalizedCoord(double u, double c)
 {
     return (u - c)/getFocalLength();
 }
+
+void QOpticalDevice::wait()
+{
+}

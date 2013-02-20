@@ -23,12 +23,13 @@ void QProjector::queue(QProjector::Pattern *p)
 
 bool QProjector::checkDependencies()
 {
-    return dependencies.empty();
+    return receivers(SIGNAL(hold()))==0;
 }
 
 void QProjector::processQueue()
 {
-    if(checkDependencies()) {
+    if(checkDependencies()
+            && patternQueue.size()>0) {
         Pattern *pattern = patternQueue.at(patternQueue.size()-1);
         patternQueue.pop_back();
         if(pattern==0){
@@ -40,25 +41,22 @@ void QProjector::processQueue()
     }
 }
 
-void QProjector::waitFor(QObject *holdup)
+void QProjector::waitFor(QObject *obj, const char *slot)
 {
-    uint i;
-    for(i=0;i<dependencies.size();i++){
-        if(dependencies.at(i)==holdup){
-            return;
-        }
-    }
-    dependencies.push_back(holdup);
+    connect(this,
+            SIGNAL(hold()),
+            obj,
+            slot);
 }
 
-void QProjector::stopWaitingFor(QObject *holdup)
+void QProjector::stopWaitingFor(QObject *obj)
 {
-    int i,idx=-1;
-    for(i=0;i<dependencies.size();i++){
-        if(dependencies.at(i)==holdup){
-            idx = i;
-        }
+    disconnect(SIGNAL(hold()),obj);
+}
+
+void QProjector::disconnectNotify(const char *signal)
+{
+    if(signal==SIGNAL(hold())){
+        processQueue();
     }
-    if(idx<0) return;
-    dependencies.erase(dependencies.begin()+idx);
 }

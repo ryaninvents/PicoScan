@@ -123,6 +123,9 @@ signals:
     
 public slots:
 
+    /// Dummy slot for waiting.
+    void wait();
+
 protected:
 
 private:

@@ -37,6 +37,9 @@ public slots:
     void frameCaptured(cv::Mat frame,
                        QCamera::FrameType type,
                        QCamera *cam);
+    /// Dummy slot to let the projector know
+    /// the pattern has been projected
+    void patternCaptured();
 
 private:
 

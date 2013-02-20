@@ -51,7 +51,7 @@ void BinaryCamera::patternProjected(
     if(gray->getBit()!=bit) return;
 
     // tell the projector to wait; we're taking a pic
-    projector->waitFor(this);
+    projector->waitFor(this,SLOT(patternCaptured()));
 
     // save the pattern
     this->pattern = gray;
@@ -91,4 +91,8 @@ void BinaryCamera::frameCaptured(cv::Mat frame,
                            this);
         isWorking = false;
     }
+}
+
+void BinaryCamera::patternCaptured()
+{
 }

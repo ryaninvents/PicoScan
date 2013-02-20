@@ -1,6 +1,8 @@
 #ifndef QPROJECTOR_H
 #define QPROJECTOR_H
 
+#include <map>
+
 #include "../qopticaldevice.h"
 #include "../../gui/imageviewwidget.h"
 
@@ -33,6 +35,15 @@ public:
     bool checkDependencies();
 
 signals:
+    /// Signal to determine whether the projector can
+    /// move on or not.
+    /// When you have a QObject that needs the projector
+    /// to wait for it, use \code
+    /// connect(object, SIGNAL(wait()),
+    /// projector,SLOT(hold()) \endcode
+    /// to cause the projector to wait. When the object
+    /// has finished, <tt>disconnect</tt> it.
+    void hold();
     /// Notify listeners that a pattern has been projected.
     void patternProjected(QProjector::Pattern*,QProjector*);
 
@@ -45,26 +56,24 @@ public slots:
     /// that to child processes.
     void processQueue();
 
-    /// Tell the projector to hold up, we're doing
-    /// something else.
-    void waitFor(QObject *holdup);
+    /// Wait for a QObject.
+    void waitFor(QObject *obj, const char* slot);
 
-    /// Tell the projector we're done with whatever
-    /// we were doing and move on.
-    void stopWaitingFor(QObject *holdup);
+    /// Stop waiting for a QObject.
+    void stopWaitingFor(QObject *obj);
 
 protected:
 
     /// Project a pattern.
     virtual void projectPattern(QProjector::Pattern *)=0;
 
+    /// Advance the pattern on disconnect.
+    void disconnectNotify(const char *signal);
+
 private:
 
     /// Queue of patterns waiting to be projected.
     std::vector<QProjector::Pattern*> patternQueue;
-
-    /// Stuff we're waiting for
-    std::vector<QObject*> dependencies;
 
 };
 
