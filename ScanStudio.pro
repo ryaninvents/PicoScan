@@ -39,7 +39,6 @@ SOURCES += main.cpp\
     gui/secondmonitorprojectordialog.cpp \
     gui/povrayprojectordialog.cpp \
     gui/fileprojectordialog.cpp \
-    geom/monotriangulator.cpp \
     gui/opencvcameradialog.cpp
 
 HEADERS  += mainwindow.h \
@@ -70,7 +69,6 @@ HEADERS  += mainwindow.h \
     gui/secondmonitorprojectordialog.h \
     gui/povrayprojectordialog.h \
     gui/fileprojectordialog.h \
-    geom/monotriangulator.h \
     gui/opencvcameradialog.h
 
 FORMS    += mainwindow.ui \

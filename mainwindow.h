@@ -10,9 +10,7 @@
 #include "gui/calibrationdialog.h"
 #include "gui/projectorsettingsdialog.h"
 
-#include "geom/monotriangulator.h"
 #include "hardware/projector/graycodepattern.h"
-#include "hardware/camera/binarycapturecamera.h"
 
 namespace Ui {
 class MainWindow;
@@ -105,9 +103,6 @@ private:
     /// Debug window
     QPlainTextEdit *debugWin;
 
-    /// Triangulator
-    MonoTriangulator *tri;
-
     /// Capture camera
     QCamera *capture;
 
@@ -116,10 +111,9 @@ private:
 
     /// Testing camera capture
     QCamera *testCam;
+
     /// Testing projector
     QProjector *testProjector;
-    /// Testing binary camera
-    BinaryCaptureCamera *codeCam;
 
     /// Image debugger
     ImageViewWidget *dbgIm;

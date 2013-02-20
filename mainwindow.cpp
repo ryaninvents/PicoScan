@@ -37,9 +37,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //showDebug();
     dbgIm->setWindowTitle("Debugging -- camera view");
 
-    codeCam = new BinaryCaptureCamera();
-    codeCam->setBitRange(0,10);
-
     PovRayCamera *capCam = new PovRayCamera();
     capCam->setParameterFilename(
                 tr("/home/ryan/Documents/mqp-data/"
@@ -82,15 +79,6 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType)),
             this,
             SLOT(debugImage(cv::Mat,QCamera::FrameType)));
-    connect(codeCam,
-            SIGNAL(intermediateFrame(cv::Mat)),
-            this,
-            SLOT(debugImage(cv::Mat)));
-
-    tri = new MonoTriangulator();
-    tri->setEncodingCamera(codeCam);
-    tri->setCaptureCamera(capCam);
-    tri->setProjector(pov);
 
 }
 
@@ -122,9 +110,7 @@ void MainWindow::showDebug()
 
 void MainWindow::cameraSettingsChanged(QCamera *first, QCamera *)
 {
-    capture = first;
-    tri->setCaptureCamera(capture);
-    //    debug("tri->setCaptureCamera(capture);");
+
 }
 
 void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type)
@@ -196,11 +182,7 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-    //tri->requestSheet();
-//   tri->getProjector()->queue(graycode);
-   codeCam->requestFrame(QCamera::DOUBLE);
-    /*testProjector->queue(graycode);
-    testCam->requestFrame(QCamera::FULL_COLOR);*/
+
 }
 
 void MainWindow::closeEvent(QCloseEvent *)
