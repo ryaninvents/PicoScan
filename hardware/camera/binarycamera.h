@@ -13,7 +13,8 @@ class BinaryCamera : public QCamera
     Q_OBJECT
 public:
     /// Create the binary camera.
-    explicit BinaryCamera(QObject *parent = 0);
+    explicit BinaryCamera(uint bit,
+                          QObject *parent = 0);
 
     /// Is the camera open?
     bool isOpen();

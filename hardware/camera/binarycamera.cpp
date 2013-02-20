@@ -1,9 +1,9 @@
 #include "binarycamera.h"
 
-BinaryCamera::BinaryCamera(QObject *parent) :
+BinaryCamera::BinaryCamera(uint bit, QObject *parent) :
     QCamera(parent),
     threshold(20),
-    bit(0),
+    bit(bit),
     isWorking(false)
 {
 }

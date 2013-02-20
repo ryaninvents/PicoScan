@@ -38,7 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
     showDebug();
     dbgIm->setWindowTitle("Debugging -- camera view");
 
-    /*PovRayCamera *capCam = new PovRayCamera();
+    //*
+    PovRayCamera *capCam = new PovRayCamera();
     capCam->setParameterFilename(
                 tr("/home/ryan/Documents/mqp-data/"
                    "simulation/butterfly-valve/"
@@ -56,15 +57,15 @@ MainWindow::MainWindow(QWidget *parent) :
                    "simulation/butterfly-valve/"
                    "valve.pov"));
     capCam->setSimZ(-1);
-    capCam->setSimFocalLength(12e-3);*/
+    capCam->setSimFocalLength(12e-3);//*/
 
-    QOpenCVCamera *capCam = new QOpenCVCamera(1);
+    /*QOpenCVCamera *capCam = new QOpenCVCamera(1);
     connect(capCam,
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
     capCam->startStream();
-    capCam->setResolution(1600,1200);
+    capCam->setResolution(1600,1200);*/
 
     PovRayProjector *pov = new PovRayProjector();
     pov->setFilterFilename(
@@ -199,7 +200,8 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-
+    testProjector->queue(graycode);
+    testCam->requestFrame(QCamera::FULL_COLOR);
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

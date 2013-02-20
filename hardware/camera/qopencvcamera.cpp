@@ -64,6 +64,10 @@ void QOpenCVCamera::adjustDeviceResolution(int u, int v)
     bool uSuccess, vSuccess;
     uSuccess = cap->set(CV_CAP_PROP_FRAME_WIDTH,u);
     vSuccess = cap->set(CV_CAP_PROP_FRAME_HEIGHT,v);
+    emit debug(QString("Horiz res: %1\n"
+                       "Vert res: %2")
+               .arg(getResolutionU())
+               .arg(getResolutionV()));
 }
 
 int QOpenCVCamera::getResolutionU()
