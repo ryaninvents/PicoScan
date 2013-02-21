@@ -1,6 +1,7 @@
 #include "povrayprojector.h"
 
 #include <fstream>
+#include "graycodepattern.h"
 
 PovRayProjector::PovRayProjector(QObject *parent) :
     QProjector(parent),
@@ -43,6 +44,12 @@ void PovRayProjector::projectPattern(QProjector::Pattern *pattern)
     // save the projector pattern to disk
     im = pattern->generatePattern(getResolutionU(),getResolutionV());
     im.save(imageFilename,"png");
+    GrayCodePattern *gray = dynamic_cast<GrayCodePattern*>(pattern);
+    if(gray!=0){
+        im.save(tr("/home/ryan/gray_%1_%2.png")
+                .arg(gray->getBit())
+                .arg(gray->isInverted()));
+    }
 
     // write the projector parameters to disk
     file = fopen(projFilename.toLocal8Bit().data(),"w");

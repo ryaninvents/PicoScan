@@ -40,6 +40,9 @@ public:
     /// Count dependencies
     uint countDependencies();
 
+    /// Get the current pattern
+    QProjector::Pattern *getCurrentPattern();
+
 signals:
     /// Signal to determine whether the projector can
     /// move on or not.
@@ -84,6 +87,9 @@ private:
 
     /// How many listeners have denied permission to advance?
     uint listenersDenyingPermission;
+
+    /// What's projecting now?
+    QProjector::Pattern *currentPattern;
 
 };
 

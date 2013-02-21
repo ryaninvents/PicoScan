@@ -43,7 +43,13 @@ public:
     void setResolution(int u, int v);
 
     /// Convert Gray code to binary.
-    static int grayToBinary(int num);
+    static uint grayToBinary(uint num);
+
+    /// Set the capture camera
+    void setCaptureCamera(QCamera *cap);
+
+    /// Set the projector
+    void setProjector(QProjector *pj);
     
 signals:
     
@@ -56,6 +62,9 @@ public slots:
     void rawFrameCaptured(cv::Mat frame,
                           QCamera::FrameType type,
                           QCamera *cam);
+
+    /// Pass along debug messages.
+    void passDebug(QString s);
 
 private:
 
@@ -91,6 +100,7 @@ private:
 
     /// The type of image we want to emit
     QCamera::FrameType capType;
+
     
 };
 

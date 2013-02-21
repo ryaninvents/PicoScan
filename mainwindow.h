@@ -12,6 +12,7 @@
 
 #include "hardware/projector/graycodepattern.h"
 #include "hardware/camera/binarycamera.h"
+#include "hardware/camera/binaryencodedcamera.h"
 
 namespace Ui {
 class MainWindow;
@@ -124,7 +125,7 @@ private:
     ImageViewWidget *dbgIm;
 
     /// Binary camera
-    BinaryCamera *binCam;
+    BinaryEncodedCamera *codedCamera;
 
 };
 

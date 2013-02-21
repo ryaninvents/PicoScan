@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
+#include "graycodepattern.h"
+
 QProjector::QProjector(QObject *parent) :
     QOpticalDevice(parent),
     listenersWaitingFor(0),
@@ -40,6 +42,11 @@ uint QProjector::countDependencies()
     return receivers(SIGNAL(aboutToAdvance()));
 }
 
+QProjector::Pattern *QProjector::getCurrentPattern()
+{
+    return currentPattern;
+}
+
 void QProjector::processQueue()
 {
     emit debug(tr("Projector processing queue of %1 patterns.")
@@ -52,7 +59,21 @@ void QProjector::processQueue()
             return;
         }
         emit debug(tr("Projector projects, and announces pattern has been projected."));
+
+        GrayCodePattern *gray =
+                dynamic_cast<GrayCodePattern*>(pattern);
+
+        if(gray){
+            emit debug(tr("Projecting Gray code pattern,"
+                      " bit %1, %2")
+                   .arg(gray->getBit())
+                   .arg(gray->isInverted()?
+                            "inverted":
+                            "not inverted"));
+        }
+        currentPattern = pattern;
         projectPattern(pattern);
+
         // handled by subclasses:
         // emit patternProjected
     }
@@ -64,7 +85,7 @@ void QProjector::permissionToAdvance(bool canAdvance)
 {
     emit debug(QString("Someone %1 the projector permission to advance.")
                .arg(canAdvance?"allows":"denies"));
-    emit debug(QString("%1 listeners reporting, %2 denying.")
+    emit debug(QString("%1 listeners left to report, %2 denying.")
                .arg((int)listenersWaitingFor-1)
                .arg((int)listenersDenyingPermission+
                     (canAdvance?0:1)));

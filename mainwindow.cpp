@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->modelView->zoomFit();
     showDebug();
     dbgIm->setWindowTitle("Debugging -- camera view");
-    dbgIm->show();
+    dbgIm->showMaximized();
 
     //*
     PovRayCamera *capCam = new PovRayCamera();
@@ -78,27 +78,33 @@ MainWindow::MainWindow(QWidget *parent) :
                 tr("/home/ryan/Documents/mqp-data/"
                    "simulation/butterfly-valve/"
                    "projector.inc"));
-    pov->setSimPosition(1,0,-1);
-    pov->setSimRotation(0,M_PI*0.25,0);
+    pov->setSimPosition(0.25,0,-1);
+    pov->setSimRotation(0,M_PI*0.1,0);
 
-    binCam = new BinaryCamera(
-                capCam,
-                pov,
-                0);
 
-    testCam = binCam;
     testProjector = pov;
 
+    // initialize the binary encoding camera
+    codedCamera = new BinaryEncodedCamera(0,10);
+    codedCamera->setCaptureCamera(capCam);
+    codedCamera->setProjector(pov);
+
+
     // debug our components
+
     connect(pov,
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
-    connect(binCam,
+    connect(capCam,
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
-    connect(binCam,
+    connect(codedCamera,
+            SIGNAL(debug(QString)),
+            this,
+            SLOT(debug(QString)));
+    connect(codedCamera,
             SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType,QCamera*)),
             this,
             SLOT(debugImage(cv::Mat,QCamera::FrameType,QCamera*)));
@@ -133,7 +139,13 @@ void MainWindow::showDebug()
 
 void MainWindow::cameraSettingsChanged(QCamera *first, QCamera *)
 {
-
+    QOpenCVCamera *cv = dynamic_cast<QOpenCVCamera*>(first);
+    if(!cv) return;
+    connect(first,
+            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType,QCamera*)),
+            this,
+            SLOT(debugImage(cv::Mat,QCamera::FrameType,QCamera*)));
+    cv->startStream();
 }
 
 void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type, QCamera *)
@@ -209,8 +221,7 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-    //testProjector->queue(graycode);
-    testCam->requestFrame(QCamera::DOUBLE);
+    codedCamera->requestFrame(QCamera::DOUBLE);
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

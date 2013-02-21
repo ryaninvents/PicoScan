@@ -1,5 +1,7 @@
 #include "binaryencodedcamera.h"
 
+#include <opencv2/highgui/highgui.hpp>
+
 BinaryEncodedCamera::BinaryEncodedCamera(uint loBit, uint hiBit, QObject *parent) :
     QCamera(parent),
     isWorking(false),
@@ -55,6 +57,7 @@ bool BinaryEncodedCamera::requestFrame(QCamera::FrameType type)
             || type==QCamera::UNSIGNED_16 // or if we want u16
                ){
         // sorry Charlie
+        emit debug(tr("Sorry Charlie"));
         return false;
     }else{
         uint i;
@@ -65,11 +68,25 @@ bool BinaryEncodedCamera::requestFrame(QCamera::FrameType type)
                     getResolutionV(),
                     getResolutionU(),
                     CV_32S);
-        for(i=0;(loBit+i)<=hiBit;i++){
+        for(i=loBit;i<=hiBit;i++){
+            emit debug(tr("Encoded camera inits camera %1.")
+                       .arg(i));
             cam = new BinaryCamera(camera,
                                    projector,
-                                   loBit+i);
+                                   i);
+            cam->setProjector(projector);
+            cam->setCaptureCamera(camera);
+            connect(cam,
+                    SIGNAL(debug(QString)),
+                    this,
+                    SLOT(passDebug(QString)));
+            connect(cam,
+                    SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType,QCamera*)),
+                    this,
+                    SLOT(rawFrameCaptured(cv::Mat,QCamera::FrameType,QCamera*)));
             subCameras.push_back(cam);
+
+            cam->requestFrame(QCamera::SIGNED_32);
         }
     }
 }
@@ -84,17 +101,27 @@ void BinaryEncodedCamera::rawFrameCaptured(
     if(!isSubcam(cam)||type==QCamera::FULL_COLOR) return;
     bcam = dynamic_cast<BinaryCamera*>(cam);
     frame.convertTo(frame,CV_32S);
+    emit debug(tr("Frame returned, bit %1")
+               .arg(bcam->getBit()));
     for(y=0;y<encoding.rows;y++){
         for(x=0;x<encoding.cols;x++){
-            if(frame.at<int>(y,x)>0)
+            if(frame.at<int>(y,x)>0){
                 encoding.at<int>(y,x) +=
                         1 << bcam->getBit();
+            }
         }
     }
     reporting++;
+    emit debug(tr("%1 bits reporting.")
+               .arg(reporting));
     if(reporting>(hiBit-loBit)){
         decodeAndEmit();
     }
+}
+
+void BinaryEncodedCamera::passDebug(QString s)
+{
+    emit debug(s);
 }
 
 bool BinaryEncodedCamera::isSubcam(QCamera *cam)
@@ -109,22 +136,25 @@ bool BinaryEncodedCamera::isSubcam(QCamera *cam)
 void BinaryEncodedCamera::decodeAndEmit()
 {
     uint x,y;
-    cv::Mat decoded = cv::Mat::zeros(
-                encoding.rows,
-                encoding.cols,
-                CV_32S);
+//    cv::Mat decoded = cv::Mat::zeros(
+//                encoding.rows,
+//                encoding.cols,
+//                CV_32S);
+    encoding.convertTo(encoding,CV_32S);
     for(y=0;y<encoding.rows;y++){
         for(x=0;x<encoding.cols;x++){
-            decoded.at<int>(y,x) =
+            encoding.at<int>(y,x) =
                     grayToBinary(
-                        encoding.at<int>(y,x));
+                        encoding.at<int>(y,x))
+                    %256
+                    ;
         }
     }
-    decoded.convertTo(decoded,
-                      getOpenCVFlagFromType(capType));
-    emit frameCaptured(decoded,
-                       capType,
+    emit frameCaptured(encoding,
+                       QCamera::SIGNED_32,
                        this);
+    cv::imwrite("/home/ryan/binary-full.png",encoding);
+    emit debug(tr("=== Full binary frame emitted ==="));
 }
 
 cv::Size BinaryEncodedCamera::getResolution()
@@ -142,7 +172,7 @@ void BinaryEncodedCamera::setResolution(int u, int v)
     camera->setResolution(u,v);
 }
 
-int BinaryEncodedCamera::grayToBinary(int num)
+uint BinaryEncodedCamera::grayToBinary(uint num)
 {
     int numBits = 8 * sizeof(num);
     int shift;
@@ -151,4 +181,14 @@ int BinaryEncodedCamera::grayToBinary(int num)
         num = num ^ (num >> shift);
     }
     return num;
+}
+
+void BinaryEncodedCamera::setCaptureCamera(QCamera *cap)
+{
+    camera = cap;
+}
+
+void BinaryEncodedCamera::setProjector(QProjector *pj)
+{
+    projector = pj;
 }

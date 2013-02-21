@@ -28,7 +28,6 @@ BinaryCamera::BinaryCamera(
     projectorCanAdvance(true)
 {
     connectProjector();
-    connectCaptureCamera();
 }
 
 bool BinaryCamera::isOpen()
@@ -50,7 +49,6 @@ void BinaryCamera::setCaptureCamera(QCamera *capCam)
 {
     disconnectCaptureCamera();
     camera = capCam;
-    connectCaptureCamera();
 }
 
 void BinaryCamera::setProjector(QProjector *pj)
@@ -73,7 +71,8 @@ bool BinaryCamera::requestFrame(QCamera::FrameType type)
             || camera==0
             || projector==0)
         return false;
-    emit debug(tr("Someone has requested a frame from the BinaryCamera"));
+    emit debug(tr("Someone has requested a frame from BinaryCamera %1")
+               .arg(getBit()));
     havePositive = false;
     haveNegative = false;
     isWorking = true;
@@ -101,15 +100,21 @@ void BinaryCamera::patternProjected(
     // if it's not gray code, return
     if(gray==0) return;
 
-    emit debug(tr("BinaryCamera recieved Gray code pattern,"
+    emit debug(tr("BinaryCamera %3 recieved Gray code pattern,"
                   " bit %1, %2")
                .arg(gray->getBit())
                .arg(gray->isInverted()?
                         "inverted":
-                        "not inverted"));
+                        "not inverted")
+               .arg(getBit()));
 
     // if it's the wrong bit, return
     if(gray->getBit()!=bit) return;
+
+    emit debug(tr("Pattern accepted."));
+
+    // connect to capture camera
+    connectCaptureCamera();
 
     // tell the projector to wait; we're taking a pic
     projectorCanAdvance = false;
@@ -117,7 +122,8 @@ void BinaryCamera::patternProjected(
     // save the pattern
     this->pattern = gray;
 
-    emit debug(tr("BinaryCamera is requesting frame from capture camera."));
+    emit debug(tr("BinaryCamera %1 is requesting frame from capture camera.")
+               .arg(getBit()));
 
     // request a frame from the camera
     camera->requestFrame(QCamera::DOUBLE);
@@ -133,17 +139,28 @@ void BinaryCamera::rawFrameCaptured(cv::Mat frame,
     if(type==QCamera::FULL_COLOR||
             cam!=this->camera) return;
 
-    emit debug(tr("Capture camera returned a valid frame."));
+    emit debug(tr("Capture camera for %1 returned a valid frame.")
+               .arg(getBit()));
+
+    disconnectCaptureCamera();
 
     // save the frame in the appropriate place
-    if(this->pattern->isInverted()){
+    if(!this->pattern->isInverted()){
         this->negative = frame;
         haveNegative = true;
         emit debug(tr("Frame is binary-negative."));
+        cv::imwrite(tr("/home/ryan/binary-neg-%1.png")
+                    .arg(getBit())
+                    .toLocal8Bit().data()
+                    ,negative);
     }else{
         this->positive = frame;
         havePositive = true;
         emit debug(tr("Frame is binary-positive."));
+        cv::imwrite(tr("/home/ryan/binary-pos-%1.png")
+                    .arg(getBit())
+                    .toLocal8Bit().data()
+                    ,positive);
     }
 
     // release the projector
@@ -152,20 +169,27 @@ void BinaryCamera::rawFrameCaptured(cv::Mat frame,
 
     // can we calculate the binary frame?
     if(havePositive && haveNegative){
-        emit debug(tr("Binary camera has all required information."));
+        emit debug(tr("Binary camera %1 has all required information.")
+                   .arg(getBit()));
         // well then, calculate and emit it
         cv::Mat binary = positive - negative;
         emit frameCaptured(binary,
                            QCamera::DOUBLE,
                            this);
-        emit debug(tr("Captured binary frame has been emitted."));
-        cv::imwrite("/home/ryan/binary-test.png",binary);
+        emit debug(tr("Captured binary frame for bit %1 has been emitted.")
+                   .arg(getBit()));
+        cv::imwrite(tr("/home/ryan/binary-test-%1.png")
+                    .arg(getBit())
+                    .toLocal8Bit().data()
+                    ,binary);
         isWorking = false;
     }
 }
 
 void BinaryCamera::disconnectCaptureCamera()
 {
+    emit debug(tr("BinaryCamera %1 disconnects from capture.")
+               .arg(getBit()));
     if(camera==0) return;
     camera->disconnect(this);
 }
@@ -179,7 +203,8 @@ void BinaryCamera::disconnectProjector()
 
 void BinaryCamera::connectCaptureCamera()
 {
-
+    emit debug(tr("BinaryCamera %1 connects to capture.")
+               .arg(getBit()));
     connect(camera,
             SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType,QCamera*)),
             this,
@@ -205,8 +230,10 @@ void BinaryCamera::connectProjector()
 
 void BinaryCamera::projectorAboutToAdvance()
 {
-    emit debug(QString("BinaryCamera recieves signal: projector is about to advance."));
-    emit debug(QString("BinaryCamera tells projector %1 wait.")
-               .arg(projectorCanAdvance?"not to":"that it must"));
+    emit debug(QString("BinaryCamera %1 recieves signal: projector is about to advance.")
+               .arg(getBit()));
+    emit debug(QString("BinaryCamera %2 tells projector %1 wait.")
+               .arg(projectorCanAdvance?"not to":"that it must")
+               .arg(getBit()));
     emit allowProjectorToAdvance(projectorCanAdvance);
 }

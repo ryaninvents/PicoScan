@@ -63,7 +63,7 @@ public slots:
     /// Request a frame.
     bool requestFrame(QCamera::FrameType type);
     /// A pattern has been projected.
-    void patternProjected(QProjector::Pattern *p,
+    void patternProjected(QProjector::Pattern *pt,
                           QProjector *pj);
     /// The projector is about to advance.
     void projectorAboutToAdvance();
