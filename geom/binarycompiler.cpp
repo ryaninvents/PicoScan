@@ -62,7 +62,10 @@ void BinaryCompiler::frameCaptured(
 void BinaryCompiler::testAndEmit()
 {
     uint n, nmax;
-    cv::Mat encoding;
+    cv::Mat encoding = cv::Mat::zeros(
+                frames[0].rows,
+                frames[0].cols,
+                CV_32S);
     nmax = frames.size()/2;
     for(n=0;n<captured.size();n++){
         if(!captured.at(n)){
