@@ -28,6 +28,9 @@ void BinaryCompiler::requestFrame(uint nmax)
 {
     uint n;
     QProjector *projector = camera->getProjector();
+    nmax++;
+    frames.clear();
+    captured.clear();
     frames.resize(nmax*2);
     captured.resize(nmax*2,false);
     for(n=0;n<nmax;n++){
@@ -67,10 +70,10 @@ void BinaryCompiler::testAndEmit()
         }
     }
     encoding = Triangulator::computeBinary(
-                frames,20);
+                frames,15);
     emit binaryFrameCaptured(encoding);
     cv::Mat color = Triangulator::maphsv(encoding,
-                                         (1<<nmax));
+                                         1<<nmax);
     emit visualBinaryFrame(color);
     cv::imwrite("/home/ryan/nubinary.png",color);
 }

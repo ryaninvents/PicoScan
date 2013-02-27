@@ -125,6 +125,7 @@ void MainWindow::debugImage(cv::Mat im,
     im.convertTo(m,CV_64F);
     dbgIm->displayImage(m,true);
     dbgIm->show();
+    dbgIm->raise();
 }
 
 void MainWindow::debugImage(cv::Mat im)
