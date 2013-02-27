@@ -12,6 +12,8 @@
 
 #include "hardware/projector/graycodepattern.h"
 
+#include "geom/binarycompiler.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -121,6 +123,8 @@ private:
 
     /// Image debugger
     ImageViewWidget *dbgIm;
+
+    BinaryCompiler *compiler;
 
 };
 

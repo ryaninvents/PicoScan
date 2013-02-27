@@ -37,6 +37,11 @@ void QCamera::setProjector(QProjector *p)
             SLOT(requestFrame(QProjector::Pattern*,QProjector*)));
 }
 
+QProjector *QCamera::getProjector()
+{
+    return projector;
+}
+
 bool QCamera::startStream()
 {
     return false;
@@ -52,7 +57,7 @@ bool QCamera::startStream()
 
 bool QCamera::requestFrame(QProjector::Pattern *pat, QProjector *proj)
 {
-    if(proj!=projector) return false;
+    //if(proj!=projector) return false;
     pattern = pat;
     return fetchFrame();
 }

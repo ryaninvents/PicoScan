@@ -35,6 +35,9 @@ public:
     /// Set the projector this camera is tied to
     void setProjector(QProjector *p);
 
+    /// Get the projector
+    QProjector *getProjector();
+
 signals:
     /// A frame has been captured.
     void frameCaptured(cv::Mat frame,

@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     testProjector = pj;
     capCam->setProjector(pj);
 
+    compiler = new BinaryCompiler(capCam);
 
     // debug our components
 
@@ -64,6 +65,10 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
+    connect(compiler,
+            SIGNAL(visualBinaryFrame(cv::Mat)),
+            this,
+            SLOT(debugImage(cv::Mat)));
 
 }
 
@@ -176,7 +181,7 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-
+    compiler->requestFrame(10);
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

@@ -1,18 +1,13 @@
 #ifndef TRIANGULATOR_H
 #define TRIANGULATOR_H
 
-#include <QObject>
 #include <opencv2/core/core.hpp>
+#include "../hardware/camera/qcamera.h"
 
 /// Provides triangulation as well as other utilities.
-class Triangulator : public QObject
+class Triangulator
 {
 public:
-    /// Create a Triangulator. Calling this constructor
-    /// is fairly useless, as this class consists entirely
-    /// of static methods, but I want to be able to subclass it.
-    explicit Triangulator(QObject *parent = 0);
-
     /// Given a line <tt>L = M_hat * s</tt>,
     /// and a plane <tt>P = D + P_up * s + P_fwd * t</tt>,
     /// find the point of intersection.
@@ -20,15 +15,9 @@ public:
                            const cv::Vec3d P_up,
                            const cv::Vec3d P_fwd,
                            const cv::Vec3d D);
-
     /** Find out if point P is within triangle ABC.
         Thanks to <a href="http://www.blackpawn.com/texts/pointinpoly/default.html">
-        blackpawn.com</a> for the code.
-        \param P point to test
-        \param A first triangle point
-        \param B second triangle point
-        \param C third triangle point
-     */
+        blackpawn.com</a> for the code. */
     static bool inTri(const cv::Vec3d P,
                       const cv::Vec3d A,
                       const cv::Vec3d B,
@@ -50,6 +39,23 @@ public:
     static void computePhase(std::vector<cv::Mat> fringes,
                              cv::Mat output,
                              double scale);
+
+    /// Compute binary encoding from a set of images.
+    static cv::Mat computeBinary(std::vector<cv::Mat> frames,
+                                 uint maskThreshold,
+                                 uint drop=0);
+
+    /// Convert to HSV
+    static cv::Mat maphsv(cv::Mat img,double scale);
+
+    /// Convert binary to Gray code.
+    static int binaryToGray(int num);
+    /// Convert Gray code to binary.
+    static int grayToBinary(int num);
+
+    /// Calibrate a single camera.
+
+    /// Calibrate a stereo pair.
 };
 
 #endif // TRIANGULATOR_H

@@ -38,6 +38,7 @@ public slots:
 
     /// Adjust the device's resolution.
     void adjustDeviceResolution(int u, int v);
+    void getAndEmitFrame();
 
 protected:
     /// get a frame
@@ -47,6 +48,7 @@ private:
 
     /// The video capture device.
     cv::VideoCapture *cap;
+
     
 };
 

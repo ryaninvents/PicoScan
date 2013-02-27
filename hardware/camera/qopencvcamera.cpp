@@ -32,10 +32,17 @@ void QOpenCVCamera::setFrameRate(uint fps)
 bool QOpenCVCamera::fetchFrame()
 {
     if(!isOpen()) return false;
+    getAndEmitFrame();
+//    QTimer::singleShot(500,this,
+//                       SLOT(getAndEmitFrame()));
+    return true;
+}
+
+void QOpenCVCamera::getAndEmitFrame()
+{
     cv::Mat m;
     cap->read(m);
     emitFrame(m);
-    return true;
 }
 
 void QOpenCVCamera::adjustDeviceResolution(int u, int v)
