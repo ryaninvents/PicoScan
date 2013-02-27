@@ -23,9 +23,6 @@ public:
     /// \bug This method does not seem to actually do anything.
     void setFrameRate(uint fps);
 
-    /// Describe
-    QString describe();
-
     /// Returns the horizontal resolution of this device.
     int getResolutionU();
 
@@ -38,11 +35,13 @@ public:
 signals:
     
 public slots:
-    /// Request a frame from the camera.
-    bool requestFrame(FrameType type);
 
     /// Adjust the device's resolution.
     void adjustDeviceResolution(int u, int v);
+
+protected:
+    /// get a frame
+    bool fetchFrame();
 
 private:
 

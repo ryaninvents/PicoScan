@@ -1,7 +1,6 @@
 #include "projectorsettingsdialog.h"
 #include "ui_projectorsettingsdialog.h"
 
-#include "povrayprojectordialog.h"
 #include "secondmonitorprojectordialog.h"
 
 ProjectorSettingsDialog::ProjectorSettingsDialog(QWidget *parent) :
@@ -42,17 +41,7 @@ void ProjectorSettingsDialog::projectorTypeChanged(int t)
     }
     case PROJECTOR_TYPE_POVRAY:
     {
-        PovRayProjectorDialog *d = new PovRayProjectorDialog();
-        connect(d,
-                SIGNAL(projectorUpdated(QProjector*)),
-                this,
-                SLOT(updateProjector(QProjector*)));
-        connect(ui->typeConfig,
-                SIGNAL(clicked()),
-                d,
-                SLOT(show()));
-        ui->typeConfig->setEnabled(true);
-        settingsDialog = d;
+        ui->typeConfig->setEnabled(false);
         break;
     }
     case PROJECTOR_TYPE_FILE:

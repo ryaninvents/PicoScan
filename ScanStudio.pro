@@ -31,10 +31,8 @@ SOURCES += main.cpp\
     hardware/projector/qprojector.cpp \
     hardware/projector/seconddisplayprojector.cpp \
     hardware/projector/graycodepattern.cpp \
-    gui/povraycameradialog.cpp \
     gui/projectorsettingsdialog.cpp \
     gui/secondmonitorprojectordialog.cpp \
-    gui/povrayprojectordialog.cpp \
     gui/fileprojectordialog.cpp \
     gui/opencvcameradialog.cpp
 
@@ -58,10 +56,8 @@ HEADERS  += mainwindow.h \
     hardware/projector/qprojector.h \
     hardware/projector/seconddisplayprojector.h \
     hardware/projector/graycodepattern.h \
-    gui/povraycameradialog.h \
     gui/projectorsettingsdialog.h \
     gui/secondmonitorprojectordialog.h \
-    gui/povrayprojectordialog.h \
     gui/fileprojectordialog.h \
     gui/opencvcameradialog.h
 
@@ -72,11 +68,8 @@ FORMS    += mainwindow.ui \
     gui/calibrationdialog.ui \
     gui/calibrationinprogress.ui \
     gui/changeresolutiondialog.ui \
-    gui/povraycameradialog.ui \
     gui/projectorsettingsdialog.ui \
     gui/secondmonitorprojectordialog.ui \
-    gui/povrayprojectordialog.ui \
-    gui/fileprojectordialog.ui \
     gui/opencvcameradialog.ui
 
 

@@ -39,6 +39,7 @@ void QCamera::setProjector(QProjector *p)
 
 bool QCamera::startStream()
 {
+    return false;
     if(streaming) return false;
     timer = new QTimer(this);
     connect(timer,
@@ -51,4 +52,12 @@ bool QCamera::startStream()
 
 bool QCamera::requestFrame(QProjector::Pattern *pat, QProjector *proj)
 {
+    if(proj!=projector) return false;
+    pattern = pat;
+    return fetchFrame();
+}
+
+void QCamera::emitFrame(cv::Mat frame)
+{
+    emit frameCaptured(frame,this,pattern);
 }

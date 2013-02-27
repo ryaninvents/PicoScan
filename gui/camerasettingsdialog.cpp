@@ -1,7 +1,6 @@
 #include "camerasettingsdialog.h"
 #include "ui_camerasettingsdialog.h"
 
-#include "povraycameradialog.h"
 #include "opencvcameradialog.h"
 
 /// \todo make sure everything is initialized to some sort
@@ -87,18 +86,7 @@ void CameraSettingsDialog::firstModeChanged(int m)
     }
     case 1: // POV-Ray
     {
-        PovRayCameraDialog *povDialog =
-                new PovRayCameraDialog(this);
-        ui->firstSettings->setEnabled(true);
-        connect(ui->firstSettings,
-                SIGNAL(clicked()),
-                povDialog,
-                SLOT(show()));
-        connect(povDialog,
-                SIGNAL(cameraChanged(QCamera*)),
-                this,
-                SLOT(firstCameraSettingsChanged(QCamera*)));
-        firstSettingsDialog = povDialog;
+        ui->firstSettings->setEnabled(false);
         break;
     }
     case 2: // files
@@ -116,7 +104,7 @@ void CameraSettingsDialog::secondModeChanged(int m)
         ui->secondSettings->setEnabled(false);
         break;
     case 1: // POV-Ray
-        ui->secondSettings->setEnabled(true);
+        ui->secondSettings->setEnabled(false);
         break;
     case 2: // files
         ui->secondSettings->setEnabled(false);
@@ -127,9 +115,6 @@ void CameraSettingsDialog::secondModeChanged(int m)
 void CameraSettingsDialog::firstCameraSettingsChanged(
         QCamera *cam)
 {
-    emit debug(QString("=== First camera changed ===\n%1\n"
-                       "========================")
-               .arg(cam->describe()));
     firstCamera = cam;
 }
 

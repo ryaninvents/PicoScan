@@ -3,8 +3,6 @@
 
 #include <stdio.h>
 #include <QScrollBar>
-#include "hardware/camera/povraycamera.h"
-#include "hardware/projector/povrayprojector.h"
 #include "hardware/camera/qopencvcamera.h"
 #include "hardware/projector/seconddisplayprojector.h"
 
@@ -40,41 +38,6 @@ MainWindow::MainWindow(QWidget *parent) :
     dbgIm->setWindowTitle("Debugging -- camera view");
     dbgIm->showMaximized();
 
-    /*
-    PovRayCamera *capCam = new PovRayCamera();
-    capCam->setParameterFilename(
-                tr("/home/ryan/Documents/mqp-data/"
-                   "simulation/butterfly-valve/"
-                   "camera.inc"));
-    capCam->setIniFilename(
-                tr("/home/ryan/Documents/mqp-data/"
-                   "simulation/butterfly-valve/"
-                   "scene.ini"));
-    capCam->setRenderFilename(
-                tr("/home/ryan/Documents/mqp-data/"
-                   "simulation/butterfly-valve/"
-                   "sim-out.png"));
-    capCam->setSceneFilename(
-                tr("/home/ryan/Documents/mqp-data/"
-                   "simulation/butterfly-valve/"
-                   "valve.pov"));
-    capCam->setSimZ(-1);
-    capCam->setSimFocalLength(12e-3);
-
-
-    PovRayProjector *pov = new PovRayProjector();
-    pov->setFilterFilename(
-                tr("/home/ryan/Documents/mqp-data/"
-                   "simulation/butterfly-valve/"
-                   "projector-filter.png"));
-    pov->setParamFilename(
-                tr("/home/ryan/Documents/mqp-data/"
-                   "simulation/butterfly-valve/"
-                   "projector.inc"));
-    pov->setSimPosition(0.25,0,-1);
-    pov->setSimRotation(0,M_PI*0.1,0);
-
-    /*///
     QOpenCVCamera *capCam = new QOpenCVCamera(1);
     connect(capCam,
             SIGNAL(debug(QString)),
@@ -84,23 +47,16 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->setResolution(1600,1200);
 
 
-    SecondDisplayProjector *pov = new SecondDisplayProjector();
-    pov->setScreen(1);
+    SecondDisplayProjector *pj = new SecondDisplayProjector();
+    pj->setScreen(1);
 
-    //*/
-
-
-    testProjector = pov;
-
-    // initialize the binary encoding camera
-    codedCamera = new BinaryEncodedCamera(0,10);
-    codedCamera->setCaptureCamera(capCam);
-    codedCamera->setProjector(pov);
+    testProjector = pj;
+    capCam->setProjector(pj);
 
 
     // debug our components
 
-    connect(pov,
+    connect(pj,
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
@@ -108,14 +64,6 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
-    connect(codedCamera,
-            SIGNAL(debug(QString)),
-            this,
-            SLOT(debug(QString)));
-    connect(codedCamera,
-            SIGNAL(frameCaptured(cv::Mat,QCamera::FrameType,QCamera*)),
-            this,
-            SLOT(debugImage(cv::Mat,QCamera::FrameType,QCamera*)));
 
 }
 
@@ -156,10 +104,12 @@ void MainWindow::cameraSettingsChanged(QCamera *first, QCamera *)
     cv->startStream();
 }
 
-void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type, QCamera *)
+void MainWindow::debugImage(cv::Mat im,
+                            QCamera*,
+                            QProjector::Pattern*)
 {
     debug("User interface displays image.");
-    if(type==QCamera::FULL_COLOR){
+    if(im.channels()==3){
         cv::Mat3b img;
         im.convertTo(img,CV_8UC3);
         dbgIm->displayImage(img,true);
@@ -174,10 +124,7 @@ void MainWindow::debugImage(cv::Mat im,QCamera::FrameType type, QCamera *)
 
 void MainWindow::debugImage(cv::Mat im)
 {
-    if(im.channels()==3)
-        debugImage(im,QCamera::FULL_COLOR,0);
-    else
-        debugImage(im,QCamera::DOUBLE,0);
+    debugImage(im,0,0);
 }
 
 void MainWindow::showAbout()
@@ -229,7 +176,7 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-    codedCamera->requestFrame(QCamera::DOUBLE);
+
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

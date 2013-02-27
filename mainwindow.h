@@ -11,8 +11,6 @@
 #include "gui/projectorsettingsdialog.h"
 
 #include "hardware/projector/graycodepattern.h"
-#include "hardware/camera/binarycamera.h"
-#include "hardware/camera/binaryencodedcamera.h"
 
 namespace Ui {
 class MainWindow;
@@ -72,8 +70,8 @@ public slots:
 
     /// Show a debug image.
     void debugImage(cv::Mat im,
-                    QCamera::FrameType type,
-                    QCamera*);
+                    QCamera*,
+                    QProjector::Pattern*);
     /// Show a debug image.
     void debugImage(cv::Mat im);
 
@@ -123,9 +121,6 @@ private:
 
     /// Image debugger
     ImageViewWidget *dbgIm;
-
-    /// Binary camera
-    BinaryEncodedCamera *codedCamera;
 
 };
 

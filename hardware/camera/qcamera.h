@@ -56,6 +56,9 @@ protected:
     /// Fetch and emit a frame
     virtual bool fetchFrame()=0;
 
+    /// Emit a frame
+    void emitFrame(cv::Mat frame);
+
 private:
 
     /// Camera ID
