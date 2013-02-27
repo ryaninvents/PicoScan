@@ -31,16 +31,12 @@ SOURCES += main.cpp\
     hardware/projector/qprojector.cpp \
     hardware/projector/seconddisplayprojector.cpp \
     hardware/projector/graycodepattern.cpp \
-    hardware/projector/povrayprojector.cpp \
-    hardware/camera/povraycamera.cpp \
     gui/povraycameradialog.cpp \
     gui/projectorsettingsdialog.cpp \
     gui/secondmonitorprojectordialog.cpp \
     gui/povrayprojectordialog.cpp \
     gui/fileprojectordialog.cpp \
-    gui/opencvcameradialog.cpp \
-    hardware/camera/binarycamera.cpp \
-    hardware/camera/binaryencodedcamera.cpp
+    gui/opencvcameradialog.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -62,16 +58,12 @@ HEADERS  += mainwindow.h \
     hardware/projector/qprojector.h \
     hardware/projector/seconddisplayprojector.h \
     hardware/projector/graycodepattern.h \
-    hardware/projector/povrayprojector.h \
-    hardware/camera/povraycamera.h \
     gui/povraycameradialog.h \
     gui/projectorsettingsdialog.h \
     gui/secondmonitorprojectordialog.h \
     gui/povrayprojectordialog.h \
     gui/fileprojectordialog.h \
-    gui/opencvcameradialog.h \
-    hardware/camera/binarycamera.h \
-    hardware/camera/binaryencodedcamera.h
+    gui/opencvcameradialog.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
