@@ -97,7 +97,7 @@ QString PovRayCamera::describe()
             .arg(simCellSize*1e6);
 }
 
-bool PovRayCamera::requestFrame(QCamera::FrameType type)
+bool PovRayCamera::requestFrame(QProjector::Pattern *pattern, QProjector *)
 {
     FILE *file;
     QString command;
@@ -150,35 +150,13 @@ bool PovRayCamera::requestFrame(QCamera::FrameType type)
     system(command.toLocal8Bit().data());
 
     // read the image from disk
-    int flags = 1;
-
     printf("%s\n",renderFilename.toLocal8Bit().data());
 
     cv::Mat frame;
 
-    if(type==QCamera::FULL_COLOR){
-        frame = cv::imread(
-                    renderFilename.toLocal8Bit().data());
-        emit frameCaptured(frame,type,this);
-        return true;
-    }
-
     frame = cv::imread(
-                renderFilename.toLocal8Bit().data(),
-                CV_LOAD_IMAGE_GRAYSCALE);
-
-    switch(type){
-    case DOUBLE:
-        frame.convertTo(frame,CV_64F);
-        break;
-    case SIGNED_32:
-        frame.convertTo(frame,CV_32S);
-        break;
-    case UNSIGNED_16:
-        frame.convertTo(frame,CV_16U);
-        break;
-    }
-    emit frameCaptured(frame,type,this);
+                renderFilename.toLocal8Bit().data());
+    emit frameCaptured(frame,this,pattern);
     return true;
 
 }

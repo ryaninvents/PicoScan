@@ -77,14 +77,14 @@ public:
 signals:
     /// A frame has been captured.
     void frameCaptured(cv::Mat frame,
-                       QCamera::FrameType type,
-                       QCamera *cam);
+                       QCamera *cam,
+                       QProjector::Pattern *pattern);
 
 public slots:
     /// Write camera parameters to disk, render
     /// the scene, and emit the frame when it's
     /// ready.
-    bool requestFrame(QCamera::FrameType type);
+    bool requestFrame(QProjector::Pattern * pattern, QProjector * );
 
 private:
 

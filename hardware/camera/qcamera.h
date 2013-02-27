@@ -4,6 +4,7 @@
 #include <QTimer>
 
 #include "../qopticaldevice.h"
+#include "../projector/qprojector.h"
 /**
   Represents a generic camera. The specifics
   of obtaining an image are left up to the
@@ -31,43 +32,29 @@ public:
     /// Set the camera's id
     void setID(uint i);
 
-    /// Get a detailed description of the camera.
-    virtual QString describe()=0;
+    /// Set the projector this camera is tied to
+    void setProjector(QProjector *p);
 
-    /// Different types of frame that you can
-    /// request from a camera.
-    enum FrameType{
-        /// A full-color, 3-channel frame.
-        FULL_COLOR,
-        /// A grayscale, 64-bit floating-point frame.
-        DOUBLE,
-        /// A signed, 32-bit integer frame.
-        SIGNED_32,
-        /// An unsigned, 32-bit integer frame.
-        UNSIGNED_16
-    };
-    
 signals:
     /// A frame has been captured.
     void frameCaptured(cv::Mat frame,
-                       QCamera::FrameType type,
-                       QCamera *cam);
+                       QCamera *cam,
+                       QProjector::Pattern *pattern);
 
 public slots:
     /// Start streaming.
     bool startStream();
     /// Capture a frame and emit it when it's ready.
+    /// Connect this to a projector's patternProjected()
+    /// signal to have the projector trigger the camera.
     /// \returns \b true if the camera will emit the
     /// frame, \b false if the camera is incapable of
     /// emitting the desired type of frame.
-    virtual bool requestFrame(QCamera::FrameType)=0;
-    /// Capture a full-color frame and emit when ready.
-    bool requestFrame();
+    bool requestFrame(QProjector::Pattern *pat, QProjector *proj);
 
 protected:
-
-    /// Convert an image type to an OpenCV flag.
-    static int getOpenCVFlagFromType(QCamera::FrameType type);
+    /// Fetch and emit a frame
+    virtual bool fetchFrame()=0;
 
 private:
 
@@ -82,6 +69,12 @@ private:
 
     /// Frame interval
     uint interval;
+
+    /// current pattern
+    QProjector::Pattern *pattern;
+
+    /// master projector
+    QProjector *projector;
     
 };
 

@@ -28,6 +28,15 @@ void QCamera::setID(uint i)
     id=i;
 }
 
+void QCamera::setProjector(QProjector *p)
+{
+    projector = p;
+    connect(projector,
+            SIGNAL(patternProjected(QProjector::Pattern*,QProjector*)),
+            this,
+            SLOT(requestFrame(QProjector::Pattern*,QProjector*)));
+}
+
 bool QCamera::startStream()
 {
     if(streaming) return false;
@@ -40,22 +49,6 @@ bool QCamera::startStream()
     return true;
 }
 
-bool QCamera::requestFrame()
+bool QCamera::requestFrame(QProjector::Pattern *pat, QProjector *proj)
 {
-    requestFrame(QCamera::FULL_COLOR);
-}
-
-int QCamera::getOpenCVFlagFromType(QCamera::FrameType type)
-{
-    switch(type){
-    case FULL_COLOR:
-        return CV_8UC3;
-    case DOUBLE:
-        return CV_64F;
-    case SIGNED_32:
-        return CV_32S;
-    case UNSIGNED_16:
-        return CV_16U;
-    }
-    return 0;
 }
