@@ -77,6 +77,12 @@ public slots:
     /// Show a debug image.
     void debugImage(cv::Mat im);
 
+    /// Write debug image 1
+    void writeDebugImg1(cv::Mat im);
+
+    /// Write debug image 2
+    void writeDebugImg2(cv::Mat im);
+
 
 
 protected:
@@ -125,6 +131,8 @@ private:
     ImageViewWidget *dbgIm;
 
     BinaryCompiler *compiler;
+
+    BinaryCompiler *compiler2;
 
 };
 

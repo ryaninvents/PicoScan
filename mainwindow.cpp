@@ -34,9 +34,9 @@ MainWindow::MainWindow(QWidget *parent) :
             SLOT(cameraSettingsChanged(QCamera*,QCamera*)));
 
     ui->modelView->zoomFit();
-    showDebug();
+//    showDebug();
     dbgIm->setWindowTitle("Debugging -- camera view");
-    dbgIm->showMaximized();
+//    dbgIm->showMaximized();
 
     QOpenCVCamera *capCam = new QOpenCVCamera(1);
     connect(capCam,
@@ -61,14 +61,14 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
-    connect(capCam,
-            SIGNAL(debug(QString)),
-            this,
-            SLOT(debug(QString)));
     connect(compiler,
             SIGNAL(visualBinaryFrame(cv::Mat)),
             this,
             SLOT(debugImage(cv::Mat)));
+    connect(compiler,
+            SIGNAL(visualBinaryFrame(cv::Mat)),
+            this,
+            SLOT(writeDebugImg1(cv::Mat)));
 
 }
 
@@ -133,6 +133,16 @@ void MainWindow::debugImage(cv::Mat im)
     debugImage(im,0,0);
 }
 
+void MainWindow::writeDebugImg1(cv::Mat im)
+{
+    cv::imwrite("/home/ryan/Documents/mqp-data/debug/cam1.png",im);
+}
+
+void MainWindow::writeDebugImg2(cv::Mat im)
+{
+    cv::imwrite("/home/ryan/Documents/mqp-data/debug/cam2.png",im);
+}
+
 void MainWindow::showAbout()
 {
     about.show();
@@ -183,6 +193,7 @@ void MainWindow::adjustCalStd()
 void MainWindow::takeFrame()
 {
     compiler->requestFrame(10);
+//    compiler2->requestFrame(10);
 }
 
 void MainWindow::closeEvent(QCloseEvent *)
