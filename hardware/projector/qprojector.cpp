@@ -52,8 +52,8 @@ void QProjector::processQueue()
     emit debug(tr("Projector processing queue of %1 patterns.")
                .arg(patternQueue.size()));
     if(patternQueue.size()>0) {
-        Pattern *pattern = patternQueue.at(patternQueue.size()-1);
-        patternQueue.pop_back();
+        Pattern *pattern = patternQueue.at(0);
+        patternQueue.erase(patternQueue.begin());
         if(pattern==0){
             processQueue();
             return;

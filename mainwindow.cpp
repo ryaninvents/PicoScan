@@ -6,6 +6,7 @@
 #include "hardware/camera/povraycamera.h"
 #include "hardware/projector/povrayprojector.h"
 #include "hardware/camera/qopencvcamera.h"
+#include "hardware/projector/seconddisplayprojector.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     dbgIm->setWindowTitle("Debugging -- camera view");
     dbgIm->showMaximized();
 
-    //*
+    /*
     PovRayCamera *capCam = new PovRayCamera();
     capCam->setParameterFilename(
                 tr("/home/ryan/Documents/mqp-data/"
@@ -58,16 +59,8 @@ MainWindow::MainWindow(QWidget *parent) :
                    "simulation/butterfly-valve/"
                    "valve.pov"));
     capCam->setSimZ(-1);
-    capCam->setSimFocalLength(12e-3);//*/
+    capCam->setSimFocalLength(12e-3);
 
-    /*
-    QOpenCVCamera *capCam = new QOpenCVCamera(1);
-    connect(capCam,
-            SIGNAL(debug(QString)),
-            this,
-            SLOT(debug(QString)));
-    capCam->startStream();
-    capCam->setResolution(1600,1200);//*/
 
     PovRayProjector *pov = new PovRayProjector();
     pov->setFilterFilename(
@@ -80,6 +73,21 @@ MainWindow::MainWindow(QWidget *parent) :
                    "projector.inc"));
     pov->setSimPosition(0.25,0,-1);
     pov->setSimRotation(0,M_PI*0.1,0);
+
+    /*///
+    QOpenCVCamera *capCam = new QOpenCVCamera(1);
+    connect(capCam,
+            SIGNAL(debug(QString)),
+            this,
+            SLOT(debug(QString)));
+    capCam->startStream();
+    capCam->setResolution(1600,1200);
+
+
+    SecondDisplayProjector *pov = new SecondDisplayProjector();
+    pov->setScreen(1);
+
+    //*/
 
 
     testProjector = pov;
