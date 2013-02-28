@@ -10,7 +10,8 @@
 BinaryCompiler::BinaryCompiler(QCamera *cam,
                                QObject *parent) :
     QObject(parent),
-    camera(cam)
+    camera(cam),
+    horiz(false)
 {
     connect(cam,
             SIGNAL(frameCaptured(cv::Mat,
@@ -34,8 +35,8 @@ void BinaryCompiler::requestFrame(uint nmax)
     frames.resize(nmax*2);
     captured.resize(nmax*2,false);
     for(n=0;n<nmax;n++){
-        projector->queue(new GrayCodePattern(n,false));
-        projector->queue(new GrayCodePattern(n,true));
+        projector->queue(new GrayCodePattern(n,false,horiz));
+        projector->queue(new GrayCodePattern(n,true,horiz));
     }
 }
 
@@ -74,7 +75,7 @@ void BinaryCompiler::testAndEmit()
     }
     encoding = Triangulator::computeBinary(
                 frames,20);
-    emit binaryFrameCaptured(encoding);
+    emit binaryFrameCaptured(encoding,horiz);
     cv::Mat color = Triangulator::maphsv(encoding,
                                          1<<nmax);
     emit visualBinaryFrame(color);

@@ -3,6 +3,7 @@
 
 #include <opencv2/core/core.hpp>
 #include "../hardware/camera/qcamera.h"
+#include "sheet.h"
 
 /// Provides triangulation as well as other utilities.
 class Triangulator
@@ -52,6 +53,12 @@ public:
     static int binaryToGray(int num);
     /// Convert Gray code to binary.
     static int grayToBinary(int num);
+
+    /// Generate a sheet
+    static Sheet computeGeometry(cv::Mat encoding,
+                                 QCamera *camera,
+                                 QProjector *projector,
+                                 uint decimation=1);
 
     /// Calibrate a single camera.
 

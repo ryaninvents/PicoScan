@@ -13,7 +13,7 @@ public:
     void requestFrame(uint nmax);
     
 signals:
-    void binaryFrameCaptured(cv::Mat);
+    void binaryFrameCaptured(cv::Mat,bool);
     void visualBinaryFrame(cv::Mat);
     
 public slots:
@@ -25,6 +25,7 @@ private:
     std::vector<cv::Mat> frames;
     std::vector<bool> captured;
     QCamera *camera;
+    bool horiz;
     
     void testAndEmit();
 

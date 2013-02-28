@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     gui/secondmonitorprojectordialog.cpp \
     gui/fileprojectordialog.cpp \
     gui/opencvcameradialog.cpp \
-    geom/binarycompiler.cpp
+    geom/binarycompiler.cpp \
+    geom/calibrator.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -61,7 +62,8 @@ HEADERS  += mainwindow.h \
     gui/secondmonitorprojectordialog.h \
     gui/fileprojectordialog.h \
     gui/opencvcameradialog.h \
-    geom/binarycompiler.h
+    geom/binarycompiler.h \
+    geom/calibrator.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

@@ -32,6 +32,40 @@ int Triangulator::grayToBinary(int num)
     return num;
 }
 
+Sheet Triangulator::computeGeometry(
+        cv::Mat encoding,
+        QCamera *camera,
+        QProjector *projector,
+        uint decimation)
+{
+    double px;
+    uint x,y;
+    cv::Vec3d P_up, P_fwd, M_hat, D, M;
+
+    D = projector->getPosition() - camera->getPosition();
+    P_up = projector->getUpVector();
+
+    Sheet sheet(cv::Size(encoding.cols/decimation+1,
+                         encoding.rows/decimation+1));
+    encoding.convertTo(encoding,CV_64F);
+
+    for(x=0; x<(encoding.cols-decimation); x+=decimation){
+        for(y=0; y<(encoding.rows-decimation); y+=decimation){
+            px = encoding.at<double>(y,x);
+            if(px<0) continue;
+            P_fwd = projector->getPixelRay(px,0);
+            M_hat = camera->getPixelRay(x,y);
+            M = Triangulator::sumTo(M_hat,P_up,P_fwd,D);
+
+            sheet.setPoint(x/decimation,y/decimation,M);
+
+        }
+    }
+
+    return sheet;
+
+}
+
 cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
                               const cv::Vec3d P_up,
                               const cv::Vec3d P_fwd,

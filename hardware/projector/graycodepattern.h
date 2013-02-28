@@ -12,7 +12,7 @@ class GrayCodePattern : public QProjector::Pattern
 {
 public:
     /// Create a new Gray code pattern.
-    GrayCodePattern(uint bit, bool inverted);
+    GrayCodePattern(uint bit, bool inverted, bool horiz=false);
     /// Generate the pattern to project.
     QImage generatePattern(int width, int height);
     /// Get the ID for this pattern.
@@ -31,6 +31,8 @@ private:
     unsigned int bit;
     /// Is the image inverted?
     bool inverted;
+    /// Is the image horizontal?
+    bool horiz;
 };
 
 #endif // GRAYCODEPATTERN_H
