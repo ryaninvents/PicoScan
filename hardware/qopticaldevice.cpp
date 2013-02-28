@@ -103,7 +103,7 @@ cv::Mat QOpticalDevice::getPixelRay(double u, double v)
 cv::Mat QOpticalDevice::getUpVector()
 {
     // first we define what "up" is
-    cv::Vec3d upVec(0.0,-1.0,0.0);
+    cv::Vec3d upVec(0.0,1.0,0.0);
     cv::Mat up;
     up = cv::Mat(upVec).reshape(1);
 
@@ -116,7 +116,7 @@ cv::Mat QOpticalDevice::getUpVector()
 cv::Mat QOpticalDevice::getFwdVector()
 {
     // first we define what "forward" is
-    cv::Vec3d fwdVec(0.0,0.0,1.0);
+    cv::Vec3d fwdVec(0.0,0.0,-1.0);
     cv::Mat fwd;
     fwd = cv::Mat(fwdVec).reshape(1);
 

@@ -163,7 +163,7 @@ void ModelViewWidget::drawFloor()
     glPopMatrix();
 }
 
-#define MODEL_SCALE 1
+#define MODEL_SCALE 5
 
 void ModelViewWidget::drawCloud()
 {
@@ -173,14 +173,16 @@ void ModelViewWidget::drawCloud()
     }
     uint i;
     glBegin(GL_POINTS);{
-        glEnableClientState(GL_VERTEX_ARRAY);
+//        glEnableClientState(GL_VERTEX_ARRAY);
         glColor3f(0,0,0);
         glDisable(GL_LIGHT0);
-        glPointSize(2.0);
-        glVertexPointer((GLint)cloud.size(),
-                        GL_DOUBLE,
-                        (GLsizei)0,
-                        &(cloud[0]));
+        glPointSize(5.0);
+//        glVertexPointer((GLint)cloud.size(),
+//                        GL_DOUBLE,
+//                        (GLsizei)0,
+//                        &(cloud[0]));
+//        glDrawArrays(GL_POINTS,0,cloud.size()/3);
+//        glDisableClientState(GL_VERTEX_ARRAY);
         for(i=0;i<cloud.size();i+=3){
             glVertex3f(cloud.at(i)*MODEL_SCALE,
                        cloud.at(i+1)*MODEL_SCALE,
