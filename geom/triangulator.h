@@ -55,7 +55,7 @@ public:
     static int grayToBinary(int num);
 
     /// Generate a sheet
-    static Sheet computeGeometry(cv::Mat encoding,
+    static std::vector<cv::Vec3d> computeGeometry(cv::Mat encoding,
                                  QCamera *camera,
                                  QProjector *projector,
                                  uint decimation=1);

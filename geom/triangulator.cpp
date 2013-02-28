@@ -1,6 +1,7 @@
 #include "triangulator.h"
 
 #include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
 
 /**
   Gray code functions adapted from http://en.wikipedia.org/wiki/Gray_code
@@ -32,7 +33,7 @@ int Triangulator::grayToBinary(int num)
     return num;
 }
 
-Sheet Triangulator::computeGeometry(
+std::vector<cv::Vec3d> Triangulator::computeGeometry(
         cv::Mat encoding,
         QCamera *camera,
         QProjector *projector,
@@ -41,12 +42,11 @@ Sheet Triangulator::computeGeometry(
     double px;
     uint x,y;
     cv::Vec3d P_up, P_fwd, M_hat, D, M;
+    std::vector<cv::Vec3d> out;
 
     D = projector->getPosition() - camera->getPosition();
     P_up = projector->getUpVector();
 
-    Sheet sheet(cv::Size(encoding.cols,
-                         encoding.rows));
     encoding.convertTo(encoding,CV_64F);
 
     for(x=0; x<(encoding.cols); x++){
@@ -57,12 +57,12 @@ Sheet Triangulator::computeGeometry(
             M_hat = camera->getPixelRay(x,y);
             M = Triangulator::sumTo(M_hat,P_up,P_fwd,D);
 
-            sheet.setPoint(x,y,M);
+            out.push_back(M);
 
         }
     }
-
-    return sheet;
+    std::cout << out.size() << " output points \n";
+    return out;
 
 }
 

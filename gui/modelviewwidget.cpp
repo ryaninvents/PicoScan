@@ -3,12 +3,12 @@
 #include <QtOpenGL>
 #include <stdio.h>
 #define MAX_ZOOM -2.0
-#define MIN_ZOOM -30.0
+#define MIN_ZOOM -90.0
 #define DEFAULT_ZOOM -8.0
 
 ModelViewWidget::ModelViewWidget(QWidget *parent) :
     QGLWidget(parent),
-    sheet(0)
+    cloud()
 {
 }
 
@@ -35,7 +35,7 @@ void ModelViewWidget::paintGL()
     glTranslatef(0.0,0.0,zoom);
     glRotatef(yRot+yPlus, 1.0, 0.0, 0.0);
     glRotatef(xRot+xPlus, 0.0, 1.0, 0.0);
-    drawSheet();
+    drawCloud();
     drawFloor();
     glFlush();
 }
@@ -96,9 +96,17 @@ void ModelViewWidget::wheelEvent(QWheelEvent *ev)
     updateGL();
 }
 
-void ModelViewWidget::setSheet(Sheet *s)
+void ModelViewWidget::setData(std::vector<cv::Vec3d> pts)
 {
-    sheet = s;
+    uint i;
+    cloud.clear();
+    for(i=0;i<pts.size();i++){
+        cloud.push_back((GLdouble)pts.at(i)[0]);
+        cloud.push_back((GLdouble)pts.at(i)[1]);
+        cloud.push_back((GLdouble)pts.at(i)[2]);
+    }
+    printf("added %d points to model view\n",
+           cloud.size()/3);
     updateGL();
 }
 
@@ -155,20 +163,35 @@ void ModelViewWidget::drawFloor()
     glPopMatrix();
 }
 
-void ModelViewWidget::drawSheet()
+#define MODEL_SCALE 1
+
+void ModelViewWidget::drawCloud()
 {
-    if(!sheet){
+    if(cloud.size()<10){
         drawCube();
         return;
     }
-    std::vector<GLdouble> points = sheet->getPoints();
+    uint i;
     glBegin(GL_POINTS);{
-
-        glColor3f(0.0,0.0,0.0);
-        glVertexPointer((GLint)points.size(),
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glColor3f(0,0,0);
+        glDisable(GL_LIGHT0);
+        glPointSize(2.0);
+        glVertexPointer((GLint)cloud.size(),
                         GL_DOUBLE,
                         (GLsizei)0,
-                        (GLdouble*)&points[0]);
+                        &(cloud[0]));
+        for(i=0;i<cloud.size();i+=3){
+            glVertex3f(cloud.at(i)*MODEL_SCALE,
+                       cloud.at(i+1)*MODEL_SCALE,
+                       cloud.at(i+2)*MODEL_SCALE);
+            if(rand()%10000<1){
+                printf("coord %f %f %f\n",
+                       cloud.at(i),
+                       cloud.at(i+1),
+                       cloud.at(i+2));
+            }
+        }
     } glEnd();
 }
 

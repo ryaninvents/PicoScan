@@ -34,7 +34,7 @@ public:
     void wheelEvent(QWheelEvent * ev);
 
     /// Change the displayed geometry.
-    void setSheet(Sheet *s);
+    void setData(std::vector<cv::Vec3d> pts);
 
 
 signals:
@@ -75,13 +75,13 @@ private:
     void drawFloor();
 
     /// draw the sheet
-    void drawSheet();
+    void drawCloud();
 
     /// draw the placeholder cube
     void drawCube();
 
     /// the mesh
-    Sheet *sheet;
+    std::vector<GLdouble> cloud;
 
 };
 

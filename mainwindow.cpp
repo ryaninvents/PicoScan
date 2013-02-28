@@ -46,12 +46,17 @@ MainWindow::MainWindow(QWidget *parent) :
             SLOT(debug(QString)));
     capCam->startStream();
     capCam->setResolution(1600,1200);
+    capCam->setFocalLength(2000);
 
     camera = capCam;
 
 
     SecondDisplayProjector *pj = new SecondDisplayProjector();
     pj->setScreen(1);
+    pj->setResolution(640,480);
+    pj->setPosition(cv::Vec3d(-1.5,-0.03,0));
+    pj->setOrientation(cv::Vec3d(0.0,0.2,0.0));
+    pj->setFocalLength(3200);
 
     projector = pj;
     capCam->setProjector(pj);
@@ -142,12 +147,12 @@ void MainWindow::debugImage(cv::Mat im)
 
 void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
 {
-    Sheet s = Triangulator::computeGeometry(
+    std::vector<cv::Vec3d> s = Triangulator::computeGeometry(
                 binary,
                 camera,
                 projector,
                 1);
-     ui->modelView->setSheet(&s);
+    ui->modelView->setData(s);
 }
 
 void MainWindow::writeDebugImg1(cv::Mat im)
