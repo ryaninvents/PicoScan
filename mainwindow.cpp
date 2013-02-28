@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this,
             SLOT(debug(QString)));
     capCam->startStream();
-    capCam->setResolution(1600,1200);
+    capCam->setResolution(1024,768);
 
 
     SecondDisplayProjector *pj = new SecondDisplayProjector();
