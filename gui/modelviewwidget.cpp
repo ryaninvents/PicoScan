@@ -7,7 +7,8 @@
 #define DEFAULT_ZOOM -8.0
 
 ModelViewWidget::ModelViewWidget(QWidget *parent) :
-    QGLWidget(parent)
+    QGLWidget(parent),
+    sheet(0)
 {
 }
 
@@ -34,34 +35,8 @@ void ModelViewWidget::paintGL()
     glTranslatef(0.0,0.0,zoom);
     glRotatef(yRot+yPlus, 1.0, 0.0, 0.0);
     glRotatef(xRot+xPlus, 0.0, 1.0, 0.0);
-
-    GLfloat x, y, z;
-    GLfloat LO=-.5, HI=.5, gap = 1;
+    drawSheet();
     drawFloor();
-    glBegin(GL_LINES);
-    glColor3f(0,0,0);
-    for(x=LO;x<=HI;x+=gap){
-        for(y=LO;y<=HI;y+=gap){
-            for(z=LO;z<=HI;z+=gap){
-                glVertex3f(x,y,z);
-            }
-        }
-    }
-    for(z=LO;z<=HI;z+=gap){
-        for(x=LO;x<=HI;x+=gap){
-            for(y=LO;y<=HI;y+=gap){
-                glVertex3f(x,y,z);
-            }
-        }
-    }
-    for(y=LO;y<=HI;y+=gap){
-        for(z=LO;z<=HI;z+=gap){
-            for(x=LO;x<=HI;x+=gap){
-                glVertex3f(x,y,z);
-            }
-        }
-    }
-    glEnd();
     glFlush();
 }
 
@@ -121,6 +96,12 @@ void ModelViewWidget::wheelEvent(QWheelEvent *ev)
     updateGL();
 }
 
+void ModelViewWidget::setSheet(Sheet *s)
+{
+    sheet = s;
+    updateGL();
+}
+
 void ModelViewWidget::zoomIn()
 {
     zoom*=0.9;
@@ -161,16 +142,65 @@ void ModelViewWidget::drawFloor()
         }
         glEnd();
     }
-    glBegin(GL_LINES);
-    for(theta=0;theta<3.14159*2;theta+=thetaStep){
-        x=cos(theta)*rMax;
-        z=sin(theta)*rMax;
-        glVertex3f(x,0.0,z);
-        x=cos(theta)*rMin;
-        z=sin(theta)*rMin;
-        glVertex3f(x,0.0,z);
-    }
-    glEnd();
+    glBegin(GL_LINES);{
+        for(theta=0;theta<3.14159*2;theta+=thetaStep){
+            x=cos(theta)*rMax;
+            z=sin(theta)*rMax;
+            glVertex3f(x,0.0,z);
+            x=cos(theta)*rMin;
+            z=sin(theta)*rMin;
+            glVertex3f(x,0.0,z);
+        }
+    } glEnd();
     glPopMatrix();
+}
+
+void ModelViewWidget::drawSheet()
+{
+    if(!sheet){
+        drawCube();
+        return;
+    }
+    std::vector<GLdouble> points = sheet->getPoints();
+    glBegin(GL_POINTS);{
+
+        glColor3f(0.0,0.0,0.0);
+        glVertexPointer((GLint)points.size(),
+                        GL_DOUBLE,
+                        (GLsizei)0,
+                        (GLdouble*)&points[0]);
+    } glEnd();
+}
+
+void ModelViewWidget::drawCube()
+{
+
+    GLfloat x, y, z;
+    GLfloat LO=-.5, HI=.5, gap = 1;
+    glBegin(GL_LINES);{
+        glColor3f(0,0,0);
+        for(x=LO;x<=HI;x+=gap){
+            for(y=LO;y<=HI;y+=gap){
+                for(z=LO;z<=HI;z+=gap){
+                    glVertex3f(x,y,z);
+                }
+            }
+        }
+        for(z=LO;z<=HI;z+=gap){
+            for(x=LO;x<=HI;x+=gap){
+                for(y=LO;y<=HI;y+=gap){
+                    glVertex3f(x,y,z);
+                }
+            }
+        }
+        for(y=LO;y<=HI;y+=gap){
+            for(z=LO;z<=HI;z+=gap){
+                for(x=LO;x<=HI;x+=gap){
+                    glVertex3f(x,y,z);
+                }
+            }
+        }
+
+    } glEnd();
 }
 

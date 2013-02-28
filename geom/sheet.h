@@ -118,6 +118,9 @@ private:
 
     /// Set up the matrices
     void initialize(cv::Size size, bool useColor);
+
+    int width;
+    int height;
 };
 
 #endif // SHEET_H

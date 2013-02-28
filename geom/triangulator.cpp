@@ -45,19 +45,19 @@ Sheet Triangulator::computeGeometry(
     D = projector->getPosition() - camera->getPosition();
     P_up = projector->getUpVector();
 
-    Sheet sheet(cv::Size(encoding.cols/decimation+1,
-                         encoding.rows/decimation+1));
+    Sheet sheet(cv::Size(encoding.cols,
+                         encoding.rows));
     encoding.convertTo(encoding,CV_64F);
 
-    for(x=0; x<(encoding.cols-decimation); x+=decimation){
-        for(y=0; y<(encoding.rows-decimation); y+=decimation){
+    for(x=0; x<(encoding.cols); x++){
+        for(y=0; y<(encoding.rows); y++){
             px = encoding.at<double>(y,x);
             if(px<0) continue;
             P_fwd = projector->getPixelRay(px,0);
             M_hat = camera->getPixelRay(x,y);
             M = Triangulator::sumTo(M_hat,P_up,P_fwd,D);
 
-            sheet.setPoint(x/decimation,y/decimation,M);
+            sheet.setPoint(x,y,M);
 
         }
     }

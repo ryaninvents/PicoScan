@@ -19,8 +19,8 @@ std::vector<GLdouble> Sheet::getPoints()
     cv::Vec3d pt;
     for(u=0;u<cloud.cols;u++){
         for(v=0;v<cloud.rows;v++){
-            if(!alpha.at<bool>(v,u)) continue;
-            pt = cloud.at<cv::Vec3d>(v,u);
+            if(!hasPointAt(u,v)) continue;
+            pt = getPoint(u,v);
             pts.push_back((GLdouble)pt[0]);
             pts.push_back((GLdouble)pt[1]);
             pts.push_back((GLdouble)pt[2]);
@@ -38,6 +38,8 @@ void Sheet::initialize(cv::Size size, bool useColor)
     }else{
         color = cv::Mat3d();
     }
+    width = size.width;
+    height = size.height;
 }
 
 cv::Point3d Sheet::getCentroid()
@@ -113,6 +115,7 @@ cv::Vec3d Sheet::getPoint(uint u, uint v)
 
 bool Sheet::hasPointAt(uint u, uint v)
 {
+    if(v>=alpha.rows || u>=alpha.cols) return false;
     return alpha.at<bool>(v,u);
 }
 

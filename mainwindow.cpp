@@ -5,6 +5,7 @@
 #include <QScrollBar>
 #include "hardware/camera/qopencvcamera.h"
 #include "hardware/projector/seconddisplayprojector.h"
+#include "geom/triangulator.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -46,11 +47,13 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->startStream();
     capCam->setResolution(1600,1200);
 
+    camera = capCam;
+
 
     SecondDisplayProjector *pj = new SecondDisplayProjector();
     pj->setScreen(1);
 
-    testProjector = pj;
+    projector = pj;
     capCam->setProjector(pj);
 
     compiler = new BinaryCompiler(capCam);
@@ -69,6 +72,10 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(visualBinaryFrame(cv::Mat)),
             this,
             SLOT(writeDebugImg1(cv::Mat)));
+    connect(compiler,
+            SIGNAL(binaryFrameCaptured(cv::Mat,bool)),
+            this,
+            SLOT(binaryImageCaptured(cv::Mat,bool)));
 
 }
 
@@ -133,6 +140,16 @@ void MainWindow::debugImage(cv::Mat im)
     debugImage(im,0,0);
 }
 
+void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
+{
+    Sheet s = Triangulator::computeGeometry(
+                binary,
+                camera,
+                projector,
+                1);
+     ui->modelView->setSheet(&s);
+}
+
 void MainWindow::writeDebugImg1(cv::Mat im)
 {
     cv::imwrite("/home/ryan/Documents/mqp-data/debug/cam1.png",im);
@@ -193,7 +210,6 @@ void MainWindow::adjustCalStd()
 void MainWindow::takeFrame()
 {
     compiler->requestFrame(10);
-//    compiler2->requestFrame(10);
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

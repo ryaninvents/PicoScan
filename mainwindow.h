@@ -13,6 +13,7 @@
 #include "hardware/projector/graycodepattern.h"
 
 #include "geom/binarycompiler.h"
+#include "geom/sheet.h"
 
 namespace Ui {
 class MainWindow;
@@ -77,6 +78,9 @@ public slots:
     /// Show a debug image.
     void debugImage(cv::Mat im);
 
+    /// Binary image has been computed
+    void binaryImageCaptured(cv::Mat binary,bool);
+
     /// Write debug image 1
     void writeDebugImg1(cv::Mat im);
 
@@ -122,10 +126,10 @@ private:
     GrayCodePattern *graycode;
 
     /// Testing camera capture
-    QCamera *testCam;
+    QCamera *camera;
 
     /// Testing projector
-    QProjector *testProjector;
+    QProjector *projector;
 
     /// Image debugger
     ImageViewWidget *dbgIm;

@@ -2,6 +2,7 @@
 #define MODELVIEWWIDGET_H
 
 #include <QtOpenGL/QGLWidget>
+#include "geom/sheet.h"
 
 /// An OpenGL view for displaying the model.
 class ModelViewWidget : public QGLWidget
@@ -31,6 +32,11 @@ public:
 
     /// Handle when the user scrolls the mouse wheel.
     void wheelEvent(QWheelEvent * ev);
+
+    /// Change the displayed geometry.
+    void setSheet(Sheet *s);
+
+
 signals:
 
 public slots:
@@ -67,6 +73,15 @@ private:
 
     /// draw the "turntable" floor
     void drawFloor();
+
+    /// draw the sheet
+    void drawSheet();
+
+    /// draw the placeholder cube
+    void drawCube();
+
+    /// the mesh
+    Sheet *sheet;
 
 };
 
