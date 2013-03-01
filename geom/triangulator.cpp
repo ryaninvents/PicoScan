@@ -41,11 +41,12 @@ std::vector<cv::Vec3d> Triangulator::computeGeometry(
 {
     double px;
     uint x,y;
-    cv::Vec3d P_up, P_fwd, M_hat, D, M;
+    cv::Vec3d P_up, P_fwd, M_hat, D, M, Cp;
     std::vector<cv::Vec3d> out;
 
     D = projector->getPosition() - camera->getPosition();
     P_up = projector->getUpVector();
+    Cp = camera->getPosition();
 
     encoding.convertTo(encoding,CV_64F);
 
@@ -55,7 +56,9 @@ std::vector<cv::Vec3d> Triangulator::computeGeometry(
             if(px<0) continue;
             P_fwd = projector->getPixelRay(px,0);
             M_hat = camera->getPixelRay(x,y);
-            M = Triangulator::sumTo(M_hat,P_up,P_fwd,D);
+            M = Triangulator::sumTo(M_hat,P_up,P_fwd,D)
+                    +Cp;
+            if(M[1]>4 || M[2]<0) continue;
 
             out.push_back(M);
 

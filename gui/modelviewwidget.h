@@ -80,6 +80,9 @@ private:
     /// draw the placeholder cube
     void drawCube();
 
+    /// draw axes
+    void drawAxes();
+
     /// the mesh
     std::vector<GLdouble> cloud;
 

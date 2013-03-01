@@ -81,7 +81,7 @@ cv::Mat QOpticalDevice::getPixelRay(double u, double v)
     double uNorm, vNorm;
 
     // first we compute the ray in camera coordinates
-    cv::Mat camBased = cv::Mat::ones(3,1,CV_64F);
+    cv::Mat camBased = getFwdVector();
     cv::Mat ray;
 
     // get the normalized coordinates

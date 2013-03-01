@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->startStream();
     capCam->setResolution(1600,1200);
     capCam->setFocalLength(1300);
-    capCam->setPosition(cv::Vec3d(0,0,2));
+    capCam->setPosition(cv::Vec3d(0,0,0));
     capCam->setOrientation(cv::Vec3d(0,0,0));
 
     camera = capCam;
@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     SecondDisplayProjector *pj = new SecondDisplayProjector();
     pj->setScreen(1);
     pj->setResolution(640,480);
-    pj->setPosition(cv::Vec3d(0.15,-0.03,2));
+    pj->setPosition(cv::Vec3d(0.15,-0.03,0));
     pj->setOrientation(cv::Vec3d(0.0,-0.5,0.0));
     pj->setFocalLength(5000);
 
