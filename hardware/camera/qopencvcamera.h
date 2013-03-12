@@ -19,10 +19,6 @@ public:
     /// Release the camera.
     void release();
 
-    /// Set frame rate.
-    /// \bug This method does not seem to actually do anything.
-    void setFrameRate(uint fps);
-
     /// Returns the horizontal resolution of this device.
     int getResolutionU();
 

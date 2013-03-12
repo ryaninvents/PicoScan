@@ -169,7 +169,7 @@ void ModelViewWidget::drawFloor()
 void ModelViewWidget::drawCloud()
 {
     if(cloud.size()<10){
-        drawCube();
+//        drawCube();
         return;
     }
     uint i;

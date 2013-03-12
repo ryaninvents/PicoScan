@@ -183,6 +183,9 @@ color:white;</string>
    <property name="statusTip">
     <string>Take a 3D frame</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
   </action>
   <action name="actionNew">
    <property name="icon">

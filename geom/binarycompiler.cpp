@@ -79,7 +79,7 @@ void BinaryCompiler::testAndEmit()
         }
     }
     encoding = Triangulator::computeBinary(
-                frames,20);
+                frames,30);
     emit binaryFrameCaptured(encoding,horiz);
     cv::Mat color = Triangulator::maphsv(encoding,
                                          1<<nmax);

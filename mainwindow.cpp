@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->setProjector(pj);
 
     compiler = new BinaryCompiler(capCam);
-
+/*
     std::vector<cv::Vec3d> helix;
 #define DNA_SCALE 1e-2
     for(double d=0;d<6*M_PI;d+=0.01){
@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
                                   -d*DNA_SCALE,
                                   -sin(d)*DNA_SCALE));
     }
-    ui->modelView->setData(helix);
+    ui->modelView->setData(helix);*/
 
     // debug our components
 
@@ -116,7 +116,6 @@ void MainWindow::debug(QString str)
                             .arg(debugWin->toPlainText())
                             .arg(str));
     QScrollBar *sb = debugWin->verticalScrollBar();
-    debugWin->show();
     sb->setValue(sb->maximum());
 }
 

@@ -11,7 +11,6 @@ QOpenCVCamera::QOpenCVCamera(uint idx, QObject *parent) :
             SIGNAL(resolutionChanged(int,int)),
             this,
             SLOT(adjustDeviceResolution(int,int)));
-    cap->set(CV_CAP_PROP_FPS,10);
 }
 
 bool QOpenCVCamera::isOpen()
@@ -23,12 +22,6 @@ void QOpenCVCamera::release()
 {
     cap->release();
     delete cap;
-}
-
-void QOpenCVCamera::setFrameRate(uint fps)
-{
-    cap->set(CV_CAP_PROP_FPS,fps);
-    QCamera::setFrameRate(fps);
 }
 
 bool QOpenCVCamera::fetchFrame(QProjector::Pattern *p)
