@@ -6,7 +6,8 @@
 QCamera::QCamera(QObject *parent) :
     QOpticalDevice(parent),
     streaming(false),
-    interval(1000/30)
+    interval(1000/30),
+    readyToAdvance(true)
 {
 }
 
@@ -39,6 +40,10 @@ void QCamera::setProjector(QProjector *p)
             SIGNAL(aboutToAdvance()),
             this,
             SLOT(projectorAboutToAdvance()));
+    connect(this,
+            SIGNAL(projectorPermissionToAdvance(bool)),
+            projector,
+            SLOT(permissionToAdvance(bool)));
 }
 
 QProjector *QCamera::getProjector()
@@ -62,15 +67,23 @@ bool QCamera::startStream()
 bool QCamera::requestFrame(QProjector::Pattern *pat, QProjector *proj)
 {
     //if(proj!=projector) return false;
+    readyToAdvance = false;
     pattern = pat;
     return fetchFrame(pat);
 }
 
 void QCamera::projectorAboutToAdvance()
 {
+    emit projectorPermissionToAdvance(readyToAdvance);
 }
 
 void QCamera::emitFrame(cv::Mat frame)
 {
     emit frameCaptured(frame,this,pattern);
+}
+
+void QCamera::ready()
+{
+    readyToAdvance = true;
+    projector->requestAdvance();
 }

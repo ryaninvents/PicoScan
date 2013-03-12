@@ -3,7 +3,7 @@
 
 QOpenCVCamera::QOpenCVCamera(uint idx, QObject *parent) :
     QCamera(parent),
-    chuck(0)
+    chuck(2)
 {
     cap = new cv::VideoCapture();
     cap->open(idx);
@@ -48,6 +48,7 @@ void QOpenCVCamera::getAndEmitFrame(QProjector::Pattern *pattern)
     }
     cap->read(m);
     emit frameCaptured(m,this,pattern);
+    ready();
 }
 
 void QOpenCVCamera::adjustDeviceResolution(int u, int v)

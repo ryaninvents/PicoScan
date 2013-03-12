@@ -43,6 +43,8 @@ signals:
     void frameCaptured(cv::Mat frame,
                        QCamera *cam,
                        QProjector::Pattern *pattern);
+    /// Projector can or can't advance.
+    void projectorPermissionToAdvance(bool);
 
 public slots:
     /// Start streaming.
@@ -64,6 +66,8 @@ protected:
     /// Emit a frame
     void emitFrame(cv::Mat frame);
 
+    void ready();
+
 private:
 
     /// Camera ID
@@ -74,6 +78,9 @@ private:
 
     /// Is the camera currently streaming?
     bool streaming;
+
+    /// Are we ready to move on?
+    bool readyToAdvance;
 
     /// Frame interval
     uint interval;

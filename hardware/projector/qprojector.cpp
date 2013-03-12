@@ -15,11 +15,13 @@ QProjector::QProjector(QObject *parent) :
 void QProjector::queue(QProjector::Pattern *p)
 {
     emit debug(QString("Someone has queued a projector pattern."));
-    emit debug(tr("Projector has %1 dependencies.")
-               .arg(countDependencies()));
+    emit debug(tr("Projector has %1 dependenc%2.")
+               .arg(countDependencies())
+               .arg(countDependencies()==1?"y":"ies"));
     patternQueue.push_back(p);
-    emit debug(tr("Projector now has %1 patterns queued.")
-               .arg(patternQueue.size()));
+    emit debug(tr("Projector now has %1 pattern%2 queued.")
+               .arg(patternQueue.size())
+               .arg(patternQueue.size()==1?"":"s"));
     requestAdvance();
 }
 
@@ -49,8 +51,9 @@ QProjector::Pattern *QProjector::getCurrentPattern()
 
 void QProjector::processQueue()
 {
-    emit debug(tr("Projector processing queue of %1 patterns.")
-               .arg(patternQueue.size()));
+    emit debug(tr("Projector processing queue of %1 pattern%2.")
+               .arg(patternQueue.size())
+               .arg(patternQueue.size()==1?"":"s"));
     if(patternQueue.size()>0) {
         Pattern *pattern = patternQueue.at(0);
         patternQueue.erase(patternQueue.begin());
@@ -85,10 +88,11 @@ void QProjector::permissionToAdvance(bool canAdvance)
 {
     emit debug(QString("Someone %1 the projector permission to advance.")
                .arg(canAdvance?"allows":"denies"));
-    emit debug(QString("%1 listeners left to report, %2 denying.")
+    emit debug(QString("%1 listener%3 left to report, %2 denying.")
                .arg((int)listenersWaitingFor-1)
                .arg((int)listenersDenyingPermission+
-                    (canAdvance?0:1)));
+                    (canAdvance?0:1))
+               .arg((int)(listenersWaitingFor)==2?"":"s"));
     if(listenersWaitingFor>0)
         listenersWaitingFor--;
     if(!canAdvance){
