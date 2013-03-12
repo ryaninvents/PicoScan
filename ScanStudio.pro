@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     gui/opencvcameradialog.cpp \
     geom/binarycompiler.cpp \
     geom/calibrator.cpp \
-    geom/phasecompiler.cpp
+    geom/phasecompiler.cpp \
+    geom/surfel.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -65,7 +66,8 @@ HEADERS  += mainwindow.h \
     gui/opencvcameradialog.h \
     geom/binarycompiler.h \
     geom/calibrator.h \
-    geom/phasecompiler.h
+    geom/phasecompiler.h \
+    geom/surfel.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
