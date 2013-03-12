@@ -35,6 +35,10 @@ void QCamera::setProjector(QProjector *p)
             SIGNAL(patternProjected(QProjector::Pattern*,QProjector*)),
             this,
             SLOT(requestFrame(QProjector::Pattern*,QProjector*)));
+    connect(projector,
+            SIGNAL(aboutToAdvance()),
+            this,
+            SLOT(projectorAboutToAdvance()));
 }
 
 QProjector *QCamera::getProjector()
@@ -59,7 +63,11 @@ bool QCamera::requestFrame(QProjector::Pattern *pat, QProjector *proj)
 {
     //if(proj!=projector) return false;
     pattern = pat;
-    return fetchFrame();
+    return fetchFrame(pat);
+}
+
+void QCamera::projectorAboutToAdvance()
+{
 }
 
 void QCamera::emitFrame(cv::Mat frame)

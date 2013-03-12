@@ -2,7 +2,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 
 QOpenCVCamera::QOpenCVCamera(uint idx, QObject *parent) :
-    QCamera(parent)
+    QCamera(parent),
+    chuck(0)
 {
     cap = new cv::VideoCapture();
     cap->open(idx);
@@ -29,20 +30,24 @@ void QOpenCVCamera::setFrameRate(uint fps)
     QCamera::setFrameRate(fps);
 }
 
-bool QOpenCVCamera::fetchFrame()
+bool QOpenCVCamera::fetchFrame(QProjector::Pattern *p)
 {
     if(!isOpen()) return false;
-    getAndEmitFrame();
+    getAndEmitFrame(p);
 //    QTimer::singleShot(500,this,
 //                       SLOT(getAndEmitFrame()));
     return true;
 }
 
-void QOpenCVCamera::getAndEmitFrame()
+void QOpenCVCamera::getAndEmitFrame(QProjector::Pattern *pattern)
 {
+    uint i;
     cv::Mat m;
+    for(i=0;i<chuck;i++){
+        cap->read(m);
+    }
     cap->read(m);
-    emitFrame(m);
+    emit frameCaptured(m,this,pattern);
 }
 
 void QOpenCVCamera::adjustDeviceResolution(int u, int v)

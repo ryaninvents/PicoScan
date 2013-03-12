@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
-    capCam->startStream();
+//    capCam->startStream();
     capCam->setResolution(1600,1200);
     capCam->setFocalLength(1300);
     capCam->setPosition(cv::Vec3d(0,0,0));
@@ -96,6 +96,10 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(binaryFrameCaptured(cv::Mat,bool)),
             this,
             SLOT(binaryImageCaptured(cv::Mat,bool)));
+    connect(compiler,
+            SIGNAL(debug(QString)),
+            this,
+            SLOT(debug(QString)));
 
 }
 
@@ -112,6 +116,7 @@ void MainWindow::debug(QString str)
                             .arg(debugWin->toPlainText())
                             .arg(str));
     QScrollBar *sb = debugWin->verticalScrollBar();
+    debugWin->show();
     sb->setValue(sb->maximum());
 }
 

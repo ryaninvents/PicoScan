@@ -15,6 +15,7 @@ public:
 signals:
     void binaryFrameCaptured(cv::Mat,bool);
     void visualBinaryFrame(cv::Mat);
+    void debug(QString);
     
 public slots:
     void frameCaptured(cv::Mat frame,

@@ -188,12 +188,6 @@ void ModelViewWidget::drawCloud()
             glVertex3f(cloud.at(i)*MODEL_SCALE,
                        cloud.at(i+1)*MODEL_SCALE,
                        cloud.at(i+2)*MODEL_SCALE);
-            if(rand()%10000<1){
-                printf("coord %f %f %f\n",
-                       cloud.at(i),
-                       cloud.at(i+1),
-                       cloud.at(i+2));
-            }
         }
     } glEnd();
 }

@@ -48,10 +48,15 @@ void BinaryCompiler::frameCaptured(
     GrayCodePattern *gray =
             dynamic_cast<GrayCodePattern*>(pattern);
     uint idx;
-    if(cam!=camera || !gray) return;
+    if(cam!=camera || !gray) {
+        return;
+    }
     idx = (gray->getBit()*2) + (gray->isInverted()?1:0);
     cv::cvtColor(frame,frames.at(idx),CV_BGR2GRAY);
     captured.at(idx) = true;
+    QString fnm = tr("/home/ryan/mqp-data/shots/capture-%1-%2.png")
+            .arg(gray->getBit()).arg(gray->isInverted());
+    cv::imwrite(fnm.toLocal8Bit().data(),frame);
     std::cout << idx << "\n";
     for(idx=0;idx<captured.size();idx++){
         std::cout << (captured.at(idx)?"#":".");

@@ -55,9 +55,11 @@ public slots:
     /// emitting the desired type of frame.
     bool requestFrame(QProjector::Pattern *pat, QProjector *proj);
 
+    void projectorAboutToAdvance();
+
 protected:
     /// Fetch and emit a frame
-    virtual bool fetchFrame()=0;
+    virtual bool fetchFrame(QProjector::Pattern*)=0;
 
     /// Emit a frame
     void emitFrame(cv::Mat frame);

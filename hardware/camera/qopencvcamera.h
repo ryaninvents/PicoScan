@@ -38,16 +38,19 @@ public slots:
 
     /// Adjust the device's resolution.
     void adjustDeviceResolution(int u, int v);
-    void getAndEmitFrame();
+    void getAndEmitFrame(QProjector::Pattern *pattern);
 
 protected:
     /// get a frame
-    bool fetchFrame();
+    bool fetchFrame(QProjector::Pattern* p);
 
 private:
 
     /// The video capture device.
     cv::VideoCapture *cap;
+
+    /// Number of frames to discard.
+    uint chuck;
 
     
 };
