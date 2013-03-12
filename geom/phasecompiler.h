@@ -1,29 +1,28 @@
-#ifndef BINARYCOMPILER_H
-#define BINARYCOMPILER_H
+#ifndef PHASECOMPILER_H
+#define PHASECOMPILER_H
 
 #include <QObject>
-#include "../hardware/camera/qcamera.h"
+#include "hardware/camera/qcamera.h"
 
-/// Generates a binary frame upon request.
+/// Generates a sinusoidal phase map upon request
 
-class BinaryCompiler : public QObject
+class PhaseCompiler : public QObject
 {
     Q_OBJECT
 public:
     /// Create the compiler
-    explicit BinaryCompiler(QCamera *cam,
-                            QObject *parent = 0);
-
+    explicit PhaseCompiler(QObject *parent = 0);
     /// Request a frame
-    /// \param nmax number of binary bits
-    void requestFrame(uint nmax);
+    /// \param width fringe width in px
+    /// \param shifts number of (evenly-spaced) phase shifts
+    void requestFrame(uint width, uint shifts);
     
 signals:
-    /// Binary frame has been captured
-    void binaryFrameCaptured(cv::Mat,bool);
-    /// Binary frame has been captured; here's a
+    /// Phase mapping has been captured
+    void phaseMapCaptured(cv::Mat, bool);
+    /// Phase mapping has been captured; here's a
     /// pretty version for you to look at
-    void visualBinaryFrame(cv::Mat);
+    void visualPhaseMap(cv::Mat);
     /// Debug
     void debug(QString);
     
@@ -32,6 +31,7 @@ public slots:
     void frameCaptured(cv::Mat frame,
                        QCamera *cam,
                        QProjector::Pattern *pattern);
+
 
 private:
     /// Frames captured so far
@@ -45,10 +45,10 @@ private:
 
     /// Horizontal or vertical?
     bool horiz;
-    
+
     /// Test for completion; if complete, emit
     void testAndEmit();
 
 };
 
-#endif // BINARYCOMPILER_H
+#endif // PHASECOMPILER_H
