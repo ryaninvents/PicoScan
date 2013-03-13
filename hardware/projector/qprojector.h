@@ -25,7 +25,7 @@ public:
         /// configuration. This uniquely identifies the pattern
         /// within the queue, so it should be a determinate
         /// function of the pattern's class and parameters.
-        virtual unsigned int getPatternID()=0;
+        //virtual unsigned int getPatternID()=0;
     };
 
     /// Queue up a pattern.

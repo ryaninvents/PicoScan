@@ -11,7 +11,7 @@ class PhaseCompiler : public QObject
     Q_OBJECT
 public:
     /// Create the compiler
-    explicit PhaseCompiler(QObject *parent = 0);
+    explicit PhaseCompiler(QCamera *cam = 0, QObject *parent = 0);
     /// Request a frame
     /// \param width fringe width in px
     /// \param shifts number of (evenly-spaced) phase shifts
@@ -45,6 +45,9 @@ private:
 
     /// Horizontal or vertical?
     bool horiz;
+
+    /// Fringe width, px
+    uint fringeSize;
 
     /// Test for completion; if complete, emit
     void testAndEmit();

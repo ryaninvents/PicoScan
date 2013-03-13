@@ -1,12 +1,37 @@
 #include "phasecompiler.h"
 
-PhaseCompiler::PhaseCompiler(QObject *parent) :
-    QObject(parent)
+#include "../hardware/projector/sinusoidpattern.h"
+#include "triangulator.h"
+
+PhaseCompiler::PhaseCompiler(QCamera *cam,
+                             QObject *parent) :
+    QObject(parent),
+    camera(cam),
+    horiz(false)
 {
+    connect(cam,
+            SIGNAL(frameCaptured(cv::Mat,
+                                 QCamera*,
+                                 QProjector::Pattern*
+                                 )),
+            this,
+            SLOT(frameCaptured(cv::Mat,
+                               QCamera*,
+                               QProjector::Pattern*
+                               )));
 }
 
 void PhaseCompiler::requestFrame(uint width, uint shifts)
 {
+    uint n;
+    QProjector *projector = camera->getProjector();
+    frames.clear();
+    captured.clear();
+    frames.resize(shifts);
+    captured.resize(shifts,false);
+    for(n=0;n<shifts;n++){
+        projector->queue(new SinusoidPattern(width,n));
+    }
 }
 
 void PhaseCompiler::testAndEmit()

@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     geom/binarycompiler.cpp \
     geom/calibrator.cpp \
     geom/phasecompiler.cpp \
-    geom/surfel.cpp
+    geom/surfel.cpp \
+    hardware/projector/sinusoidpattern.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -67,7 +68,8 @@ HEADERS  += mainwindow.h \
     geom/binarycompiler.h \
     geom/calibrator.h \
     geom/phasecompiler.h \
-    geom/surfel.h
+    geom/surfel.h \
+    hardware/projector/sinusoidpattern.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
