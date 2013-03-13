@@ -8,6 +8,9 @@
 #define DEFAULT_ZOOM 1.0
 #define MOVE_SCALE 0.01
 
+
+#define MODEL_SCALE 5
+
 ModelViewWidget::ModelViewWidget(QWidget *parent) :
     QGLWidget(parent),
     cloud()
@@ -85,7 +88,7 @@ void ModelViewWidget::mouseMoveEvent(QMouseEvent *ev)
         if(yRot+yPlus < -90) yPlus = -90 - yRot;
         updateGL();
     }else if(ev->buttons()==Qt::RightButton){
-        cv::Vec3d tln(-x*MOVE_SCALE,y*MOVE_SCALE,0);
+        cv::Vec3d tln(x*MOVE_SCALE,-y*MOVE_SCALE,0);
         cv::Mat r = getCurrentModelRotation();
         cv::Mat dm = r*cv::Mat(tln);
         dTrans = cv::Vec3d(dm.at<double>(0),
@@ -110,7 +113,7 @@ void ModelViewWidget::mouseReleaseEvent(QMouseEvent *ev)
 
 void ModelViewWidget::wheelEvent(QWheelEvent *ev)
 {
-    zoom -= (GLdouble)ev->delta()/200.0;
+    zoom -= (GLdouble)ev->delta()/1000.0;
     if(zoom>MAX_ZOOM) zoom = MAX_ZOOM;
     if(zoom<MIN_ZOOM) zoom = MIN_ZOOM;
     updateGL();
@@ -130,14 +133,14 @@ void ModelViewWidget::setData(std::vector<cv::Vec3d> pts)
     updateGL();
 }
 
-void ModelViewWidget::zoomIn()
+void ModelViewWidget::zoomOut()
 {
     zoom*=0.9;
     if(zoom>MAX_ZOOM) zoom = MAX_ZOOM;
     updateGL();
 }
 
-void ModelViewWidget::zoomOut()
+void ModelViewWidget::zoomIn()
 {
     zoom/=0.9;
     if(zoom<MIN_ZOOM) zoom = MIN_ZOOM;
@@ -152,7 +155,17 @@ void ModelViewWidget::zoomFit()
 
 void ModelViewWidget::center()
 {
-    trans = cv::Vec3d();
+    cv::Vec3d avg = cv::Vec3d();
+    uint i;
+    for(i=0;i<cloud.size();i+=3){
+        avg[0] -= cloud[i];
+        avg[1] -= cloud[i+1];
+        avg[2] -= cloud[i+2];
+    }
+    avg[0] /= cloud.size()/3;
+    avg[1] /= cloud.size()/3;
+    avg[2] /= cloud.size()/3;
+    trans = avg*MODEL_SCALE;
     updateGL();
 }
 
@@ -188,8 +201,6 @@ void ModelViewWidget::drawFloor()
     } glEnd();
     glPopMatrix();
 }
-
-#define MODEL_SCALE 5
 
 void ModelViewWidget::drawCloud()
 {
@@ -267,8 +278,8 @@ void ModelViewWidget::drawAxes()
 cv::Mat ModelViewWidget::getCurrentModelRotation()
 {
     cv::Mat m1, m2;
-    cv::Rodrigues(cv::Vec3d(0.5*yRot/M_PI,0,0),m1);
-    cv::Rodrigues(cv::Vec3d(0,0.5*xRot/M_PI,0),m2);
-    return m1*m2;
+    cv::Rodrigues(cv::Vec3d(-(yRot+yPlus)/180*M_PI,0,0),m1);
+    cv::Rodrigues(cv::Vec3d(0,-(xRot+xPlus)/180*M_PI,0),m2);
+    return m2*m1;
 }
 
