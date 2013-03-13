@@ -2,14 +2,17 @@
 
 #include <QtOpenGL>
 #include <stdio.h>
-#define MAX_ZOOM -2.0
-#define MIN_ZOOM -90.0
-#define DEFAULT_ZOOM -8.0
+#include <opencv2/calib3d/calib3d.hpp>
+#define MAX_ZOOM 100
+#define MIN_ZOOM 0.01
+#define DEFAULT_ZOOM 1.0
+#define MOVE_SCALE 0.01
 
 ModelViewWidget::ModelViewWidget(QWidget *parent) :
     QGLWidget(parent),
     cloud()
 {
+    zoom = DEFAULT_ZOOM;
 }
 
 void ModelViewWidget::initializeGL() {
@@ -23,7 +26,7 @@ void ModelViewWidget::initializeGL() {
     glEnableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
     //srand(5);
-    zoom = -8.0;
+    zoom = DEFAULT_ZOOM;
     xRot = -18.0;
     yRot = 12.0;
 }
@@ -32,12 +35,16 @@ void ModelViewWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    glTranslatef(0.0,0.0,zoom);
+    glTranslatef(0.0,0.0,-8.0);
+    glScalef(zoom,zoom,zoom);
     glRotatef(yRot+yPlus, 1.0, 0.0, 0.0);
     glRotatef(xRot+xPlus, 0.0, 1.0, 0.0);
+    drawAxes();
+    glTranslated((GLdouble)(trans[0]+dTrans[0]),
+                 (GLdouble)(trans[1]+dTrans[1]),
+                 (GLdouble)(trans[2]+dTrans[2]));
     drawCloud();
 //    drawFloor();
-    drawAxes();
     glFlush();
 }
 
@@ -69,29 +76,41 @@ void ModelViewWidget::mousePressEvent(QMouseEvent *ev)
 
 void ModelViewWidget::mouseMoveEvent(QMouseEvent *ev)
 {
+    int x = ev->x() - mX;
+    int y = ev->y() - mY;
     if(ev->buttons()==Qt::LeftButton){
-        int x = ev->x() - mX;
-        int y = ev->y() - mY;
         xPlus = (GLdouble)x/10;
         yPlus = (GLdouble)y/10;
         if(yRot+yPlus > 90) yPlus = 90 - yRot;
         if(yRot+yPlus < -90) yPlus = -90 - yRot;
         updateGL();
+    }else if(ev->buttons()==Qt::RightButton){
+        cv::Vec3d tln(-x*MOVE_SCALE,y*MOVE_SCALE,0);
+        cv::Mat r = getCurrentModelRotation();
+        cv::Mat dm = r*cv::Mat(tln);
+        dTrans = cv::Vec3d(dm.at<double>(0),
+                           dm.at<double>(1),
+                           dm.at<double>(2));
+//        dTrans = cv::Vec3d(x*MOVE_SCALE,-y*MOVE_SCALE,0);
+        updateGL();
     }
 }
 
-void ModelViewWidget::mouseReleaseEvent(QMouseEvent *)
+void ModelViewWidget::mouseReleaseEvent(QMouseEvent *ev)
 {
     xRot+=xPlus;
     yRot+=yPlus;
     xPlus = 0;
     yPlus = 0;
+    trans = trans+dTrans;
+    dTrans = cv::Vec3d();
+    updateGL();
     releaseMouse();
 }
 
 void ModelViewWidget::wheelEvent(QWheelEvent *ev)
 {
-    zoom += (GLdouble)ev->delta()/200.0;
+    zoom -= (GLdouble)ev->delta()/200.0;
     if(zoom>MAX_ZOOM) zoom = MAX_ZOOM;
     if(zoom<MIN_ZOOM) zoom = MIN_ZOOM;
     updateGL();
@@ -128,6 +147,12 @@ void ModelViewWidget::zoomOut()
 void ModelViewWidget::zoomFit()
 {
     zoom = DEFAULT_ZOOM;
+    updateGL();
+}
+
+void ModelViewWidget::center()
+{
+    trans = cv::Vec3d();
     updateGL();
 }
 
@@ -237,5 +262,13 @@ void ModelViewWidget::drawAxes()
         glVertex3f(0.0,0.0,0.0);
         glVertex3f(0.0,0.0,1.0);
     } glEnd();
+}
+
+cv::Mat ModelViewWidget::getCurrentModelRotation()
+{
+    cv::Mat m1, m2;
+    cv::Rodrigues(cv::Vec3d(0.5*yRot/M_PI,0,0),m1);
+    cv::Rodrigues(cv::Vec3d(0,0.5*xRot/M_PI,0),m2);
+    return m1*m2;
 }
 

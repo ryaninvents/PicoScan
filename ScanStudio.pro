@@ -177,7 +177,8 @@ OTHER_FILES += \
     config.geom \
     gui/icons/oxygen/camera-web-64.png \
     gui/icons/oxygen/code-context.png \
-    gui/icons/oxygen/document-edit-encrypt.png
+    gui/icons/oxygen/document-edit-encrypt.png \
+    gui/icons/oxygen/snap-orthogonal.png
 
 RESOURCES += \
     gui/icons.qrc

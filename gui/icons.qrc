@@ -89,5 +89,6 @@
         <file>icons/oxygen/code-context.png</file>
         <file>icons/oxygen/camera-web-64.png</file>
         <file>icons/oxygen/document-edit-encrypt.png</file>
+        <file>icons/oxygen/snap-orthogonal.png</file>
     </qresource>
 </RCC>

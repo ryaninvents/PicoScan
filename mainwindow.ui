@@ -135,6 +135,7 @@ color:white;</string>
    <addaction name="actionZoom_out"/>
    <addaction name="actionZoom_best"/>
    <addaction name="actionZoom_in"/>
+   <addaction name="actionCenter"/>
    <addaction name="separator"/>
    <addaction name="actionFull_screen"/>
   </widget>
@@ -412,6 +413,18 @@ color:white;</string>
     <string>Select the encoding patterns to project</string>
    </property>
   </action>
+  <action name="actionCenter">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/snap-orthogonal.png</normaloff>:/oxygen/icons/oxygen/snap-orthogonal.png</iconset>
+   </property>
+   <property name="text">
+    <string>Center</string>
+   </property>
+   <property name="toolTip">
+    <string>Center the model in the window</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -424,6 +437,7 @@ color:white;</string>
     <slot>zoomIn()</slot>
     <slot>zoomOut()</slot>
     <slot>zoomFit()</slot>
+    <slot>center()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -620,6 +634,22 @@ color:white;</string>
     <hint type="destinationlabel">
      <x>353</x>
      <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCenter</sender>
+   <signal>triggered()</signal>
+   <receiver>modelView</receiver>
+   <slot>center()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>243</y>
     </hint>
    </hints>
   </connection>

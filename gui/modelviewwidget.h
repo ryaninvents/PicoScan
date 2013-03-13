@@ -28,7 +28,7 @@ public:
     void mouseMoveEvent(QMouseEvent * ev);
 
     /// Handle a mouse release.
-    void mouseReleaseEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent * ev);
 
     /// Handle when the user scrolls the mouse wheel.
     void wheelEvent(QWheelEvent * ev);
@@ -50,6 +50,9 @@ public slots:
     /// Zoom to the default level.
     void zoomFit();
 
+    /// Center the model.
+    void center();
+
 private:
     /// model rotation about Y axis in 3D space; that is,
     /// in response to mouse X-movement
@@ -59,6 +62,11 @@ private:
     GLdouble yRot;
     /// zoom level
     GLdouble zoom;
+
+    /// model translation in response to mouse
+    cv::Vec3d trans;
+    /// change in model translation during current drag op
+    cv::Vec3d dTrans;
 
     /// change in Y-rotation during the current drag operation
     GLdouble xPlus;
@@ -71,6 +79,9 @@ private:
     /// mouse press position Y
     int mY;
 
+    /// mouse button
+    uint mouseButton;
+
     /// draw the "turntable" floor
     void drawFloor();
 
@@ -82,6 +93,9 @@ private:
 
     /// draw axes
     void drawAxes();
+
+    /// get current rotation matrix for model view
+    cv::Mat getCurrentModelRotation();
 
     /// the mesh
     std::vector<GLdouble> cloud;
