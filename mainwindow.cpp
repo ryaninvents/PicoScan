@@ -35,16 +35,13 @@ MainWindow::MainWindow(QWidget *parent) :
             SLOT(cameraSettingsChanged(QCamera*,QCamera*)));
 
     ui->modelView->zoomFit();
-//    showDebug();
     dbgIm->setWindowTitle("Debugging -- camera view");
-//    dbgIm->showMaximized();
 
     QOpenCVCamera *capCam = new QOpenCVCamera(1);
     connect(capCam,
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
-//    capCam->startStream();
     capCam->setResolution(1600,1200);
     capCam->setFocalLength(1300);
     capCam->setPosition(cv::Vec3d(0,0,0));
@@ -64,19 +61,6 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->setProjector(pj);
 
     compiler = new BinaryCompiler(capCam);
-/*
-    std::vector<cv::Vec3d> helix;
-#define DNA_SCALE 1e-2
-    for(double d=0;d<6*M_PI;d+=0.01){
-        helix.push_back(cv::Vec3d(cos(d)*DNA_SCALE,
-                                  -d*DNA_SCALE,
-                                  sin(d)*DNA_SCALE));
-
-        helix.push_back(cv::Vec3d(-cos(d)*DNA_SCALE,
-                                  -d*DNA_SCALE,
-                                  -sin(d)*DNA_SCALE));
-    }
-    ui->modelView->setData(helix);*/
 
     // debug our components
 
@@ -218,6 +202,7 @@ void MainWindow::showCalStdSettings()
 
 void MainWindow::showCalibrationDialog()
 {
+    calib->setLeft(camera);
     calib->show();
 }
 

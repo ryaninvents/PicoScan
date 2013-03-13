@@ -7,6 +7,19 @@ ImageViewWidget::ImageViewWidget(QWidget *parent) :
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
+void ImageViewWidget::displayMat(cv::Mat frame, bool scale)
+{
+    if(frame.channels()==3){
+        cv::Mat3b im;// = frame;
+        frame.convertTo(im,CV_8UC3);
+        displayImage(im,scale);
+    }else{
+        cv::Mat_<double> im;// = frame;
+        frame.convertTo(im,CV_64F);
+        displayImage(im,scale);
+    }
+}
+
 void ImageViewWidget::displayImage(cv::Mat_<double> image, bool scale)
 {
     double inScale = 1.0;

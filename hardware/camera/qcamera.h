@@ -56,6 +56,8 @@ public slots:
     /// frame, \b false if the camera is incapable of
     /// emitting the desired type of frame.
     bool requestFrame(QProjector::Pattern *pat, QProjector *proj);
+    ///  Capture an ordinary frame.
+    bool requestFrame();
 
     void projectorAboutToAdvance();
 

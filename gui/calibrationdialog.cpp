@@ -19,7 +19,11 @@ CalibrationDialog::~CalibrationDialog()
 }
 
 void CalibrationDialog::takeSnap()
-{
+{/*
+    if(left){
+        connect(left,
+                SIGNAL(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)),)
+    }*/
     /*cv::Mat left, right;
     int n;/*
     left = manager->getFirst()->getFrame();
@@ -61,4 +65,21 @@ void CalibrationDialog::close()
 void CalibrationDialog::calibrateProjector()
 {
 
+}
+
+void CalibrationDialog::setLeft(QCamera *cam)
+{
+    left = cam;
+    ui->previewFirst->setCamera(cam);
+    ui->previewFirst->startCameraStream();
+}
+
+void CalibrationDialog::show()
+{
+    QDialog::show();
+    ui->previewFirst->startCameraStream();
+}
+
+void CalibrationDialog::leftFrameCaptured(cv::Mat frame, QCamera *cam, QProjector::Pattern *pattern)
+{
 }

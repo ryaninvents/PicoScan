@@ -3,25 +3,35 @@
 CameraStreamWidget::CameraStreamWidget(QWidget *parent) :
     ImageViewWidget(parent),
     running(false),
-    interval(100)
+    interval(250),
+    camera(0)
 {
-    noCamera = true;
+}
+
+void CameraStreamWidget::setCamera(QCamera *cam)
+{
+    if(camera) camera->disconnect(this);
+    camera = cam;
+    connect(camera,
+            SIGNAL(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)),
+            this,
+            SLOT(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)));
 }
 
 void CameraStreamWidget::startCameraStream()
-{/*
-    if(noCamera || running) return;
+{
+    if(!camera || running) return;
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(updateImage()));
     timer->start(interval);
-    running = true;*/
+    running = true;
 }
 
 void CameraStreamWidget::stopCameraStream()
-{/*
-    if(!running || noCamera) return;
+{
+    if(!running || !camera) return;
     timer->stop();
-    running = false;*/
+    running = false;
 }
 
 void CameraStreamWidget::toggleCameraStream(bool b)
@@ -34,14 +44,18 @@ void CameraStreamWidget::toggleCameraStream(bool b)
 }
 
 void CameraStreamWidget::updateImage()
-{/*
-    if(noCamera) return;
-    cv::Mat3b image;
-    image = camera->getFrame();
-    displayImage(image,true);*/
+{
+    if(!camera) return;
+    camera->requestFrame();
 }
 
 void CameraStreamWidget::closeCameraStream()
 {
     stopCameraStream();
+}
+
+void CameraStreamWidget::frameCaptured(cv::Mat frame, QCamera *cam, QProjector::Pattern *)
+{
+    if(cam!=camera) return;
+    displayMat(frame,true);
 }

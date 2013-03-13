@@ -24,7 +24,7 @@ public:
       Change the camera attached to the widget.
       \param cam The camera to stream to the widget.
       */
-    void setCamera(QCamera *cam){camera = cam;noCamera = false;}
+    void setCamera(QCamera *cam);
 
     /**
       Set the frame-taking interval of the widget, in milliseconds.
@@ -47,6 +47,8 @@ public slots:
     void updateImage();
     /** Close the camera stream so you can destroy the widget. */
     void closeCameraStream();
+    /// The camera has captured a frame.
+    void frameCaptured(cv::Mat frame,QCamera* cam,QProjector::Pattern*);
 
 private:
     /// Timer for controlling streaming

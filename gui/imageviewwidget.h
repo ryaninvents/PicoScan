@@ -13,6 +13,9 @@ public:
     /// Create the image viewer.
     explicit ImageViewWidget(QWidget *parent = 0);
 
+    /// Display an OpenCV matrix.
+    void displayMat(cv::Mat frame,bool scale);
+
     /// Display an image.
     /// \param image the image to display
     /// \param scale if \b true, the image will be scaled

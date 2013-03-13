@@ -72,6 +72,11 @@ bool QCamera::requestFrame(QProjector::Pattern *pat, QProjector *proj)
     return fetchFrame(pat);
 }
 
+bool QCamera::requestFrame()
+{
+    return fetchFrame(0);
+}
+
 void QCamera::projectorAboutToAdvance()
 {
     emit projectorPermissionToAdvance(readyToAdvance);

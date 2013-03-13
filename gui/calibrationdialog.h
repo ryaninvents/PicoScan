@@ -2,6 +2,8 @@
 #define CALIBRATIONDIALOG_H
 
 #include <QDialog>
+#include "hardware/camera/qcamera.h"
+#include "geom/calibrator.h"
 
 namespace Ui {
 class CalibrationDialog;
@@ -29,10 +31,20 @@ public slots:
     void close();
     /// Calibrate the projector.
     void calibrateProjector();
+    /// Set left camera
+    void setLeft(QCamera *cam);
+    /// Show the dialog
+    void show();
+    /// Left camera has captured a frame
+    void leftFrameCaptured(cv::Mat frame,QCamera* cam,QProjector::Pattern *pattern);
     
 private:
     /// UI
     Ui::CalibrationDialog *ui;
+    /// left camera
+    QCamera *left;
+
+    Calibrator *calib;
 };
 
 #endif // CALIBRATIONDIALOG_H

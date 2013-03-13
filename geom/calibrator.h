@@ -4,28 +4,38 @@
 #include <QObject>
 #include "../hardware/camera/qcamera.h"
 
+/// Utility class for performing calibrations.
 class Calibrator : public QObject
 {
     Q_OBJECT
 public:
+    /// Create the calibrator.
     explicit Calibrator(QObject *parent = 0);
-    enum CalMode{
-        CAMERA_MODE,
-        PROJECTOR_MODE
-    };
+
+    /// Set the left camera
+    void setLeft(QCamera *cam);
+    /// Set the right camera
+    void setRight(QCamera *cam);
     
 signals:
     
 public slots:
+    /// One of our cameras has captured a frame
     void frameCaptured(cv::Mat frame,
                        QCamera *cam,
-                       QProjector::Pattern *pattern);
+                       QProjector::Pattern *);
+    /// Request a stereo frame
+    void takeStereoFrame();
 
 private:
-    QCamera *camera1;
-    QCamera *camera2;
-    std::vector<cv::Mat> frames1;
-    std::vector<cv::Mat> frames2;
+    /// Camera on the left
+    QCamera *leftCam;
+    /// Camera on the right
+    QCamera *rightCam;
+    /// Frames captured from left camera
+    std::vector<cv::Mat> framesLeft;
+    /// Frames captured from right camera
+    std::vector<cv::Mat> framesRight;
     
 };
 
