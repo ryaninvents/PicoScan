@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "../hardware/camera/qcamera.h"
+#include "../hardware/standards/calibrationstandard.h"
 
 /// Utility class for performing calibrations.
 class Calibrator : public QObject
@@ -16,8 +17,13 @@ public:
     void setLeft(QCamera *cam);
     /// Set the right camera
     void setRight(QCamera *cam);
+
+    /// Calibrate the cameras
+    double calibrate(CalibrationStandard *standard);
     
 signals:
+    /// Calibration patterns
+    void countFrame(int);
     
 public slots:
     /// One of our cameras has captured a frame
@@ -36,6 +42,8 @@ private:
     std::vector<cv::Mat> framesLeft;
     /// Frames captured from right camera
     std::vector<cv::Mat> framesRight;
+
+    void countCalibrationFrames();
     
 };
 

@@ -33,18 +33,27 @@ public slots:
     void calibrateProjector();
     /// Set left camera
     void setLeft(QCamera *cam);
+    /// One of our cameras has captured a frame
+    void frameCaptured(cv::Mat frame,QCamera* cam,QProjector::Pattern *pattern);
+    /// Set right camera
+    void setRight(QCamera *cam);
+
+    /// Set counter value
+    void setCounter(int ctr);
     /// Show the dialog
     void show();
-    /// Left camera has captured a frame
-    void leftFrameCaptured(cv::Mat frame,QCamera* cam,QProjector::Pattern *pattern);
     
 private:
     /// UI
     Ui::CalibrationDialog *ui;
     /// left camera
     QCamera *left;
+    /// right camera
+    QCamera *right;
 
     Calibrator *calib;
+
+    CalibrationStandard *standard;
 };
 
 #endif // CALIBRATIONDIALOG_H
