@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this,
             SLOT(debug(QString)));
     capCam->setResolution(1600,1200);
-    capCam->setFocalLength(1300);
+    capCam->setFocalLength(1400);
     capCam->setPosition(cv::Vec3d(0,0,0));
     capCam->setOrientation(cv::Vec3d(0,0,0));
 
@@ -55,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pj->setResolution(640,480);
     pj->setPosition(cv::Vec3d(0.15,-0.03,0));
     pj->setOrientation(cv::Vec3d(0.0,-0.5,0.0));
-    pj->setFocalLength(5000);
+    pj->setFocalLength(9500);
 
     projector = pj;
     capCam->setProjector(pj);
@@ -68,10 +68,10 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
-    connect(compiler,
-            SIGNAL(visualBinaryFrame(cv::Mat)),
-            this,
-            SLOT(debugImage(cv::Mat)));
+//    connect(compiler,
+//            SIGNAL(visualBinaryFrame(cv::Mat)),
+//            this,
+//            SLOT(debugImage(cv::Mat)));
     connect(compiler,
             SIGNAL(visualBinaryFrame(cv::Mat)),
             this,

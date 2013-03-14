@@ -8,7 +8,8 @@
 /// monitor, assumed to be a projector.
 /// Despite its name, it need not be the second
 /// display; it can also be used on the primary
-/// or any other display hooked up to the system.
+/// or any other display hooked up to the system,
+/// provided the code is set up right.
 class SecondDisplayProjector : public QProjector
 {
     Q_OBJECT

@@ -6,7 +6,7 @@
 #define MAX_ZOOM 100
 #define MIN_ZOOM 0.01
 #define DEFAULT_ZOOM 1.0
-#define MOVE_SCALE 0.01
+#define MOVE_SCALE 0.005/zoom
 
 
 #define MODEL_SCALE 5
@@ -262,6 +262,7 @@ void ModelViewWidget::drawCube()
 
 void ModelViewWidget::drawAxes()
 {
+    glLineWidth(3.5);
     glBegin(GL_LINES);{
         glColor3f(0.5,0.0,0.0);
         glVertex3f(0.0,0.0,0.0);
