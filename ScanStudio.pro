@@ -39,7 +39,9 @@ SOURCES += main.cpp\
     geom/calibrator.cpp \
     geom/phasecompiler.cpp \
     geom/surfel.cpp \
-    hardware/projector/sinusoidpattern.cpp
+    hardware/projector/sinusoidpattern.cpp \
+    geom/calibrationcompiler.cpp \
+    hardware/projector/flatcolorpattern.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -69,7 +71,9 @@ HEADERS  += mainwindow.h \
     geom/calibrator.h \
     geom/phasecompiler.h \
     geom/surfel.h \
-    hardware/projector/sinusoidpattern.h
+    hardware/projector/sinusoidpattern.h \
+    geom/calibrationcompiler.h \
+    hardware/projector/flatcolorpattern.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

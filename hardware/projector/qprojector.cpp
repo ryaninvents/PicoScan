@@ -117,3 +117,13 @@ void QProjector::requestAdvance()
         processQueue();
     }
 }
+
+void QProjector::Pattern::setID(int id)
+{
+    _id = id;
+}
+
+int QProjector::Pattern::getID()
+{
+    return _id;
+}
