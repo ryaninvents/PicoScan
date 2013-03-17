@@ -17,7 +17,7 @@ ChessboardStandard::ChessboardStandard(cv::Size size, double scaleX, double scal
 }
 
 std::vector<cv::Point2f> ChessboardStandard::getImagePoints(
-        cv::Mat image,
+        const cv::Mat image,
         bool *success)
 {
     std::vector<cv::Point2f> corners;

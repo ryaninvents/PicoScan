@@ -22,7 +22,7 @@ DotMatrixStandard::DotMatrixStandard(cv::Size size, double scale):
 }
 
 std::vector<cv::Point2f> DotMatrixStandard::getImagePoints(
-        cv::Mat image,
+        const cv::Mat image,
         bool *success)
 {
     std::vector<cv::Point2f> corners;

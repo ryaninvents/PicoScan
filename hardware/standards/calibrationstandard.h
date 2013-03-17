@@ -27,7 +27,7 @@ public:
         \param success \a true if the standard was found,
                         \a false otherwise.
         \returns an ordered list of all points in the image. */
-    virtual std::vector<cv::Point2f> getImagePoints(cv::Mat image,
+    virtual std::vector<cv::Point2f> getImagePoints(const cv::Mat image,
                                                     bool *success) = 0;
 
     /** Locate the standard in every image. */

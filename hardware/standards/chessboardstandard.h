@@ -33,7 +33,7 @@ public:
     ChessboardStandard(cv::Size size, double scaleX, double scaleY);
 
     /// Find the chessboard in the image.
-    std::vector<cv::Point2f> getImagePoints(cv::Mat image, bool *success);
+    std::vector<cv::Point2f> getImagePoints(const cv::Mat image, bool *success);
 
     /// Get a list of points on this chessboard.
     std::vector<cv::Point3f> getObjectPoints();

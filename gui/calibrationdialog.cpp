@@ -9,19 +9,14 @@
 
 CalibrationDialog::CalibrationDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CalibrationDialog),
-    calib(new Calibrator)
+    ui(new Ui::CalibrationDialog)
 {
     ui->setupUi(this);
 
-    standard = new DotMatrixStandard(cv::Size(9,17),
-                                     17e-3, 8.5e-3,
-                                     8.5e-3);
+//    standard = new DotMatrixStandard(cv::Size(9,17),
+//                                     17e-3, 8.5e-3,
+//                                     8.5e-3);
 
-    connect(calib,
-            SIGNAL(countFrame(int)),
-            this,
-            SLOT(setCounter(int)));
 }
 
 
@@ -32,12 +27,12 @@ CalibrationDialog::~CalibrationDialog()
 
 void CalibrationDialog::takeSnap()
 {
-    calib->takeStereoFrame();
+//    calib->takeStereoFrame();
 }
 
 void CalibrationDialog::calibrate()
 {
-    calib->calibrate(standard);
+//    calib->calibrate(standard);
     close();
 }
 
@@ -62,7 +57,7 @@ void CalibrationDialog::calibrateProjector()
 void CalibrationDialog::setLeft(QCamera *cam)
 {
     left = cam;
-    calib->setLeft(cam);
+//    calib->setLeft(cam);
     ui->previewFirst->setCamera(cam);
     ui->previewFirst->startCameraStream();
 }
@@ -80,7 +75,7 @@ void CalibrationDialog::frameCaptured(cv::Mat frame, QCamera *cam, QProjector::P
 void CalibrationDialog::setRight(QCamera *cam)
 {
     right = cam;
-    calib->setRight(cam);
+//    calib->setRight(cam);
     ui->previewSecond->setCamera(cam);
     ui->previewSecond->startCameraStream();
 }

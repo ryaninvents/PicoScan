@@ -33,10 +33,8 @@ SOURCES += main.cpp\
     hardware/projector/graycodepattern.cpp \
     gui/projectorsettingsdialog.cpp \
     gui/secondmonitorprojectordialog.cpp \
-    gui/fileprojectordialog.cpp \
     gui/opencvcameradialog.cpp \
     geom/binarycompiler.cpp \
-    geom/calibrator.cpp \
     geom/phasecompiler.cpp \
     geom/surfel.cpp \
     hardware/projector/sinusoidpattern.cpp \
@@ -65,10 +63,8 @@ HEADERS  += mainwindow.h \
     hardware/projector/graycodepattern.h \
     gui/projectorsettingsdialog.h \
     gui/secondmonitorprojectordialog.h \
-    gui/fileprojectordialog.h \
     gui/opencvcameradialog.h \
     geom/binarycompiler.h \
-    geom/calibrator.h \
     geom/phasecompiler.h \
     geom/surfel.h \
     hardware/projector/sinusoidpattern.h \

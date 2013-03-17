@@ -30,7 +30,7 @@ public:
     DotMatrixStandard(cv::Size size, double scale);
 
     /// Find standard points in an image.
-    std::vector<cv::Point2f> getImagePoints(cv::Mat image, bool *success);
+    std::vector<cv::Point2f> getImagePoints(const cv::Mat image, bool *success);
 
     /// Get a list of the points in this standard.
     std::vector<cv::Point3f> getObjectPoints();

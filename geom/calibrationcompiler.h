@@ -26,18 +26,21 @@ public slots:
     /// One of the cameras has captured a frame
     void frameCaptured(cv::Mat frame,
                        QCamera *cam,
-                       QProjector::Pattern *pattern);
+                       QProjector::Pattern *);
 
     /// Take a stereo frame
     void takeStereoFrame();
 
+    /// Calibrate the setup
+    double calibrate();
+
 private:
     /// POIs from left camera
-    std::vector<std::vector<cv::Point3f> >
-        framesLeft;
+    std::vector<std::vector<cv::Point2f> >
+        poisLeft;
     /// POIs from right camera
-    std::vector<std::vector<cv::Point3f> >
-        framesRight;
+    std::vector<std::vector<cv::Point2f> >
+        poisRight;
 
     /// Left camera
     QCamera *cameraLeft;
@@ -53,6 +56,8 @@ private:
     bool waitingForRight;
     /// Failed to find a pattern?
     bool fail;
+
+
     
 };
 
