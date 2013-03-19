@@ -43,13 +43,24 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
-    capCam->setResolution(1600,1200);
+    capCam->setResolution(800,600);
     capCam->setFocalLength(1400);
     capCam->setPosition(cv::Vec3d(0,0,0));
     capCam->setOrientation(cv::Vec3d(0,0,0));
 
     camera = capCam;
 
+    QOpenCVCamera *capCam2 = new QOpenCVCamera(2);
+    connect(capCam2,
+            SIGNAL(debug(QString)),
+            this,
+            SLOT(debug(QString)));
+    capCam2->setResolution(800,600);
+    capCam2->setFocalLength(1400);
+    capCam2->setPosition(cv::Vec3d(-0.115,0,0));
+    capCam2->setOrientation(cv::Vec3d(0,0,0));
+
+    camera2 = capCam2;
 
     SecondDisplayProjector *pj = new SecondDisplayProjector();
     pj->setScreen(1);
@@ -59,9 +70,11 @@ MainWindow::MainWindow(QWidget *parent) :
     pj->setFocalLength(9500);
 
     projector = pj;
-    capCam->setProjector(pj);
+    capCam->connectProjector(pj);
+    capCam2->connectProjector(pj);
 
     compiler = new BinaryCompiler(capCam);
+    compiler->setProjector(pj);
 
     // debug our components
 
@@ -219,6 +232,8 @@ void MainWindow::showCalStdSettings()
 void MainWindow::showCalibrationDialog()
 {
     calib->setLeft(camera);
+    calib->setRight(camera2);
+    calib->setProjector(projector);
     calib->show();
 }
 

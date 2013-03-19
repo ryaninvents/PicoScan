@@ -52,6 +52,8 @@ private:
     /// Test for completion; if complete, emit
     void testAndEmit();
 
+    QProjector *projector;
+
 };
 
 #endif // PHASECOMPILER_H

@@ -57,7 +57,7 @@ void CalibrationDialog::calibrateProjector()
 void CalibrationDialog::setLeft(QCamera *cam)
 {
     left = cam;
-//    calib->setLeft(cam);
+    calib->setLeft(cam);
     ui->previewFirst->setCamera(cam);
     ui->previewFirst->startCameraStream();
 }
@@ -75,9 +75,14 @@ void CalibrationDialog::frameCaptured(cv::Mat frame, QCamera *cam, QProjector::P
 void CalibrationDialog::setRight(QCamera *cam)
 {
     right = cam;
-//    calib->setRight(cam);
+    calib->setRight(cam);
     ui->previewSecond->setCamera(cam);
     ui->previewSecond->startCameraStream();
+}
+
+void CalibrationDialog::setProjector(QProjector *proj)
+{
+    calib->setProjector(proj);
 }
 
 void CalibrationDialog::setCounter(int ctr)

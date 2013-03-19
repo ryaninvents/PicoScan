@@ -17,6 +17,7 @@ public:
     /// Request a frame
     /// \param nmax number of binary bits
     void requestFrame(uint nmax);
+    void setProjector(QProjector *pj);
     
 signals:
     /// Binary frame has been captured
@@ -42,6 +43,8 @@ private:
 
     /// Our camera
     QCamera *camera;
+    /// Our projector
+    QProjector *projector;
 
     /// Horizontal or vertical?
     bool horiz;

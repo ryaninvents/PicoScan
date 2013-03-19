@@ -33,10 +33,7 @@ public:
     void setID(uint i);
 
     /// Set the projector this camera is tied to
-    void setProjector(QProjector *p);
-
-    /// Get the projector
-    QProjector *getProjector();
+    void connectProjector(QProjector *projector);
 
 signals:
     /// A frame has been captured.

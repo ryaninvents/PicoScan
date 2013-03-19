@@ -37,6 +37,10 @@ public slots:
     /// Clear frames from memory
     void removeFrames();
 
+    void setLeft(QCamera *cam);
+    void setRight(QCamera *cam);
+    void setProjector(QProjector *pj);
+
 private:
     /// POIs from left camera
     std::vector<std::vector<cv::Point2f> >
@@ -49,6 +53,8 @@ private:
     QCamera *cameraLeft;
     /// Right camera
     QCamera *cameraRight;
+    /// Projector
+    QProjector *projector;
 
     /// Calibration standard
     CalibrationStandard *standard;

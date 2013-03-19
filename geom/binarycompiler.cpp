@@ -28,7 +28,6 @@ BinaryCompiler::BinaryCompiler(QCamera *cam,
 void BinaryCompiler::requestFrame(uint nmax)
 {
     uint n;
-    QProjector *projector = camera->getProjector();
     nmax++;
     frames.clear();
     captured.clear();
@@ -38,6 +37,11 @@ void BinaryCompiler::requestFrame(uint nmax)
         projector->queue(new GrayCodePattern(n,false,horiz));
         projector->queue(new GrayCodePattern(n,true,horiz));
     }
+}
+
+void BinaryCompiler::setProjector(QProjector *pj)
+{
+    projector = pj;
 }
 
 void BinaryCompiler::frameCaptured(

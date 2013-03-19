@@ -4,6 +4,9 @@
 
 CalibrationCompiler::CalibrationCompiler(QObject *parent) :
     QObject(parent),
+    cameraLeft(0),
+    cameraRight(0),
+    projector(0),
     waitingForLeft(false),
     waitingForRight(false),
     fail(false)
@@ -51,7 +54,6 @@ void CalibrationCompiler::frameCaptured(
 void CalibrationCompiler::takeStereoFrame()
 {
     if(waitingForLeft||waitingForRight) return;
-    QProjector *projector = cameraLeft->getProjector();
     FlatColorPattern *pattern = new FlatColorPattern();
     pattern->setID(poisLeft.size());
     projector->queue(pattern);
@@ -127,4 +129,19 @@ void CalibrationCompiler::removeFrames()
     poisLeft.clear();
     poisRight.clear();
     emit framesCaptured(0u);
+}
+
+void CalibrationCompiler::setLeft(QCamera *cam)
+{
+    cameraLeft = cam;
+}
+
+void CalibrationCompiler::setRight(QCamera *cam)
+{
+    cameraRight = cam;
+}
+
+void CalibrationCompiler::setProjector(QProjector *pj)
+{
+    projector = pj;
 }

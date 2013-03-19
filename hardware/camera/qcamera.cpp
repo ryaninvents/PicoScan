@@ -29,8 +29,9 @@ void QCamera::setID(uint i)
     id=i;
 }
 
-void QCamera::setProjector(QProjector *p)
+void QCamera::connectProjector(QProjector *p)
 {
+    if(!p) return;
     projector = p;
     connect(projector,
             SIGNAL(patternProjected(QProjector::Pattern*,QProjector*)),
@@ -44,11 +45,6 @@ void QCamera::setProjector(QProjector *p)
             SIGNAL(projectorPermissionToAdvance(bool)),
             projector,
             SLOT(permissionToAdvance(bool)));
-}
-
-QProjector *QCamera::getProjector()
-{
-    return projector;
 }
 
 bool QCamera::startStream()
@@ -90,5 +86,5 @@ void QCamera::emitFrame(cv::Mat frame)
 void QCamera::ready()
 {
     readyToAdvance = true;
-    projector->requestAdvance();
+    if(projector) projector->requestAdvance();
 }

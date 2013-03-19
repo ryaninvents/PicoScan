@@ -37,6 +37,8 @@ public slots:
     void frameCaptured(cv::Mat frame,QCamera* cam,QProjector::Pattern *pattern);
     /// Set right camera
     void setRight(QCamera *cam);
+    /// Set projector
+    void setProjector(QProjector *proj);
 
     /// Set counter value
     void setCounter(int ctr);

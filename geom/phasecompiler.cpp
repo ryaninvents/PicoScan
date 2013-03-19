@@ -24,7 +24,6 @@ PhaseCompiler::PhaseCompiler(QCamera *cam,
 void PhaseCompiler::requestFrame(uint width, uint shifts)
 {
     uint n;
-    QProjector *projector = camera->getProjector();
     frames.clear();
     captured.clear();
     frames.resize(shifts);

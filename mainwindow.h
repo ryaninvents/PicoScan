@@ -87,6 +87,7 @@ public slots:
     /// Write debug image 2
     void writeDebugImg2(cv::Mat im);
 
+    /// Save to an STL file
     void saveSTL();
 
 
@@ -129,6 +130,7 @@ private:
 
     /// Testing camera capture
     QCamera *camera;
+    QCamera *camera2;
 
     /// Testing projector
     QProjector *projector;
