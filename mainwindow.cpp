@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <QScrollBar>
+#include <QFileDialog>
 #include "hardware/camera/qopencvcamera.h"
 #include "hardware/projector/seconddisplayprojector.h"
 #include "geom/triangulator.h"
@@ -150,12 +151,14 @@ void MainWindow::debugImage(cv::Mat im)
 
 void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
 {
-    std::vector<cv::Vec3d> s = Triangulator::computeGeometry(
+    geom = Triangulator::computeSheet(
                 binary,
                 camera,
                 projector,
                 1);
-    ui->modelView->setData(s);
+    geom->removeNonManifold();
+    geom->removeNonManifold();
+    ui->modelView->setData(geom);
 }
 
 void MainWindow::writeDebugImg1(cv::Mat im)
@@ -166,6 +169,19 @@ void MainWindow::writeDebugImg1(cv::Mat im)
 void MainWindow::writeDebugImg2(cv::Mat im)
 {
     cv::imwrite("/home/ryan/Documents/mqp-data/debug/cam2.png",im);
+}
+
+void MainWindow::saveSTL()
+{
+    QString fnm;
+    fnm = QFileDialog::getSaveFileName(
+                    this,
+                    tr("Save STL"),
+                    QDir::homePath(),
+                    tr("Standard Tesselation Language(*.stl)"));
+    if(fnm.length()>0){
+        geom->saveSTL(fnm.toLocal8Bit().data());
+    }
 }
 
 void MainWindow::showAbout()

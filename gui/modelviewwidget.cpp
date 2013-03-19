@@ -119,6 +119,13 @@ void ModelViewWidget::wheelEvent(QWheelEvent *ev)
     updateGL();
 }
 
+void ModelViewWidget::setData(Sheet *data)
+{
+    sheet = data;
+    cloud = data->getPoints();
+    updateGL();
+}
+/*
 void ModelViewWidget::setData(std::vector<cv::Vec3d> pts)
 {
     uint i;
@@ -131,7 +138,9 @@ void ModelViewWidget::setData(std::vector<cv::Vec3d> pts)
     printf("added %d points to model view\n",
            cloud.size()/3);
     updateGL();
-}
+}*/
+
+
 
 void ModelViewWidget::zoomOut()
 {
@@ -274,6 +283,12 @@ void ModelViewWidget::drawAxes()
         glVertex3f(0.0,0.0,0.0);
         glVertex3f(0.0,0.0,1.0);
     } glEnd();
+}
+
+void ModelViewWidget::drawSheet()
+{
+    cloud = sheet->getPoints();
+    drawCloud();
 }
 
 cv::Mat ModelViewWidget::getCurrentModelRotation()

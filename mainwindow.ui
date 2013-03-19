@@ -68,7 +68,7 @@ color:white;</string>
      <x>0</x>
      <y>0</y>
      <width>707</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -653,6 +653,22 @@ color:white;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionExport_to_STL</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveSTL()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAbout()</slot>
@@ -664,5 +680,6 @@ color:white;</string>
   <slot>takeFrame()</slot>
   <slot>showDebug()</slot>
   <slot>showProjectorSettings()</slot>
+  <slot>saveSTL()</slot>
  </slots>
 </ui>

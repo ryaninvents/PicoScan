@@ -87,6 +87,8 @@ public slots:
     /// Write debug image 2
     void writeDebugImg2(cv::Mat im);
 
+    void saveSTL();
+
 
 
 protected:
@@ -137,6 +139,8 @@ private:
     BinaryCompiler *compiler;
 
     BinaryCompiler *compiler2;
+
+    Sheet *geom;
 
 };
 
