@@ -129,6 +129,29 @@ uint Sheet::getHeight()
     return cloud.rows;
 }
 
+void Sheet::removeNonManifold()
+{
+    cv::Mat_<bool> remove(cloud.rows,cloud.cols);
+    uint u,v;
+    for(u=0;u<remove.cols;u++){
+        for(v=0;v<remove.rows;v++){
+            if(     !hasPointAt(u-1,v) ||
+                    !hasPointAt(u+1,v) ||
+                    !hasPointAt(u,v-1) ||
+                    !hasPointAt(u,v+1)){
+                remove.at<bool>(v,u) = true;
+            }else remove.at<bool>(v,u) = false;
+        }
+    }
+    for(u=0;u<remove.cols;u++){
+        for(v=0;v<remove.rows;v++){
+            if(remove.at<bool>(v,u)){
+                alpha.at<bool>(v,u) = false;
+            }
+        }
+    }
+}
+
 Sheet Sheet::decimate(int n)
 {
     Sheet sheet(cv::Size(getWidth()/n+1,getHeight()/n+1));

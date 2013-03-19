@@ -120,3 +120,11 @@ double CalibrationCompiler::calibrate()
 
     return (rpeL+rpeR)/2;
 }
+
+void CalibrationCompiler::removeFrames()
+{
+    if(waitingForLeft||waitingForRight) return;
+    poisLeft.clear();
+    poisRight.clear();
+    emit framesCaptured(0u);
+}

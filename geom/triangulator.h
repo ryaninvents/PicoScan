@@ -63,6 +63,10 @@ public:
     /// Calibrate a single camera.
 
     /// Calibrate a stereo pair.
+    Sheet *computeSheet(cv::Mat encoding,
+                        QCamera *camera,
+                        QProjector *projector,
+                        uint decimation);
 };
 
 #endif // TRIANGULATOR_H

@@ -21,7 +21,7 @@ signals:
     void framesCaptured(uint);
     /// Setup has been calibrated
     void calibrated(QCamera*, QCamera*, QProjector*);
-    
+
 public slots:
     /// One of the cameras has captured a frame
     void frameCaptured(cv::Mat frame,
@@ -33,6 +33,9 @@ public slots:
 
     /// Calibrate the setup
     double calibrate();
+
+    /// Clear frames from memory
+    void removeFrames();
 
 private:
     /// POIs from left camera
@@ -58,7 +61,7 @@ private:
     bool fail;
 
 
-    
+
 };
 
 #endif // CALIBRATIONCOMPILER_H

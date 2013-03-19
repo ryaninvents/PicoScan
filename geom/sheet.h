@@ -92,6 +92,9 @@ public:
     /// Get the parametric height
     uint getHeight();
 
+    /// Remove non-manifold points.
+    void removeNonManifold();
+
 
 
 private:

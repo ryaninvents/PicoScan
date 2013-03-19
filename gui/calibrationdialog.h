@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "hardware/camera/qcamera.h"
+#include "geom/calibrationcompiler.h"
 
 namespace Ui {
 class CalibrationDialog;
@@ -49,6 +50,10 @@ private:
     QCamera *left;
     /// right camera
     QCamera *right;
+    /// calibrator
+    CalibrationCompiler *calib;
+    /// standard
+    CalibrationStandard *standard;
 
 };
 

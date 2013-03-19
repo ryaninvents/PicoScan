@@ -69,6 +69,41 @@ std::vector<cv::Vec3d> Triangulator::computeGeometry(
 
 }
 
+Sheet* Triangulator::computeSheet(
+        cv::Mat encoding,
+        QCamera *camera,
+        QProjector *projector,
+        uint decimation)
+{
+    double px;
+    uint x,y;
+    cv::Vec3d P_up, P_fwd, M_hat, D, M, Cp;
+    Sheet *sheet = new Sheet(cv::Size(encoding.cols,encoding.rows));
+
+    D = projector->getPosition() - camera->getPosition();
+    P_up = projector->getUpVector();
+    Cp = camera->getPosition();
+
+    encoding.convertTo(encoding,CV_64F);
+
+    for(x=0; x<(encoding.cols); x++){
+        for(y=0; y<(encoding.rows); y++){
+            px = encoding.at<double>(y,x);
+            if(px<0) continue;
+            P_fwd = projector->getPixelRay(px,0);
+            M_hat = camera->getPixelRay(x,y);
+            M = Triangulator::sumTo(M_hat,P_up,P_fwd,D)
+                    +Cp;
+            if(M[1]>4 || M[2]<0) continue;
+
+            sheet->setPoint(x,y,M);
+
+        }
+    }
+    return sheet;
+
+}
+
 cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
                               const cv::Vec3d P_up,
                               const cv::Vec3d P_fwd,

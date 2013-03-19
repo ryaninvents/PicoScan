@@ -9,13 +9,14 @@
 
 CalibrationDialog::CalibrationDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CalibrationDialog)
+    ui(new Ui::CalibrationDialog),
+    calib(new CalibrationCompiler)
 {
     ui->setupUi(this);
 
-//    standard = new DotMatrixStandard(cv::Size(9,17),
-//                                     17e-3, 8.5e-3,
-//                                     8.5e-3);
+    standard = new DotMatrixStandard(cv::Size(9,17),
+                                     17e-3, 8.5e-3,
+                                     8.5e-3);
 
 }
 
@@ -27,12 +28,11 @@ CalibrationDialog::~CalibrationDialog()
 
 void CalibrationDialog::takeSnap()
 {
-//    calib->takeStereoFrame();
+    calib->takeStereoFrame();
 }
 
 void CalibrationDialog::calibrate()
 {
-//    calib->calibrate(standard);
     close();
 }
 
