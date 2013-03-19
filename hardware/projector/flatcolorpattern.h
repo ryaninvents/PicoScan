@@ -8,7 +8,7 @@
 class FlatColorPattern : public QProjector::Pattern
 {
 public:
-    /// Create a white pattern
+    /// Create a blank pattern
     FlatColorPattern();
 
     QImage generatePattern(int width, int height);
