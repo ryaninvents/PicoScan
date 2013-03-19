@@ -1,6 +1,7 @@
 #include "calibrationcompiler.h"
 #include "hardware/projector/flatcolorpattern.h"
 #include <opencv2/calib3d/calib3d.hpp>
+#include <iostream>
 
 CalibrationCompiler::CalibrationCompiler(QObject *parent) :
     QObject(parent),
@@ -20,7 +21,9 @@ void CalibrationCompiler::frameCaptured(
 {
     bool success;
     std::vector<cv::Point2f> imagePts;
-    if(!waitingForLeft && !waitingForRight) return;
+    if(!waitingForLeft && !waitingForRight){
+        return;
+    }
     if(cam==cameraLeft){
         imagePts = standard->getImagePoints(frame,&success);
         if(success){
@@ -134,14 +137,27 @@ void CalibrationCompiler::removeFrames()
 void CalibrationCompiler::setLeft(QCamera *cam)
 {
     cameraLeft = cam;
+    connect(cam,
+            SIGNAL(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)),
+            this,
+            SLOT(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)));
 }
 
 void CalibrationCompiler::setRight(QCamera *cam)
 {
     cameraRight = cam;
+    connect(cam,
+            SIGNAL(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)),
+            this,
+            SLOT(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)));
 }
 
 void CalibrationCompiler::setProjector(QProjector *pj)
 {
     projector = pj;
+}
+
+void CalibrationCompiler::setStandard(CalibrationStandard *s)
+{
+    standard = s;
 }

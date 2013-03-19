@@ -30,6 +30,7 @@ std::vector<cv::Point2f> DotMatrixStandard::getImagePoints(
                                    offset<0.000001?
                                        cv::CALIB_CB_SYMMETRIC_GRID:
                                        cv::CALIB_CB_ASYMMETRIC_GRID);
+    std::cout << (*success?"success":"failure") << std::endl;
     return corners;
 }
 

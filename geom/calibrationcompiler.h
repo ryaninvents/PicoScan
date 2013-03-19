@@ -40,6 +40,7 @@ public slots:
     void setLeft(QCamera *cam);
     void setRight(QCamera *cam);
     void setProjector(QProjector *pj);
+    void setStandard(CalibrationStandard *s);
 
 private:
     /// POIs from left camera

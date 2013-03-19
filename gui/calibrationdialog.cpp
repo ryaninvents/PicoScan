@@ -17,6 +17,12 @@ CalibrationDialog::CalibrationDialog(QWidget *parent) :
     standard = new DotMatrixStandard(cv::Size(9,17),
                                      17e-3, 8.5e-3,
                                      8.5e-3);
+    calib->setStandard(standard);
+
+    connect(calib,
+            SIGNAL(framesCaptured(uint)),
+            this,
+            SLOT(setCounter(uint)));
 
 }
 
@@ -85,7 +91,7 @@ void CalibrationDialog::setProjector(QProjector *proj)
     calib->setProjector(proj);
 }
 
-void CalibrationDialog::setCounter(int ctr)
+void CalibrationDialog::setCounter(uint ctr)
 {
     ui->imageCount->setText(QString::number(ctr));
 }

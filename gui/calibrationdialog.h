@@ -41,7 +41,7 @@ public slots:
     void setProjector(QProjector *proj);
 
     /// Set counter value
-    void setCounter(int ctr);
+    void setCounter(uint ctr);
     /// Show the dialog
     void show();
     

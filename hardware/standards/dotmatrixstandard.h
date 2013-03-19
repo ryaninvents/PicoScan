@@ -2,6 +2,7 @@
 #define DOTMATRIXSTANDARD_H
 
 #include "calibrationstandard.h"
+#include <iostream>
 
 /// A dot-matrix standard consisting of a grid of dots.
 /// The dots may form a regular grid, or they may form
