@@ -40,7 +40,9 @@ SOURCES += main.cpp\
     hardware/projector/sinusoidpattern.cpp \
     geom/calibrationcompiler.cpp \
     hardware/projector/flatcolorpattern.cpp \
-    gui/deviceparametersdialog.cpp
+    gui/deviceparametersdialog.cpp \
+    gui/widgets/positionwidget.cpp \
+    gui/widgets/rotationwidget.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -71,7 +73,9 @@ HEADERS  += mainwindow.h \
     hardware/projector/sinusoidpattern.h \
     geom/calibrationcompiler.h \
     hardware/projector/flatcolorpattern.h \
-    gui/deviceparametersdialog.h
+    gui/deviceparametersdialog.h \
+    gui/widgets/positionwidget.h \
+    gui/widgets/rotationwidget.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
@@ -83,7 +87,9 @@ FORMS    += mainwindow.ui \
     gui/projectorsettingsdialog.ui \
     gui/secondmonitorprojectordialog.ui \
     gui/opencvcameradialog.ui \
-    gui/deviceparametersdialog.ui
+    gui/deviceparametersdialog.ui \
+    gui/widgets/positionwidget.ui \
+    gui/widgets/rotationwidget.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`
