@@ -68,7 +68,7 @@ color:white;</string>
      <x>0</x>
      <y>0</y>
      <width>707</width>
-     <height>24</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -76,17 +76,8 @@ color:white;</string>
      <string>File</string>
     </property>
     <addaction name="actionExport_to_STL"/>
-    <addaction name="actionExport_to_OBJ"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
-   </widget>
-   <widget class="QMenu" name="menuHardware">
-    <property name="title">
-     <string>Hardware</string>
-    </property>
-    <addaction name="actionSelect_standard"/>
-    <addaction name="actionSelect_cameras"/>
-    <addaction name="actionProjector_settings"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -99,6 +90,7 @@ color:white;</string>
     <property name="title">
      <string>View</string>
     </property>
+    <addaction name="actionCenter"/>
     <addaction name="actionZoom_best"/>
     <addaction name="separator"/>
     <addaction name="actionFull_screen"/>
@@ -107,13 +99,12 @@ color:white;</string>
     <property name="title">
      <string>Setup</string>
     </property>
+    <addaction name="actionSelect_standard"/>
     <addaction name="actionSetup_wizard"/>
-    <addaction name="actionConfigure_pattern"/>
     <addaction name="actionCalibrate"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
-   <addaction name="menuHardware"/>
    <addaction name="menuSetup"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -126,9 +117,6 @@ color:white;</string>
    </attribute>
    <addaction name="actionSelect_standard"/>
    <addaction name="actionSetup_wizard"/>
-   <addaction name="actionSelect_cameras"/>
-   <addaction name="actionConfigure_pattern"/>
-   <addaction name="actionProjector_settings"/>
    <addaction name="actionCalibrate"/>
    <addaction name="actionTake_snapshot"/>
    <addaction name="separator"/>
@@ -371,10 +359,13 @@ color:white;</string>
     <string>Toggle full screen</string>
    </property>
    <property name="iconVisibleInMenu">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionExport_to_OBJ">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="gui/icons.qrc">
      <normaloff>:/oxygen/icons/oxygen/shapes.png</normaloff>:/oxygen/icons/oxygen/shapes.png</iconset>
@@ -393,6 +384,9 @@ color:white;</string>
    </property>
    <property name="text">
     <string>Debugging</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionConfigure_pattern">
@@ -419,10 +413,13 @@ color:white;</string>
      <normaloff>:/oxygen/icons/oxygen/snap-orthogonal.png</normaloff>:/oxygen/icons/oxygen/snap-orthogonal.png</iconset>
    </property>
    <property name="text">
-    <string>Center</string>
+    <string>Center model</string>
    </property>
    <property name="toolTip">
     <string>Center the model in the window</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
  </widget>

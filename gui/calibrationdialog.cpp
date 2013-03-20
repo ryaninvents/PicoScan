@@ -44,8 +44,7 @@ void CalibrationDialog::calibrate()
 
 void CalibrationDialog::reset()
 {
-    //calibrator->clearFrames();
-    ui->imageCount->setText(QString::number(0));
+    calib->removeFrames();
 }
 
 void CalibrationDialog::close()
