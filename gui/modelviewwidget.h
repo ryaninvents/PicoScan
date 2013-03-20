@@ -94,6 +94,11 @@ private:
     /// draw axes
     void drawAxes();
 
+    /// draw a camera
+    void drawCamera(float fWidth, float fDepth);
+    /// draw a projector
+    void drawProjector(float fDepth);
+
     /// get current rotation matrix for model view
     cv::Mat getCurrentModelRotation();
 

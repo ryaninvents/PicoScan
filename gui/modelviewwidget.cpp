@@ -46,6 +46,19 @@ void ModelViewWidget::paintGL()
     glTranslated((GLdouble)(trans[0]+dTrans[0]),
                  (GLdouble)(trans[1]+dTrans[1]),
                  (GLdouble)(trans[2]+dTrans[2]));
+    glPushMatrix();{
+        drawProjector(2);
+    } glPopMatrix();
+    glPushMatrix();{
+        glTranslatef(0.2,0.0,0.0);
+        glRotatef(-20,0,1,0);
+        drawCamera(5,1);
+    } glPopMatrix();
+    glPushMatrix();{
+        glTranslatef(-0.2,0.0,0.0);
+        glRotatef(20,0,1,0);
+        drawCamera(5,1);
+    } glPopMatrix();
     drawCloud();
 //    drawFloor();
     glFlush();
@@ -271,7 +284,7 @@ void ModelViewWidget::drawCube()
 
 void ModelViewWidget::drawAxes()
 {
-    glLineWidth(3.5);
+    glLineWidth(1);
     glBegin(GL_LINES);{
         glColor3f(0.5,0.0,0.0);
         glVertex3f(0.0,0.0,0.0);
@@ -283,6 +296,161 @@ void ModelViewWidget::drawAxes()
         glVertex3f(0.0,0.0,0.0);
         glVertex3f(0.0,0.0,1.0);
     } glEnd();
+}
+
+void ModelViewWidget::drawCamera(float fWidth, float fDepth)
+{
+    glLineWidth(1.0);
+    glPushMatrix();
+    glScalef(1e-3,1e-3,1e-3);
+    fDepth *=fWidth;
+    glTranslatef(0,0,fDepth);
+    fWidth *= 0.5;
+    glBegin(GL_LINES);{
+        glColor3f(0,0,0);
+        glVertex3f(0.0,0.0,-fDepth);
+        glVertex3f(fWidth,fWidth,0);
+        glVertex3f(0.0,0.0,-fDepth);
+        glVertex3f(-fWidth,fWidth,0);
+        glVertex3f(0.0,0.0,-fDepth);
+        glVertex3f(-fWidth,-fWidth,0);
+        glVertex3f(0.0,0.0,-fDepth);
+        glVertex3f(fWidth,-fWidth,0);
+
+        glVertex3f(fWidth,fWidth,0);
+        glVertex3f(-fWidth,fWidth,0);
+        glVertex3f(-fWidth,-fWidth,0);
+        glVertex3f(fWidth,-fWidth,0);
+
+        glVertex3f(-fWidth,fWidth,0);
+        glVertex3f(-fWidth,-fWidth,0);
+        glVertex3f(fWidth,-fWidth,0);
+        glVertex3f(fWidth,fWidth,0);
+
+        glVertex3f(-8.5,8.5,0);
+        glVertex3f(-8.5,-8.5,0);
+        glVertex3f(8.5,-8.5,0);
+        glVertex3f(8.5,8.5,0);
+        glVertex3f(-8.5,-8.5,0);
+        glVertex3f(8.5,-8.5,0);
+        glVertex3f(8.5,8.5,0);
+        glVertex3f(-8.5,8.5,0);
+
+        glVertex3f(-8.5,8.5,-3);
+        glVertex3f(-8.5,-8.5,-3);
+        glVertex3f(8.5,-8.5,-3);
+        glVertex3f(8.5,8.5,-3);
+        glVertex3f(-8.5,-8.5,-3);
+        glVertex3f(8.5,-8.5,-3);
+        glVertex3f(8.5,8.5,-3);
+        glVertex3f(-8.5,8.5,-3);
+
+        glVertex3f(-8.5,-8.5,0);
+        glVertex3f(-8.5,-8.5,-3);
+        glVertex3f(8.5,8.5,0);
+        glVertex3f(8.5,8.5,-3);
+        glVertex3f(8.5,-8.5,0);
+        glVertex3f(8.5,-8.5,-3);
+        glVertex3f(-8.5,8.5,0);
+        glVertex3f(-8.5,8.5,-3);
+
+        glVertex3f(-15,46,-3);
+        glVertex3f(-15,-18,-3);
+        glVertex3f(15,-18,-3);
+        glVertex3f(15,46,-3);
+        glVertex3f(-15,-18,-3);
+        glVertex3f(15,-18,-3);
+        glVertex3f(15,46,-3);
+        glVertex3f(-15,46,-3);
+
+        glVertex3f(-15,46,-20);
+        glVertex3f(-15,-18,-20);
+        glVertex3f(15,-18,-20);
+        glVertex3f(15,46,-20);
+        glVertex3f(-15,-18,-20);
+        glVertex3f(15,-18,-20);
+        glVertex3f(15,46,-20);
+        glVertex3f(-15,46,-20);
+
+        glVertex3f(-15,46,-3);
+        glVertex3f(-15,46,-20);
+        glVertex3f(-15,-18,-3);
+        glVertex3f(-15,-18,-20);
+        glVertex3f(15,-18,-3);
+        glVertex3f(15,-18,-20);
+        glVertex3f(15,46,-3);
+        glVertex3f(15,46,-20);
+
+    } glEnd();
+    glPopMatrix();
+}
+
+void ModelViewWidget::drawProjector(float fDepth)
+{
+    glLineWidth(1.0);
+    glPushMatrix();
+    glScalef(1e-3,1e-3,1e-3);
+    fDepth *= 12;
+    glTranslatef(0,0,fDepth);
+    glBegin(GL_LINES);{
+        glColor3f(0,0,0);
+        glVertex3f(0.0,0.0,-fDepth);
+        glVertex3f(6,4.5,0);
+        glVertex3f(0.0,0.0,-fDepth);
+        glVertex3f(-6,4.5,0);
+        glVertex3f(0.0,0.0,-fDepth);
+        glVertex3f(-6,-4.5,0);
+        glVertex3f(0.0,0.0,-fDepth);
+        glVertex3f(6,-4.5,0);
+
+        glVertex3f(6,4.5,0);
+        glVertex3f(-6,4.5,0);
+        glVertex3f(-6,-4.5,0);
+        glVertex3f(6,-4.5,0);
+
+        glVertex3f(-6,4.5,0);
+        glVertex3f(-6,-4.5,0);
+        glVertex3f(6,-4.5,0);
+        glVertex3f(6,4.5,0);
+
+        glVertex3f(-40,5.5,0);
+        glVertex3f(-40,-12,0);
+        glVertex3f(20,-12,0);
+        glVertex3f(20,5.5,0);
+        glVertex3f(-40,-12,0);
+        glVertex3f(20,-12,0);
+        glVertex3f(20,5.5,0);
+        glVertex3f(-40,5.5,0);
+
+        glVertex3f(-40,5.5,-118);
+        glVertex3f(-40,-12,-118);
+        glVertex3f(20,-12,-118);
+        glVertex3f(20,5.5,-118);
+        glVertex3f(-40,-12,-118);
+        glVertex3f(20,-12,-118);
+        glVertex3f(20,5.5,-118);
+        glVertex3f(-40,5.5,-118);
+
+        glVertex3f(-40,5.5,-118);
+        glVertex3f(-40,5.5,0);
+        glVertex3f(-40,-12,-118);
+        glVertex3f(-40,-12,0);
+        glVertex3f(20,-12,-118);
+        glVertex3f(20,-12,0);
+        glVertex3f(20,5.5,-118);
+        glVertex3f(20,5.5,0);
+        glVertex3f(-40,-12,-118);
+        glVertex3f(-40,-12,0);
+        glVertex3f(20,-12,-118);
+        glVertex3f(20,-12,0);
+        glVertex3f(20,5.5,-118);
+        glVertex3f(20,5.5,0);
+        glVertex3f(-40,5.5,-118);
+        glVertex3f(-40,5.5,0);
+
+
+    } glEnd();
+    glPopMatrix();
 }
 
 void ModelViewWidget::drawSheet()
