@@ -7,6 +7,7 @@
 #include "hardware/camera/qopencvcamera.h"
 #include "hardware/projector/seconddisplayprojector.h"
 #include "geom/triangulator.h"
+#include "hardware/projector/flatcolorpattern.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -68,6 +69,9 @@ MainWindow::MainWindow(QWidget *parent) :
     pj->setPosition(cv::Vec3d(0.15,-0.03,0));
     pj->setOrientation(cv::Vec3d(0.0,-0.5,0.0));
     pj->setFocalLength(9500);
+
+    FlatColorPattern *blank = new FlatColorPattern();
+    pj->queue(blank);
 
     projector = pj;
     capCam->connectProjector(pj);

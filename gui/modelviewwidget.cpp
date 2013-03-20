@@ -43,6 +43,7 @@ void ModelViewWidget::paintGL()
     glRotatef(yRot+yPlus, 1.0, 0.0, 0.0);
     glRotatef(xRot+xPlus, 0.0, 1.0, 0.0);
     drawAxes();
+    drawFloor();
     glTranslated((GLdouble)(trans[0]+dTrans[0]),
                  (GLdouble)(trans[1]+dTrans[1]),
                  (GLdouble)(trans[2]+dTrans[2]));
@@ -60,7 +61,6 @@ void ModelViewWidget::paintGL()
         drawCamera(5,1);
     } glPopMatrix();
     drawCloud();
-//    drawFloor();
     glFlush();
 }
 
@@ -194,7 +194,7 @@ void ModelViewWidget::center()
 void ModelViewWidget::drawFloor()
 {
     glPushMatrix();
-    glTranslatef(0.0,-1.0,0.0);
+    glTranslatef(0.0,-0.1,0.0);
     glColor3f(0.5,0.5,0.5);
     double r, theta;
     double rMax = 5;
