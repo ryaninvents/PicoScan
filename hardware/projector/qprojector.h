@@ -1,8 +1,6 @@
 #ifndef QPROJECTOR_H
 #define QPROJECTOR_H
 
-#include <map>
-
 #include "../qopticaldevice.h"
 #include "../../gui/imageviewwidget.h"
 

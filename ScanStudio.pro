@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     hardware/projector/flatcolorpattern.cpp \
     gui/deviceparametersdialog.cpp \
     gui/widgets/positionwidget.cpp \
-    gui/widgets/rotationwidget.cpp
+    gui/widgets/rotationwidget.cpp \
+    hardware/projector/gridpattern.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -75,7 +76,8 @@ HEADERS  += mainwindow.h \
     hardware/projector/flatcolorpattern.h \
     gui/deviceparametersdialog.h \
     gui/widgets/positionwidget.h \
-    gui/widgets/rotationwidget.h
+    gui/widgets/rotationwidget.h \
+    hardware/projector/gridpattern.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
