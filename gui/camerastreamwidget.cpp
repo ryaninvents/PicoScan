@@ -45,7 +45,7 @@ void CameraStreamWidget::toggleCameraStream(bool b)
 
 void CameraStreamWidget::updateImage()
 {
-    if(!camera) return;
+    if(!camera || !running) return;
     camera->requestFrame();
 }
 
@@ -56,6 +56,6 @@ void CameraStreamWidget::closeCameraStream()
 
 void CameraStreamWidget::frameCaptured(cv::Mat frame, QCamera *cam, QProjector::Pattern *)
 {
-    if(cam!=camera) return;
+    if(cam!=camera || !running) return;
     displayMat(frame,true);
 }

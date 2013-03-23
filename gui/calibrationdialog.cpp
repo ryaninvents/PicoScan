@@ -39,6 +39,7 @@ void CalibrationDialog::takeSnap()
 
 void CalibrationDialog::calibrate()
 {
+    calib->calibrate();
     close();
 }
 
@@ -49,14 +50,14 @@ void CalibrationDialog::reset()
 
 void CalibrationDialog::close()
 {
-    ui->previewFirst->closeCameraStream();
-    ui->previewSecond->closeCameraStream();
+    stopStreaming();
     QDialog::close();
 }
 
 void CalibrationDialog::calibrateProjector()
 {
-
+    stopStreaming();
+    calib->takeBinaryFrame();
 }
 
 void CalibrationDialog::setLeft(QCamera *cam)
@@ -70,7 +71,19 @@ void CalibrationDialog::setLeft(QCamera *cam)
 void CalibrationDialog::show()
 {
     QDialog::show();
+    startStreaming();
+}
+
+void CalibrationDialog::stopStreaming()
+{
+    ui->previewFirst->stopCameraStream();
+    ui->previewSecond->stopCameraStream();
+}
+
+void CalibrationDialog::startStreaming()
+{
     ui->previewFirst->startCameraStream();
+    ui->previewSecond->startCameraStream();
 }
 
 void CalibrationDialog::frameCaptured(cv::Mat frame, QCamera *cam, QProjector::Pattern *pattern)
@@ -88,6 +101,21 @@ void CalibrationDialog::setRight(QCamera *cam)
 void CalibrationDialog::setProjector(QProjector *proj)
 {
     calib->setProjector(proj);
+}
+
+void CalibrationDialog::setBinary(BinaryCompiler *binary)
+{
+    calib->setBinary(binary);
+    connect(
+                binary,
+                SIGNAL(binaryFrameCaptured(cv::Mat,bool)),
+                this,
+                SLOT(binaryFrameCaptured(cv::Mat,bool)));
+}
+
+void CalibrationDialog::binaryFrameCaptured(cv::Mat, bool)
+{
+    startStreaming();
 }
 
 void CalibrationDialog::setCounter(uint ctr)

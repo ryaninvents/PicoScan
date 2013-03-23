@@ -4,6 +4,7 @@
 #include <QObject>
 #include "hardware/camera/qcamera.h"
 #include "hardware/standards/calibrationstandard.h"
+#include "geom/binarycompiler.h"
 
 /// Calibrates a stereo setup.
 /// Only solves the cameras.
@@ -31,6 +32,9 @@ public slots:
     /// Take a stereo frame
     void takeStereoFrame();
 
+    /// Take a binary frame to calibrate the projector
+    void takeBinaryFrame();
+
     /// Calibrate the setup
     double calibrate();
 
@@ -39,6 +43,7 @@ public slots:
 
     void setLeft(QCamera *cam);
     void setRight(QCamera *cam);
+    void setBinary(BinaryCompiler *b);
     void setProjector(QProjector *pj);
     void setStandard(CalibrationStandard *s);
 
@@ -59,6 +64,9 @@ private:
 
     /// Calibration standard
     CalibrationStandard *standard;
+
+    /// Binary compiler.
+    BinaryCompiler *bin;
 
     /// Waiting for left image?
     bool waitingForLeft;

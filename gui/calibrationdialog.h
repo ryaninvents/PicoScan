@@ -39,6 +39,10 @@ public slots:
     void setRight(QCamera *cam);
     /// Set projector
     void setProjector(QProjector *proj);
+    /// Set binary capture
+    void setBinary(BinaryCompiler *binary);
+
+    void binaryFrameCaptured(cv::Mat,bool);
 
     /// Set counter value
     void setCounter(uint ctr);
@@ -56,6 +60,9 @@ private:
     CalibrationCompiler *calib;
     /// standard
     CalibrationStandard *standard;
+
+    void stopStreaming();
+    void startStreaming();
 
 };
 

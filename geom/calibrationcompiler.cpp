@@ -8,6 +8,7 @@ CalibrationCompiler::CalibrationCompiler(QObject *parent) :
     cameraLeft(0),
     cameraRight(0),
     projector(0),
+    bin(0),
     waitingForLeft(false),
     waitingForRight(false),
     fail(false)
@@ -65,8 +66,17 @@ void CalibrationCompiler::takeStereoFrame()
     fail = false;
 }
 
+void CalibrationCompiler::takeBinaryFrame()
+{
+    if(bin){
+        bin->requestFrame(11);
+    }else
+        std::cout << "No binary compiler";
+}
+
 double CalibrationCompiler::calibrate()
 {
+
     std::vector<std::vector<cv::Point3f> > objectPoints;
 
     cv::Mat cameraL = cv::Mat::eye(3,3,CV_64F);
@@ -123,6 +133,13 @@ double CalibrationCompiler::calibrate()
     cameraLeft  -> setOrientation(cv::Vec3d());
     cameraRight -> setOrientation(relativeRot);
 
+    std::cout << cameraL << '\n'
+              << cameraR << '\n'
+              << distortionL << '\n'
+              << distortionR << '\n'
+              << relativeRot << '\n'
+              << relativeTrans << '\n';
+
     return (rpeL+rpeR)/2;
 }
 
@@ -150,6 +167,11 @@ void CalibrationCompiler::setRight(QCamera *cam)
             SIGNAL(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)),
             this,
             SLOT(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)));
+}
+
+void CalibrationCompiler::setBinary(BinaryCompiler *b)
+{
+    bin = b;
 }
 
 void CalibrationCompiler::setProjector(QProjector *pj)

@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
+    <width>766</width>
     <height>375</height>
    </rect>
   </property>
@@ -85,7 +85,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="projector">
        <property name="text">
         <string>Projector</string>
        </property>
@@ -231,10 +231,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>projector</sender>
+   <signal>clicked()</signal>
+   <receiver>CalibrationDialog</receiver>
+   <slot>calibrateProjector()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>396</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>382</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>takeSnap()</slot>
   <slot>calibrate()</slot>
   <slot>reset()</slot>
+  <slot>calibrateProjector()</slot>
  </slots>
 </ui>
