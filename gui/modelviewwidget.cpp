@@ -126,7 +126,7 @@ void ModelViewWidget::mouseReleaseEvent(QMouseEvent *ev)
 
 void ModelViewWidget::wheelEvent(QWheelEvent *ev)
 {
-    zoom -= (GLdouble)ev->delta()/1000.0;
+    zoom *= exp((GLdouble)ev->delta()/5000.0);
     if(zoom>MAX_ZOOM) zoom = MAX_ZOOM;
     if(zoom<MIN_ZOOM) zoom = MIN_ZOOM;
     updateGL();
