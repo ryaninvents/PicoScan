@@ -35,6 +35,7 @@ public slots:
 
     /// Take a binary frame to calibrate the projector
     void takeBinaryFrame();
+    void binaryFrameCaptured(cv::Mat frame,bool);
 
     /// Calibrate the setup
     double calibrate();
@@ -47,6 +48,7 @@ public slots:
     void setBinary(BinaryCompiler *b);
     void setProjector(QProjector *pj);
     void setStandard(CalibrationStandard *s);
+    void setEnabled(bool enabled);
 
 private:
     /// POIs from left camera
@@ -75,6 +77,12 @@ private:
     bool waitingForRight;
     /// Failed to find a pattern?
     bool fail;
+
+    bool _enabled;
+
+    void echo(QString s);
+    void echo(const char *s);
+    void connectCameras(bool b);
 
 
 

@@ -102,6 +102,10 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
+    connect(calib,
+            SIGNAL(debug(QString)),
+            this,
+            SLOT(debug(QString)));
 
 }
 
@@ -168,6 +172,7 @@ void MainWindow::debugImage(cv::Mat im)
 
 void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
 {
+    if(calib->isVisible()) return;
     geom = Triangulator::computeSheet(
                 binary,
                 camera,

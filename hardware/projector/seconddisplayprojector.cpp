@@ -8,6 +8,20 @@ SecondDisplayProjector::SecondDisplayProjector(QObject *parent) :
     w(),
     displayIdx(1)
 {
+     w.setWindowFlags(Qt::X11BypassWindowManagerHint);
+     w.setCursor( QCursor( Qt::BlankCursor ) );
+     w.setContentsMargins(0,0,0,0);
+
+     QPalette Pal(w.palette());
+     // set black background
+     Pal.setColor(QPalette::Background, Qt::black);
+     Pal.setColor(QPalette::Window, Qt::black);
+     Pal.setColor(QPalette::Base, Qt::black);
+     Pal.setColor(QPalette::Light, Qt::black);
+     Pal.setColor(QPalette::Mid, Qt::black);
+
+     w.setAutoFillBackground(true);
+     w.setPalette(Pal);
 }
 
 void SecondDisplayProjector::setScreen(uint screen)

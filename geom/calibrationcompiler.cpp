@@ -11,7 +11,8 @@ CalibrationCompiler::CalibrationCompiler(QObject *parent) :
     bin(0),
     waitingForLeft(false),
     waitingForRight(false),
-    fail(false)
+    fail(false),
+    _enabled(false)
 {
 }
 
@@ -20,12 +21,16 @@ void CalibrationCompiler::frameCaptured(
         QCamera *cam,
         QProjector::Pattern *)
 {
+    emit debug(tr("(CC) frameCaptured();\n(CC) waitingForLeft = %1;\n(CC) waitingForRight = %2;")
+               .arg(waitingForLeft).arg(waitingForRight));
     bool success;
     std::vector<cv::Point2f> imagePts;
     if(!waitingForLeft && !waitingForRight){
+        echo("(CC) return from frameCaptured();");
         return;
     }
     if(cam==cameraLeft){
+        emit debug(tr("(CC) cam==cameraLeft;"));
         imagePts = standard->getImagePoints(frame,&success);
         if(success){
             poisLeft.push_back(imagePts);
@@ -36,6 +41,7 @@ void CalibrationCompiler::frameCaptured(
         waitingForLeft = false;
         if(!success) fail = true;
     }else if(cam==cameraRight){
+        emit debug(tr("(CC) cam==cameraRight;"));
         imagePts = standard->getImagePoints(frame,&success);
         if(success){
             poisRight.push_back(imagePts);
@@ -45,36 +51,56 @@ void CalibrationCompiler::frameCaptured(
         }
         waitingForRight = false;
         if(!success) fail = true;
-    }else return;
+    }else{
+        echo("(CC) Unrecognized camera");
+        return;
+    }
     if(!(waitingForLeft||waitingForRight)){
+        connectCameras(false);
         if(fail){
+            emit debug(tr("(CC) fail;\n(CC) framesCaptured(%1);")
+                       .arg(poisLeft.size()));
             poisLeft.pop_back();
             poisRight.pop_back();
             emit framesCaptured(poisLeft.size());
+        }else{
+            takeBinaryFrame();
         }
-        takeBinaryFrame();
     }
 }
 
 void CalibrationCompiler::takeStereoFrame()
 {
+    emit debug(tr("(CC) takeStereoFrame();"));
     if(waitingForLeft||waitingForRight) return;
+    waitingForLeft = true;
+    waitingForRight = true;
+    connectCameras(true);
+    fail = false;
     FlatColorPattern *pattern = new FlatColorPattern();
     pattern->setID(poisLeft.size());
     projector->queue(pattern);
-    waitingForLeft = true;
-    waitingForRight = true;
-    fail = false;
+
+    emit debug(tr("(CC) waitingForLeft = %1;\n(CC) waitingForRight = %2;")
+               .arg(waitingForLeft).arg(waitingForRight));
 }
 
 void CalibrationCompiler::takeBinaryFrame()
 {
+    emit debug(tr("(CC) takeBinaryFrame();"));
     if(bin){
-        bin->requestFrame(10);
+        bin->requestFrame(11);
     }else{
         emit framesCaptured(poisLeft.size());
-        emit debug(tr("No binary compiler"));
+        emit debug(tr("(CC) No binary compiler"));
     }
+}
+
+void CalibrationCompiler::binaryFrameCaptured(cv::Mat frame, bool)
+{
+    emit debug(tr("(CC) binaryFrameCaptured(); framesCaptured(%1);")
+               .arg(poisLeft.size()));
+    emit framesCaptured(poisLeft.size());
 }
 
 double CalibrationCompiler::calibrate()
@@ -157,19 +183,11 @@ void CalibrationCompiler::removeFrames()
 void CalibrationCompiler::setLeft(QCamera *cam)
 {
     cameraLeft = cam;
-    connect(cam,
-            SIGNAL(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)),
-            this,
-            SLOT(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)));
 }
 
 void CalibrationCompiler::setRight(QCamera *cam)
 {
     cameraRight = cam;
-    connect(cam,
-            SIGNAL(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)),
-            this,
-            SLOT(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)));
 }
 
 void CalibrationCompiler::setBinary(BinaryCompiler *b)
@@ -185,4 +203,45 @@ void CalibrationCompiler::setProjector(QProjector *pj)
 void CalibrationCompiler::setStandard(CalibrationStandard *s)
 {
     standard = s;
+}
+
+void CalibrationCompiler::setEnabled(bool enabled)
+{
+    _enabled = enabled;
+    if(enabled){
+        connect(bin,
+                SIGNAL(binaryFrameCaptured(cv::Mat,bool)),
+                this,
+                SLOT(binaryFrameCaptured(cv::Mat,bool)));
+    }else{
+        bin->disconnect(this);
+    }
+}
+
+void CalibrationCompiler::echo(QString s)
+{
+    emit debug(s);
+}
+
+void CalibrationCompiler::echo(const char *s)
+{
+    emit debug(tr(s));
+}
+
+void CalibrationCompiler::connectCameras(bool b)
+{
+    if(b){
+        connect(cameraLeft,
+                SIGNAL(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)),
+                this,
+                SLOT(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)));
+        connect(cameraRight,
+                SIGNAL(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)),
+                this,
+                SLOT(frameCaptured(cv::Mat,QCamera*,QProjector::Pattern*)));
+
+    }else{
+        cameraLeft->disconnect(this);
+        cameraRight->disconnect(this);
+    }
 }

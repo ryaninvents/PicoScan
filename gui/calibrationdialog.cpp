@@ -51,10 +51,12 @@ void CalibrationDialog::calibrate()
 void CalibrationDialog::reset()
 {
     calib->removeFrames();
+    startStreaming();
 }
 
 void CalibrationDialog::close()
 {
+    calib->setEnabled(false);
     stopStreaming();
     QDialog::close();
 }
@@ -75,6 +77,7 @@ void CalibrationDialog::setLeft(QCamera *cam)
 
 void CalibrationDialog::show()
 {
+    calib->setEnabled(true);
     QDialog::show();
     startStreaming();
 }
@@ -132,4 +135,5 @@ void CalibrationDialog::setCounter(uint ctr)
 {
 //    ui->imageCount->setText(QString::number(ctr));
     ui->lcdNumber->display((int)ctr);
+    startStreaming();
 }
