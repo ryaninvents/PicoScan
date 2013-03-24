@@ -3,7 +3,7 @@
  <class>CalibrationDialog</class>
  <widget class="QDialog" name="CalibrationDialog">
   <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -24,7 +24,7 @@
    <bool>true</bool>
   </property>
   <property name="modal">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -54,22 +54,18 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLCDNumber" name="lcdNumber">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text">
-        <string>Calibration images taken:</string>
+       <property name="smallDecimalPoint">
+        <bool>false</bool>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="imageCount">
-       <property name="text">
-        <string>0</string>
+       <property name="numDigits">
+        <number>2</number>
        </property>
       </widget>
      </item>
@@ -81,17 +77,6 @@
        <property name="icon">
         <iconset resource="icons.qrc">
          <normaloff>:/oxygen/icons/oxygen/media-record.png</normaloff>:/oxygen/icons/oxygen/media-record.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="projector">
-       <property name="text">
-        <string>Projector</string>
-       </property>
-       <property name="icon">
-        <iconset resource="icons.qrc">
-         <normaloff>:/oxygen/icons/oxygen/video-projector.png</normaloff>:/oxygen/icons/oxygen/video-projector.png</iconset>
        </property>
       </widget>
      </item>
@@ -227,22 +212,6 @@
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
-     <y>187</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>projector</sender>
-   <signal>clicked()</signal>
-   <receiver>CalibrationDialog</receiver>
-   <slot>calibrateProjector()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>396</x>
-     <y>347</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>382</x>
      <y>187</y>
     </hint>
    </hints>

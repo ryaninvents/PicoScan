@@ -238,7 +238,7 @@ void MainWindow::showCalibrationDialog()
     calib->setRight(camera2);
     calib->setProjector(projector);
     calib->setBinary(compiler);
-    calib->showMaximized();
+    calib->show();
 }
 
 void MainWindow::quitProgram()

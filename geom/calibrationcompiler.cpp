@@ -50,8 +50,9 @@ void CalibrationCompiler::frameCaptured(
         if(fail){
             poisLeft.pop_back();
             poisRight.pop_back();
+            emit framesCaptured(poisLeft.size());
         }
-        emit framesCaptured(poisLeft.size());
+        takeBinaryFrame();
     }
 }
 
@@ -69,9 +70,11 @@ void CalibrationCompiler::takeStereoFrame()
 void CalibrationCompiler::takeBinaryFrame()
 {
     if(bin){
-        bin->requestFrame(11);
-    }else
-        std::cout << "No binary compiler";
+        bin->requestFrame(10);
+    }else{
+        emit framesCaptured(poisLeft.size());
+        emit debug(tr("No binary compiler"));
+    }
 }
 
 double CalibrationCompiler::calibrate()

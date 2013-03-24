@@ -22,6 +22,7 @@ signals:
     void framesCaptured(uint);
     /// Setup has been calibrated
     void calibrated(QCamera*, QCamera*, QProjector*);
+    void debug(QString);
 
 public slots:
     /// One of the cameras has captured a frame

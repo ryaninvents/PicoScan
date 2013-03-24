@@ -23,6 +23,10 @@ CalibrationDialog::CalibrationDialog(QWidget *parent) :
             SIGNAL(framesCaptured(uint)),
             this,
             SLOT(setCounter(uint)));
+    connect(calib,
+            SIGNAL(debug(QString)),
+            this,
+            SLOT(emitDebug(QString)));
 
 }
 
@@ -34,6 +38,7 @@ CalibrationDialog::~CalibrationDialog()
 
 void CalibrationDialog::takeSnap()
 {
+    stopStreaming();
     calib->takeStereoFrame();
 }
 
@@ -118,7 +123,13 @@ void CalibrationDialog::binaryFrameCaptured(cv::Mat, bool)
     startStreaming();
 }
 
+void CalibrationDialog::emitDebug(QString info)
+{
+    emit debug(info);
+}
+
 void CalibrationDialog::setCounter(uint ctr)
 {
-    ui->imageCount->setText(QString::number(ctr));
+//    ui->imageCount->setText(QString::number(ctr));
+    ui->lcdNumber->display((int)ctr);
 }

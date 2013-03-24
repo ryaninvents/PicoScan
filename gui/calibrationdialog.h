@@ -20,6 +20,9 @@ public:
     /// Destroy the dialog
     ~CalibrationDialog();
 
+signals:
+    void debug(QString);
+
 public slots:
     /// Take a snapshot
     void takeSnap();
@@ -43,6 +46,8 @@ public slots:
     void setBinary(BinaryCompiler *binary);
 
     void binaryFrameCaptured(cv::Mat,bool);
+
+    void emitDebug(QString info);
 
     /// Set counter value
     void setCounter(uint ctr);
