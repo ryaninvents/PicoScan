@@ -1,6 +1,8 @@
 #include "calibrationcompiler.h"
 #include "hardware/projector/flatcolorpattern.h"
 #include <opencv2/calib3d/calib3d.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include "geom/triangulator.h"
 #include <iostream>
 
 CalibrationCompiler::CalibrationCompiler(QObject *parent) :
@@ -100,6 +102,11 @@ void CalibrationCompiler::binaryFrameCaptured(cv::Mat frame, bool)
 {
     emit debug(tr("(CC) binaryFrameCaptured(); framesCaptured(%1);")
                .arg(poisLeft.size()));
+    Triangulator::cropToStandard(frame,
+                                 standard,
+                                 poisLeft.at(poisLeft.size()-1));
+    binaryFrames.push_back(frame);
+    //cv::imwrite("/home/ryan/cropped.png",frame);
     emit framesCaptured(poisLeft.size());
 }
 

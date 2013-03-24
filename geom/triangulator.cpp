@@ -196,6 +196,32 @@ cv::Vec3d Triangulator::getPlane(std::vector<cv::Vec3d> pts)
     return cv::Vec3d(m.at<double>(2),m.at<double>(1),m.at<double>(0));
 }
 
+void Triangulator::cropToStandard(cv::Mat encoding,
+                                  CalibrationStandard *standard,
+                                  std::vector<cv::Point2f> imagePts)
+{
+    int u,v;
+    cv::Point2f _A = imagePts.at(standard->getPointA());
+    cv::Point2f _B = imagePts.at(standard->getPointB());
+    cv::Point2f _C = imagePts.at(standard->getPointC());
+    cv::Point2f _D = imagePts.at(standard->getPointD());
+    cv::Vec3d A(_A.x,_A.y,0);
+    cv::Vec3d B(_B.x,_B.y,0);
+    cv::Vec3d C(_C.x,_C.y,0);
+    cv::Vec3d D(_D.x,_D.y,0);
+    cv::Vec3d P;
+    bool inRect;
+    for(u=0;u<encoding.cols;u++){
+        for(v=0;v<encoding.rows;v++){
+            P = cv::Vec3d(u,v,0);
+            inRect = inTri(P,A,B,C) || inTri(P,B,C,D);
+            if(!inRect){
+                encoding.at<float>(v,u) = -1;
+            }
+        }
+    }
+}
+
 
 
 cv::Vec3d Triangulator::getCentroid(std::vector<cv::Vec3d> pts)

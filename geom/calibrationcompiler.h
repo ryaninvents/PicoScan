@@ -57,6 +57,8 @@ private:
     /// POIs from right camera
     std::vector<std::vector<cv::Point2f> >
         poisRight;
+    /// Binary encodings
+    std::vector<cv::Mat> binaryFrames;
 
     /// Left camera
     QCamera *cameraLeft;

@@ -3,6 +3,7 @@
 
 #include <opencv2/core/core.hpp>
 #include "../hardware/camera/qcamera.h"
+#include "../hardware/standards/calibrationstandard.h"
 #include "sheet.h"
 
 /// Provides triangulation as well as other utilities.
@@ -16,6 +17,7 @@ public:
                            const cv::Vec3d P_up,
                            const cv::Vec3d P_fwd,
                            const cv::Vec3d D);
+
     /** Find out if point P is within triangle ABC.
         Thanks to <a href="http://www.blackpawn.com/texts/pointinpoly/default.html">
         blackpawn.com</a> for the code. */
@@ -29,6 +31,17 @@ public:
         The function returns a vector Q. The equation for
         the plane is x = Q.dot(cv::Vec3d(y,z,1)).*/
     static cv::Vec3d getPlane(std::vector<cv::Vec3d> pts);
+
+    /**
+     * "Crop" an encoded frame; i.e., remove pixels lying outside
+     * the calibration standard.
+     * @brief cropToStandard
+     * @param encoding
+     * @param standard
+     */
+    static void cropToStandard(cv::Mat encoding,
+                               CalibrationStandard *standard,
+                               std::vector<cv::Point2f> imagePts);
 
     /** Get the centroid of a set of pts. */
     static cv::Vec3d getCentroid(std::vector<cv::Vec3d> pts);

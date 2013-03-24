@@ -47,12 +47,12 @@ int DotMatrixStandard::getPointA()
 
 int DotMatrixStandard::getPointB()
 {
-    return size.height - 1;
+    return size.width-1;
 }
 
 int DotMatrixStandard::getPointC()
 {
-    return (size.width-1)*size.height;
+    return (size.width)*(size.height-1);
 }
 
 int DotMatrixStandard::getPointD()
