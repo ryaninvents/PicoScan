@@ -9,8 +9,10 @@
 #include "gui/calibrationstandarddialog.h"
 #include "gui/calibrationdialog.h"
 #include "gui/projectorsettingsdialog.h"
+#include "gui/singlecalibrationdialog.h"
 
 #include "hardware/projector/graycodepattern.h"
+#include "hardware/standards/calibrationstandard.h"
 
 #include "geom/binarycompiler.h"
 #include "geom/sheet.h"
@@ -144,6 +146,9 @@ private:
 
     Sheet *geom;
 
+    SingleCalibrationDialog *singleCal;
+
+    CalibrationStandard *standard;
 };
 
 #endif // MAINWINDOW_H

@@ -68,7 +68,7 @@ color:white;</string>
      <x>0</x>
      <y>0</y>
      <width>707</width>
-     <height>29</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -117,6 +117,7 @@ color:white;</string>
    </attribute>
    <addaction name="actionSelect_standard"/>
    <addaction name="actionSetup_wizard"/>
+   <addaction name="actionSelect_cameras"/>
    <addaction name="actionCalibrate"/>
    <addaction name="actionTake_snapshot"/>
    <addaction name="separator"/>

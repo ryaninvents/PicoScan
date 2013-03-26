@@ -8,6 +8,9 @@
 #include "hardware/projector/seconddisplayprojector.h"
 #include "geom/triangulator.h"
 #include "hardware/projector/gridpattern.h"
+#include "hardware/projector/flatcolorpattern.h"
+#include "hardware/standards/dotmatrixstandard.h"
+#include "hardware/standards/chessboardstandard.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,7 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     calib(new CalibrationDialog),
     debugWin(new QPlainTextEdit),
     graycode(new GrayCodePattern(1,false)),
-    dbgIm(new ImageViewWidget)
+    dbgIm(new ImageViewWidget),
+    singleCal(new SingleCalibrationDialog)
 {
     ui->setupUi(this);
 
@@ -70,8 +74,10 @@ MainWindow::MainWindow(QWidget *parent) :
     pj->setOrientation(cv::Vec3d(0.0,0,0.0));
     pj->setFocalLength(19000);
 
-    GridPattern *grid = new GridPattern();
-    pj->queue(grid);
+//    GridPattern *grid = new GridPattern();
+//    pj->queue(grid);
+    FlatColorPattern *flat = new FlatColorPattern();
+    pj->queue(flat);
 
     projector = pj;
     capCam->connectProjector(pj);
@@ -79,6 +85,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     compiler = new BinaryCompiler(capCam);
     compiler->setProjector(pj);
+
+    singleCal->setCamera(capCam);
 
     // debug our components
 
@@ -106,6 +114,14 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
+
+
+
+//    standard = new DotMatrixStandard(cv::Size(6,7),
+//                                     0.91*20e-3, 0.91*17e-3,
+//                                     0.91*10e-3);
+    standard = new ChessboardStandard(cv::Size(9,12),20e-3);
+    singleCal->setStandard(standard);
 
 }
 
@@ -201,6 +217,9 @@ void MainWindow::saveSTL()
                     QDir::homePath(),
                     tr("Standard Tesselation Language(*.stl)"));
     if(fnm.length()>0){
+        if(!fnm.endsWith(".stl")){
+            fnm = fnm.append(".stl");
+        }
         geom->saveSTL(fnm.toLocal8Bit().data());
     }
 }
@@ -222,7 +241,7 @@ void MainWindow::setFullScreen(bool fs)
 void MainWindow::showCameraSettings()
 {
     debug("Showing camera settings.");
-    camSettings.show();
+    singleCal->open();
     enableCalibrate();
 }
 

@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     gui/deviceparametersdialog.cpp \
     gui/widgets/positionwidget.cpp \
     gui/widgets/rotationwidget.cpp \
-    hardware/projector/gridpattern.cpp
+    hardware/projector/gridpattern.cpp \
+    gui/singlecalibrationdialog.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -77,7 +78,8 @@ HEADERS  += mainwindow.h \
     gui/deviceparametersdialog.h \
     gui/widgets/positionwidget.h \
     gui/widgets/rotationwidget.h \
-    hardware/projector/gridpattern.h
+    hardware/projector/gridpattern.h \
+    gui/singlecalibrationdialog.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
@@ -91,7 +93,8 @@ FORMS    += mainwindow.ui \
     gui/opencvcameradialog.ui \
     gui/deviceparametersdialog.ui \
     gui/widgets/positionwidget.ui \
-    gui/widgets/rotationwidget.ui
+    gui/widgets/rotationwidget.ui \
+    gui/singlecalibrationdialog.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`
