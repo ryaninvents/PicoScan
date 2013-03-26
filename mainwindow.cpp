@@ -39,26 +39,26 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->modelView->zoomFit();
     dbgIm->setWindowTitle("Debugging -- camera view");
 
-    QOpenCVCamera *capCam = new QOpenCVCamera(1);
+    QOpenCVCamera *capCam = new QOpenCVCamera(2);
     connect(capCam,
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
     capCam->setResolution(1600,1200);
-    capCam->setFocalLength(1400);
-    capCam->setPosition(cv::Vec3d(0,0,0));
-    capCam->setOrientation(cv::Vec3d(0,0,0));
+    capCam->setFocalLength(4000);
+    capCam->setPosition(cv::Vec3d(0.3,0,0));
+    capCam->setOrientation(cv::Vec3d(0,-0.1,0));
 
     camera = capCam;
 
-    QOpenCVCamera *capCam2 = new QOpenCVCamera(2);
+    QOpenCVCamera *capCam2 = new QOpenCVCamera(1);
     connect(capCam2,
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
     capCam2->setResolution(1600,1200);
-    capCam2->setFocalLength(1400);
-    capCam2->setPosition(cv::Vec3d(-0.115,0,0));
+    capCam2->setFocalLength(4000);
+    capCam2->setPosition(cv::Vec3d(0.2,0,0));
     capCam2->setOrientation(cv::Vec3d(0,0,0));
 
     camera2 = capCam2;
@@ -66,9 +66,9 @@ MainWindow::MainWindow(QWidget *parent) :
     SecondDisplayProjector *pj = new SecondDisplayProjector();
     pj->setScreen(1);
     pj->setResolution(640,480);
-    pj->setPosition(cv::Vec3d(0.15,-0.03,0));
-    pj->setOrientation(cv::Vec3d(0.0,-0.5,0.0));
-    pj->setFocalLength(9500);
+    pj->setPosition(cv::Vec3d(0,0,0));
+    pj->setOrientation(cv::Vec3d(0.0,0,0.0));
+    pj->setFocalLength(19000);
 
     GridPattern *grid = new GridPattern();
     pj->queue(grid);

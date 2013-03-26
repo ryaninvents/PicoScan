@@ -28,7 +28,7 @@ public:
     void mouseMoveEvent(QMouseEvent * ev);
 
     /// Handle a mouse release.
-    void mouseReleaseEvent(QMouseEvent * ev);
+    void mouseReleaseEvent(QMouseEvent *);
 
     /// Handle when the user scrolls the mouse wheel.
     void wheelEvent(QWheelEvent * ev);

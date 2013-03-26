@@ -9,7 +9,7 @@
 #define MOVE_SCALE 0.005/zoom
 
 
-#define MODEL_SCALE 5
+#define MODEL_SCALE 1
 
 ModelViewWidget::ModelViewWidget(QWidget *parent) :
     QGLWidget(parent),
@@ -112,7 +112,7 @@ void ModelViewWidget::mouseMoveEvent(QMouseEvent *ev)
     }
 }
 
-void ModelViewWidget::mouseReleaseEvent(QMouseEvent *ev)
+void ModelViewWidget::mouseReleaseEvent(QMouseEvent *)
 {
     xRot+=xPlus;
     yRot+=yPlus;
@@ -226,10 +226,10 @@ void ModelViewWidget::drawFloor()
 
 void ModelViewWidget::drawCloud()
 {
-    if(cloud.size()<10){
-//        drawCube();
-        return;
-    }
+//    if(cloud.size()<10){
+////        drawCube();
+//        return;
+//    }
     uint i;
     glBegin(GL_POINTS);{
 //        glEnableClientState(GL_VERTEX_ARRAY);

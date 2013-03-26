@@ -18,6 +18,11 @@ public:
                            const cv::Vec3d P_fwd,
                            const cv::Vec3d D);
 
+    static cv::Vec3d intersectRayPlane(const cv::Vec3d planeOrigin,
+                                       const cv::Vec3d planeRot,
+                                       const cv::Vec3d rayOrigin,
+                                       const cv::Vec3d rayDirection);
+
     /** Find out if point P is within triangle ABC.
         Thanks to <a href="http://www.blackpawn.com/texts/pointinpoly/default.html">
         blackpawn.com</a> for the code. */

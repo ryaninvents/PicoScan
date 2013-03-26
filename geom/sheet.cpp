@@ -116,6 +116,10 @@ cv::Vec3d Sheet::getPoint(uint u, uint v)
 bool Sheet::hasPointAt(uint u, uint v)
 {
     if(v>=alpha.rows || u>=alpha.cols) return false;
+    cv::Vec3d pt = cloud.at<cv::Vec3d>(v,u);
+    if(     abs(pt[0])<1e-3 &&
+            abs(pt[1])<1e-3 &&
+            abs(pt[2])<1e-3) return false;
     return alpha.at<bool>(v,u);
 }
 

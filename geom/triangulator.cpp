@@ -2,6 +2,7 @@
 
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
+#include <opencv2/calib3d/calib3d.hpp>
 
 /**
   Gray code functions adapted from http://en.wikipedia.org/wiki/Gray_code
@@ -56,9 +57,9 @@ std::vector<cv::Vec3d> Triangulator::computeGeometry(
             if(px<0) continue;
             P_fwd = projector->getPixelRay(px,0);
             M_hat = camera->getPixelRay(x,y);
-            M = Triangulator::sumTo(M_hat,P_up,P_fwd,D)
-                    +Cp;
-            if(M[1]>4 || M[2]<0) continue;
+            M = Triangulator::sumTo(M_hat,P_up,P_fwd,D);
+            M = M+Cp;
+            //if(M[1]>4 || M[2]<0) continue;
 
             out.push_back(M);
 
@@ -94,7 +95,7 @@ Sheet* Triangulator::computeSheet(
             M_hat = camera->getPixelRay(x,y);
             M = Triangulator::sumTo(M_hat,P_up,P_fwd,D)
                     +Cp;
-            if(M[1]>4 || M[2]<0) continue;
+            //if(M[1]>4 || M[2]<0) continue;
 
             sheet->setPoint(x,y,M);
 
@@ -142,6 +143,35 @@ cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
 
     // scale the output
     M = k.at<double>(0,0) * M_hat;
+
+    return M;
+}
+
+cv::Vec3d Triangulator::intersectRayPlane(const cv::Vec3d planeOrigin,
+                                          const cv::Vec3d planeRot,
+                                          const cv::Vec3d rayOrigin,
+                                          const cv::Vec3d rayDirection)
+{
+    cv::Vec3d x(1,0,0);
+    cv::Vec3d z(0,0,1);
+    cv::Mat matNorm;
+    cv::Vec3d planeNorm;
+    cv::Vec3d P_up, P_right;
+    cv::Mat rotn;
+    cv::Vec3d D,M;
+    // calculate the normal
+    cv::Rodrigues(planeRot,rotn);
+    matNorm = rotn * cv::Mat(z);
+    matNorm.reshape(1);
+    planeNorm = cv::Vec3d(matNorm);
+    // create a pair of vectors in the plane
+    P_up = x.cross(planeNorm);
+    P_right = P_up.cross(planeNorm);
+    // calculate the difference vector
+    D = rayOrigin - planeOrigin;
+
+    M = sumTo(rayDirection,P_up,P_right,D);
+    M = M + planeOrigin;
 
     return M;
 }
