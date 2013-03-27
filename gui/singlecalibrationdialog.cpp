@@ -1,10 +1,13 @@
 #include "singlecalibrationdialog.h"
 #include "ui_singlecalibrationdialog.h"
 
+#include <iostream>
+#include <opencv2/calib3d/calib3d.hpp>
+
 SingleCalibrationDialog::SingleCalibrationDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SingleCalibrationDialog),
-    numFrames(0)
+    imagePoints()
 {
     ui->setupUi(this);
 }
@@ -17,6 +20,8 @@ SingleCalibrationDialog::~SingleCalibrationDialog()
 void SingleCalibrationDialog::setStandard(CalibrationStandard *standard)
 {
     this->standard = standard;
+    imagePoints.clear();
+    ui->lcdNumber->display((int)0);
 }
 
 void SingleCalibrationDialog::setCamera(QCamera *camera)
@@ -39,13 +44,37 @@ void SingleCalibrationDialog::takeFrame()
 
 void SingleCalibrationDialog::calibrate()
 {
+    std::vector<std::vector<cv::Point3f> > objectPoints;
+
+    objectPoints = standard->getObjectPoints(imagePoints.size());
+
+    cv::Mat M = cv::Mat::eye(3,3,CV_64F);
+    cv::Mat k;
+    std::vector<cv::Mat> rvecs;
+    std::vector<cv::Mat> tvecs;
+
+    cv::calibrateCamera(objectPoints,
+                        imagePoints,
+                        camera->getResolution(),
+                        M, k, rvecs, tvecs,
+                        CV_CALIB_FIX_ASPECT_RATIO
+                      | CV_CALIB_FIX_PRINCIPAL_POINT);
+
+    std::cout << M << '\n' << k << '\n';
+
+    camera->setIntrinsics(M);
+    camera->setDistortion(k);
+
+    close();
+
 }
 
 
-void SingleCalibrationDialog::frameCaptured(cv::Mat frame, QCamera *cam, QProjector::Pattern *pattern)
+void SingleCalibrationDialog::frameCaptured(cv::Mat frame, QCamera *cam, QProjector::Pattern *)
 {
     std::vector<cv::Point2f> pts;
     bool success;
+    if(cam!=camera) return;
     camera->disconnect(this);
     pts = standard->getImagePoints(frame,&success);
     if(success){

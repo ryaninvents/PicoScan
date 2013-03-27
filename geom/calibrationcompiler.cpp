@@ -110,21 +110,17 @@ void CalibrationCompiler::binaryFrameCaptured(cv::Mat frame, bool)
     emit framesCaptured(poisLeft.size());
 }
 
-double CalibrationCompiler::calibrate()
+int CalibrationCompiler::calibrate()
 {
 
     std::vector<std::vector<cv::Point3f> > objectPoints;
 
-    cv::Mat cameraL = cv::Mat::eye(3,3,CV_64F);
-    cv::Mat distortionL = cv::Mat::zeros(8, 1, CV_64F);
-    cv::Mat cameraR = cv::Mat::eye(3,3,CV_64F);
-    cv::Mat distortionR = cv::Mat::zeros(8, 1, CV_64F);
+    if(poisLeft.size()<4) return -4;
+
     std::vector<cv::Mat> rvecsL, rvecsR;
     std::vector<cv::Mat> tvecsL, tvecsR;
 
     uint i;
-    double rpeL;
-    double rpeR;
 
     std::vector<cv::Point3f> cornersReal;
     std::vector<cv::Point2f> cornersImage;
@@ -133,22 +129,16 @@ double CalibrationCompiler::calibrate()
 
     objectPoints = standard->getObjectPoints(poisLeft.size());
 
-    rpeL = cv::calibrateCamera(objectPoints,poisLeft,
-                                      cameraLeft->getResolution(),
-                                      cameraL,distortionL,rvecsL,tvecsL,
-                                      CV_CALIB_FIX_ASPECT_RATIO|
-                                      CV_CALIB_FIX_PRINCIPAL_POINT);
-    rpeR = cv::calibrateCamera(objectPoints,poisRight,
-                                      cameraRight->getResolution(),
-                                      cameraR,distortionR,rvecsR,tvecsR,
-                                      CV_CALIB_FIX_ASPECT_RATIO|
-                                      CV_CALIB_FIX_PRINCIPAL_POINT);
-
-    cameraLeft  -> setIntrinsics(cameraL);
-    cameraLeft  -> setDistortion(distortionL);
-    cameraRight -> setIntrinsics(cameraR);
-    cameraRight -> setDistortion(distortionR);
-
+    cv::solvePnP(objectPoints,
+                 poisLeft,
+                 cameraLeft->getIntrinsics(),
+                 cameraLeft->getDistortion(),
+                 rvecsL, tvecsL);
+    cv::solvePnP(objectPoints,
+                 poisRight,
+                 cameraRight->getIntrinsics(),
+                 cameraRight->getDistortion(),
+                 rvecsR, tvecsR);
 
     for(i=0;i<poisLeft.size();i++){
         cornersReal.push_back(cv::Point3f(tvecsL.at(i).at<double>(0),
@@ -159,24 +149,15 @@ double CalibrationCompiler::calibrate()
 
     solvePnP(cornersReal,
              cornersImage,
-             cameraR,
-             distortionR,
+             cameraRight->getIntrinsics(),
+             cameraRight->getDistortion(),
              relativeRot,
              relativeTrans);
 
-    cameraLeft  -> setPosition(cv::Vec3d());
-    cameraRight -> setPosition(relativeTrans);
-    cameraLeft  -> setOrientation(cv::Vec3d());
-    cameraRight -> setOrientation(relativeRot);
-
-    std::cout << cameraL << '\n'
-              << cameraR << '\n'
-              << distortionL << '\n'
-              << distortionR << '\n'
-              << relativeRot << '\n'
+    std::cout << relativeRot << '\n'
               << relativeTrans << '\n';
 
-    return (rpeL+rpeR)/2;
+    return 0;
 }
 
 void CalibrationCompiler::removeFrames()

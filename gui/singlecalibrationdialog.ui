@@ -157,8 +157,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>calibrate</sender>
+   <signal>clicked()</signal>
+   <receiver>SingleCalibrationDialog</receiver>
+   <slot>calibrate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>takeFrame()</slot>
+  <slot>calibrate()</slot>
  </slots>
 </ui>

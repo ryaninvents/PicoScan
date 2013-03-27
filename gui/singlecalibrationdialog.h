@@ -23,7 +23,7 @@ public slots:
     void setCamera(QCamera *camera);
     void takeFrame();
     void calibrate();
-    void frameCaptured(cv::Mat frame, QCamera *cam, QProjector::Pattern *pattern);
+    void frameCaptured(cv::Mat frame, QCamera *cam, QProjector::Pattern *);
 
     void open();
     void close();
@@ -33,8 +33,6 @@ private:
 
     QCamera *camera;
     CalibrationStandard *standard;
-
-    int numFrames;
 
     std::vector<std::vector<cv::Point2f> > imagePoints;
 

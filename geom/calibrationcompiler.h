@@ -38,7 +38,7 @@ public slots:
     void binaryFrameCaptured(cv::Mat frame,bool);
 
     /// Calibrate the setup
-    double calibrate();
+    int calibrate();
 
     /// Clear frames from memory
     void removeFrames();

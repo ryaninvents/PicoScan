@@ -49,8 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this,
             SLOT(debug(QString)));
     capCam->setResolution(1600,1200);
-    capCam->setFocalLength(4000);
-    capCam->setPosition(cv::Vec3d(0.3,0,0));
+    capCam->setFocalLength(1300);
+    capCam->setPosition(cv::Vec3d(0.2,0,0));
     capCam->setOrientation(cv::Vec3d(0,-0.1,0));
 
     camera = capCam;
@@ -61,9 +61,9 @@ MainWindow::MainWindow(QWidget *parent) :
             this,
             SLOT(debug(QString)));
     capCam2->setResolution(1600,1200);
-    capCam2->setFocalLength(4000);
+    capCam2->setFocalLength(1300);
     capCam2->setPosition(cv::Vec3d(0.2,0,0));
-    capCam2->setOrientation(cv::Vec3d(0,0,0));
+    capCam2->setOrientation(cv::Vec3d(0,-0.1,0));
 
     camera2 = capCam2;
 
@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pj->setResolution(640,480);
     pj->setPosition(cv::Vec3d(0,0,0));
     pj->setOrientation(cv::Vec3d(0.0,0,0.0));
-    pj->setFocalLength(19000);
+    pj->setFocalLength(2000);
 
 //    GridPattern *grid = new GridPattern();
 //    pj->queue(grid);
