@@ -85,6 +85,14 @@ Sheet* Triangulator::computeSheet(
     P_up = projector->getUpVector();
     Cp = camera->getPosition();
 
+    std::cout << "Projector posn:\n " << cv::Mat(projector->getPosition())
+              << "\nProjector rotn:\n " << projector->getOrientation()
+              << "\nProjector fwd:\n " << projector->getFwdVector()
+              << "\nCamera posn:\n " << cv::Mat(camera->getPosition())
+              << "\nCamera rotn:\n " << camera->getOrientation()
+              << "\nCamera fwd:\n " << camera->getFwdVector() << "\n";
+
+
     encoding.convertTo(encoding,CV_64F);
 
     for(x=0; x<(encoding.cols); x++){

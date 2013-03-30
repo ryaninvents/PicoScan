@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "hardware/standards/dotmatrixstandard.h"
+#include "hardware/standards/chessboardstandard.h"
 
 CalibrationDialog::CalibrationDialog(QWidget *parent) :
     QDialog(parent),
@@ -14,9 +15,11 @@ CalibrationDialog::CalibrationDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    standard = new DotMatrixStandard(cv::Size(9,17),
-                                     17e-3, 8.5e-3,
-                                     8.5e-3);
+//    standard = new DotMatrixStandard(cv::Size(9,17),
+//                                     17e-3, 8.5e-3,
+//                                     8.5e-3);
+
+    standard = new ChessboardStandard(cv::Size(9,12),20e-3);
     calib->setStandard(standard);
 
     connect(calib,

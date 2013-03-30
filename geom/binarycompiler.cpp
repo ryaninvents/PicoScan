@@ -61,11 +61,6 @@ void BinaryCompiler::frameCaptured(
     QString fnm = tr("/home/ryan/mqp-data/shots/capture-%1-%2.png")
             .arg(gray->getBit()).arg(gray->isInverted());
     cv::imwrite(fnm.toLocal8Bit().data(),frame);
-    std::cout << idx << "\n";
-    for(idx=0;idx<captured.size();idx++){
-        std::cout << (captured.at(idx)?"#":".");
-    }
-    std::cout << "\n";
     testAndEmit();
 }
 

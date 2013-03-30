@@ -5,6 +5,7 @@
 #include "geom/triangulator.h"
 #include <iostream>
 
+
 CalibrationCompiler::CalibrationCompiler(QObject *parent) :
     QObject(parent),
     cameraLeft(0),
@@ -16,6 +17,7 @@ CalibrationCompiler::CalibrationCompiler(QObject *parent) :
     fail(false),
     _enabled(false)
 {
+
 }
 
 void CalibrationCompiler::frameCaptured(

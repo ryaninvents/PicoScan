@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 #include <QDesktopWidget>
+#include <iostream>
 
 /*!
 \mainpage Scan Studio
@@ -55,6 +56,8 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
+
+#include <opencv2/calib3d/calib3d.hpp>
 
 /// Entry point for ScanStudio.
 int main(int argc, char** argv)

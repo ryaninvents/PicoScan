@@ -1,6 +1,7 @@
 #include "qopticaldevice.h"
 
 #include <opencv2/calib3d/calib3d.hpp>
+#include <iostream>
 
 QOpticalDevice::QOpticalDevice(QObject *parent) :
     QObject(parent),
@@ -107,7 +108,7 @@ cv::Mat QOpticalDevice::getUpVector()
     cv::Mat up;
     up = cv::Mat(upVec).reshape(1);
 
-    //std::cout << up << "\n";
+//    std::cout << "Up: " << up << "\n";
 
     // then we rotate it to match this device
     return orientation * up;
@@ -123,7 +124,7 @@ cv::Mat QOpticalDevice::getFwdVector()
 
     // then we rotate it to match this device
     fwd = orientation * fwd;
-    //std::cout << "Forward: " << fwd << "\n";
+//    std::cout << "Forward: " << fwd << "\n";
     return fwd;
 }
 
