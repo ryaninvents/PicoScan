@@ -2,6 +2,7 @@
 
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
+#include <fstream>
 #include <opencv2/calib3d/calib3d.hpp>
 
 /**
@@ -94,6 +95,8 @@ Sheet* Triangulator::computeSheet(
 
 
     encoding.convertTo(encoding,CV_64F);
+    std::ofstream csv;
+    csv.open("/home/ryan/mqp-data/cloud.csv");
 
     for(x=0; x<(encoding.cols); x++){
         for(y=0; y<(encoding.rows); y++){
@@ -103,12 +106,13 @@ Sheet* Triangulator::computeSheet(
             M_hat = camera->getPixelRay(x,y);
             M = Triangulator::sumTo(M_hat,P_up,P_fwd,D)
                     +Cp;
-            //if(M[1]>4 || M[2]<0) continue;
+            csv << M[0] << ',' << M[1] << ',' << M[2] << '\n';
 
             sheet->setPoint(x,y,M);
 
         }
     }
+    csv.close();
     return sheet;
 
 }
