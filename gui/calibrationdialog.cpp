@@ -93,6 +93,7 @@ void CalibrationDialog::stopStreaming()
 
 void CalibrationDialog::startStreaming()
 {
+    if(!isVisible()) return;
     ui->previewFirst->startCameraStream();
     ui->previewSecond->startCameraStream();
 }
