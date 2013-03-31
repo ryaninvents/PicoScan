@@ -200,7 +200,7 @@ void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
                 1);
 //    geom->removeNonManifold();
     std::cout << "foreground: " << geom << '\n';
-    if(bg) geom->removeBackground(bg,0.01);
+    if(bg) geom->removeBackground(bg,0.005);
     ui->modelView->setData(geom);
 }
 

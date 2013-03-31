@@ -255,6 +255,7 @@ void ModelViewWidget::drawCloud()
                        cloud.at(i+2)*MODEL_SCALE);
         }
     } glEnd();
+    return;
     glBegin(GL_POINTS);{
         glColor3f(0,0.4,1);
         glDisable(GL_LIGHT0);
