@@ -278,8 +278,8 @@ cv::Vec3d Triangulator::getCentroid(std::vector<cv::Vec3d> pts)
     return cv::Vec3d(x/i,y/i,z/i);
 }
 
-void Triangulator::computePhase(std::vector<cv::Mat> fringes,
-                                   cv::Mat output,
+cv::Mat Triangulator::computePhase(std::vector<cv::Mat> fringes,
+                                   double threshold,
                                    double scale)
 {
     uint m = fringes.size();
@@ -290,6 +290,9 @@ void Triangulator::computePhase(std::vector<cv::Mat> fringes,
     cv::Mat B = cv::Mat::zeros(3,1,CV_64F);
     cv::Mat X;
     alpha = 2*M_PI/m;
+    cv::Mat output = cv::Mat::zeros(fringes.at(0).rows,
+                            fringes.at(0).cols,
+                            CV_64F);
 
     A.at<double>(0,0) = m;
     for(i=0;i<m;i++){
@@ -315,11 +318,16 @@ void Triangulator::computePhase(std::vector<cv::Mat> fringes,
                B.at<double>(2) += I*sin(alpha*i);
            }
            X = A*B;
-           output.at<double>(y,x) = atan2(X.at<double>(2),
-                                          X.at<double>(1));
+           if(X.at<double>(0)>threshold)
+           output.at<double>(y,x) = (atan2(X.at<double>(2),
+                                          X.at<double>(1))
+                                     +M_PI)/(2*M_PI);
+           else
+               output.at<double>(y,x) = -1;
        }
     }
-    output /= scale;
+    output *= scale;
+    return output;
 }
 
 cv::Mat Triangulator::computeBinary(
@@ -403,7 +411,7 @@ cv::Mat Triangulator::maphsv(cv::Mat img, double scale)
     std::vector<cv::Mat> hsv;
     hsv.resize(3);
     img.convertTo(img,CV_32S);
-    hsv[0] = img*180/scale;
+    hsv[0] = img*180.0/scale;
     hsv[1] = cv::Mat::ones(img.rows,img.cols,HUE_FORMAT)*255;
     hsv[2] = cv::Mat::ones(img.rows,img.cols,HUE_FORMAT)*255;
 //    cv::threshold(image,hsv[2],0,255,CV_THRESH_BINARY);

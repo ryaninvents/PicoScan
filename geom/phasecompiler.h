@@ -16,6 +16,8 @@ public:
     /// \param width fringe width in px
     /// \param shifts number of (evenly-spaced) phase shifts
     void requestFrame(uint width, uint shifts);
+
+    void setProjector(QProjector *proj);
     
 signals:
     /// Phase mapping has been captured
@@ -39,6 +41,9 @@ private:
 
     /// Whether or not each frame has been captured
     std::vector<bool> captured;
+
+    std::vector<int> fCt;
+    int loops;
 
     /// Our camera
     QCamera *camera;

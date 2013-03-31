@@ -3,7 +3,8 @@
 SinusoidPattern::SinusoidPattern(uint width, uint shift, bool horiz):
     period(width),
     shift(shift),
-    horiz(horiz)
+    horiz(horiz),
+    brightness(255)
 {
 }
 
@@ -61,9 +62,14 @@ uint SinusoidPattern::getShift()
     return shift;
 }
 
+void SinusoidPattern::setBrightness(uint b)
+{
+    brightness = b;
+}
+
 uint SinusoidPattern::getSinusoidValue(uint x)
 {
     double phase = (double)(x-shift)/(double)period;
     phase = phase*2*M_PI;
-    return (uint)(127*cos(phase)+128);
+    return (uint)((brightness/2-1)*cos(phase)+(brightness/2));
 }

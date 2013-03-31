@@ -90,6 +90,9 @@ MainWindow::MainWindow(QWidget *parent) :
     compiler = new BinaryCompiler(capCam);
     compiler->setProjector(pj);
 
+    fringer = new PhaseCompiler(capCam);
+    fringer->setProjector(pj);
+
     singleCal->setCamera(capCam);
 
     // debug our components
@@ -291,7 +294,13 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-    compiler->requestFrame(11);
+//    compiler->requestFrame(11);
+    fringer->requestFrame(32,8);
+}
+
+void MainWindow::takeSinusoidFrame()
+{
+
 }
 
 void MainWindow::closeEvent(QCloseEvent *)

@@ -16,6 +16,7 @@
 
 #include "geom/binarycompiler.h"
 #include "geom/sheet.h"
+#include "geom/phasecompiler.h"
 
 namespace Ui {
 class MainWindow;
@@ -59,6 +60,9 @@ public slots:
 
     /// Take a snapshot.
     void takeFrame();
+
+    /// Take a sinusoidal snapshot.
+    void takeSinusoidFrame();
 
     /// Write debug info to the side panel.
     void debug(QString str);
@@ -154,6 +158,8 @@ private:
     SingleCalibrationDialog *singleCal;
 
     CalibrationStandard *standard;
+
+    PhaseCompiler *fringer;
 };
 
 #endif // MAINWINDOW_H

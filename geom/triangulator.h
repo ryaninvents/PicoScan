@@ -55,9 +55,9 @@ public:
     //static cv::Vec3d getPlaneNormal(cv::Vec3d plane);
 
     /// Compute wrapped phase from set of images.
-    static void computePhase(std::vector<cv::Mat> fringes,
-                             cv::Mat output,
-                             double scale);
+    static cv::Mat computePhase(std::vector<cv::Mat> fringes,
+                                double threshold,
+                                double scale);
 
     /// Compute binary encoding from a set of images.
     static cv::Mat computeBinary(std::vector<cv::Mat> frames,

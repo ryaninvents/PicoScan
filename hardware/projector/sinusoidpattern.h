@@ -19,6 +19,7 @@ public:
 
     uint getPeriod();
     uint getShift();
+    void setBrightness(uint b);
 
 private:
     /// Fringe width (px)
@@ -27,6 +28,7 @@ private:
     uint shift;
     /// Is the pattern horizontal?
     bool horiz;
+    uint brightness;
 
     /// Get sinusoid value
     uint getSinusoidValue(uint x);
