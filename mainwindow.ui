@@ -117,6 +117,7 @@ color:white;</string>
    </attribute>
    <addaction name="actionSelect_standard"/>
    <addaction name="actionSetup_wizard"/>
+   <addaction name="actionSet_background"/>
    <addaction name="actionSelect_cameras"/>
    <addaction name="actionCalibrate"/>
    <addaction name="actionTake_snapshot"/>
@@ -423,6 +424,15 @@ color:white;</string>
     <bool>true</bool>
    </property>
   </action>
+  <action name="actionSet_background">
+   <property name="icon">
+    <iconset resource="gui/icons.qrc">
+     <normaloff>:/oxygen/icons/oxygen/applications-graphics.png</normaloff>:/oxygen/icons/oxygen/applications-graphics.png</iconset>
+   </property>
+   <property name="text">
+    <string>Set background</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -667,6 +677,22 @@ color:white;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSet_background</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setAsBackground()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAbout()</slot>
@@ -679,5 +705,6 @@ color:white;</string>
   <slot>showDebug()</slot>
   <slot>showProjectorSettings()</slot>
   <slot>saveSTL()</slot>
+  <slot>setAsBackground()</slot>
  </slots>
 </ui>

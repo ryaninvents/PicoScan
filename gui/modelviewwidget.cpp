@@ -134,8 +134,23 @@ void ModelViewWidget::wheelEvent(QWheelEvent *ev)
 
 void ModelViewWidget::setData(Sheet *data)
 {
+    if(!data){
+        cloud.clear();
+        return;
+    }
     sheet = data;
     cloud = data->getPoints();
+    updateGL();
+}
+
+void ModelViewWidget::setBackground(Sheet *data)
+{
+    if(!data){
+        bgCloud.clear();
+        return;
+    }
+    bg = data;
+    bgCloud = data->getPoints();
     updateGL();
 }
 /*
@@ -232,20 +247,21 @@ void ModelViewWidget::drawCloud()
 //    }
     uint i;
     glBegin(GL_POINTS);{
-//        glEnableClientState(GL_VERTEX_ARRAY);
         glColor3f(0,0,0);
         glDisable(GL_LIGHT0);
-        glPointSize(5.0);
-//        glVertexPointer((GLint)cloud.size(),
-//                        GL_DOUBLE,
-//                        (GLsizei)0,
-//                        &(cloud[0]));
-//        glDrawArrays(GL_POINTS,0,cloud.size()/3);
-//        glDisableClientState(GL_VERTEX_ARRAY);
         for(i=0;i<cloud.size();i+=3){
             glVertex3f(cloud.at(i)*MODEL_SCALE,
                        cloud.at(i+1)*MODEL_SCALE,
                        cloud.at(i+2)*MODEL_SCALE);
+        }
+    } glEnd();
+    glBegin(GL_POINTS);{
+        glColor3f(0,0.4,1);
+        glDisable(GL_LIGHT0);
+        for(i=0;i<bgCloud.size();i+=3){
+            glVertex3f(bgCloud.at(i)*MODEL_SCALE,
+                       bgCloud.at(i+1)*MODEL_SCALE,
+                       bgCloud.at(i+2)*MODEL_SCALE);
         }
     } glEnd();
 }

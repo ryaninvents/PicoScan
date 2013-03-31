@@ -68,6 +68,11 @@ void Sheet::setPoint(unsigned int u, unsigned int v, cv::Vec3d pt)
     alpha.at<bool>(v,u) = true;
 }
 
+void Sheet::removePoint(uint u, uint v)
+{
+    alpha.at<bool>(v,u) = false;
+}
+
 void Sheet::saveSTL(char *fnm)
 {
     FILE *file;
@@ -154,6 +159,29 @@ void Sheet::removeNonManifold()
             }
         }
     }
+}
+
+void Sheet::removeBackground(Sheet *bg, double dist)
+{
+    uint u,v;
+    cv::Vec3d obPt, bgPt;
+    if(bg->getWidth()!=getWidth() || bg->getHeight()!=getHeight()) return;
+    dist = dist*dist;
+    for(u=0;u<getWidth();u++){
+        for(v=0;v<getHeight();v++){
+            if(!(hasPointAt(u,v) && bg->hasPointAt(u,v))) continue;
+            obPt = getPoint(u,v);
+            bgPt = bg->getPoint(u,v);
+            if(dist2(obPt,bgPt)<dist) removePoint(u,v);
+        }
+    }
+}
+
+double Sheet::dist2(cv::Vec3d pt1, cv::Vec3d pt2)
+{
+    return (pt1[0]-pt2[0])*(pt1[0]-pt2[0])
+            +(pt1[1]-pt2[1])*(pt1[1]-pt2[1])
+            +(pt1[2]-pt2[2])*(pt1[2]-pt2[2]);
 }
 
 Sheet Sheet::decimate(int n)

@@ -92,6 +92,10 @@ public slots:
     /// Save to an STL file
     void saveSTL();
 
+    /// Set the current scan as background so
+    /// it will be removed from subsequent scans.
+    void setAsBackground();
+
 
 
 protected:
@@ -145,6 +149,7 @@ private:
     BinaryCompiler *compiler2;
 
     Sheet *geom;
+    Sheet *bg;
 
     SingleCalibrationDialog *singleCal;
 

@@ -19,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     debugWin(new QPlainTextEdit),
     graycode(new GrayCodePattern(1,false)),
     dbgIm(new ImageViewWidget),
-    singleCal(new SingleCalibrationDialog)
+    singleCal(new SingleCalibrationDialog),
+    bg(0)
 {
     ui->setupUi(this);
 
@@ -198,6 +199,8 @@ void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
                 projector,
                 1);
 //    geom->removeNonManifold();
+    std::cout << "foreground: " << geom << '\n';
+    if(bg) geom->removeBackground(bg,0.01);
     ui->modelView->setData(geom);
 }
 
@@ -225,6 +228,14 @@ void MainWindow::saveSTL()
         }
         geom->saveSTL(fnm.toLocal8Bit().data());
     }
+}
+
+void MainWindow::setAsBackground()
+{
+    std::cout << "background: " << geom << '\n';
+    bg = geom;
+    ui->modelView->setBackground(geom);
+    ui->modelView->setData(0);
 }
 
 void MainWindow::showAbout()

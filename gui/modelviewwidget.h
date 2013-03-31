@@ -36,6 +36,8 @@ public:
     /// Change the displayed geometry.
     void setData(Sheet *data);
 
+    void setBackground(Sheet *data);
+
 
 signals:
 
@@ -104,9 +106,12 @@ private:
 
     /// the mesh
     std::vector<GLdouble> cloud;
+    std::vector<GLdouble> bgCloud;
 
     ///
     Sheet *sheet;
+
+    Sheet *bg;
 
     void drawSheet();
 

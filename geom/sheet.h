@@ -78,6 +78,9 @@ public:
     /// Add a point to the sheet.
     void setPoint(unsigned int u, unsigned int v, cv::Vec3d pt);
 
+    /// Remove a point
+    void removePoint(uint u, uint v);
+
     /// Save to STL format.
     void saveSTL(char *fnm);
 
@@ -95,7 +98,10 @@ public:
     /// Remove non-manifold points.
     void removeNonManifold();
 
+    /// Remove a background scan.
+    void removeBackground(Sheet *bg, double dist);
 
+    static double dist2(cv::Vec3d pt1, cv::Vec3d pt2);
 
 private:
     /**
