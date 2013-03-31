@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     gui/widgets/positionwidget.cpp \
     gui/widgets/rotationwidget.cpp \
     hardware/projector/gridpattern.cpp \
-    gui/singlecalibrationdialog.cpp
+    gui/singlecalibrationdialog.cpp \
+    geom/hybridcompiler.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -79,7 +80,8 @@ HEADERS  += mainwindow.h \
     gui/widgets/positionwidget.h \
     gui/widgets/rotationwidget.h \
     hardware/projector/gridpattern.h \
-    gui/singlecalibrationdialog.h
+    gui/singlecalibrationdialog.h \
+    geom/hybridcompiler.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

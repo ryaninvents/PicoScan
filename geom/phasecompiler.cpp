@@ -35,12 +35,13 @@ void PhaseCompiler::requestFrame(uint width, uint shifts)
     captured.resize(shifts,false);
     fCt.resize(shifts,0);
     loops = 6;
+    this->width = width;
     SinusoidPattern *s;
     for(q=0;q<loops;q++){
         for(n=0;n<shifts;n++){
             s = new SinusoidPattern(width,n*width/shifts);
             s->setID(n);
-            s->setBrightness(128);
+            s->setBrightness(150);
             projector->queue(s);
         }
     }
@@ -61,9 +62,10 @@ void PhaseCompiler::testAndEmit()
     for(n=0;n<frames.size();n++){
         frames.at(n) /= loops;
     }
-    phase = Triangulator::computePhase(frames,20,1);
-    cv::Mat inLivingColor = Triangulator::maphsv(phase*1000,1000);
+    phase = Triangulator::computePhase(frames,20,width);
+    cv::Mat inLivingColor = Triangulator::maphsv(phase*1000,1000*width);
     cv::imwrite("/home/ryan/phase.png",inLivingColor);
+    emit phaseMapCaptured(phase,false);
 }
 
 void PhaseCompiler::frameCaptured(cv::Mat frame, QCamera *cam, QProjector::Pattern *pattern)

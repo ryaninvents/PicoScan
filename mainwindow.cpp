@@ -87,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->connectProjector(pj);
     capCam2->connectProjector(pj);
 
+
     compiler = new BinaryCompiler(capCam);
     compiler->setProjector(pj);
 
@@ -295,7 +296,7 @@ void MainWindow::adjustCalStd()
 void MainWindow::takeFrame()
 {
 //    compiler->requestFrame(11);
-    fringer->requestFrame(32,8);
+    fringer->requestFrame(256,8);
 }
 
 void MainWindow::takeSinusoidFrame()

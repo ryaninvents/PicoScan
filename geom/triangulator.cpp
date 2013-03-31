@@ -283,7 +283,7 @@ cv::Mat Triangulator::computePhase(std::vector<cv::Mat> fringes,
                                    double scale)
 {
     uint m = fringes.size();
-    double alpha,I;
+    double alpha,I,o;
     uint i,x,y;
 
     cv::Mat A = cv::Mat::zeros(3,3,CV_64F);
@@ -318,10 +318,12 @@ cv::Mat Triangulator::computePhase(std::vector<cv::Mat> fringes,
                B.at<double>(2) += I*sin(alpha*i);
            }
            X = A*B;
-           if(X.at<double>(0)>threshold)
-           output.at<double>(y,x) = (atan2(X.at<double>(2),
-                                          X.at<double>(1))
-                                     +M_PI)/(2*M_PI);
+           if(X.at<double>(0)>threshold){
+               o = (atan2(X.at<double>(2),
+                          X.at<double>(1)))/(2*M_PI)-1/6;
+               if(o<0) o+=1;
+               output.at<double>(y,x) = o;
+           }
            else
                output.at<double>(y,x) = -1;
        }

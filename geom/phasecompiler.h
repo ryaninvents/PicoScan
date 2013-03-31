@@ -44,6 +44,7 @@ private:
 
     std::vector<int> fCt;
     int loops;
+    int width;
 
     /// Our camera
     QCamera *camera;
