@@ -51,8 +51,8 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->setResolution(1600,1200);
     capCam->setPrincipalPoint(800,600);
     capCam->setFocalLength(1300);
-    capCam->setPosition(cv::Vec3d(-0.24,-0.01,0));
-    capCam->setOrientation(cv::Vec3d(0,M_PI/6.5,0));
+    capCam->setPosition(cv::Vec3d(-0.25,-0.01,0));
+    capCam->setOrientation(cv::Vec3d(0,M_PI/12,0));
 
     camera = capCam;
 
@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pj->setPrincipalPoint(848/2,480/2);
     pj->setPosition(cv::Vec3d(0.0,0,0));
     pj->setOrientation(cv::Vec3d(-0*M_PI/180,0.0,0.0));
-    pj->setFocalLength(3000);
+    pj->setFocalLength(3600);
 
     GridPattern *grid = new GridPattern();
     pj->queue(grid);
@@ -197,7 +197,7 @@ void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
                 camera,
                 projector,
                 1);
-    geom->removeNonManifold();
+//    geom->removeNonManifold();
     ui->modelView->setData(geom);
 }
 
