@@ -20,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     graycode(new GrayCodePattern(1,false)),
     dbgIm(new ImageViewWidget),
     singleCal(new SingleCalibrationDialog),
-    bg(0)
+    bg(0),
+    singleCal2(new SingleCalibrationDialog)
 {
     ui->setupUi(this);
 
@@ -95,6 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
     fringer->setProjector(pj);
 
     singleCal->setCamera(capCam);
+    singleCal2->setCamera(capCam2);
 
     // debug our components
 
@@ -260,7 +262,12 @@ void MainWindow::showCameraSettings()
 {
     debug("Showing camera settings.");
     singleCal->open();
-    enableCalibrate();
+}
+
+void MainWindow::showCamera2Settings()
+{
+    debug("Showing camera 2 settings.");
+    singleCal2->open();
 }
 
 void MainWindow::showProjectorSettings()
@@ -295,8 +302,8 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-//    compiler->requestFrame(11);
-    fringer->requestFrame(256,8);
+    compiler->requestFrame(11);
+//    fringer->requestFrame(256,16);
 }
 
 void MainWindow::takeSinusoidFrame()

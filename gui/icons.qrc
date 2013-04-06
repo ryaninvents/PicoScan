@@ -91,4 +91,8 @@
         <file>icons/oxygen/document-edit-encrypt.png</file>
         <file>icons/oxygen/snap-orthogonal.png</file>
     </qresource>
+    <qresource prefix="/oxy-custom">
+        <file>icons/oxygen-mod/camera-web-1.png</file>
+        <file>icons/oxygen-mod/camera-web-2.png</file>
+    </qresource>
 </RCC>

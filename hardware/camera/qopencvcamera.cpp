@@ -3,7 +3,7 @@
 
 QOpenCVCamera::QOpenCVCamera(uint idx, QObject *parent) :
     QCamera(parent),
-    chuck(1)
+    chuck(2)
 {
     cap = new cv::VideoCapture();
     cap->open(idx);

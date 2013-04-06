@@ -194,7 +194,9 @@ OTHER_FILES += \
     gui/icons/oxygen/camera-web-64.png \
     gui/icons/oxygen/code-context.png \
     gui/icons/oxygen/document-edit-encrypt.png \
-    gui/icons/oxygen/snap-orthogonal.png
+    gui/icons/oxygen/snap-orthogonal.png \
+    gui/icons/oxygen-mod/camera-web-2.png \
+    gui/icons/oxygen-mod/camera-web-1.png
 
 RESOURCES += \
     gui/icons.qrc

@@ -180,13 +180,14 @@ cv::Vec3d Triangulator::intersectRayPlane(const cv::Vec3d planeOrigin,
     P_up = x.cross(planeNorm);
     P_right = P_up.cross(planeNorm);
     // calculate the difference vector
-    D = rayOrigin - planeOrigin;
+    D = planeOrigin - rayOrigin;
 
     M = sumTo(rayDirection,P_up,P_right,D);
-    M = M + planeOrigin;
+    M = M + rayOrigin;
 
     return M;
 }
+
 
 bool Triangulator::inTri(const cv::Vec3d P, const cv::Vec3d A, const cv::Vec3d B, const cv::Vec3d C)
 {

@@ -43,6 +43,8 @@ public slots:
     /// Show the camera settings dialog.
     void showCameraSettings();
 
+    void showCamera2Settings();
+
     /// Show the projector settings dialog.
     void showProjectorSettings();
 
@@ -156,6 +158,7 @@ private:
     Sheet *bg;
 
     SingleCalibrationDialog *singleCal;
+    SingleCalibrationDialog *singleCal2;
 
     CalibrationStandard *standard;
 

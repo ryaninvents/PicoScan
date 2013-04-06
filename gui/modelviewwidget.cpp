@@ -6,7 +6,7 @@
 #define MAX_ZOOM 100
 #define MIN_ZOOM 0.01
 #define DEFAULT_ZOOM 1.0
-#define MOVE_SCALE 0.005/zoom
+#define MOVE_SCALE 0.006/zoom
 
 
 #define MODEL_SCALE 1

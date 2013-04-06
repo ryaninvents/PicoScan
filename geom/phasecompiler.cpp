@@ -34,7 +34,7 @@ void PhaseCompiler::requestFrame(uint width, uint shifts)
     frames.resize(shifts);
     captured.resize(shifts,false);
     fCt.resize(shifts,0);
-    loops = 6;
+    loops = 4;
     this->width = width;
     SinusoidPattern *s;
     for(q=0;q<loops;q++){

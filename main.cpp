@@ -58,6 +58,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include <opencv2/calib3d/calib3d.hpp>
+#include "geom/triangulator.h"
 
 /// Entry point for ScanStudio.
 int main(int argc, char** argv)
