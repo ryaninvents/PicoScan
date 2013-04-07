@@ -39,7 +39,7 @@ void ImageViewWidget::displayImage(cv::Mat_<double> image, bool scale)
     }
 
     if(scale){
-        dest = dest.scaled(size(),Qt::KeepAspectRatio);
+        dest = dest.scaled(size(),Qt::KeepAspectRatio,Qt::SmoothTransformation);
     }
 
     displayImage(dest);
@@ -59,7 +59,7 @@ void ImageViewWidget::displayImage(cv::Mat3b image, bool scale)
 
 
     if(scale){
-        dest = dest.scaled(size(),Qt::KeepAspectRatio);
+        dest = dest.scaled(size(),Qt::KeepAspectRatio,Qt::SmoothTransformation);
     }
 
 

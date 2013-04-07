@@ -328,7 +328,7 @@ void MainWindow::closeEvent(QCloseEvent *)
 
 void MainWindow::enableCalibrate()
 {
-    ui->actionCalibrate->setEnabled(true);
+//    ui->actionCalibrate->setEnabled(true);
 }
 
 void MainWindow::computeCombinedGeometry()
