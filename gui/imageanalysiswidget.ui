@@ -59,91 +59,6 @@
         </item>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QWidget" name="widget_3" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QSpinBox" name="selectedU">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="selectedV">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Encoding:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QCheckBox" name="showKey">
-        <property name="text">
-         <string>Show key</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QCheckBox" name="showCrosshair">
-        <property name="text">
-         <string>Show crosshair</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="2">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Selected position:</string>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="0" colspan="2">
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="1">
@@ -211,6 +126,103 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item row="4" column="1">
+       <widget class="QWidget" name="widget_3" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QSpinBox" name="selectedU">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximum">
+            <number>1600</number>
+           </property>
+           <property name="value">
+            <number>800</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="selectedV">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximum">
+            <number>1200</number>
+           </property>
+           <property name="value">
+            <number>600</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Encoding:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QCheckBox" name="showKey">
+        <property name="text">
+         <string>Show key</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QCheckBox" name="showCrosshair">
+        <property name="text">
+         <string>Show crosshair</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Selected position:</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -317,6 +329,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>selectedU</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImageAnalysisWidget</receiver>
+   <slot>crosshairXChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>201</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>320</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>selectedV</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImageAnalysisWidget</receiver>
+   <slot>crosshairYChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>226</x>
+     <y>201</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>320</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setImageDisplayed(int)</slot>
@@ -324,5 +368,7 @@
   <slot>cropBottomChanged(int)</slot>
   <slot>cropLeftChanged(int)</slot>
   <slot>cropRightChanged(int)</slot>
+  <slot>crosshairYChanged(int)</slot>
+  <slot>crosshairXChanged(int)</slot>
  </slots>
 </ui>

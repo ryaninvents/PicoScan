@@ -11,6 +11,7 @@ ImageAnalysisWidget::ImageAnalysisWidget(QWidget *parent) :
     bottomBits(6)
 {
     ui->setupUi(this);
+    ui->image->setCrosshairEnabled(true);
 }
 
 ImageAnalysisWidget::~ImageAnalysisWidget()
@@ -94,4 +95,24 @@ void ImageAnalysisWidget::cropRightChanged(int n)
     crop.width = n-crop.x;
     ui->cropLeft->setMaximum(n+1);
     updateImage();
+}
+
+void ImageAnalysisWidget::crosshairXChanged(int x)
+{
+    crossX = x;
+    ui->image->setCrosshair(crossX,crossY);
+}
+
+void ImageAnalysisWidget::crosshairYChanged(int y)
+{
+    crossY = y;
+    ui->image->setCrosshair(crossX,crossY);
+}
+
+void ImageAnalysisWidget::crosshairChanged(int x, int y)
+{
+    crossX = x;
+    crossY = y;
+    ui->selectedU->setValue(x);
+    ui->selectedV->setValue(y);
 }

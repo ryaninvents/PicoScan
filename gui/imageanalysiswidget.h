@@ -34,6 +34,9 @@ public slots:
     void cropBottomChanged(int n);
     void cropLeftChanged(int n);
     void cropRightChanged(int n);
+    void crosshairXChanged(int x);
+    void crosshairYChanged(int y);
+    void crosshairChanged(int x,int y);
     
 private:
     Ui::ImageAnalysisWidget *ui;
@@ -47,6 +50,8 @@ private:
 
     int cursorX;
     int cursorY;
+    int crossX;
+    int crossY;
 
     cv::Rect_<int> crop;
 };

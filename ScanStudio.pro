@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     hardware/projector/gridpattern.cpp \
     gui/singlecalibrationdialog.cpp \
     geom/hybridcompiler.cpp \
-    gui/imageanalysiswidget.cpp
+    gui/imageanalysiswidget.cpp \
+    gui/plotwidget.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -83,7 +84,8 @@ HEADERS  += mainwindow.h \
     hardware/projector/gridpattern.h \
     gui/singlecalibrationdialog.h \
     geom/hybridcompiler.h \
-    gui/imageanalysiswidget.h
+    gui/imageanalysiswidget.h \
+    gui/plotwidget.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \

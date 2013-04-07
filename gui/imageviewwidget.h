@@ -41,9 +41,27 @@ public:
     /// Display the image in the widget without scaling.
     void displayImage(QImage image);
 
+
+
 signals:
-    
+    void crosshairSet(int,int);
+
+
 public slots:
+
+    void setCrosshairEnabled(bool enabled);
+    void setHighQualityScale(bool highQuality);
+    void setCrosshair(int x, int y);
+
+private:
+    void updateView();
+    bool showXhair;
+    QPoint crosshair;
+    int origW, origH;
+    bool hq;
+    QImage im;
+    QPoint compToImageCoord(QPoint C);
+    QPoint imageToCompCoord(QPoint I);
 
 };
 
