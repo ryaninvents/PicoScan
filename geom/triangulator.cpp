@@ -148,6 +148,23 @@ cv::Mat Triangulator::combineBinaryAndPhase(cv::Mat binaryMap, cv::Mat phaseMap,
     return output;
 }
 
+cv::Mat Triangulator::binaryReduce(cv::Mat binary,int amt)
+{
+    cv::Mat B;
+    binary.convertTo(B,CV_32S);
+    int u,v,x;
+    for(u=0;u<binary.cols;u++){
+        for(v=0;v<binary.rows;v++){
+            x = B.at<int>(v,u);
+            if(x>0){
+                B.at<int>(v,u) = (x>>amt)<<amt;
+            }
+        }
+    }
+    B.convertTo(B,CV_64F);
+    return B;
+}
+
 cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
                               const cv::Vec3d P_up,
                               const cv::Vec3d P_fwd,

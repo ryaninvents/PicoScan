@@ -89,6 +89,8 @@ public:
     static cv::Mat combineBinaryAndPhase(cv::Mat binaryMap,
                                          cv::Mat phaseMap,
                                          int sinusoidPower);
+
+    static cv::Mat binaryReduce(cv::Mat binary, int amt);
 };
 
 #endif // TRIANGULATOR_H

@@ -22,8 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     singleCal(new SingleCalibrationDialog),
     bg(0),
     singleCal2(new SingleCalibrationDialog),
-    sinusoidPower(10),
-    sinusoidShifts(24)
+    sinusoidPower(6),
+    sinusoidShifts(8)
 {
     ui->setupUi(this);
 
@@ -206,6 +206,7 @@ void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
     // hacky; fix later
     if(calib->isVisible()) return;
     lastBinaryFrame = binary;
+    ui->analysis->setBinary(binary);
     computeCombinedGeometry();
     /*
     geom = Triangulator::computeSheet(
@@ -311,13 +312,14 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-//    compiler->requestFrame(10);
+    compiler->requestFrame(10);
     fringer->requestFrame(1<<sinusoidPower,sinusoidShifts);
 }
 
 void MainWindow::phaseMapCaptured(cv::Mat ph, bool)
 {
     lastPhaseMap = ph;
+    ui->analysis->setPhaseMap(ph);
     computeCombinedGeometry();
 }
 
