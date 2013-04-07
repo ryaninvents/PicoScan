@@ -12,3 +12,9 @@ GraphViewWidget::~GraphViewWidget()
 {
     delete ui;
 }
+
+void GraphViewWidget::plotLine(cv::Mat data)
+{
+    ui->plot->setData(data);
+    ui->plot->plotLines();
+}

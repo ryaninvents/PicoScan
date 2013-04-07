@@ -130,6 +130,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(fringer, SIGNAL(phaseMapCaptured(cv::Mat,bool)),
             this,    SLOT(phaseMapCaptured(cv::Mat,bool)));
 
+    connect(ui->analysis, SIGNAL(plotCrossSection(cv::Mat)),
+            ui->plot,     SLOT(plotLine(cv::Mat)));
+
 
 
 //    standard = new DotMatrixStandard(cv::Size(6,7),
@@ -206,9 +209,7 @@ void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
     // do nothing if the calibration dialog is open
     // hacky; fix later
     if(calib->isVisible()) return;
-    binary.convertTo(lastBinaryFrame,CV_16S);
-    cv::medianBlur(lastBinaryFrame,lastBinaryFrame,3);
-    lastBinaryFrame.convertTo(lastBinaryFrame,CV_64F);
+    binary.convertTo(lastBinaryFrame,CV_64F);
     ui->analysis->setBinary(lastBinaryFrame);
     computeCombinedGeometry();
 
@@ -316,7 +317,7 @@ void MainWindow::adjustCalStd()
 void MainWindow::takeFrame()
 {
     compiler->requestFrame(10);
-    fringer->requestFrame(1<<sinusoidPower,sinusoidShifts);
+//    fringer->requestFrame(1<<sinusoidPower,sinusoidShifts);
 }
 
 void MainWindow::phaseMapCaptured(cv::Mat ph, bool)

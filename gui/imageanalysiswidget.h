@@ -27,6 +27,7 @@ public:
     void setPhaseMap(cv::Mat p);
     void setHybrid(cv::Mat h);
     void updateImage();
+    cv::Mat getRowData();
 
 public slots:
     void setImageDisplayed(int n);
@@ -37,6 +38,10 @@ public slots:
     void crosshairXChanged(int x);
     void crosshairYChanged(int y);
     void crosshairChanged(int x,int y);
+    void requestPlot();
+
+signals:
+    void plotCrossSection(cv::Mat);
     
 private:
     Ui::ImageAnalysisWidget *ui;

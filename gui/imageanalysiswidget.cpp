@@ -57,6 +57,19 @@ void ImageAnalysisWidget::updateImage()
     }
 }
 
+cv::Mat ImageAnalysisWidget::getRowData()
+{
+    cv::Mat data = -1*cv::Mat::ones(binary.cols,2,CV_64F);
+//    binary.row(crossY).reshape(1).copyTo(data.col(0));
+//    reduced.row(crossY).reshape(1).copyTo(data.col(1));
+    int i;
+    for(i=0;i<binary.cols;i++){
+        data.at<double>(i,0) = binary.at<double>(crossY,i);
+        data.at<double>(i,1) = reduced.at<double>(crossY,i);
+    }
+    return data;
+}
+
 void ImageAnalysisWidget::setImageDisplayed(int n)
 {
     currentDisplayMode = n;
@@ -69,6 +82,7 @@ void ImageAnalysisWidget::cropTopChanged(int n)
     crop.y = n;
     crop.height = ui->cropBot->value()-n;
     ui->cropBot->setMinimum(n+1);
+    ui->selectedV->setMinimum(n);
     updateImage();
 }
 
@@ -77,6 +91,7 @@ void ImageAnalysisWidget::cropBottomChanged(int n)
     if(n<=crop.y) return;
     crop.height = n-crop.y;
     ui->cropTop->setMaximum(n-1);
+    ui->selectedV->setMaximum(n);
     updateImage();
 }
 
@@ -86,6 +101,7 @@ void ImageAnalysisWidget::cropLeftChanged(int n)
     crop.x = n;
     crop.width = ui->cropRight->value()-n;
     ui->cropRight->setMinimum(n+1);
+    ui->selectedU->setMinimum(n);
     updateImage();
 }
 
@@ -93,7 +109,8 @@ void ImageAnalysisWidget::cropRightChanged(int n)
 {
     if(n<=crop.x) return;
     crop.width = n-crop.x;
-    ui->cropLeft->setMaximum(n+1);
+    ui->cropLeft->setMaximum(n-1);
+    ui->selectedU->setMaximum(n);
     updateImage();
 }
 
@@ -115,4 +132,10 @@ void ImageAnalysisWidget::crosshairChanged(int x, int y)
     crossY = y;
     ui->selectedU->setValue(x);
     ui->selectedV->setValue(y);
+}
+
+void ImageAnalysisWidget::requestPlot()
+{
+    cv::Mat data = getRowData();
+    emit plotCrossSection(data);
 }

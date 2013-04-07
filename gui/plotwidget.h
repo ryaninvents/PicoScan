@@ -13,7 +13,7 @@ public:
     void setHeaders(std::vector<QString> headerList);
     void setData(cv::Mat input);
     void setData(std::vector<cv::Mat> input);
-    void plotPoints();
+    void plotLines();
 signals:
     
 public slots:
@@ -21,6 +21,8 @@ public slots:
 private:
     std::vector<QString> headerList;
     cv::Mat data;
+
+    void fixHeaders();
     
 };
 

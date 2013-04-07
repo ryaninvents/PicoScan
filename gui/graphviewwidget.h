@@ -2,6 +2,7 @@
 #define GRAPHVIEWWIDGET_H
 
 #include <QWidget>
+#include <opencv2/core/core.hpp>
 
 namespace Ui {
 class GraphViewWidget;
@@ -14,6 +15,9 @@ class GraphViewWidget : public QWidget
 public:
     explicit GraphViewWidget(QWidget *parent = 0);
     ~GraphViewWidget();
+
+public slots:
+    void plotLine(cv::Mat data);
     
 private:
     Ui::GraphViewWidget *ui;

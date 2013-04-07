@@ -52,7 +52,7 @@
        <enum>QTabWidget::South</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <property name="iconSize">
        <size>
@@ -157,7 +157,7 @@ color:white;</string>
          <number>0</number>
         </property>
         <item>
-         <widget class="GraphViewWidget" name="widget" native="true"/>
+         <widget class="GraphViewWidget" name="plot" native="true"/>
         </item>
        </layout>
       </widget>
