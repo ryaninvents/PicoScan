@@ -47,7 +47,8 @@ SOURCES += main.cpp\
     gui/singlecalibrationdialog.cpp \
     geom/hybridcompiler.cpp \
     gui/imageanalysiswidget.cpp \
-    gui/plotwidget.cpp
+    gui/plotwidget.cpp \
+    gui/graphviewwidget.cpp
 
 HEADERS  += mainwindow.h \
     hardware/standards/calibrationstandard.h \
@@ -85,7 +86,8 @@ HEADERS  += mainwindow.h \
     gui/singlecalibrationdialog.h \
     geom/hybridcompiler.h \
     gui/imageanalysiswidget.h \
-    gui/plotwidget.h
+    gui/plotwidget.h \
+    gui/graphviewwidget.h
 
 FORMS    += mainwindow.ui \
     gui/aboutdialog.ui \
@@ -101,7 +103,8 @@ FORMS    += mainwindow.ui \
     gui/widgets/positionwidget.ui \
     gui/widgets/rotationwidget.ui \
     gui/singlecalibrationdialog.ui \
-    gui/imageanalysiswidget.ui
+    gui/imageanalysiswidget.ui \
+    gui/graphviewwidget.ui
 
 
 LIBS += `pkg-config opencv --cflags --libs`

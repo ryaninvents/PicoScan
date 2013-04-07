@@ -52,7 +52,7 @@
        <enum>QTabWidget::South</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="iconSize">
        <size>
@@ -149,6 +149,17 @@ color:white;</string>
        <attribute name="toolTip">
         <string>Graph view</string>
        </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="GraphViewWidget" name="widget" native="true"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -565,6 +576,12 @@ color:white;</string>
    <class>ImageAnalysisWidget</class>
    <extends>QWidget</extends>
    <header>gui/imageanalysiswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GraphViewWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/graphviewwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

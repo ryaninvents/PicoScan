@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <QScrollBar>
 #include <QFileDialog>
+#include <opencv2/imgproc/imgproc.hpp>
 #include "hardware/camera/qopencvcamera.h"
 #include "hardware/projector/seconddisplayprojector.h"
 #include "geom/triangulator.h"
@@ -205,19 +206,21 @@ void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
     // do nothing if the calibration dialog is open
     // hacky; fix later
     if(calib->isVisible()) return;
-    lastBinaryFrame = binary;
-    ui->analysis->setBinary(binary);
+    binary.convertTo(lastBinaryFrame,CV_16S);
+    cv::medianBlur(lastBinaryFrame,lastBinaryFrame,3);
+    lastBinaryFrame.convertTo(lastBinaryFrame,CV_64F);
+    ui->analysis->setBinary(lastBinaryFrame);
     computeCombinedGeometry();
-    /*
+
     geom = Triangulator::computeSheet(
-                binary,
+                lastBinaryFrame,
                 camera,
                 projector,
                 1);
 //    geom->removeNonManifold();
 //    std::cout << "foreground: " << geom << '\n';
 //    if(bg) geom->removeBackground(bg,0.005);
-    ui->modelView->setData(geom);*/
+    ui->modelView->setData(geom);
 }
 
 void MainWindow::writeDebugImg1(cv::Mat im)
