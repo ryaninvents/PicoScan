@@ -21,7 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     dbgIm(new ImageViewWidget),
     singleCal(new SingleCalibrationDialog),
     bg(0),
-    singleCal2(new SingleCalibrationDialog)
+    singleCal2(new SingleCalibrationDialog),
+    sinusoidPower(10),
+    sinusoidShifts(24)
 {
     ui->setupUi(this);
 
@@ -124,6 +126,8 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(debug(QString)),
             this,
             SLOT(debug(QString)));
+    connect(fringer, SIGNAL(phaseMapCaptured(cv::Mat,bool)),
+            this,    SLOT(phaseMapCaptured(cv::Mat,bool)));
 
 
 
@@ -198,7 +202,12 @@ void MainWindow::debugImage(cv::Mat im)
 
 void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
 {
+    // do nothing if the calibration dialog is open
+    // hacky; fix later
     if(calib->isVisible()) return;
+    lastBinaryFrame = binary;
+    computeCombinedGeometry();
+    /*
     geom = Triangulator::computeSheet(
                 binary,
                 camera,
@@ -207,7 +216,7 @@ void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
 //    geom->removeNonManifold();
 //    std::cout << "foreground: " << geom << '\n';
 //    if(bg) geom->removeBackground(bg,0.005);
-    ui->modelView->setData(geom);
+    ui->modelView->setData(geom);*/
 }
 
 void MainWindow::writeDebugImg1(cv::Mat im)
@@ -302,13 +311,14 @@ void MainWindow::adjustCalStd()
 
 void MainWindow::takeFrame()
 {
-    compiler->requestFrame(11);
-//    fringer->requestFrame(256,16);
+//    compiler->requestFrame(10);
+    fringer->requestFrame(1<<sinusoidPower,sinusoidShifts);
 }
 
-void MainWindow::takeSinusoidFrame()
+void MainWindow::phaseMapCaptured(cv::Mat ph, bool)
 {
-
+    lastPhaseMap = ph;
+    computeCombinedGeometry();
 }
 
 void MainWindow::closeEvent(QCloseEvent *)
@@ -319,4 +329,19 @@ void MainWindow::closeEvent(QCloseEvent *)
 void MainWindow::enableCalibrate()
 {
     ui->actionCalibrate->setEnabled(true);
+}
+
+void MainWindow::computeCombinedGeometry()
+{
+    return;
+    lastCombined = Triangulator::combineBinaryAndPhase(
+                lastBinaryFrame,
+                lastPhaseMap,
+                sinusoidPower);
+    geom = Triangulator::computeSheet(
+                lastPhaseMap,
+                camera,
+                projector,
+                1);
+    ui->modelView->setData(geom);
 }

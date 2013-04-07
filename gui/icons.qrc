@@ -95,4 +95,11 @@
         <file>icons/oxygen-mod/camera-web-1.png</file>
         <file>icons/oxygen-mod/camera-web-2.png</file>
     </qresource>
+    <qresource prefix="/fugue">
+        <file>icons/fugue/block.png</file>
+        <file>icons/fugue/spectrum.png</file>
+        <file>icons/fugue/wrench-screwdriver.png</file>
+        <file>icons/fugue/chart.png</file>
+        <file>icons/fugue/ruler.png</file>
+    </qresource>
 </RCC>

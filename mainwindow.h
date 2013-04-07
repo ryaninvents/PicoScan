@@ -64,7 +64,7 @@ public slots:
     void takeFrame();
 
     /// Take a sinusoidal snapshot.
-    void takeSinusoidFrame();
+    void phaseMapCaptured(cv::Mat ph, bool);
 
     /// Write debug info to the side panel.
     void debug(QString str);
@@ -163,6 +163,15 @@ private:
     CalibrationStandard *standard;
 
     PhaseCompiler *fringer;
+
+    uint sinusoidPower;
+    int sinusoidShifts;
+
+    cv::Mat lastBinaryFrame;
+    cv::Mat lastPhaseMap;
+    cv::Mat lastCombined;
+
+    void computeCombinedGeometry();
 };
 
 #endif // MAINWINDOW_H

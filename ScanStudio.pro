@@ -196,7 +196,12 @@ OTHER_FILES += \
     gui/icons/oxygen/document-edit-encrypt.png \
     gui/icons/oxygen/snap-orthogonal.png \
     gui/icons/oxygen-mod/camera-web-2.png \
-    gui/icons/oxygen-mod/camera-web-1.png
+    gui/icons/oxygen-mod/camera-web-1.png \
+    gui/icons/fugue/wrench-screwdriver.png \
+    gui/icons/fugue/spectrum.png \
+    gui/icons/fugue/block.png \
+    gui/icons/fugue/chart.png \
+    gui/icons/fugue/ruler.png
 
 RESOURCES += \
     gui/icons.qrc

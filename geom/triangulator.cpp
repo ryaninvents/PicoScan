@@ -117,6 +117,37 @@ Sheet* Triangulator::computeSheet(
 
 }
 
+cv::Mat Triangulator::combineBinaryAndPhase(cv::Mat binaryMap, cv::Mat phaseMap, int sinusoidPower)
+{
+    double sinusoidPeriod = 1<<sinusoidPower;
+    cv::Mat bin, ph, output;
+
+    if(binaryMap.rows != phaseMap.rows ||
+            binaryMap.cols != phaseMap.cols) return output;
+    binaryMap.convertTo(bin,CV_32F);
+    phaseMap.convertTo(ph,CV_32F);
+    output = cv::Mat::ones(bin.rows,bin.cols,CV_64F);
+    int u,v;
+    double val, phase, difPlus, difMinus;
+    int chopped;
+    for(v=0;v<binaryMap.rows;v++){
+        for(u=0;u<binaryMap.cols;u++){
+            val = bin.at<float>(v,u);
+            phase = ph.at<float>(v,u);
+            if(val<0 || phase<0){
+                output.at<double>(v,u) = -1;
+                continue;
+            }
+            chopped = ((int)(((int)val) >> sinusoidPower)) << sinusoidPower;
+//            difPlus = chopped + phase - val;
+//            difMinus = difPlus - sinusoidPeriod;
+            output.at<double>(v,u) = chopped + phase;
+//                    - ( abs(difMinus) < abs(difPlus)? sinusoidPeriod : 0);
+        }
+    }
+    return output;
+}
+
 cv::Vec3d Triangulator::sumTo(const cv::Vec3d M_hat,
                               const cv::Vec3d P_up,
                               const cv::Vec3d P_fwd,
@@ -321,7 +352,7 @@ cv::Mat Triangulator::computePhase(std::vector<cv::Mat> fringes,
            X = A*B;
            if(X.at<double>(0)>threshold){
                o = (atan2(X.at<double>(2),
-                          X.at<double>(1)))/(2*M_PI)-1/6;
+                          X.at<double>(1)))/(2*M_PI);
                if(o<0) o+=1;
                output.at<double>(y,x) = o;
            }

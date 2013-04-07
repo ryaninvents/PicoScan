@@ -85,6 +85,10 @@ public:
                                QCamera *camera,
                                QProjector *projector,
                                uint decimation);
+
+    static cv::Mat combineBinaryAndPhase(cv::Mat binaryMap,
+                                         cv::Mat phaseMap,
+                                         int sinusoidPower);
 };
 
 #endif // TRIANGULATOR_H
