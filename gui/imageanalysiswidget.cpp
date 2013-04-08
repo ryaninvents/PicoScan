@@ -42,7 +42,17 @@ void ImageAnalysisWidget::setReducedBinary(cv::Mat rb)
 void ImageAnalysisWidget::setPhaseMap(cv::Mat p)
 {
     p.convertTo(phase,CV_64F);
+    phase = phase * 2;
     hybrid = reduced + phase;
+    int u,v;
+    for(v=0;v<hybrid.rows;v++){
+        for(u=0;u<hybrid.cols;u++){
+            if(reduced.at<double>(v,u)<0
+                    || phase.at<double>(v,u) < 0){
+                hybrid.at<double>(v,u) = -1;
+            }
+        }
+    }
     updateImage();
 }
 

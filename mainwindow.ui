@@ -52,7 +52,7 @@
        <enum>QTabWidget::South</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <property name="iconSize">
        <size>
@@ -137,6 +137,78 @@ color:white;</string>
        <attribute name="title">
         <string>Parameters</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="1" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Phase shifts:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="numShifts">
+          <property name="minimum">
+           <number>4</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>8</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Reduced binary bits:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="bottomBits">
+          <property name="maximum">
+           <number>10</number>
+          </property>
+          <property name="value">
+           <number>6</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2" rowspan="3">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="0" colspan="3">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Project grid for focusing</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="graphs">
        <attribute name="icon">
@@ -845,6 +917,38 @@ color:white;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>numShifts</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setShifts(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>177</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bottomBits</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setBits(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>177</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAbout()</slot>
@@ -859,5 +963,7 @@ color:white;</string>
   <slot>saveSTL()</slot>
   <slot>setAsBackground()</slot>
   <slot>showCamera2Settings()</slot>
+  <slot>setShifts(int)</slot>
+  <slot>setBits(int)</slot>
  </slots>
 </ui>

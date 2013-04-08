@@ -260,6 +260,16 @@ void MainWindow::setAsBackground()
     ui->modelView->setData(0);
 }
 
+void MainWindow::setShifts(int shifts)
+{
+    sinusoidShifts = shifts;
+}
+
+void MainWindow::setBits(int bits)
+{
+    sinusoidPower = bits;
+}
+
 void MainWindow::showAbout()
 {
     about.show();

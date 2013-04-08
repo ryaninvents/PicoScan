@@ -370,7 +370,7 @@ cv::Mat Triangulator::computePhase(std::vector<cv::Mat> fringes,
            if(X.at<double>(0)>threshold){
                o = (atan2(X.at<double>(2),
                           X.at<double>(1)))/(2*M_PI);
-               if(o<0) o+=1;
+               if(o<=0) o+=1;
                output.at<double>(y,x) = o;
            }
            else

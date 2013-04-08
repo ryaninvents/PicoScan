@@ -102,6 +102,9 @@ public slots:
     /// it will be removed from subsequent scans.
     void setAsBackground();
 
+    void setShifts(int shifts);
+    void setBits(int bits);
+
 
 
 protected:
