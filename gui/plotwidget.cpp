@@ -54,8 +54,8 @@ void PlotWidget::plotLines()
     }
 //    std::cout << data << '\n';
     QString command = tr("gnuplot << EOF\n"
-                         "set title \"%5\",\n"
-                         "set terminal png size %3,%4\n"
+                         "set title \"%5\"\n"
+                         "set terminal png enhanced font \"cmr10,16\" size %3,%4\n"
                          "set output \"plot.png\"\n"
                          "plot %1\n%2\nEOF\n")
             .arg(series).arg(datatable).arg(width()-2).arg(height()-2)
@@ -79,7 +79,7 @@ void PlotWidget::fixHeaders()
     int i;
     if(oldSize<data.cols){
         for(i=oldSize;i<data.cols;i++){
-            headerList.push_back(tr("Series %1").arg(i+1));
+            headerList.push_back(tr("Intensity %1").arg(i+1));
         }
     }
 }
