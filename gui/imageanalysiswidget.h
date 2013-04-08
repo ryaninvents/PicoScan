@@ -27,7 +27,6 @@ public:
     void setBinary(cv::Mat b);
     void setReducedBinary(cv::Mat rb);
     void setPhaseMap(cv::Mat p);
-    void setHybrid(cv::Mat h);
     void updateImage();
     cv::Mat getRowData();
 
@@ -43,7 +42,8 @@ public slots:
     void requestPlot();
 
 signals:
-    void plotCrossSection(cv::Mat);
+    void plotCrossSection(QString, cv::Mat);
+    void cropXChanged(int xmin,int xmax);
     
 private:
     Ui::ImageAnalysisWidget *ui;

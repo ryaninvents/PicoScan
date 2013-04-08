@@ -10,9 +10,12 @@ class PlotWidget : public ImageViewWidget
     Q_OBJECT
 public:
     explicit PlotWidget(QWidget *parent = 0);
-    void setHeaders(std::vector<QString> headerList);
+    void setHeaders(std::vector<QString> headers);
+    void setHeaders(QString headers);
     void setData(cv::Mat input);
     void setData(std::vector<cv::Mat> input);
+    void setXRange(double min, double max);
+    void clearXRange();
     void plotLines();
 signals:
     
@@ -26,6 +29,8 @@ private:
     void fixHeaders();
     QString title;
     int mode;
+    double xmin, xmax;
+    bool autoX;
     
 };
 

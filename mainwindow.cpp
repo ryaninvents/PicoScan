@@ -130,8 +130,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(fringer, SIGNAL(phaseMapCaptured(cv::Mat,bool)),
             this,    SLOT(phaseMapCaptured(cv::Mat,bool)));
 
-    connect(ui->analysis, SIGNAL(plotCrossSection(cv::Mat)),
-            ui->plot,     SLOT(plotLine(cv::Mat)));
+    connect(ui->analysis, SIGNAL(plotCrossSection(QString,cv::Mat)),
+            ui->plot,     SLOT(plotLine(QString,cv::Mat)));
+    connect(ui->analysis, SIGNAL(cropXChanged(int,int)),
+            ui->plot,     SLOT(setXRange(int,int)));
 
 
 
@@ -317,7 +319,7 @@ void MainWindow::adjustCalStd()
 void MainWindow::takeFrame()
 {
     compiler->requestFrame(10);
-//    fringer->requestFrame(1<<sinusoidPower,sinusoidShifts);
+    fringer->requestFrame(1<<(sinusoidPower-1),sinusoidShifts);
 }
 
 void MainWindow::phaseMapCaptured(cv::Mat ph, bool)

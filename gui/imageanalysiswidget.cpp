@@ -8,14 +8,18 @@ ImageAnalysisWidget::ImageAnalysisWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ImageAnalysisWidget),
     currentDisplayMode(IA_DISPLAY_BINARY),
-    crop(0,0,1600,1200),
+    crop(400,400,300,300),
     binaryScale(1024),
     bottomBits(6)
 {
     ui->setupUi(this);
     ui->image->setCrosshairEnabled(true);
-    sample = cv::imread("/home/ryan/test-gradient.png",CV_LOAD_IMAGE_GRAYSCALE);
+    sample = cv::imread("/home/ryan/gradient.png",CV_LOAD_IMAGE_GRAYSCALE);
     sample.convertTo(sample,CV_64F);
+    binary = cv::Mat::zeros(1600,1200,CV_64F);
+    reduced = cv::Mat::zeros(1600,1200,CV_64F);
+    phase = cv::Mat::zeros(1600,1200,CV_64F);
+    hybrid = cv::Mat::zeros(1600,1200,CV_64F);
 }
 
 ImageAnalysisWidget::~ImageAnalysisWidget()
@@ -37,13 +41,9 @@ void ImageAnalysisWidget::setReducedBinary(cv::Mat rb)
 
 void ImageAnalysisWidget::setPhaseMap(cv::Mat p)
 {
-    phase = p;
+    p.convertTo(phase,CV_64F);
+    hybrid = reduced + phase;
     updateImage();
-}
-
-void ImageAnalysisWidget::setHybrid(cv::Mat h)
-{
-    hybrid = h;
 }
 
 void ImageAnalysisWidget::updateImage()
@@ -58,20 +58,29 @@ void ImageAnalysisWidget::updateImage()
     case IA_DISPLAY_PHASE:
         ui->image->displayMat(Triangulator::maphsv(phase(crop),1<<bottomBits),true);
         break;
-    case IA_DISPLAY_SAMPLE:
-        ui->image->displayMat(Triangulator::maphsv(sample(crop),255),true);
+    case IA_DISPLAY_HYBRID:
+        ui->image->displayMat(Triangulator::maphsv(hybrid(crop),binaryScale),true);
         break;
+//    case IA_DISPLAY_SAMPLE:
+//        ui->image->displayMat(Triangulator::maphsv(sample(crop),255),true);
+//        break;
     }
 }
 
 cv::Mat ImageAnalysisWidget::getRowData()
 {
-    cv::Mat data = -1*cv::Mat::ones(sample.cols,1,CV_64F);
+    cv::Mat data = -1*cv::Mat::ones(sample.cols,5,CV_64F);
 //    binary.row(crossY).reshape(1).copyTo(data.col(0));
 //    reduced.row(crossY).reshape(1).copyTo(data.col(1));
-    int i;
-    for(i=0;i<sample.cols;i++){
-        data.at<double>(i,0) = sample.at<double>(crossY,i);
+    int i,x;
+    for(x=crop.x;x<=crop.x+crop.width;x++){
+        i = x-crop.x;
+        data.at<double>(i,0) = x;
+        data.at<double>(i,1) = binary.at<double>(crossY,x);
+        data.at<double>(i,2) = reduced.at<double>(crossY,x);
+        data.at<double>(i,3) = phase.at<double>(crossY,x);
+        data.at<double>(i,4) = hybrid.at<double>(crossY,x);
+//        data.at<double>(i,2) = sample.at<double>(crossY,i);
 //        data.at<double>(i,1) = reduced.at<double>(crossY,i);
     }
     return data;
@@ -109,6 +118,7 @@ void ImageAnalysisWidget::cropLeftChanged(int n)
     crop.width = ui->cropRight->value()-n;
     ui->cropRight->setMinimum(n+1);
     ui->selectedU->setMinimum(n);
+    emit cropXChanged(crop.x,crop.x+crop.width);
     updateImage();
 }
 
@@ -118,6 +128,7 @@ void ImageAnalysisWidget::cropRightChanged(int n)
     crop.width = n-crop.x;
     ui->cropLeft->setMaximum(n-1);
     ui->selectedU->setMaximum(n);
+    emit cropXChanged(crop.x,crop.x+crop.width);
     updateImage();
 }
 
@@ -144,5 +155,5 @@ void ImageAnalysisWidget::crosshairChanged(int x, int y)
 void ImageAnalysisWidget::requestPlot()
 {
     cv::Mat data = getRowData();
-    emit plotCrossSection(data);
+    emit plotCrossSection(tr("Position|Binary|Reduced binary|Scaled phase|Hybrid"),data);
 }

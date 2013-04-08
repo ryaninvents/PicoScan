@@ -57,12 +57,18 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <QString>
 #include <opencv2/calib3d/calib3d.hpp>
 #include "geom/triangulator.h"
+#include "hardware/projector/sinusoidpattern.h"
 
 /// Entry point for ScanStudio.
 int main(int argc, char** argv)
 {
+//    SinusoidPattern *patt = new SinusoidPattern(64,0);
+//    QImage pattern = patt->generatePattern(800,600);
+//    pattern.save(QString("/home/ryan/sinusoid.png"));
+//    return 0;
     QApplication a(argc, argv);
     MainWindow w;
     QRect screenres = QApplication::desktop()->screenGeometry(0);

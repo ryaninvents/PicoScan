@@ -17,7 +17,8 @@ public:
     ~GraphViewWidget();
 
 public slots:
-    void plotLine(cv::Mat data);
+    void plotLine(QString headers, cv::Mat data);
+    void setXRange(int xMin, int xMax);
     
 private:
     Ui::GraphViewWidget *ui;
