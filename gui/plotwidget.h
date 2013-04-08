@@ -17,12 +17,15 @@ public:
 signals:
     
 public slots:
+    void setTitle(QString t);
 
 private:
     std::vector<QString> headerList;
     cv::Mat data;
 
     void fixHeaders();
+    QString title;
+    int mode;
     
 };
 

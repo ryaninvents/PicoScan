@@ -9,6 +9,8 @@
 #define IA_DISPLAY_REDUCED 1
 #define IA_DISPLAY_PHASE 2
 #define IA_DISPLAY_HYBRID 3
+#define IA_DISPLAY_ORIGINAL 4
+#define IA_DISPLAY_SAMPLE 5
 
 namespace Ui {
 class ImageAnalysisWidget;
@@ -51,6 +53,7 @@ private:
     int bottomBits;
     cv::Mat phase;
     cv::Mat hybrid;
+    cv::Mat sample;
     int currentDisplayMode;
 
     int cursorX;

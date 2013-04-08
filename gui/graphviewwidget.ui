@@ -150,10 +150,30 @@
    <extends>QWidget</extends>
    <header>gui/plotwidget.h</header>
    <container>1</container>
+   <slots>
+    <slot>setTitle(QString)</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources>
   <include location="icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>title</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>plot</receiver>
+   <slot>setTitle(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>354</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

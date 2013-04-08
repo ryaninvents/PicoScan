@@ -57,6 +57,16 @@
           <string>Hybrid</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Original</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Sample</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="6" column="0" colspan="2">
@@ -174,13 +184,13 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_2">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Encoding:</string>
+         <string>Display:</string>
         </property>
        </widget>
       </item>
@@ -243,7 +253,6 @@
      <property name="autoFillBackground">
       <bool>true</bool>
      </property>
-     <zorder>widget_2</zorder>
     </widget>
    </item>
   </layout>

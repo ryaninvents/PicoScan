@@ -2,6 +2,8 @@
 #include "ui_imageanalysiswidget.h"
 #include "geom/triangulator.h"
 
+#include <opencv2/highgui/highgui.hpp>
+
 ImageAnalysisWidget::ImageAnalysisWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ImageAnalysisWidget),
@@ -12,6 +14,8 @@ ImageAnalysisWidget::ImageAnalysisWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->image->setCrosshairEnabled(true);
+    sample = cv::imread("/home/ryan/test-gradient.png",CV_LOAD_IMAGE_GRAYSCALE);
+    sample.convertTo(sample,CV_64F);
 }
 
 ImageAnalysisWidget::~ImageAnalysisWidget()
@@ -54,18 +58,21 @@ void ImageAnalysisWidget::updateImage()
     case IA_DISPLAY_PHASE:
         ui->image->displayMat(Triangulator::maphsv(phase(crop),1<<bottomBits),true);
         break;
+    case IA_DISPLAY_SAMPLE:
+        ui->image->displayMat(Triangulator::maphsv(sample(crop),255),true);
+        break;
     }
 }
 
 cv::Mat ImageAnalysisWidget::getRowData()
 {
-    cv::Mat data = -1*cv::Mat::ones(binary.cols,2,CV_64F);
+    cv::Mat data = -1*cv::Mat::ones(sample.cols,1,CV_64F);
 //    binary.row(crossY).reshape(1).copyTo(data.col(0));
 //    reduced.row(crossY).reshape(1).copyTo(data.col(1));
     int i;
-    for(i=0;i<binary.cols;i++){
-        data.at<double>(i,0) = binary.at<double>(crossY,i);
-        data.at<double>(i,1) = reduced.at<double>(crossY,i);
+    for(i=0;i<sample.cols;i++){
+        data.at<double>(i,0) = sample.at<double>(crossY,i);
+//        data.at<double>(i,1) = reduced.at<double>(crossY,i);
     }
     return data;
 }
