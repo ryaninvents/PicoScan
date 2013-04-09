@@ -128,7 +128,7 @@ cv::Mat Triangulator::combineBinaryAndPhase(cv::Mat binaryMap, cv::Mat phaseMap,
     phaseMap.convertTo(ph,CV_32F);
     output = cv::Mat::ones(bin.rows,bin.cols,CV_64F);
     int u,v;
-    double val, phase, difPlus, difMinus;
+    double val, phase, shortBinary;
     int chopped;
     for(v=0;v<binaryMap.rows;v++){
         for(u=0;u<binaryMap.cols;u++){
@@ -139,6 +139,9 @@ cv::Mat Triangulator::combineBinaryAndPhase(cv::Mat binaryMap, cv::Mat phaseMap,
                 continue;
             }
             chopped = ((int)(((int)val) >> sinusoidPower)) << sinusoidPower;
+            shortBinary = val - chopped;
+            if((shortBinary-phase)<-sinusoidPeriod) phase += sinusoidPeriod;
+            if((shortBinary-phase)>sinusoidPeriod) phase -= sinusoidPeriod;
 //            difPlus = chopped + phase - val;
 //            difMinus = difPlus - sinusoidPeriod;
             output.at<double>(v,u) = chopped + phase;
