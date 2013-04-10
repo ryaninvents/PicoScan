@@ -128,23 +128,23 @@ cv::Mat Triangulator::combineBinaryAndPhase(cv::Mat binaryMap, cv::Mat phaseMap,
     phaseMap.convertTo(ph,CV_32F);
     output = cv::Mat::ones(bin.rows,bin.cols,CV_64F);
     int u,v;
-    double val, phase, shortBinary;
+    double value, phase, shortBinary, hybrid;
     int chopped;
     for(v=0;v<binaryMap.rows;v++){
         for(u=0;u<binaryMap.cols;u++){
-            val = bin.at<float>(v,u);
+            value = bin.at<float>(v,u);
             phase = ph.at<float>(v,u);
-            if(val<0 || phase<0){
+            if(value<0 || phase<0){
                 output.at<double>(v,u) = -1;
                 continue;
             }
-            chopped = ((int)(((int)val) >> sinusoidPower)) << sinusoidPower;
-            shortBinary = val - chopped;
-            if((shortBinary-phase)<-sinusoidPeriod) phase += sinusoidPeriod;
-            if((shortBinary-phase)>sinusoidPeriod) phase -= sinusoidPeriod;
-//            difPlus = chopped + phase - val;
-//            difMinus = difPlus - sinusoidPeriod;
-            output.at<double>(v,u) = chopped + phase;
+            chopped = ((int)(((int)value) >> sinusoidPower)) << sinusoidPower;
+            shortBinary = value - chopped;
+            hybrid = chopped + phase;
+            if((value-hybrid)>(hybrid+sinusoidPeriod-value)) hybrid+=sinusoidPeriod;
+//            if((shortBinary-phase)<-sinusoidPeriod) phase += sinusoidPeriod;
+//            if((shortBinary-phase)>sinusoidPeriod) phase -= sinusoidPeriod;
+            output.at<double>(v,u) = hybrid;
 //                    - ( abs(difMinus) < abs(difPlus)? sinusoidPeriod : 0);
         }
     }

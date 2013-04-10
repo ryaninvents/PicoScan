@@ -8,7 +8,7 @@ ImageAnalysisWidget::ImageAnalysisWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ImageAnalysisWidget),
     currentDisplayMode(IA_DISPLAY_BINARY),
-    crop(400,400,300,300),
+    crop(0,0,1600,1200),
     binaryScale(1024),
     bottomBits(6)
 {
@@ -43,16 +43,19 @@ void ImageAnalysisWidget::setPhaseMap(cv::Mat p)
 {
     p.convertTo(phase,CV_64F);
     phase = phase * 2;
-    hybrid = reduced + phase;
-    int u,v;
-    for(v=0;v<hybrid.rows;v++){
-        for(u=0;u<hybrid.cols;u++){
-            if(reduced.at<double>(v,u)<0
-                    || phase.at<double>(v,u) < 0){
-                hybrid.at<double>(v,u) = -1;
-            }
-        }
-    }
+    hybrid = Triangulator::combineBinaryAndPhase(
+                binary,
+                phase,
+                bottomBits);
+//    int u,v;
+//    for(v=0;v<hybrid.rows;v++){
+//        for(u=0;u<hybrid.cols;u++){
+//            if(reduced.at<double>(v,u)<0
+//                    || phase.at<double>(v,u) < 0){
+//                hybrid.at<double>(v,u) = -1;
+//            }
+//        }
+//    }
     updateImage();
 }
 
