@@ -329,7 +329,7 @@ void MainWindow::adjustCalStd()
 void MainWindow::takeFrame()
 {
     compiler->requestFrame(10);
-    fringer->requestFrame(1<<(sinusoidPower-1),sinusoidShifts);
+//    fringer->requestFrame(1<<(sinusoidPower-1),sinusoidShifts);
 }
 
 void MainWindow::phaseMapCaptured(cv::Mat ph, bool)
