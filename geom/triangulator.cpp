@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <opencv2/calib3d/calib3d.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 /**
   Gray code functions adapted from http://en.wikipedia.org/wiki/Gray_code
@@ -26,8 +27,8 @@ int Triangulator::binaryToGray(int num)
 */
 int Triangulator::grayToBinary(int num)
 {
-    unsigned int numBits = 8 * sizeof(num);
-    unsigned int shift;
+    int numBits = 8 * sizeof(num);
+    int shift;
     for (shift = 1; shift < numBits; shift = 2 * shift)
     {
         num = num ^ (num >> shift);
@@ -330,6 +331,8 @@ cv::Vec3d Triangulator::getCentroid(std::vector<cv::Vec3d> pts)
     return cv::Vec3d(x/i,y/i,z/i);
 }
 
+#define SKIP_FRINGE 2
+
 cv::Mat Triangulator::computePhase(std::vector<cv::Mat> fringes,
                                    double threshold,
                                    double scale)
@@ -347,7 +350,8 @@ cv::Mat Triangulator::computePhase(std::vector<cv::Mat> fringes,
                             CV_64F);
 
     A.at<double>(0,0) = m;
-    for(i=0;i<m;i++){
+
+    for(i=SKIP_FRINGE;i<m;i++){
         A.at<double>(1,0) += cos(alpha*i);
         A.at<double>(2,0) += sin(alpha*i);
         A.at<double>(1,1) += cos(alpha*i)*cos(alpha*i);
@@ -363,7 +367,7 @@ cv::Mat Triangulator::computePhase(std::vector<cv::Mat> fringes,
     for(x=0;x<output.cols;x++){
        for(y=0;y<output.rows;y++){
            B = cv::Mat::zeros(3,1,CV_64F);
-           for(i=0;i<m;i++){
+           for(i=SKIP_FRINGE;i<m;i++){
                I = (double)fringes[i].at<unsigned char>(y,x);
                B.at<double>(0) += I;
                B.at<double>(1) += I*cos(alpha*i);
@@ -429,6 +433,10 @@ cv::Mat Triangulator::computeBinary(
 
         // difference
         img = inv - img;
+
+        QString fnm = QString("/home/ryan/mqp-data/shots/diff-%1.png")
+                .arg(n);
+        cv::imwrite(fnm.toLocal8Bit().data(),img*50);
 
         // collect the bit
         for(x=0; x<img.cols; x++){

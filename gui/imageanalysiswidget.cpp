@@ -47,6 +47,7 @@ void ImageAnalysisWidget::setPhaseMap(cv::Mat p)
                 binary,
                 phase,
                 bottomBits);
+    emit hybridMapComputed(hybrid);
 //    int u,v;
 //    for(v=0;v<hybrid.rows;v++){
 //        for(u=0;u<hybrid.cols;u++){
@@ -82,7 +83,7 @@ void ImageAnalysisWidget::updateImage()
 
 cv::Mat ImageAnalysisWidget::getRowData()
 {
-    cv::Mat data = -1*cv::Mat::ones(sample.cols,5,CV_64F);
+    cv::Mat data = -1*cv::Mat::ones(sample.cols,3,CV_64F);
 //    binary.row(crossY).reshape(1).copyTo(data.col(0));
 //    reduced.row(crossY).reshape(1).copyTo(data.col(1));
     int i,x;
@@ -90,9 +91,9 @@ cv::Mat ImageAnalysisWidget::getRowData()
         i = x-crop.x;
         data.at<double>(i,0) = x;
         data.at<double>(i,1) = binary.at<double>(crossY,x);
-        data.at<double>(i,2) = reduced.at<double>(crossY,x);
-        data.at<double>(i,3) = phase.at<double>(crossY,x);
-        data.at<double>(i,4) = hybrid.at<double>(crossY,x);
+//        data.at<double>(i,2) = reduced.at<double>(crossY,x);
+//        data.at<double>(i,3) = phase.at<double>(crossY,x);
+        data.at<double>(i,2) = hybrid.at<double>(crossY,x);
 //        data.at<double>(i,2) = sample.at<double>(crossY,i);
 //        data.at<double>(i,1) = reduced.at<double>(crossY,i);
     }
@@ -168,5 +169,5 @@ void ImageAnalysisWidget::crosshairChanged(int x, int y)
 void ImageAnalysisWidget::requestPlot()
 {
     cv::Mat data = getRowData();
-    emit plotCrossSection(tr("Position|Binary|Reduced binary|Scaled phase|Hybrid"),data);
+    emit plotCrossSection(tr("Position|Binary|Hybrid"),data);
 }

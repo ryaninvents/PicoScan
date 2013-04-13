@@ -58,7 +58,7 @@ void BinaryCompiler::frameCaptured(
     idx = (gray->getBit()*2) + (gray->isInverted()?1:0);
     cv::cvtColor(frame,frames.at(idx),CV_BGR2GRAY);
     captured.at(idx) = true;
-    QString fnm = tr("/home/ryan/mqp-data/shots/capture-%1-%2.png")
+    QString fnm = tr("/home/ryan/mqp-data/shots/binary-%1-%2.png")
             .arg(gray->getBit()).arg(gray->isInverted());
     cv::imwrite(fnm.toLocal8Bit().data(),frame);
     testAndEmit();

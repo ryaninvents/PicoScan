@@ -11,9 +11,9 @@ QImage GrayCodePattern::generatePattern(int width, int height)
 {
     if(horiz){
         QImage out(width,height,QImage::Format_ARGB32);
-        unsigned int value;
-        unsigned int x,y,gray;
-        unsigned int mask = 1<<bit;
+        int value;
+        int x,y,gray;
+        int mask = 1<<bit;
 
         for (y = 0; y < height; y++) {
                 QRgb *destrow = (QRgb*)out.scanLine(y);
@@ -30,9 +30,9 @@ QImage GrayCodePattern::generatePattern(int width, int height)
         return out;
     }else{
         QImage out(width,height,QImage::Format_ARGB32);
-        unsigned int values[width];
-        unsigned int x,y,gray;
-        unsigned int mask = 1<<bit;
+        int values[width];
+        int x,y,gray;
+        int mask = 1<<bit;
 
         for (x = 0; x < width; x++) {
             gray = binaryToGray(x);

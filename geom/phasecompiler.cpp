@@ -82,5 +82,9 @@ void PhaseCompiler::frameCaptured(cv::Mat frame, QCamera *cam, QProjector::Patte
         frames.at(sine->getID()) = frames.at(sine->getID()) + fm;
     fCt.at(sine->getID())++;
     if(fCt.at(sine->getID())>=loops) captured.at(sine->getID()) = true;
+
+    QString fnm = tr("/home/ryan/mqp-data/shots/sinusoid-%1.png")
+            .arg(sine->getID());
+    cv::imwrite(fnm.toLocal8Bit().data(),frame);
     testAndEmit();
 }

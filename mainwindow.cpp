@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     capCam->setPrincipalPoint(800,600);
     capCam->setFocalLength(1300);
     capCam->setPosition(cv::Vec3d(-0.25,-0.01,0));
-    capCam->setOrientation(cv::Vec3d(0,M_PI/12,0));
+    capCam->setOrientation(cv::Vec3d(0,M_PI/6,0));
 
     camera = capCam;
 
@@ -76,11 +76,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     SecondDisplayProjector *pj = new SecondDisplayProjector();
     pj->setScreen(1);
-    pj->setResolution(848,480);
-    pj->setPrincipalPoint(848/2,480/2);
+    pj->setResolution(720,480);
+    pj->setPrincipalPoint(720/2,480/2);
     pj->setPosition(cv::Vec3d(0.0,0,0));
     pj->setOrientation(cv::Vec3d(-0*M_PI/180,0.0,0.0));
-    pj->setFocalLength(3600);
+    pj->setFocalLength(3600*720/848);
 
     GridPattern *grid = new GridPattern();
     pj->queue(grid);
@@ -101,7 +101,9 @@ MainWindow::MainWindow(QWidget *parent) :
     singleCal->setCamera(capCam);
     singleCal2->setCamera(capCam2);
 
-    // debug our components
+    lastBinaryFrame = cv::Mat::ones(1600,1200,CV_64F)*-1;
+    lastCombined = cv::Mat::ones(1600,1200,CV_64F)*-1;
+    lastPhaseMap = cv::Mat::ones(1600,1200,CV_64F)*-1;
 
     connect(pj,
             SIGNAL(debug(QString)),
@@ -134,6 +136,8 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->plot,     SLOT(plotLine(QString,cv::Mat)));
     connect(ui->analysis, SIGNAL(cropXChanged(int,int)),
             ui->plot,     SLOT(setXRange(int,int)));
+    connect(ui->analysis, SIGNAL(hybridMapComputed(cv::Mat)),
+            this,         SLOT(hybridImageCaptured(cv::Mat)));
 
 
 
@@ -213,17 +217,22 @@ void MainWindow::binaryImageCaptured(cv::Mat binary, bool)
     if(calib->isVisible()) return;
     binary.convertTo(lastBinaryFrame,CV_64F);
     ui->analysis->setBinary(lastBinaryFrame);
-    computeCombinedGeometry();
+//    computeCombinedGeometry();
 
-    geom = Triangulator::computeSheet(
-                lastBinaryFrame,
-                camera,
-                projector,
-                1);
+//    geom = Triangulator::computeSheet(
+//                lastBinaryFrame,
+//                camera,
+//                projector,
+//                1);
 //    geom->removeNonManifold();
 //    std::cout << "foreground: " << geom << '\n';
-//    if(bg) geom->removeBackground(bg,0.005);
-    ui->modelView->setData(geom);
+    //    if(bg) geom->removeBackground(bg,0.005);
+}
+
+void MainWindow::hybridImageCaptured(cv::Mat hybrid)
+{
+    lastCombined = hybrid;
+    computeCombinedGeometry();
 }
 
 void MainWindow::writeDebugImg1(cv::Mat im)
@@ -329,14 +338,14 @@ void MainWindow::adjustCalStd()
 void MainWindow::takeFrame()
 {
     compiler->requestFrame(10);
-//    fringer->requestFrame(1<<(sinusoidPower-1),sinusoidShifts);
+    fringer->requestFrame(1<<(sinusoidPower-1),sinusoidShifts);
 }
 
 void MainWindow::phaseMapCaptured(cv::Mat ph, bool)
 {
     lastPhaseMap = ph;
     ui->analysis->setPhaseMap(ph);
-    computeCombinedGeometry();
+//    computeCombinedGeometry();
 }
 
 void MainWindow::closeEvent(QCloseEvent *)
@@ -351,13 +360,12 @@ void MainWindow::enableCalibrate()
 
 void MainWindow::computeCombinedGeometry()
 {
-    return;
     lastCombined = Triangulator::combineBinaryAndPhase(
                 lastBinaryFrame,
-                lastPhaseMap,
+                lastPhaseMap*2,
                 sinusoidPower);
     geom = Triangulator::computeSheet(
-                lastPhaseMap,
+                lastCombined,
                 camera,
                 projector,
                 1);

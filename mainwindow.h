@@ -89,6 +89,8 @@ public slots:
     /// Binary image has been computed
     void binaryImageCaptured(cv::Mat binary,bool);
 
+    void hybridImageCaptured(cv::Mat hybrid);
+
     /// Write debug image 1
     void writeDebugImg1(cv::Mat im);
 

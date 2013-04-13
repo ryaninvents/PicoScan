@@ -42,6 +42,7 @@ public slots:
     void requestPlot();
 
 signals:
+    void hybridMapComputed(cv::Mat);
     void plotCrossSection(QString, cv::Mat);
     void cropXChanged(int xmin,int xmax);
     
