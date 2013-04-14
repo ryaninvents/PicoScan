@@ -144,8 +144,10 @@ MainWindow::MainWindow(QWidget *parent) :
 //    standard = new DotMatrixStandard(cv::Size(6,7),
 //                                     0.91*20e-3, 0.91*17e-3,
 //                                     0.91*10e-3);
-    standard = new ChessboardStandard(cv::Size(9,12),20e-3);
+//    standard = new ChessboardStandard(cv::Size(9,12),20e-3);
+    standard = new ChessboardStandard(cv::Size(7,6),10e-3);
     singleCal->setStandard(standard);
+    singleCal2->setStandard(standard);
 
 }
 

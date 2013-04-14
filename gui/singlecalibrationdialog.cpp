@@ -49,9 +49,14 @@ void SingleCalibrationDialog::calibrate()
     objectPoints = standard->getObjectPoints(imagePoints.size());
 
     cv::Mat M = cv::Mat::eye(3,3,CV_64F);
-    cv::Mat k;
+    cv::Mat k = cv::Mat::zeros(1,5,CV_64F);
     std::vector<cv::Mat> rvecs;
     std::vector<cv::Mat> tvecs;
+
+    for(int u=0;u<objectPoints.at(0).size();u++){
+        std::cout << objectPoints.at(0).at(u) << '\t'
+                  << imagePoints.at(0).at(u) << '\n';
+    }
 
     cv::calibrateCamera(objectPoints,
                         imagePoints,
