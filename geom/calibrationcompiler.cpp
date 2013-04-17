@@ -179,8 +179,8 @@ int CalibrationCompiler::calibrate()
              relativeRot,
              relativeTrans);
 
-    std::cout << relativeRot << '\n'
-              << relativeTrans << '\n';
+    std::cout << "Rotation: " << relativeRot << '\n'
+              << "Distance: " << relativeTrans << '\n';
 
 
 
