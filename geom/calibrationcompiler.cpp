@@ -121,6 +121,8 @@ int CalibrationCompiler::calibrate()
 
     std::vector<cv::Mat> rvecsL, rvecsR;
     std::vector<cv::Mat> tvecsL, tvecsR;
+    cv::Mat camMatL, camMatR;
+    cv::Mat camDistL, camDistR;
 
     uint i;
 
@@ -131,6 +133,26 @@ int CalibrationCompiler::calibrate()
 
     objectPoints = standard->getObjectPoints(poisLeft.size());
 
+    camMatL = cameraLeft->getIntrinsics();
+    camMatR = cameraRight->getIntrinsics();
+
+    cv::calibrateCamera(objectPoints,
+                        poisLeft,
+                        cameraLeft->getResolution(),
+                        camMatL,
+                        camDistL,
+                        rvecsL, tvecsL,
+                        CV_CALIB_USE_INTRINSIC_GUESS);
+
+    cv::calibrateCamera(objectPoints,
+                        poisRight,
+                        cameraRight->getResolution(),
+                        camMatR,
+                        camDistR,
+                        rvecsR, tvecsR,
+                        CV_CALIB_USE_INTRINSIC_GUESS);
+
+    /*
     cv::solvePnP(objectPoints,
                  poisLeft,
                  cameraLeft->getIntrinsics(),
@@ -141,6 +163,7 @@ int CalibrationCompiler::calibrate()
                  cameraRight->getIntrinsics(),
                  cameraRight->getDistortion(),
                  rvecsR, tvecsR);
+                 */
 
     for(i=0;i<poisLeft.size();i++){
         cornersReal.push_back(cv::Point3f(tvecsL.at(i).at<double>(0),
@@ -158,6 +181,8 @@ int CalibrationCompiler::calibrate()
 
     std::cout << relativeRot << '\n'
               << relativeTrans << '\n';
+
+
 
     return 0;
 }

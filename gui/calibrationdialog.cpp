@@ -19,7 +19,7 @@ CalibrationDialog::CalibrationDialog(QWidget *parent) :
 //                                     17e-3, 8.5e-3,
 //                                     8.5e-3);
 
-    standard = new ChessboardStandard(cv::Size(7,6),(3+5/32)/8*25.4e-3);
+    standard = new ChessboardStandard(cv::Size(7,6),10e-3);
     calib->setStandard(standard);
 
     connect(calib,
